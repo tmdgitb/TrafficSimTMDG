@@ -1,0 +1,9 @@
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\bin\Debug\SimTMDG.exe.config
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\bin\Debug\SimTMDG.exe
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\bin\Debug\SimTMDG.pdb
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\obj\Debug\SimTMDG.csprojResolveAssemblyReference.cache
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\obj\Debug\SimTMDG.Properties.Resources.resources
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\obj\Debug\SimTMDG.csproj.GenerateResource.Cache
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\obj\Debug\SimTMDG.exe
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\obj\Debug\SimTMDG.pdb
+c:\users\ilham\documents\visual studio 2015\Projects\SimTMDG\SimTMDG\obj\Debug\SimTMDG.Main.resources
