@@ -94,7 +94,7 @@ namespace SimTMDG.Road
             for(int i = 0; i < vehicles.Count; i++)
             {
                 vehicles[i].Think(tickLength);
-                vehicles[i].absCoord = vehicles[i].newCoord(_startPoint, _endPoint, vehicles[i].distance);
+                vehicles[i].newCoord(_startPoint, _endPoint, vehicles[i].distance);
                 
 
                 if (vehicles[i].distance >= Length())
@@ -118,7 +118,7 @@ namespace SimTMDG.Road
             {
                 vehicles.Add(new IVehicle());
                 vehicles[i].distance = i * (vehicles[i].length * 5);
-                vehicles[i].absCoord = vehicles[i].newCoord(_startPoint, _endPoint, vehicles[i].distance);
+                vehicles[i].newCoord(_startPoint, _endPoint, vehicles[i].distance);
                 vehicles[i].rotation = Vector2.AngleBetween(_startPoint, _endPoint);
                 Debug.WriteLine("V rotate " + vehicles[i].rotation + "(" + _startPoint.X + ", " + _startPoint.Y + ") - (" + _endPoint.X + ", " + _endPoint.Y + ")");
 

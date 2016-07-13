@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimTMDG.Road
 {
-    class Route : IEnumerable<WaySegment>
+    public class Routing : IEnumerable<WaySegment>
     {
         /// <summary>
 		/// Wegroute
@@ -19,13 +19,26 @@ namespace SimTMDG.Road
 		/// </summary>
 		public double costs;
 
+        internal LinkedList<WaySegment> Route
+        {
+            get
+            {
+                return route;
+            }
+
+            set
+            {
+                route = value;
+            }
+        }
+
         #region Constructor
         /// <summary>
-		/// Standardkonstruktor, erstellt eine neue leere Wegroute zu einem Zielknoten
-		/// </summary>
-		public Route()
+        /// Standardkonstruktor, erstellt eine neue leere Wegroute zu einem Zielknoten
+        /// </summary>
+        public Routing()
         {
-            route = new LinkedList<WaySegment>();
+            Route = new LinkedList<WaySegment>();
             costs = 0;
         }
         #endregion
@@ -36,18 +49,18 @@ namespace SimTMDG.Road
 		/// <param name="rs">einzufügendes RouteSegment</param>
 		public void Push(WaySegment ws)
         {
-            route.AddFirst(ws);
+            Route.AddFirst(ws);
             costs += ws.Length; // TODO use length as cost for now
         }
 
         public IEnumerator<WaySegment> GetEnumerator()
         {
-            return route.GetEnumerator();
+            return Route.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return route.GetEnumerator();
+            return Route.GetEnumerator();
         }
     }
 }

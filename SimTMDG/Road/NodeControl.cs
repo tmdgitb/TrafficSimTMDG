@@ -9,10 +9,22 @@ namespace SimTMDG.Road
 {
     public class NodeControl : ITickable
     {
-        private Route _route;
-        private List<Node> _nodes = new List<Node>();
-        private List<WaySegment> _segments = new List<WaySegment>();
+        //private Routing _route;
+        public List<Node> _nodes = new List<Node>();
+        public List<WaySegment> segments = new List<WaySegment>();
 
+        internal List<WaySegment> Segments
+        {
+            get
+            {
+                return segments;
+            }
+
+            set
+            {
+                segments = value;
+            }
+        }
 
         public NodeControl()
         {
@@ -23,51 +35,92 @@ namespace SimTMDG.Road
         // TODO temp for testing
         public void Load()
         {
+            Reset();
             
-            _nodes.Add(new Node(new Vector2(100, 150)));
-            _nodes.Add(new Node(new Vector2(250, 150)));
-            _nodes.Add(new Node(new Vector2(300, 175)));
-            _nodes.Add(new Node(new Vector2(350, 225)));
-            _nodes.Add(new Node(new Vector2(400, 300)));
-            _nodes.Add(new Node(new Vector2(400, 400)));
+            
+            //_nodes.Add(new Node(new Vector2(100, 150)));
+            //_nodes.Add(new Node(new Vector2(250, 150)));
+            //_nodes.Add(new Node(new Vector2(300, 175)));
+            //_nodes.Add(new Node(new Vector2(350, 225)));
+            //_nodes.Add(new Node(new Vector2(400, 300)));
+            //_nodes.Add(new Node(new Vector2(400, 350)));
+            //_nodes.Add(new Node(new Vector2(400, 225)));
+            //_nodes.Add(new Node(new Vector2(425, 200)));
 
-            _segments.Add(new WaySegment(_nodes[0], _nodes[1]));
-            _segments.Add(new WaySegment(_nodes[1], _nodes[2]));
-            _segments.Add(new WaySegment(_nodes[2], _nodes[3]));
-            _segments.Add(new WaySegment(_nodes[3], _nodes[4]));
-            _segments.Add(new WaySegment(_nodes[4], _nodes[5]));
-
-            _route = new Route();
-            _route.Push(_segments[0]);
-            _route.Push(_segments[1]);
-            _route.Push(_segments[2]);
-            _route.Push(_segments[3]);
-            _route.Push(_segments[4]);
+            //_segments.Add(new WaySegment(_nodes[0], _nodes[1]));
+            //_segments.Add(new WaySegment(_nodes[1], _nodes[2]));
+            //_segments.Add(new WaySegment(_nodes[2], _nodes[3]));
+            //_segments.Add(new WaySegment(_nodes[3], _nodes[4]));
+            //_segments.Add(new WaySegment(_nodes[4], _nodes[5]));
+            //_segments.Add(new WaySegment(_nodes[3], _nodes[6]));
+            //_segments.Add(new WaySegment(_nodes[6], _nodes[7]));
 
 
-            _segments[0].vehicles.Add(new IVehicle());
-            _segments[0].vehicles[0].absCoord = _segments[0].vehicles[0]
-                .newCoord(
-                    _segments[0].startNode.Position,
-                    _segments[0].endNode.Position,
-                    _segments[0].vehicles[0].distance);
 
-            Debug.WriteLine("veh[0] distance: " + _segments[0].vehicles[0].distance
-                + ", absCoord: " + _segments[0].vehicles[0].absCoord);
+            //Routing _route = new Routing();
+            //_route.Push(_segments[0]);
+            //_route.Push(_segments[1]);
+            //_route.Push(_segments[2]);
+            //_route.Push(_segments[3]);
+            //_route.Push(_segments[4]);
+
+            //Routing _route2 = new Routing();
+            //_route2.Push(_segments[0]);
+            //_route2.Push(_segments[1]);
+            //_route2.Push(_segments[2]);
+            //_route2.Push(_segments[5]);
+            //_route2.Push(_segments[6]);
+
+            //Random rnd = new Random();
+
+            //_segments[0].vehicles.Add(new IVehicle());
+            //_segments[0].vehicles[0].CurrentSegment = _segments[0];
+            //_segments[0].vehicles[0].distance = 20;
+            //_segments[0].vehicles[0].color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
+            //_segments[0].vehicles[0]
+            //    .newCoord(
+            //        _segments[0].startNode.Position,
+            //        _segments[0].endNode.Position,
+            //        _segments[0].vehicles[0].distance);
+
+            //_segments[0].vehicles[0].Routing = _route;
+
+            //_segments[0].vehicles.Add(new IVehicle());
+            //_segments[0].vehicles[1].CurrentSegment = _segments[0];
+            //_segments[0].vehicles[1].distance = 0;
+            //_segments[0].vehicles[1].color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
+            //_segments[0].vehicles[1]
+            //    .newCoord(
+            //        _segments[0].startNode.Position,
+            //        _segments[0].endNode.Position,
+            //        _segments[0].vehicles[1].distance);
+
+            //_segments[0].vehicles[1].Routing = _route2;
+
+            //Debug.WriteLine("veh[0] distance: " + _segments[0].vehicles[0].distance
+            //    + ", absCoord: " + _segments[0].vehicles[0].absCoord);
         }
 
 
 
         public void Reset()
         {
+            _nodes.Clear();
             
+            foreach(WaySegment ws in Segments)
+            {
+                ws.vehicles.Clear();
+            }
+
+            Segments.Clear();
+
         }
 
         public void Tick(double tickLength)
         {
-            foreach(WaySegment ws in _segments)
+            foreach(WaySegment ws in Segments)
             {
-                ws.Tick(tickLength);
+                ws.Tick(tickLength);                
             }
         }
 
@@ -75,9 +128,14 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            foreach (WaySegment ws in _segments)
+            foreach (WaySegment ws in Segments)
             {
                 ws.Draw(g);
+
+                for (int i = 0; i < ws.vehicles.Count; i++)
+                {
+                    ws.vehicles[i].newCoord(ws.startNode.Position, ws.endNode.Position, ws.vehicles[i].distance);
+                }
             }
         }
         #endregion

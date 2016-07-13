@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace SimTMDG.Road
 {
-    class WaySegment : ITickable
+    [Serializable]
+    public class WaySegment : ITickable
     {
         #region ID
         /// <summary>
         /// WaySegment ID
         /// </summary>
-        private int _id;
+        private int _id = 0;
 
         public int Id
         {
@@ -91,18 +92,20 @@ namespace SimTMDG.Road
 
         #region vehicles on segment
         public List<IVehicle> vehicles = new List<IVehicle>();
+        public List<IVehicle> vehToRemove = new List<IVehicle>();
         #endregion
 
 
         #region Constructor
         public WaySegment()
         {
-
+            _id = _id++;
         }
 
 
         public WaySegment(Node _startNode, Node _endNode)
         {
+            _id = _id++;
             startNode = _startNode;
             endNode = _endNode;
             _length = Vector2.GetDistance(startNode.Position, endNode.Position);
@@ -127,14 +130,27 @@ namespace SimTMDG.Road
             for (int i = 0; i < vehicles.Count; i++)
             {
                 vehicles[i].Think(tickLength);
-                vehicles[i].absCoord = vehicles[i].newCoord(startNode.Position, endNode.Position, vehicles[i].distance);
-
-
-                if (vehicles[i].distance >= Length)
-                {
-                    vehicles.Remove(vehicles[i]);
-                }
             }
+
+            RemoveAllVehiclesInRemoveList();
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                vehicles[i].Move(tickLength);
+            }
+
+            RemoveAllVehiclesInRemoveList();
+
+            
+        }
+
+        public void RemoveAllVehiclesInRemoveList()
+        {
+            foreach (IVehicle v in vehToRemove)
+            {
+                vehicles.Remove(v);
+            }
+
+            vehToRemove.Clear();
         }
 
         public void Reset()

@@ -74,17 +74,46 @@ namespace SimTMDG.Vehicle
             //_statistics.startTimeOnNodeConnection = GlobalTime.Instance.currentTime;
         }
 
+        public IVehicle(WaySegment cs, Color c, List<WaySegment> r)
+        {
+            hashcode = hashcodeIndex++;
+            currentSegment = cs;
+            color = c;
+            routing = new Routing();
+            for(int i = 0; i < r.Count; i++)
+            {
+                routing.Push(r[i]);
+            }
+
+            newCoord(cs.startNode.Position, cs.endNode.Position, distance);
+        }
+
         #endregion
 
         public Double length = 7;
         public Double width = 3;
         public Double distance = 0.0;
+        private Double rearPos;
         public Double speed = 70;
         public Double acc = 0;
         public Double orientation;
         public Color color = Color.Black;
         public Vector2 absCoord = new Vector2();
         public Double rotation = 0;
+        private WaySegment currentSegment;
+
+        public double RearPos
+        {
+            get
+            {
+                return distance - (length / 2);
+            }
+
+            set
+            {
+                rearPos = value;
+            }
+        }
 
 
 
@@ -99,38 +128,12 @@ namespace SimTMDG.Vehicle
             PointF normal = new PointF((float)absCoord.X, (float)absCoord.Y);
 
             PointF[] ppoints =
-                {
-                        //new PointF((float)(absCoord.X + (length / 2)), (float)(absCoord.Y + (width / 2))),
-                        //new PointF((float)(absCoord.X + (length / 2)), (float)(absCoord.Y - (width / 2))),
-                        //new PointF((float)(absCoord.X - (length / 2)), (float)(absCoord.Y - (width / 2))),
-                        //new PointF((float)(absCoord.X - (length / 2)), (float)(absCoord.Y + (width / 2)))
-
-                        
-                        RotatePoint(new PointF((float)(absCoord.X + (length / 2)), (float)(absCoord.Y + (width / 2))), normal, rotation),
-                        RotatePoint(new PointF((float)(absCoord.X + (length / 2)), (float)(absCoord.Y - (width / 2))), normal, rotation),
-                        RotatePoint(new PointF((float)(absCoord.X - (length / 2)), (float)(absCoord.Y - (width / 2))) , normal, rotation),
-                        RotatePoint(new PointF((float)(absCoord.X - (length / 2)), (float)(absCoord.Y + (width / 2))) , normal, rotation)
-
-
-                        
-                        
-                        
-
-                        //new PointF((float)(absCoord.X + (length / 2) * Math.Cos(-rotation) - (width / 2) * Math.Sin(-rotation)),
-                        //           (float)(absCoord.Y + (width / 2) * Math.Cos(-rotation) + (width / 2) * Math.Sin(-rotation))),           // UL
-                        //new PointF((float)(absCoord.X - (length / 2) * Math.Cos(-rotation) - (width / 2) * Math.Sin(-rotation)),
-                        //           (float)(absCoord.Y + (width / 2) * Math.Cos(-rotation) - (width / 2) * Math.Sin(-rotation))),           // UR
-                        //new PointF((float)(absCoord.X - (length / 2) * Math.Cos(-rotation) + (width / 2) * Math.Sin(-rotation)),
-                        //           (float)(absCoord.Y - (width / 2) * Math.Cos(-rotation) - (width / 2) * Math.Sin(-rotation))),           // BR
-                        //new PointF((float)(absCoord.X + (length / 2) * Math.Cos(-rotation) + (width / 2) * Math.Sin(-rotation)),
-                        //           (float)(absCoord.Y - (width / 2) * Math.Cos(-rotation) + (width / 2) * Math.Sin(-rotation)))            // BL
-                        
-                        //state.positionAbs  -  8 * normal,
-                        //state.positionAbs  +  8 * normal,
-                        //state.positionAbs  -  length * orientation  +  8 * normal,
-                        //state.positionAbs  -  length * orientation  -  8 * normal,
-                        
-                        };
+                {                        
+                    RotatePoint(new PointF((float)(absCoord.X + (length / 2)), (float)(absCoord.Y + (width / 2))), normal, rotation),
+                    RotatePoint(new PointF((float)(absCoord.X + (length / 2)), (float)(absCoord.Y - (width / 2))), normal, rotation),
+                    RotatePoint(new PointF((float)(absCoord.X - (length / 2)), (float)(absCoord.Y - (width / 2))) , normal, rotation),
+                    RotatePoint(new PointF((float)(absCoord.X - (length / 2)), (float)(absCoord.Y + (width / 2))) , normal, rotation)                       
+                };
             
             toReturn.AddPolygon(ppoints);
 
@@ -148,18 +151,95 @@ namespace SimTMDG.Vehicle
 
         #endregion
 
+        #region route
+        private Routing routing;
+
+        internal Routing Routing
+        {
+            get { return routing; }
+
+            set { routing = value; }
+        }
+
+        internal WaySegment CurrentSegment
+        {
+            get
+            {
+                return currentSegment;
+            }
+
+            set
+            {
+                currentSegment = value;
+            }
+        }
+
+        
+
+        #endregion
+
 
         #region think
         public void Think(double tickLength)
         {
+            
+        }
+
+        #region move
+        public void Move(double tickLength)
+        {
             speed += acc * tickLength;
             distance += speed * tickLength;
 
-            Debug.WriteLine(hashcode + " - " + distance);
+            //Debug.WriteLine(hashcode + " - " + distance);
+
+            #region vehicle change segment
+            /// Check if vehicles move past the segment
+            if (RearPos >= CurrentSegment.Length)
+            {
+                double newDistance = distance - currentSegment.Length;
+                if (Routing.Route.Count > 0)
+                {
+                    Routing.Route.RemoveLast();
+                    if (Routing.Route.Count > 0)
+                    {
+                        RemoveFromCurrentSegment(Routing.Route.Last.Value, newDistance);
+                    }
+                    else
+                    {
+                        RemoveFromCurrentSegment(null, 0);
+                    }
+                }else
+                {
+                    RemoveFromCurrentSegment(null, 0);
+                }
+
+                
+            }
+            #endregion
         }
         #endregion
 
-        public PointF newCoord(Vector2 start, Vector2 end, Double traveled)
+        #endregion
+
+        private void RemoveFromCurrentSegment(WaySegment nextSegment, double startPosition)
+        {
+            currentSegment.vehToRemove.Add(this);
+
+            if (nextSegment != null)
+            {
+                distance = startPosition;
+                nextSegment.vehicles.Add(this);
+                currentSegment = nextSegment;
+                RotateVehicle(currentSegment.startNode, currentSegment.endNode);
+            }
+            else
+            {
+                // Vehicle died
+            }
+        }
+
+        public void newCoord(Vector2 start, Vector2 end, Double traveled)
         {
             Vector2 difference = new Vector2();
             difference.X = end.X - start.X;
@@ -173,7 +253,7 @@ namespace SimTMDG.Vehicle
             toReturn.Y = (float)(difference.Y * traveled) / distance + (float) start.Y;
 
 
-            return toReturn;
+            absCoord = toReturn;
         }
 
         public PointF RotatePoint(PointF point, PointF origin, Double angle)
@@ -186,6 +266,11 @@ namespace SimTMDG.Vehicle
                 Y = (float)(translated_X * Math.Sin(angle) + translated_Y * Math.Cos(angle)) + origin.Y
             };
             return rotated;
+        }
+
+        public void RotateVehicle(Node startPoint, Node endPoint)
+        {
+            rotation = Vector2.AngleBetween(startPoint.Position, endPoint.Position);
         }
 
     }
