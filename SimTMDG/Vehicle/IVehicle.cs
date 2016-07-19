@@ -79,13 +79,14 @@ namespace SimTMDG.Vehicle
             hashcode = hashcodeIndex++;
             currentSegment = cs;
             color = c;
-            routing = new Routing();
+            Routing = new Routing();
             for(int i = 0; i < r.Count; i++)
             {
-                routing.Push(r[i]);
+                Routing.Push(r[i]);
             }
 
-            newCoord(cs.startNode.Position, cs.endNode.Position, distance);
+            newCoord();
+            RotateVehicle(currentSegment.startNode, currentSegment.endNode);
         }
 
         #endregion
@@ -239,18 +240,18 @@ namespace SimTMDG.Vehicle
             }
         }
 
-        public void newCoord(Vector2 start, Vector2 end, Double traveled)
+        public void newCoord()
         {
             Vector2 difference = new Vector2();
-            difference.X = end.X - start.X;
-            difference.Y = end.Y - start.Y;
+            difference.X = currentSegment.endNode.Position.X - currentSegment.startNode.Position.X;
+            difference.Y = currentSegment.endNode.Position.Y - currentSegment.startNode.Position.Y;
 
             PointF toReturn = new PointF();
 
-            float distance = (float) Vector2.GetDistance(start, end);
+            //float segmentLength = (float) Vector2.GetDistance(start, end);
 
-            toReturn.X = (float)(difference.X * traveled) / distance + (float) start.X;
-            toReturn.Y = (float)(difference.Y * traveled) / distance + (float) start.Y;
+            toReturn.X = (float)(difference.X * this.distance) / (float) currentSegment.Length + (float) currentSegment.startNode.Position.X;
+            toReturn.Y = (float)(difference.Y * this.distance) / (float) currentSegment.Length + (float) currentSegment.startNode.Position.Y;
 
 
             absCoord = toReturn;

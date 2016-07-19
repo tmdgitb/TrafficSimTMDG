@@ -69,7 +69,7 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(Color.DarkGray, 1);
+            Pen pen = new Pen(Color.DarkGray, 0.125f);
             g.DrawLine(pen, (Point)_startPoint, (Point)_endPoint);
 
             foreach (IVehicle v in vehicles)
@@ -94,7 +94,7 @@ namespace SimTMDG.Road
             for(int i = 0; i < vehicles.Count; i++)
             {
                 vehicles[i].Think(tickLength);
-                vehicles[i].newCoord(_startPoint, _endPoint, vehicles[i].distance);
+                vehicles[i].newCoord();
                 
 
                 if (vehicles[i].distance >= Length())
@@ -118,7 +118,7 @@ namespace SimTMDG.Road
             {
                 vehicles.Add(new IVehicle());
                 vehicles[i].distance = i * (vehicles[i].length * 5);
-                vehicles[i].newCoord(_startPoint, _endPoint, vehicles[i].distance);
+                vehicles[i].newCoord();
                 vehicles[i].rotation = Vector2.AngleBetween(_startPoint, _endPoint);
                 Debug.WriteLine("V rotate " + vehicles[i].rotation + "(" + _startPoint.X + ", " + _startPoint.Y + ") - (" + _endPoint.X + ", " + _endPoint.Y + ")");
 

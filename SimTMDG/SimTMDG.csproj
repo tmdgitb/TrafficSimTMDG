@@ -73,6 +73,7 @@
     <Compile Include="Tools\Interval.cs" />
     <Compile Include="Tools\ISavable.cs" />
     <Compile Include="Tools\ITickable.cs" />
+    <Compile Include="Tools\Math2.cs" />
     <Compile Include="Tools\SortedLinkedList.cs" />
     <Compile Include="Tools\Vector2.cs" />
     <Compile Include="Vehicle\IVehicle.cs" />

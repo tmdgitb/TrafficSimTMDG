@@ -34,12 +34,12 @@ namespace SimTMDG
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.zoomComboBox = new System.Windows.Forms.ComboBox();
             this.playButton = new System.Windows.Forms.Button();
             this.stepButton = new System.Windows.Forms.Button();
+            this.tempLoadButton = new System.Windows.Forms.Button();
             this.DaGrid = new SimTMDG.MainForm.CustUserControl();
             this.timerSimulation = new System.Windows.Forms.Timer(this.components);
-            this.tempLoadButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -79,7 +79,7 @@ namespace SimTMDG
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.comboBox1);
-            this.flowLayoutPanel1.Controls.Add(this.comboBox2);
+            this.flowLayoutPanel1.Controls.Add(this.zoomComboBox);
             this.flowLayoutPanel1.Controls.Add(this.playButton);
             this.flowLayoutPanel1.Controls.Add(this.stepButton);
             this.flowLayoutPanel1.Controls.Add(this.tempLoadButton);
@@ -96,13 +96,27 @@ namespace SimTMDG
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 2;
             // 
-            // comboBox2
+            // zoomComboBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(130, 3);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 3;
+            this.zoomComboBox.FormattingEnabled = true;
+            this.zoomComboBox.Items.AddRange(new object[] {
+            "10%",
+            "15%",
+            "20%",
+            "25%",
+            "33%",
+            "50%",
+            "67%",
+            "100%",
+            "150%",
+            "200%",
+            "400%",
+            "800%"});
+            this.zoomComboBox.Location = new System.Drawing.Point(130, 3);
+            this.zoomComboBox.Name = "zoomComboBox";
+            this.zoomComboBox.Size = new System.Drawing.Size(121, 21);
+            this.zoomComboBox.TabIndex = 3;
+            this.zoomComboBox.SelectedIndexChanged += new System.EventHandler(this.zoomComboBox_SelectedIndexChanged);
             // 
             // playButton
             // 
@@ -124,6 +138,16 @@ namespace SimTMDG
             this.stepButton.UseVisualStyleBackColor = true;
             this.stepButton.Click += new System.EventHandler(this.stepButton_Click);
             // 
+            // tempLoadButton
+            // 
+            this.tempLoadButton.Location = new System.Drawing.Point(419, 3);
+            this.tempLoadButton.Name = "tempLoadButton";
+            this.tempLoadButton.Size = new System.Drawing.Size(75, 23);
+            this.tempLoadButton.TabIndex = 5;
+            this.tempLoadButton.Text = "Load";
+            this.tempLoadButton.UseVisualStyleBackColor = true;
+            this.tempLoadButton.Click += new System.EventHandler(this.tempLoadButton_Click);
+            // 
             // DaGrid
             // 
             this.DaGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -140,6 +164,9 @@ namespace SimTMDG
             this.DaGrid.Size = new System.Drawing.Size(240, 240);
             this.DaGrid.TabIndex = 3;
             this.DaGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.DaGrid_Paint);
+            this.DaGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DaGrid_MouseDown);
+            this.DaGrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DaGrid_MouseMove);
+            this.DaGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DaGrid_MouseUp);
             this.DaGrid.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.DaGrid_MouseWheel);
             this.DaGrid.Resize += new System.EventHandler(this.DaGrid_Resize);
             // 
@@ -147,16 +174,6 @@ namespace SimTMDG
             // 
             this.timerSimulation.Interval = 67;
             this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
-            // 
-            // tempLoadButton
-            // 
-            this.tempLoadButton.Location = new System.Drawing.Point(419, 3);
-            this.tempLoadButton.Name = "tempLoadButton";
-            this.tempLoadButton.Size = new System.Drawing.Size(75, 23);
-            this.tempLoadButton.TabIndex = 5;
-            this.tempLoadButton.Text = "Load";
-            this.tempLoadButton.UseVisualStyleBackColor = true;
-            this.tempLoadButton.Click += new System.EventHandler(this.tempLoadButton_Click);
             // 
             // Main
             // 
@@ -176,7 +193,7 @@ namespace SimTMDG
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox zoomComboBox;
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.Button stepButton;
         private System.Windows.Forms.Timer timerSimulation;

@@ -27,6 +27,8 @@ namespace SimTMDG
         private NodeControl nc;
         private List<WaySegment> _route;
         private List<WaySegment> _route2;
+        private List<WaySegment> _route3;
+        private List<WaySegment> _route4;
         Random rnd = new Random();
         int vehCount = 0;
         Double timeMod = 0.0;
@@ -110,6 +112,37 @@ namespace SimTMDG
         /// </summary>
         //public NodeControl nodeControl = new NodeControl();
 
+        private DragNDrop howToDrag = DragNDrop.NONE;
+
+        private Rectangle daGridRubberband;
+
+        /// <summary>
+        /// AutoscrollPosition vom daGrid umschließenden Panel. (Wird für Thumbnailanzeige benötigt)
+        /// </summary>
+        private Point daGridScrollPosition = new Point();
+
+        /// <summary>
+        /// Mittelpunkt der angezeigten Fläche in Weltkoordinaten. (Wird für Zoom benötigt)
+        /// </summary>
+        private PointF daGridViewCenter = new Point();
+
+        //private List<GraphicsPath> additionalGraphics = new List<GraphicsPath>();
+
+        private float[,] zoomMultipliers = new float[,] {
+            { 0.1f, 10},
+            { 0.15f, 1f/0.15f},
+            { 0.2f, 5},
+            { 0.25f, 4},
+            { 1f/3f, 3},
+            { 0.5f, 2},
+            { 2f/3f, 1.5f},
+            { 1, 1},
+            { 1.5f, 2f/3f},
+            { 2, 0.5f},
+            { 4, 0.25f},
+            { 8, 0.125f}
+        };
+
         #endregion
 
         public Main()
@@ -122,6 +155,9 @@ namespace SimTMDG
             // - setdockingstuff
 
             //
+            zoomComboBox.SelectedIndex = 7;
+            daGridScrollPosition = new Point(0, 0);
+            UpdateDaGridClippingRect();
             DaGrid.Dock = DockStyle.Fill;
 
             // - setstyle
@@ -160,21 +196,31 @@ namespace SimTMDG
             nc.Tick(tickLength);
 
             #region tempVehGenerate
-            if ((timeMod % 24) == 0.0)
+            if ((timeMod % 12) == 0.0)
             {
                 if ((vehCount % 2) == 0)
                 {
-                    nc.Segments[0].vehicles.Add(new IVehicle(
-                        nc.Segments[0],
+                    _route[0].vehicles.Add(new IVehicle(
+                        _route[0],
                         Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
                         _route));
+
+                    _route4[0].vehicles.Add(new IVehicle(
+                        _route4[0],
+                        Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                        _route4));
                 }
                 else
                 {
-                    nc.Segments[0].vehicles.Add(new IVehicle(
-                        nc.Segments[0],
+                    _route2[0].vehicles.Add(new IVehicle(
+                        _route2[0],
                         Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
                         _route2));
+
+                    _route3[0].vehicles.Add(new IVehicle(
+                        _route3[0],
+                        Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                        _route3));
                 }
                 vehCount++;
             }
@@ -227,7 +273,7 @@ namespace SimTMDG
         {
             if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
             {
-                //ZoomComboBox.SelectedIndex = Math2.Clamp(zoomComboBox.SelectedIndex + (e.Delta / 120), 0, zoomComboBox.Items.Count - 1);
+                zoomComboBox.SelectedIndex = Math2.Clamp(zoomComboBox.SelectedIndex + (e.Delta / 120), 0, zoomComboBox.Items.Count - 1);
 
             }
         }
@@ -249,6 +295,11 @@ namespace SimTMDG
 
             renderStopwatch.Reset();
             renderStopwatch.Start();
+
+            e.Graphics.Transform = new Matrix(
+                zoomMultipliers[zoomComboBox.SelectedIndex, 0], 0,
+                0, zoomMultipliers[zoomComboBox.SelectedIndex, 0],
+                -daGridScrollPosition.X * zoomMultipliers[zoomComboBox.SelectedIndex, 0], -daGridScrollPosition.Y * zoomMultipliers[zoomComboBox.SelectedIndex, 0]);
 
             //roadSegment.Draw(e.Graphics);  
             nc.Draw(e.Graphics);          
@@ -299,9 +350,132 @@ namespace SimTMDG
 
         }
 
+        /// <summary>
+		/// aktualisiert das Clipping-Rectangle von DaGrid
+		/// </summary>
+		private void UpdateDaGridClippingRect()
+        {
+            if (zoomComboBox.SelectedIndex >= 0)
+            {
+                //    // daGridClippingRect aktualisieren
+                //    renderOptionsDaGrid.clippingRect.X = daGridScrollPosition.X;
+                //    renderOptionsDaGrid.clippingRect.Y = daGridScrollPosition.Y;
+                //    renderOptionsDaGrid.clippingRect.Width = (int)Math.Ceiling(pnlMainGrid.ClientSize.Width * zoomMultipliers[zoomComboBox.SelectedIndex, 1]);
+                //    renderOptionsDaGrid.clippingRect.Height = (int)Math.Ceiling(pnlMainGrid.ClientSize.Height * zoomMultipliers[zoomComboBox.SelectedIndex, 1]);
+
+                daGridViewCenter = new PointF(
+                    daGridScrollPosition.X + (DaGrid.Width / 2 * zoomMultipliers[zoomComboBox.SelectedIndex, 1]),
+                    daGridScrollPosition.Y + (DaGrid.Height / 2 * zoomMultipliers[zoomComboBox.SelectedIndex, 1]));
+
+                //    RectangleF bounds = nodeSteuerung.GetLineNodeBounds();
+                //    float zoom = Math.Min(1.0f, Math.Min((float)thumbGrid.ClientSize.Width / bounds.Width, (float)thumbGrid.ClientSize.Height / bounds.Height));
+
+                //    thumbGridClientRect = new Rectangle(
+                //        (int)Math.Round((daGridScrollPosition.X - bounds.X) * zoom),
+                //        (int)Math.Round((daGridScrollPosition.Y - bounds.Y) * zoom),
+                //        (int)Math.Round(pnlMainGrid.ClientSize.Width * zoomMultipliers[zoomComboBox.SelectedIndex, 1] * zoom),
+                //        (int)Math.Round(pnlMainGrid.ClientSize.Height * zoomMultipliers[zoomComboBox.SelectedIndex, 1] * zoom));
+
+                //    lblScrollPosition.Text = "Canvas Location (dm): (" + daGridScrollPosition.X + ", " + daGridScrollPosition.Y + ") -> (" + (daGridScrollPosition.X + renderOptionsDaGrid.clippingRect.Width) + ", " + (daGridScrollPosition.Y + renderOptionsDaGrid.clippingRect.Height) + ")";
+
+                //    UpdateConnectionsRenderCache();
+            }
+        }
+
+        void DaGrid_MouseDown(object sender, MouseEventArgs e)
+        {
+            Vector2 clickedPosition = new Vector2(e.X, e.Y);
+            clickedPosition *= zoomMultipliers[zoomComboBox.SelectedIndex, 1];
+            clickedPosition += daGridScrollPosition;
+
+            // Node Gedöns
+            switch (e.Button)
+            {
+                case MouseButtons.Right:
+                    if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                    {
+                        #region Nodes löschen
+                        //this.Cursor = Cursors.Default;
+                        //// LineNode entfernen
+                        //LineNode nodeToDelete = nodeSteuerung.GetLineNodeAt(clickedPosition);
+                        //// checken ob gefunden
+                        //if (nodeToDelete != null)
+                        //{
+                        //    if (selectedLineNodes.Contains(nodeToDelete))
+                        //    {
+                        //        selectedLineNodes.Remove(nodeToDelete);
+                        //    }
+                        //    nodeSteuerung.DeleteLineNode(nodeToDelete);
+                        //}
+                        #endregion
+                    }
+                    else
+                    {
+                        #region move main grid
+                        howToDrag = DragNDrop.MOVE_MAIN_GRID;
+                        daGridRubberband.Location = clickedPosition;
+                        this.Cursor = Cursors.SizeAll;
+                        #endregion
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+            Invalidate(InvalidationLevel.ONLY_MAIN_CANVAS);
+        }
+
+        void DaGrid_MouseMove(object sender, MouseEventArgs e)
+        {
+            Vector2 clickedPosition = new Vector2(e.X, e.Y);
+            clickedPosition *= zoomMultipliers[zoomComboBox.SelectedIndex, 1];
+            clickedPosition += daGridScrollPosition;
+            //lblMouseCoordinates.Text = "Current Mouse Coordinates (m): " + (clickedPosition * 0.1).ToString();
+
+            this.Cursor = (howToDrag == DragNDrop.MOVE_MAIN_GRID) ? Cursors.SizeAll : Cursors.Default;
+
+            //if (selectedLineNodes != null)
+            //{
+                switch (howToDrag)
+                {
+                    case DragNDrop.MOVE_MAIN_GRID:
+                        clickedPosition = new Vector2(e.X, e.Y);
+                        clickedPosition *= zoomMultipliers[zoomComboBox.SelectedIndex, 1];
+                        daGridScrollPosition = new Point((int)Math.Round(-clickedPosition.X + daGridRubberband.X), (int)Math.Round(-clickedPosition.Y + daGridRubberband.Y));
+                        UpdateDaGridClippingRect();
+                        Invalidate(InvalidationLevel.ONLY_MAIN_CANVAS);
+                        break;
+                default:
+                    break;
+                }
+            //}
+        }
+
+        void DaGrid_MouseUp(object sender, MouseEventArgs e)
+        {
+            Vector2 clickedPosition = new Vector2(e.X, e.Y);
+            clickedPosition *= zoomMultipliers[zoomComboBox.SelectedIndex, 1];
+            clickedPosition += daGridScrollPosition;
+            this.Cursor = Cursors.Default;
+
+            switch (howToDrag)
+            {
+                case DragNDrop.MOVE_MAIN_GRID:
+                    //thumbGrid.Invalidate();
+                    break;
+                default:
+                    break;
+            }
+
+            howToDrag = DragNDrop.NONE;
+            Invalidate(InvalidationLevel.ONLY_MAIN_CANVAS);
+        }
+
+
         #endregion
-        
-        
+
+
         private void tempLoadButton_Click(object sender, EventArgs e)
         {
 
@@ -311,6 +485,7 @@ namespace SimTMDG
                 ofd.InitialDirectory = Application.ExecutablePath;
                 ofd.AddExtension = true;
                 ofd.DefaultExt = @".xml";
+                ofd.Filter = @"OpenStreetMap|*.osm";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -371,9 +546,9 @@ namespace SimTMDG
                             lnd.Add(nd);
                         }
 
-                        for(int i=0; i < lnd.Count - 1; i++)
+                        for (int i = 0; i < lnd.Count - 1; i++)
                         {
-                            
+
                             long ndId;
                             XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
                             if (ndIdNode != null)
@@ -382,7 +557,7 @@ namespace SimTMDG
                                 ndId = 0;
 
                             long ndNextId;
-                            XmlNode ndIdNextNode = lnd[i+1].Attributes.GetNamedItem("ref");
+                            XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
                             if (ndIdNextNode != null)
                                 ndNextId = long.Parse(ndIdNextNode.Value);
                             else
@@ -390,12 +565,12 @@ namespace SimTMDG
 
                             if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                             {
-                                nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId),  nc._nodes.Find(y => y.Id == ndNextId))); 
+                                nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId)));
                             }
 
                             // Node in einen TextReader packen
                             //TextReader tr = new StringReader(nd.OuterXml);
-                            
+
                             // und Deserializen
                             //XmlSerializer xs = new XmlSerializer(typeof(Node));
                             //Node n = (Node)xs.Deserialize(tr);
@@ -409,70 +584,119 @@ namespace SimTMDG
 
             #endregion
 
-            //#region tempload
-            //GlobalTime.Instance.Reset();
-            //nc.Load();
-            //nc._nodes.Add(new Node(new Vector2(100, 150)));
-            //nc._nodes.Add(new Node(new Vector2(250, 150)));
-            //nc._nodes.Add(new Node(new Vector2(300, 175)));
-            //nc._nodes.Add(new Node(new Vector2(350, 225)));
-            //nc._nodes.Add(new Node(new Vector2(400, 300)));
-            //nc._nodes.Add(new Node(new Vector2(400, 350)));
-            //nc._nodes.Add(new Node(new Vector2(400, 225)));
-            //nc._nodes.Add(new Node(new Vector2(425, 200)));
+            Debug.WriteLine("Segment Count" + nc.segments.Count);
+            _route = new List<WaySegment>();
+            _route.Add(nc.segments[0]);
+            _route.Add(nc.segments[1]);
+            _route.Add(nc.segments[2]);
+            _route.Add(nc.segments[39]);
+            _route.Add(nc.segments[264]);
+            _route.Add(nc.segments[262]);
+            _route.Add(nc.segments[265]);
+            _route.Add(nc.segments[266]);
+            _route.Add(nc.segments[374]);
+            _route.Add(nc.segments[349]);
+            _route.Add(nc.segments[47]);
+            _route.Add(nc.segments[350]);
+            _route.Add(nc.segments[351]);
+            _route.Add(nc.segments[352]);
+            _route.Add(nc.segments[353]);
+            _route.Add(nc.segments[354]);
+            _route.Add(nc.segments[355]);
+            _route.Add(nc.segments[356]);
+            _route.Add(nc.segments[357]);
+            _route.Add(nc.segments[358]);
+            _route.Add(nc.segments[359]);
+            _route.Add(nc.segments[360]);
+            _route.Add(nc.segments[361]);
+            _route.Add(nc.segments[362]);
+            _route.Add(nc.segments[363]);
+            _route.Add(nc.segments[364]);
 
-            //nc.Segments.Add(new WaySegment(nc._nodes[0], nc._nodes[1]));
-            //nc.Segments.Add(new WaySegment(nc._nodes[1], nc._nodes[2]));
-            //nc.Segments.Add(new WaySegment(nc._nodes[2], nc._nodes[3]));
-            //nc.Segments.Add(new WaySegment(nc._nodes[3], nc._nodes[4]));
-            //nc.Segments.Add(new WaySegment(nc._nodes[4], nc._nodes[5]));
-            //nc.Segments.Add(new WaySegment(nc._nodes[3], nc._nodes[6]));
-            //nc.Segments.Add(new WaySegment(nc._nodes[6], nc._nodes[7]));
+            _route2 = new List<WaySegment>();
+            _route2.Add(nc.segments[0]);
+            _route2.Add(nc.segments[1]);
+            _route2.Add(nc.segments[2]);
+            _route2.Add(nc.segments[39]);
+            _route2.Add(nc.segments[264]);
+            _route2.Add(nc.segments[262]);
+            _route2.Add(nc.segments[265]);
+            _route2.Add(nc.segments[266]);
+            _route2.Add(nc.segments[374]);
+            _route2.Add(nc.segments[280]);
+            _route2.Add(nc.segments[281]);
+            _route2.Add(nc.segments[282]);
+            _route2.Add(nc.segments[283]);
+            _route2.Add(nc.segments[284]);
+            _route2.Add(nc.segments[285]);
+            _route2.Add(nc.segments[286]);
+            _route2.Add(nc.segments[287]);
+            _route2.Add(nc.segments[288]);
+            _route2.Add(nc.segments[289]);
+            _route2.Add(nc.segments[290]);
 
+            _route3 = new List<WaySegment>();
+            _route3.Add(nc.segments[267]);
+            _route3.Add(nc.segments[268]);
+            _route3.Add(nc.segments[269]);
+            _route3.Add(nc.segments[270]);
+            _route3.Add(nc.segments[271]);
+            _route3.Add(nc.segments[272]);
+            _route3.Add(nc.segments[273]);
+            _route3.Add(nc.segments[274]);
+            _route3.Add(nc.segments[275]);
+            _route3.Add(nc.segments[276]);
+            _route3.Add(nc.segments[277]);
+            _route3.Add(nc.segments[278]);
+            _route3.Add(nc.segments[369]);
+            _route3.Add(nc.segments[370]);
+            _route3.Add(nc.segments[371]);
+            _route3.Add(nc.segments[372]);
+            _route3.Add(nc.segments[373]);
+            _route3.Add(nc.segments[365]);
+            _route3.Add(nc.segments[366]);
+            _route3.Add(nc.segments[367]);
+            _route3.Add(nc.segments[368]);
 
+            _route4 = new List<WaySegment>();
+            _route4.Add(nc.segments[32]);
+            _route4.Add(nc.segments[33]);
+            _route4.Add(nc.segments[34]);
+            _route4.Add(nc.segments[35]);
+            _route4.Add(nc.segments[36]);
+            _route4.Add(nc.segments[131]);
+            _route4.Add(nc.segments[132]);
+            _route4.Add(nc.segments[133]);
+            _route4.Add(nc.segments[212]);
+            _route4.Add(nc.segments[213]);
+            _route4.Add(nc.segments[214]);
+            _route4.Add(nc.segments[215]);
+            _route4.Add(nc.segments[216]);
+            _route4.Add(nc.segments[217]);
+            _route4.Add(nc.segments[218]);
+            _route4.Add(nc.segments[219]);
+            _route4.Add(nc.segments[220]);
+            _route4.Add(nc.segments[221]);
+            _route4.Add(nc.segments[222]);
 
-            //_route = new List<WaySegment>();
-            //_route.Add(nc.Segments[0]);
-            //_route.Add(nc.Segments[1]);
-            //_route.Add(nc.Segments[2]);
-            //_route.Add(nc.Segments[3]);
-            //_route.Add(nc.Segments[4]);
-
-            //_route2 = new List<WaySegment>();
-            //_route2.Add(nc.Segments[0]);
-            //_route2.Add(nc.Segments[1]);
-            //_route2.Add(nc.Segments[2]);
-            //_route2.Add(nc.Segments[5]);
-            //_route2.Add(nc.Segments[6]);
-
-
-
-            //nc.Segments[0].vehicles.Add(new IVehicle());
-            //nc.Segments[0].vehicles[0].CurrentSegment = nc.Segments[0];
-            //nc.Segments[0].vehicles[0].distance = 20;
-            //nc.Segments[0].vehicles[0].color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
-            //nc.Segments[0].vehicles[0]
-            //    .newCoord(
-            //        nc.Segments[0].startNode.Position,
-            //        nc.Segments[0].endNode.Position,
-            //        nc.Segments[0].vehicles[0].distance);
-
-            //nc.Segments[0].vehicles[0].Routing = _route;
-
-            //nc.Segments[0].vehicles.Add(new IVehicle());
-            //nc.Segments[0].vehicles[1].CurrentSegment = nc.Segments[0];
-            //nc.Segments[0].vehicles[1].distance = 0;
-            //nc.Segments[0].vehicles[1].color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
-            //nc.Segments[0].vehicles[1]
-            //    .newCoord(
-            //        nc.Segments[0].startNode.Position,
-            //        nc.Segments[0].endNode.Position,
-            //        nc.Segments[0].vehicles[1].distance);
-
-            //nc.Segments[0].vehicles[1].Routing = _route2;
-            //#endregion
 
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
+        }
+
+        private void zoomComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            // neue Autoscrollposition berechnen und setzen
+            daGridScrollPosition = new Point(
+                (int)Math.Round(daGridViewCenter.X - (DaGrid.Width / 2 * zoomMultipliers[zoomComboBox.SelectedIndex, 1])),
+                (int)Math.Round(daGridViewCenter.Y - (DaGrid.Height / 2 * zoomMultipliers[zoomComboBox.SelectedIndex, 1])));
+
+            // Bitmap umrechnen:
+            //UpdateBackgroundImage();
+
+            UpdateDaGridClippingRect();
+            //thumbGrid.Invalidate();
+            DaGrid.Invalidate();
         }
     }
 }

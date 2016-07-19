@@ -132,9 +132,9 @@ namespace SimTMDG.Road
             {
                 ws.Draw(g);
 
-                for (int i = 0; i < ws.vehicles.Count; i++)
+                foreach(IVehicle v in ws.vehicles)
                 {
-                    ws.vehicles[i].newCoord(ws.startNode.Position, ws.endNode.Position, ws.vehicles[i].distance);
+                    v.newCoord();
                 }
             }
         }
