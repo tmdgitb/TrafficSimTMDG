@@ -102,6 +102,7 @@ namespace SimTMDG.Vehicle
         public Vector2 absCoord = new Vector2();
         public Double rotation = 0;
         private WaySegment currentSegment;
+        private bool alreadyMoved = false;
 
         public double RearPos
         {
@@ -189,35 +190,66 @@ namespace SimTMDG.Vehicle
         #region move
         public void Move(double tickLength)
         {
-            speed += acc * tickLength;
-            distance += speed * tickLength;
-
-            //Debug.WriteLine(hashcode + " - " + distance);
-
-            #region vehicle change segment
-            /// Check if vehicles move past the segment
-            if (RearPos >= CurrentSegment.Length)
+            if (!alreadyMoved)
             {
-                double newDistance = distance - currentSegment.Length;
-                if (Routing.Route.Count > 0)
+                speed += acc * tickLength;
+
+                if (speed < 0)
+                    speed = 0;
+
+                distance += speed * tickLength;
+
+                //Debug.WriteLine(hashcode + " - " + distance);
+
+                #region vehicle change segment
+                /// Check if vehicles move past the segment
+                if (distance >= CurrentSegment.Length)
                 {
-                    Routing.Route.RemoveLast();
+                    double newDistance = distance - currentSegment.Length;
                     if (Routing.Route.Count > 0)
                     {
-                        RemoveFromCurrentSegment(Routing.Route.Last.Value, newDistance);
+                        Routing.Route.RemoveLast();
+                        if (Routing.Route.Count > 0)
+                        {
+                            if (newDistance > Routing.Route.Last.Value.Length)
+                            {
+                                newDistance = newDistance - Routing.Route.Last.Value.Length;
+                                Routing.Route.RemoveLast();
+                                RemoveFromCurrentSegment(Routing.Route.Last.Value, newDistance);
+                            }
+                            else
+                            {
+                                RemoveFromCurrentSegment(Routing.Route.Last.Value, newDistance);
+                            }
+                        }
+                        else
+                        {
+                            RemoveFromCurrentSegment(null, 0);
+                        }
                     }
                     else
                     {
                         RemoveFromCurrentSegment(null, 0);
                     }
+
+
                 }else
                 {
-                    RemoveFromCurrentSegment(null, 0);
+                    newCoord();
                 }
+                #endregion
 
-                
+                //speed += acc * tickLength;
+                //distance += speed * tickLength;
+                //newCoord();
+
+                alreadyMoved = true;
             }
-            #endregion
+        }
+
+        public void Reset()
+        {
+            alreadyMoved = false;
         }
         #endregion
 
@@ -230,8 +262,9 @@ namespace SimTMDG.Vehicle
             if (nextSegment != null)
             {
                 distance = startPosition;
-                nextSegment.vehicles.Add(this);
+                nextSegment.vehicles.Add(this);                
                 currentSegment = nextSegment;
+                newCoord();
                 RotateVehicle(currentSegment.startNode, currentSegment.endNode);
             }
             else

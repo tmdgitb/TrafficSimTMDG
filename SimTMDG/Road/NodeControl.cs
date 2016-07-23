@@ -35,9 +35,10 @@ namespace SimTMDG.Road
         // TODO temp for testing
         public void Load()
         {
-            Reset();
-            
-            
+
+            Clear();
+
+
             //_nodes.Add(new Node(new Vector2(100, 150)));
             //_nodes.Add(new Node(new Vector2(250, 150)));
             //_nodes.Add(new Node(new Vector2(300, 175)));
@@ -102,17 +103,34 @@ namespace SimTMDG.Road
         }
 
 
-
-        public void Reset()
+        public void Clear()
         {
             _nodes.Clear();
-            
-            foreach(WaySegment ws in Segments)
+
+            foreach (WaySegment ws in Segments)
             {
                 ws.vehicles.Clear();
             }
 
             Segments.Clear();
+        }
+
+
+        public void Reset()
+        {
+            //_nodes.Clear();
+            
+            //foreach(WaySegment ws in Segments)
+            //{
+            //    ws.vehicles.Clear();
+            //}
+
+            //Segments.Clear();
+
+            foreach (WaySegment ws in segments)
+            {
+                ws.Reset();
+            }
 
         }
 
@@ -120,8 +138,16 @@ namespace SimTMDG.Road
         {
             foreach(WaySegment ws in Segments)
             {
-                ws.Tick(tickLength);                
+                ws.Tick(tickLength);              
             }
+
+            //foreach (WaySegment ws in Segments)
+            //{
+            //    foreach (IVehicle v in ws.vehicles)
+            //    {
+            //        v.newCoord();
+            //    }
+            //}
         }
 
 
@@ -131,10 +157,19 @@ namespace SimTMDG.Road
             foreach (WaySegment ws in Segments)
             {
                 ws.Draw(g);
+            }
 
-                foreach(IVehicle v in ws.vehicles)
+            //foreach (Node nd in _nodes)
+            //{
+            //    nd.Draw(g);
+            //}
+
+            foreach (WaySegment ws in Segments)
+            {
+                foreach (IVehicle v in ws.vehicles)
                 {
-                    v.newCoord();
+                    //if (v.distance <= v.CurrentSegment.Length)
+                        v.Draw(g);
                 }
             }
         }

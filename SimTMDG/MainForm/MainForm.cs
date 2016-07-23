@@ -195,6 +195,8 @@ namespace SimTMDG
             //roadSegment.Tick(tickLength);
             nc.Tick(tickLength);
 
+            nc.Reset();
+
             #region tempVehGenerate
             if ((timeMod % 12) == 0.0)
             {
@@ -579,106 +581,114 @@ namespace SimTMDG
                             //nc._nodes.Add(n);
                         }
                     }
+
+                    #region manually generate route
+                    Debug.WriteLine("Segment Count" + nc.segments.Count);
+                    _route = new List<WaySegment>();
+                    _route.Add(nc.segments[0]);
+                    _route.Add(nc.segments[1]);
+                    _route.Add(nc.segments[2]);
+                    _route.Add(nc.segments[39]);
+                    _route.Add(nc.segments[264]);
+                    _route.Add(nc.segments[262]);
+                    _route.Add(nc.segments[265]);
+                    _route.Add(nc.segments[266]);
+                    _route.Add(nc.segments[374]);
+                    _route.Add(nc.segments[349]);
+                    _route.Add(nc.segments[47]);
+                    _route.Add(nc.segments[350]);
+                    _route.Add(nc.segments[351]);
+                    _route.Add(nc.segments[352]);
+                    _route.Add(nc.segments[353]);
+                    _route.Add(nc.segments[354]);
+                    _route.Add(nc.segments[355]);
+                    _route.Add(nc.segments[356]);
+                    _route.Add(nc.segments[357]);
+                    _route.Add(nc.segments[358]);
+                    _route.Add(nc.segments[359]);
+                    _route.Add(nc.segments[360]);
+                    _route.Add(nc.segments[361]);
+                    _route.Add(nc.segments[362]);
+                    _route.Add(nc.segments[363]);
+                    _route.Add(nc.segments[364]);
+
+                    _route2 = new List<WaySegment>();
+                    _route2.Add(nc.segments[0]);
+                    _route2.Add(nc.segments[1]);
+                    _route2.Add(nc.segments[2]);
+                    _route2.Add(nc.segments[39]);
+                    _route2.Add(nc.segments[264]);
+                    _route2.Add(nc.segments[262]);
+                    _route2.Add(nc.segments[265]);
+                    _route2.Add(nc.segments[266]);
+                    _route2.Add(nc.segments[374]);
+                    _route2.Add(nc.segments[280]);
+                    _route2.Add(nc.segments[281]);
+                    _route2.Add(nc.segments[282]);
+                    _route2.Add(nc.segments[283]);
+                    _route2.Add(nc.segments[284]);
+                    _route2.Add(nc.segments[285]);
+                    _route2.Add(nc.segments[286]);
+                    _route2.Add(nc.segments[287]);
+                    _route2.Add(nc.segments[288]);
+                    _route2.Add(nc.segments[289]);
+                    _route2.Add(nc.segments[290]);
+
+                    _route3 = new List<WaySegment>();
+                    _route3.Add(nc.segments[267]);
+                    _route3.Add(nc.segments[268]);
+                    _route3.Add(nc.segments[269]);
+                    _route3.Add(nc.segments[270]);
+                    _route3.Add(nc.segments[271]);
+                    _route3.Add(nc.segments[272]);
+                    _route3.Add(nc.segments[273]);
+                    _route3.Add(nc.segments[274]);
+                    _route3.Add(nc.segments[275]);
+                    _route3.Add(nc.segments[276]);
+                    _route3.Add(nc.segments[277]);
+                    _route3.Add(nc.segments[278]);
+                    _route3.Add(nc.segments[369]);
+                    _route3.Add(nc.segments[370]);
+                    _route3.Add(nc.segments[371]);
+                    _route3.Add(nc.segments[372]);
+                    _route3.Add(nc.segments[373]);
+                    _route3.Add(nc.segments[365]);
+                    _route3.Add(nc.segments[366]);
+                    _route3.Add(nc.segments[367]);
+                    _route3.Add(nc.segments[368]);
+
+                    _route4 = new List<WaySegment>();
+                    _route4.Add(nc.segments[32]);
+                    _route4.Add(nc.segments[33]);
+                    _route4.Add(nc.segments[34]);
+                    _route4.Add(nc.segments[35]);
+                    _route4.Add(nc.segments[36]);
+                    _route4.Add(nc.segments[131]);
+                    _route4.Add(nc.segments[132]);
+                    _route4.Add(nc.segments[133]);
+                    _route4.Add(nc.segments[212]);
+                    _route4.Add(nc.segments[213]);
+                    _route4.Add(nc.segments[214]);
+                    _route4.Add(nc.segments[215]);
+                    _route4.Add(nc.segments[216]);
+                    _route4.Add(nc.segments[217]);
+                    _route4.Add(nc.segments[218]);
+                    _route4.Add(nc.segments[219]);
+                    _route4.Add(nc.segments[220]);
+                    _route4.Add(nc.segments[221]);
+                    _route4.Add(nc.segments[222]);
+
+                    //_route4[0].vehicles.Add(new IVehicle(
+                    //    _route4[0],
+                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //    _route4));
+
+                    #endregion
                 }
             }
 
             #endregion
-
-            Debug.WriteLine("Segment Count" + nc.segments.Count);
-            _route = new List<WaySegment>();
-            _route.Add(nc.segments[0]);
-            _route.Add(nc.segments[1]);
-            _route.Add(nc.segments[2]);
-            _route.Add(nc.segments[39]);
-            _route.Add(nc.segments[264]);
-            _route.Add(nc.segments[262]);
-            _route.Add(nc.segments[265]);
-            _route.Add(nc.segments[266]);
-            _route.Add(nc.segments[374]);
-            _route.Add(nc.segments[349]);
-            _route.Add(nc.segments[47]);
-            _route.Add(nc.segments[350]);
-            _route.Add(nc.segments[351]);
-            _route.Add(nc.segments[352]);
-            _route.Add(nc.segments[353]);
-            _route.Add(nc.segments[354]);
-            _route.Add(nc.segments[355]);
-            _route.Add(nc.segments[356]);
-            _route.Add(nc.segments[357]);
-            _route.Add(nc.segments[358]);
-            _route.Add(nc.segments[359]);
-            _route.Add(nc.segments[360]);
-            _route.Add(nc.segments[361]);
-            _route.Add(nc.segments[362]);
-            _route.Add(nc.segments[363]);
-            _route.Add(nc.segments[364]);
-
-            _route2 = new List<WaySegment>();
-            _route2.Add(nc.segments[0]);
-            _route2.Add(nc.segments[1]);
-            _route2.Add(nc.segments[2]);
-            _route2.Add(nc.segments[39]);
-            _route2.Add(nc.segments[264]);
-            _route2.Add(nc.segments[262]);
-            _route2.Add(nc.segments[265]);
-            _route2.Add(nc.segments[266]);
-            _route2.Add(nc.segments[374]);
-            _route2.Add(nc.segments[280]);
-            _route2.Add(nc.segments[281]);
-            _route2.Add(nc.segments[282]);
-            _route2.Add(nc.segments[283]);
-            _route2.Add(nc.segments[284]);
-            _route2.Add(nc.segments[285]);
-            _route2.Add(nc.segments[286]);
-            _route2.Add(nc.segments[287]);
-            _route2.Add(nc.segments[288]);
-            _route2.Add(nc.segments[289]);
-            _route2.Add(nc.segments[290]);
-
-            _route3 = new List<WaySegment>();
-            _route3.Add(nc.segments[267]);
-            _route3.Add(nc.segments[268]);
-            _route3.Add(nc.segments[269]);
-            _route3.Add(nc.segments[270]);
-            _route3.Add(nc.segments[271]);
-            _route3.Add(nc.segments[272]);
-            _route3.Add(nc.segments[273]);
-            _route3.Add(nc.segments[274]);
-            _route3.Add(nc.segments[275]);
-            _route3.Add(nc.segments[276]);
-            _route3.Add(nc.segments[277]);
-            _route3.Add(nc.segments[278]);
-            _route3.Add(nc.segments[369]);
-            _route3.Add(nc.segments[370]);
-            _route3.Add(nc.segments[371]);
-            _route3.Add(nc.segments[372]);
-            _route3.Add(nc.segments[373]);
-            _route3.Add(nc.segments[365]);
-            _route3.Add(nc.segments[366]);
-            _route3.Add(nc.segments[367]);
-            _route3.Add(nc.segments[368]);
-
-            _route4 = new List<WaySegment>();
-            _route4.Add(nc.segments[32]);
-            _route4.Add(nc.segments[33]);
-            _route4.Add(nc.segments[34]);
-            _route4.Add(nc.segments[35]);
-            _route4.Add(nc.segments[36]);
-            _route4.Add(nc.segments[131]);
-            _route4.Add(nc.segments[132]);
-            _route4.Add(nc.segments[133]);
-            _route4.Add(nc.segments[212]);
-            _route4.Add(nc.segments[213]);
-            _route4.Add(nc.segments[214]);
-            _route4.Add(nc.segments[215]);
-            _route4.Add(nc.segments[216]);
-            _route4.Add(nc.segments[217]);
-            _route4.Add(nc.segments[218]);
-            _route4.Add(nc.segments[219]);
-            _route4.Add(nc.segments[220]);
-            _route4.Add(nc.segments[221]);
-            _route4.Add(nc.segments[222]);
-
+            
 
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }

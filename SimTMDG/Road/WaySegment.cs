@@ -117,12 +117,7 @@ namespace SimTMDG.Road
         public void Draw(Graphics g)
         {
             Pen pen = new Pen(Color.DarkGray, 1);
-            g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
-
-            foreach (IVehicle v in vehicles)
-            {
-                v.Draw(g);
-            }
+            g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);            
         }
 
         public void Tick(double tickLength)
@@ -155,6 +150,10 @@ namespace SimTMDG.Road
 
         public void Reset()
         {
+            foreach (IVehicle v in vehicles)
+            {
+                v.Reset();
+            }
         }
         #endregion
     }

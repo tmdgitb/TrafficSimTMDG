@@ -1,6 +1,7 @@
 ﻿using SimTMDG.Tools;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,5 +70,14 @@ namespace SimTMDG.Road
             );
             this.Position = toReturn;
         }
+
+        #region draw
+        public void Draw(Graphics g)
+        {
+            Pen pen = new Pen(Color.AliceBlue, 1);
+            Rectangle rec = new Rectangle((int) this.Position.X - 1, (int) this.Position.Y - 1, 2, 2);
+            g.DrawEllipse(pen, rec);
+        }
+        #endregion
     }
 }
