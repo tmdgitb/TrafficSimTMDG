@@ -33,13 +33,14 @@ namespace SimTMDG
             this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.speedComboBox = new System.Windows.Forms.ComboBox();
             this.zoomComboBox = new System.Windows.Forms.ComboBox();
             this.playButton = new System.Windows.Forms.Button();
             this.stepButton = new System.Windows.Forms.Button();
             this.tempLoadButton = new System.Windows.Forms.Button();
             this.DaGrid = new SimTMDG.MainForm.CustUserControl();
             this.timerSimulation = new System.Windows.Forms.Timer(this.components);
+            this.buttonTLightTemp = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -51,6 +52,7 @@ namespace SimTMDG
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.DaGrid, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonTLightTemp, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -78,7 +80,7 @@ namespace SimTMDG
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.comboBox1);
+            this.flowLayoutPanel1.Controls.Add(this.speedComboBox);
             this.flowLayoutPanel1.Controls.Add(this.zoomComboBox);
             this.flowLayoutPanel1.Controls.Add(this.playButton);
             this.flowLayoutPanel1.Controls.Add(this.stepButton);
@@ -88,13 +90,20 @@ namespace SimTMDG
             this.flowLayoutPanel1.Size = new System.Drawing.Size(867, 30);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // comboBox1
+            // speedComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 2;
+            this.speedComboBox.FormattingEnabled = true;
+            this.speedComboBox.Items.AddRange(new object[] {
+            "1x",
+            "2x",
+            "4x",
+            "8x",
+            "16x"});
+            this.speedComboBox.Location = new System.Drawing.Point(3, 3);
+            this.speedComboBox.Name = "speedComboBox";
+            this.speedComboBox.Size = new System.Drawing.Size(121, 21);
+            this.speedComboBox.TabIndex = 2;
+            this.speedComboBox.SelectedIndexChanged += new System.EventHandler(this.speedComboBox_SelectedIndexChanged);
             // 
             // zoomComboBox
             // 
@@ -175,6 +184,16 @@ namespace SimTMDG
             this.timerSimulation.Interval = 67;
             this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
             // 
+            // buttonTLightTemp
+            // 
+            this.buttonTLightTemp.Location = new System.Drawing.Point(3, 39);
+            this.buttonTLightTemp.Name = "buttonTLightTemp";
+            this.buttonTLightTemp.Size = new System.Drawing.Size(214, 23);
+            this.buttonTLightTemp.TabIndex = 4;
+            this.buttonTLightTemp.Text = "Change Traffic Light";
+            this.buttonTLightTemp.UseVisualStyleBackColor = true;
+            this.buttonTLightTemp.Click += new System.EventHandler(this.buttonTLightTemp_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,13 +211,14 @@ namespace SimTMDG
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox speedComboBox;
         private System.Windows.Forms.ComboBox zoomComboBox;
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.Button stepButton;
         private System.Windows.Forms.Timer timerSimulation;
         private MainForm.CustUserControl DaGrid;
         private System.Windows.Forms.Button tempLoadButton;
+        private System.Windows.Forms.Button buttonTLightTemp;
     }
 }
 

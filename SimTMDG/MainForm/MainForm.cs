@@ -143,6 +143,13 @@ namespace SimTMDG
             { 8, 0.125f}
         };
 
+
+
+        private int[] speedMultipliers = new int[]
+        {
+            1, 2, 4, 8, 16
+        };
+
         #endregion
 
         public Main()
@@ -155,6 +162,7 @@ namespace SimTMDG
             // - setdockingstuff
 
             //
+            speedComboBox.SelectedIndex = 0;
             zoomComboBox.SelectedIndex = 7;
             daGridScrollPosition = new Point(0, 0);
             UpdateDaGridClippingRect();
@@ -198,34 +206,35 @@ namespace SimTMDG
             nc.Reset();
 
             #region tempVehGenerate
-            if ((timeMod % 12) == 0.0)
+            if ((timeMod % 72) == 0.0)
             {
                 if ((vehCount % 2) == 0)
                 {
                     _route[0].vehicles.Add(new IVehicle(
                         _route[0],
-                        Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route));
 
                     _route4[0].vehicles.Add(new IVehicle(
                         _route4[0],
-                        Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route4));
                 }
                 else
                 {
                     _route2[0].vehicles.Add(new IVehicle(
                         _route2[0],
-                        Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route2));
 
                     _route3[0].vehicles.Add(new IVehicle(
                         _route3[0],
-                        Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route3));
                 }
                 vehCount++;
             }
+            //Debug.WriteLine("VehCount " + vehCount);
             timeMod++;
             #endregion
 
@@ -237,7 +246,7 @@ namespace SimTMDG
             //nodeSteuerung.Reset();
 
             thinkStopwatch.Stop();
-            Debug.WriteLine(GlobalTime.Instance.currentTime);
+            //Debug.WriteLine(GlobalTime.Instance.currentTime);
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
 
@@ -583,6 +592,8 @@ namespace SimTMDG
                     }
 
                     #region manually generate route
+
+
                     Debug.WriteLine("Segment Count" + nc.segments.Count);
                     _route = new List<WaySegment>();
                     _route.Add(nc.segments[0]);
@@ -611,6 +622,8 @@ namespace SimTMDG
                     _route.Add(nc.segments[362]);
                     _route.Add(nc.segments[363]);
                     _route.Add(nc.segments[364]);
+
+                    nc.segments[374].endNode.tLight = new TrafficLight();                    
 
                     _route2 = new List<WaySegment>();
                     _route2.Add(nc.segments[0]);
@@ -678,20 +691,84 @@ namespace SimTMDG
                     _route4.Add(nc.segments[221]);
                     _route4.Add(nc.segments[222]);
 
-                    //_route4[0].vehicles.Add(new IVehicle(
-                    //    _route4[0],
+
+                    //_route[0].vehicles.Add(new IVehicle(
+                    //    _route[0],
                     //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                    //    _route4));
+                    //    _route));
+
+                    ////_route[0].vehicles[0].dumb = true;
+                    //_route[0].vehicles[0].distance = 100;
+
+                    //_route[0].vehicles.Add(new IVehicle(
+                    //    _route[0],
+                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //    _route));
+
+                    //_route[0].vehicles[1].distance = 50;
+
+                    //_route[0].vehicles.Add(new IVehicle(
+                    //    _route[0],
+                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //    _route));
+
+                    //_route[0].vehicles[2].distance = 0;
+
+
 
                     #endregion
                 }
             }
-
             #endregion
-            
+
+
+            //#region Longitudinal Model Test
+            //GlobalTime.Instance.Reset();
+            //nc.Clear();
+
+            //nc._nodes.Add(new Node(new Vector2(0, 200)));
+            //nc._nodes.Add(new Node(new Vector2(2000, 200)));
+
+            //nc.segments.Add(new WaySegment(nc._nodes[0], nc._nodes[1]));
+            //_route = new List<WaySegment>();
+            //_route.Add(nc.segments[0]);
+
+            //_route[0].vehicles.Add(new IVehicle(
+            //    _route[0],
+            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+            //    _route));
+
+            //_route[0].vehicles[0]._physics.targetVelocity = 7;
+            //_route[0].vehicles[0].distance = 100;
+
+            //_route[0].vehicles.Add(new IVehicle(
+            //    _route[0],
+            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+            //    _route));
+
+            //_route[0].vehicles[1]._physics.targetVelocity = 13;
+            //_route[0].vehicles[1].distance = 50;
+
+            //_route[0].vehicles.Add(new IVehicle(
+            //    _route[0],
+            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+            //    _route));
+
+            //_route[0].vehicles[2]._physics.targetVelocity = 10;
+            //_route[0].vehicles[2].distance = 0;
+
+            //#endregion
+
 
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
+
+        private void speedComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            timerSimulation.Interval =(int) (1000 / (int) _temp_stepsPerSeconds / speedMultipliers[speedComboBox.SelectedIndex]);
+            Debug.WriteLine("timerSimulation Interval " + timerSimulation.Interval + ", " + speedMultipliers[speedComboBox.SelectedIndex]);
+        }
+
 
         private void zoomComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -707,6 +784,21 @@ namespace SimTMDG
             UpdateDaGridClippingRect();
             //thumbGrid.Invalidate();
             DaGrid.Invalidate();
+        }
+
+        private void buttonTLightTemp_Click(object sender, EventArgs e)
+        {
+            switch(nc.segments[374].endNode.tLight.trafficLightState)
+            {
+                case TrafficLight.State.GREEN:
+                    nc.segments[374].endNode.tLight.SwitchToRed();
+                    break;
+                case TrafficLight.State.RED:
+                    nc.segments[374].endNode.tLight.SwitchToGreen();
+                    break;
+            }
+
+            Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
     }
 }
