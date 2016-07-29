@@ -48,6 +48,12 @@ namespace SimTMDG.Road
         }
         #endregion
 
+        /// <summary>
+		/// zum LineNode gehörige Ampel
+		/// </summary>
+		[XmlIgnore]
+        public TrafficLight tLight;
+
 
         #region Constructor
         public Node()
@@ -74,9 +80,24 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(Color.AliceBlue, 1);
-            Rectangle rec = new Rectangle((int) this.Position.X - 1, (int) this.Position.Y - 1, 2, 2);
-            g.DrawEllipse(pen, rec);
+            Color penColor = Color.Gray;
+
+            if (tLight != null)
+            {
+                if (tLight.trafficLightState == TrafficLight.State.GREEN)
+                {
+                    penColor = Color.Green;
+                }
+                else if (tLight.trafficLightState == TrafficLight.State.RED)
+                {
+                    penColor = Color.Red;
+                }
+
+                Pen pen = new Pen(penColor, 1);
+                Rectangle rec = new Rectangle((int) this.Position.X - 1, (int) this.Position.Y - 1, 2, 2);
+                g.DrawEllipse(pen, rec);
+            }
+
         }
         #endregion
     }

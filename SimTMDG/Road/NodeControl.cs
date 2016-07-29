@@ -159,10 +159,10 @@ namespace SimTMDG.Road
                 ws.Draw(g);
             }
 
-            //foreach (Node nd in _nodes)
-            //{
-            //    nd.Draw(g);
-            //}
+            foreach (Node nd in _nodes)
+            {
+                nd.Draw(g);
+            }
 
             foreach (WaySegment ws in Segments)
             {
