@@ -328,7 +328,7 @@ namespace SimTMDG.Vehicle
 
         #endregion
 
-
+        public int vehiclesIndex = 0;
         public Double length = 7;
         public Double width = 3;
         public Double distance = 0.0;
@@ -459,7 +459,7 @@ namespace SimTMDG.Vehicle
 
             #region Vehicle in Front
 
-            VehicleDistance vd = findVehicleInFront();
+            VehicleDistance vd = findVehicleInFront(route);
 
             if (vd != null && vd.distance < lookaheadDistance)
             {
@@ -494,6 +494,43 @@ namespace SimTMDG.Vehicle
 
 
             return lowestAcceleration;
+        }
+
+        private VehicleDistance findVehicleInFront(List<WaySegment> route)
+        {
+            VehicleDistance vd = null;
+            double searchedDistance = 0;
+
+            // Search in current segment
+
+            if ((this.vehiclesIndex < route[0].vehicles.Count - 1) && (route[0].vehicles.Count > 1))
+            {
+                double returnDistance = route[0].vehicles[vehiclesIndex + 1].distance - (route[0].vehicles[vehiclesIndex + 1].length / 2 + this.distance + this.length / 2);
+                vd = new VehicleDistance(route[0].vehicles[vehiclesIndex + 1], returnDistance);
+            }
+            else
+            {
+                searchedDistance += route[0].Length - (this.distance + this.length / 2);
+                if (searchedDistance < 768)
+                {
+                    for (int i=1; i < route.Count; i++)
+                    {
+                        if (route[i].vehicles.Count > 0)
+                        {
+                            double returnDistance = (route[i].vehicles[0].distance - route[i].vehicles[0].length / 2) + (searchedDistance);
+                            vd = new VehicleDistance(route[i].vehicles[0], returnDistance);
+                            //return vd;
+                            break;
+                        }
+                        else
+                        {
+                            searchedDistance += route[i].Length;
+                        }
+                    }
+                }
+            }
+
+            return vd;
         }
 
 
@@ -545,11 +582,11 @@ namespace SimTMDG.Vehicle
 
             if (vd == null)
             {
-                if (this.routing.Route.Last.Value.vehicles.Count > 1)
+                if (this.routing.Route.First.Value.vehicles.Count > 1)
                 {
-                    for (int i = 0; i < this.routing.Route.Last.Value.vehicles.Count; i++)
+                    for (int i = 0; i < this.routing.Route.First.Value.vehicles.Count; i++)
                     {
-                        if (this.routing.Route.Last.Value.vehicles[i].distance > this.distance)
+                        if (this.routing.Route.First.Value.vehicles[i].distance > this.distance)
                         {
                             //if (vd == null || (this.routing.Route.Last.Value.vehicles[i].distance < vd.vehicle.distance))
                             //{
@@ -562,15 +599,15 @@ namespace SimTMDG.Vehicle
                             if (vd == null)
                             {
                                 double distanceToFront = (this.currentSegment.Length - (this.distance + (this.length / 2)))
-                                                         + (this.routing.Route.Last.Value.vehicles[i].distance - (this.routing.Route.Last.Value.vehicles[i].length / 2));
+                                                         + (this.routing.Route.First.Value.vehicles[i].distance - (this.routing.Route.First.Value.vehicles[i].length / 2));
 
-                                vd = new VehicleDistance(this.routing.Route.Last.Value.vehicles[i], distanceToFront);
-                            }else if (this.routing.Route.Last.Value.vehicles[i].distance < vd.vehicle.distance)
+                                vd = new VehicleDistance(this.routing.Route.First.Value.vehicles[i], distanceToFront);
+                            }else if (this.routing.Route.First.Value.vehicles[i].distance < vd.vehicle.distance)
                             {
                                 double distanceToFront = (this.currentSegment.Length - (this.distance + (this.length / 2)))
-                                                         + (this.routing.Route.Last.Value.vehicles[i].distance - (this.routing.Route.Last.Value.vehicles[i].length / 2));
+                                                         + (this.routing.Route.First.Value.vehicles[i].distance - (this.routing.Route.First.Value.vehicles[i].length / 2));
 
-                                vd.vehicle = this.routing.Route.Last.Value.vehicles[i];
+                                vd.vehicle = this.routing.Route.First.Value.vehicles[i];
                                 vd.distance = distanceToFront;
                             }
                         }
@@ -617,11 +654,22 @@ namespace SimTMDG.Vehicle
             //return distance;
 
             double toReturn = distance;
+            double searchedDistance = 0;
 
-            if(this.currentSegment.endNode.tLight != null)
+            while(searchedDistance < 768)
             {
-                if (currentSegment.endNode.tLight.trafficLightState == TrafficLight.State.RED)
-                    toReturn = this.currentSegment.Length - this.distance;
+                for(int i=0; i < route.Count; i++)
+                {
+                    if(route[i].endNode.tLight != null)
+                    {
+                        if (route[i].endNode.tLight.trafficLightState == TrafficLight.State.RED)
+                            toReturn = route[i].Length + searchedDistance - (this.distance + this.length / 2 );
+                    }else
+                    {
+                        searchedDistance += route[i].Length;
+                    }
+                }
+
             }
 
             return toReturn;
@@ -655,18 +703,18 @@ namespace SimTMDG.Vehicle
                     double newDistance = distance - currentSegment.Length;
                     if (Routing.Route.Count > 0)
                     {
-                        Routing.Route.RemoveLast();
+                        Routing.Route.RemoveFirst();
                         if (Routing.Route.Count > 0)
                         {
-                            if (newDistance > Routing.Route.Last.Value.Length)
+                            if (newDistance > Routing.Route.First.Value.Length)
                             {
-                                newDistance = newDistance - Routing.Route.Last.Value.Length;
-                                Routing.Route.RemoveLast();
-                                RemoveFromCurrentSegment(Routing.Route.Last.Value, newDistance);
+                                newDistance = newDistance - Routing.Route.First.Value.Length;
+                                Routing.Route.RemoveFirst();
+                                RemoveFromCurrentSegment(Routing.Route.First.Value, newDistance);
                             }
                             else
                             {
-                                RemoveFromCurrentSegment(Routing.Route.Last.Value, newDistance);
+                                RemoveFromCurrentSegment(Routing.Route.First.Value, newDistance);
                             }
                         }
                         else

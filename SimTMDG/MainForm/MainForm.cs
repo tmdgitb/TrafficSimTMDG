@@ -698,14 +698,14 @@ namespace SimTMDG
                     //    _route));
 
                     ////_route[0].vehicles[0].dumb = true;
-                    //_route[0].vehicles[0].distance = 100;
+                    //_route[0].vehicles[0].distance = 20;
 
                     //_route[0].vehicles.Add(new IVehicle(
                     //    _route[0],
                     //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
                     //    _route));
 
-                    //_route[0].vehicles[1].distance = 50;
+                    //_route[0].vehicles[1].distance = 10;
 
                     //_route[0].vehicles.Add(new IVehicle(
                     //    _route[0],

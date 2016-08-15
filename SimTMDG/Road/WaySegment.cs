@@ -16,7 +16,9 @@ namespace SimTMDG.Road
         /// <summary>
         /// WaySegment ID
         /// </summary>
-        private int _id = 0;
+
+        private static int idIndex = 0;
+        private int _id = -1;
 
         public int Id
         {
@@ -99,13 +101,13 @@ namespace SimTMDG.Road
         #region Constructor
         public WaySegment()
         {
-            _id = _id++;
+            _id = idIndex++;
         }
 
 
         public WaySegment(Node _startNode, Node _endNode)
         {
-            _id = _id++;
+            _id = idIndex++;
             startNode = _startNode;
             endNode = _endNode;
             _length = Vector2.GetDistance(startNode.Position, endNode.Position);
@@ -122,12 +124,15 @@ namespace SimTMDG.Road
 
         public void Tick(double tickLength)
         {
+            SortVehicles();
+
             for (int i = 0; i < vehicles.Count; i++)
             {
                 vehicles[i].Think(tickLength);
             }
 
             RemoveAllVehiclesInRemoveList();
+
             for (int i = 0; i < vehicles.Count; i++)
             {
                 vehicles[i].Move(tickLength);
@@ -153,6 +158,22 @@ namespace SimTMDG.Road
             foreach (IVehicle v in vehicles)
             {
                 v.Reset();
+            }
+        }
+        #endregion
+
+
+        #region sort vehicles
+        public void SortVehicles()
+        {
+            if (vehicles.Count > 1)
+            {
+                vehicles.Sort((x, y) => x.distance.CompareTo(y.distance));
+
+                for (int i = 0; i < vehicles.Count; i++)
+                {
+                    vehicles[i].vehiclesIndex = i;
+                }
             }
         }
         #endregion

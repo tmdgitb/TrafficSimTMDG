@@ -49,7 +49,7 @@ namespace SimTMDG.Road
 		/// <param name="rs">einzufügendes RouteSegment</param>
 		public void Push(WaySegment ws)
         {
-            Route.AddFirst(ws);
+            Route.AddLast(ws);
             costs += ws.Length; // TODO use length as cost for now
         }
 
