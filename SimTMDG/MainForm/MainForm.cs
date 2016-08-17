@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace SimTMDG
@@ -487,10 +488,106 @@ namespace SimTMDG
         #endregion
 
 
+        private void LoadOsmMap(string path)
+        {
+            XDocument xd = new XDocument();
+            xd = XDocument.Load(path);
+            XElement mainNode = xd.Element("osm");
+
+            XElement bounds = mainNode.Element("bounds");
+            
+            // Check if there's a bounds or not
+            // We need boundary for projecting lat lon to cartesian coord
+            if (bounds == null)
+            {
+                Debug.WriteLine("bounds null");
+            }
+            else
+            {
+                double minLon = double.Parse(bounds.Attribute("minlon").Value) / 10000000;                
+                double maxLat = double.Parse(bounds.Attribute("maxlat").Value) / 10000000;
+                
+                Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
+
+                // Find only <node> referred by <way>
+                // Make sure to only include <way> with highway tag
+                // Also make sure no duplicate <node>
+
+                // This code lists <node> id
+                var query = xd.Descendants("way")
+                            .Where(p => p.Elements("tag")
+                                .Any(c => (string)c.Attribute("k") == "highway")
+                            ).Elements("nd")
+                            .GroupBy(i => i.Attribute("ref").Value)
+                            .Select(g => g.Key)
+                            .ToList();
+
+                
+                // Deserialize XML for each <node> in query
+                // Find node by id, create new node, calculate position
+                for (int i = 0; i < query.Count(); i++)
+                {
+                    Node nd = (from node in mainNode.Elements("node")
+                                where node.Attribute("id").Value == query[i]
+                                select new Node()
+                                {
+                                    Id = Convert.ToInt64(node.Attribute("id").Value),
+                                    Lat = double.Parse(node.Attribute("lat").Value),
+                                    Long = double.Parse(node.Attribute("lon").Value)
+                                }).Single();
+
+                    nd.latLonToPos(minLon, maxLat);
+                    nc._nodes.Add(nd);
+
+                    
+                }
+
+                List<XElement> wayQuery = xd.Descendants("way")
+                                .Where(p => p.Elements("tag")
+                                    .Any(c => (string)c.Attribute("k") == "highway")
+                                ).ToList();
+
+                foreach (XElement way in wayQuery)
+                {
+                    List<XElement> nodeQuery = way.Elements("nd").ToList();
+                    //Debug.WriteLine("query " + wayQuery[i] + " elem" + nodeQuery);
+
+                    var oneway = from tag in way.Elements("tag")
+                                   where tag.Attribute("k").Value == "oneway"
+                                   select (string) tag.Attribute("v").Value;
+
+                    if(oneway.Single() == "-1")
+                    {
+                        for (int i = nodeQuery.Count; i > 1; i--)
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < nodeQuery.Count() - 1; i++)
+                        {
+
+                        }
+                    }
+
+                    Debug.WriteLine("values" + oneway);
+
+
+
+                    
+                }
+
+
+
+            }
+
+            Debug.WriteLine("values");
+        }
+
+
         private void tempLoadButton_Click(object sender, EventArgs e)
         {
-
-            #region Load File
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.InitialDirectory = Application.ExecutablePath;
@@ -500,267 +597,280 @@ namespace SimTMDG
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    GlobalTime.Instance.Reset();
-                    nc.Load();
-
-                    XmlDocument xd = new XmlDocument();
-                    xd.Load(ofd.FileName);
-
-                    XmlNode mainNode = xd.SelectSingleNode("//osm");
-                    XmlNode bounds = xd.SelectSingleNode("//osm/bounds");
-
-                    if (bounds == null)
-                    {
-                        Debug.WriteLine("bounds null");
-                    }
-
-                    double minLon;
-                    XmlNode minLonNode = bounds.Attributes.GetNamedItem("minlon");
-
-                    if (minLonNode != null)
-                        minLon = double.Parse(minLonNode.Value) / 10000000;
-                    else
-                        minLon = 0;
-
-                    double maxLat;
-                    XmlNode maxLatNode = bounds.Attributes.GetNamedItem("maxlat");
-
-                    if (maxLatNode != null)
-                        maxLat = double.Parse(maxLatNode.Value) / 10000000;
-                    else
-                        maxLat = 0;
-
-                    Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
-
-                    XmlNodeList xnlLineNode = xd.SelectNodes("//osm/node");
-                    foreach (XmlNode aXmlNode in xnlLineNode)
-                    {
-                        // Node in einen TextReader packen
-                        TextReader tr = new StringReader(aXmlNode.OuterXml);
-                        // und Deserializen
-                        XmlSerializer xs = new XmlSerializer(typeof(Node));
-                        Node n = (Node)xs.Deserialize(tr);
-                        n.latLonToPos(minLon, maxLat);
-
-                        // ab in die Liste
-                        nc._nodes.Add(n);
-                    }
-
-                    XmlNodeList xnlWayNode = xd.SelectNodes("//osm/way");
-                    foreach (XmlNode aXmlNode in xnlWayNode)
-                    {
-                        XmlNodeList nds = aXmlNode.SelectNodes("nd");
-                        List<XmlNode> lnd = new List<XmlNode>();
-
-                        foreach (XmlNode nd in nds)
-                        {
-                            lnd.Add(nd);
-                        }
-
-                        for (int i = 0; i < lnd.Count - 1; i++)
-                        {
-
-                            long ndId;
-                            XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
-                            if (ndIdNode != null)
-                                ndId = long.Parse(ndIdNode.Value);
-                            else
-                                ndId = 0;
-
-                            long ndNextId;
-                            XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
-                            if (ndIdNextNode != null)
-                                ndNextId = long.Parse(ndIdNextNode.Value);
-                            else
-                                ndNextId = 0;
-
-                            if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
-                            {
-                                nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId)));
-                            }
-
-                            // Node in einen TextReader packen
-                            //TextReader tr = new StringReader(nd.OuterXml);
-
-                            // und Deserializen
-                            //XmlSerializer xs = new XmlSerializer(typeof(Node));
-                            //Node n = (Node)xs.Deserialize(tr);
-
-                            //// ab in die Liste
-                            //nc._nodes.Add(n);
-                        }
-                    }
-
-                    #region manually generate route
-
-
-                    Debug.WriteLine("Segment Count" + nc.segments.Count);
-                    _route = new List<WaySegment>();
-                    _route.Add(nc.segments[0]);
-                    _route.Add(nc.segments[1]);
-                    _route.Add(nc.segments[2]);
-                    _route.Add(nc.segments[39]);
-                    _route.Add(nc.segments[264]);
-                    _route.Add(nc.segments[262]);
-                    _route.Add(nc.segments[265]);
-                    _route.Add(nc.segments[266]);
-                    _route.Add(nc.segments[374]);
-                    _route.Add(nc.segments[349]);
-                    _route.Add(nc.segments[47]);
-                    _route.Add(nc.segments[350]);
-                    _route.Add(nc.segments[351]);
-                    _route.Add(nc.segments[352]);
-                    _route.Add(nc.segments[353]);
-                    _route.Add(nc.segments[354]);
-                    _route.Add(nc.segments[355]);
-                    _route.Add(nc.segments[356]);
-                    _route.Add(nc.segments[357]);
-                    _route.Add(nc.segments[358]);
-                    _route.Add(nc.segments[359]);
-                    _route.Add(nc.segments[360]);
-                    _route.Add(nc.segments[361]);
-                    _route.Add(nc.segments[362]);
-                    _route.Add(nc.segments[363]);
-                    _route.Add(nc.segments[364]);
-
-                    nc.segments[374].endNode.tLight = new TrafficLight();                    
-
-                    _route2 = new List<WaySegment>();
-                    _route2.Add(nc.segments[0]);
-                    _route2.Add(nc.segments[1]);
-                    _route2.Add(nc.segments[2]);
-                    _route2.Add(nc.segments[39]);
-                    _route2.Add(nc.segments[264]);
-                    _route2.Add(nc.segments[262]);
-                    _route2.Add(nc.segments[265]);
-                    _route2.Add(nc.segments[266]);
-                    _route2.Add(nc.segments[374]);
-                    _route2.Add(nc.segments[280]);
-                    _route2.Add(nc.segments[281]);
-                    _route2.Add(nc.segments[282]);
-                    _route2.Add(nc.segments[283]);
-                    _route2.Add(nc.segments[284]);
-                    _route2.Add(nc.segments[285]);
-                    _route2.Add(nc.segments[286]);
-                    _route2.Add(nc.segments[287]);
-                    _route2.Add(nc.segments[288]);
-                    _route2.Add(nc.segments[289]);
-                    _route2.Add(nc.segments[290]);
-
-                    _route3 = new List<WaySegment>();
-                    _route3.Add(nc.segments[267]);
-                    _route3.Add(nc.segments[268]);
-                    _route3.Add(nc.segments[269]);
-                    _route3.Add(nc.segments[270]);
-                    _route3.Add(nc.segments[271]);
-                    _route3.Add(nc.segments[272]);
-                    _route3.Add(nc.segments[273]);
-                    _route3.Add(nc.segments[274]);
-                    _route3.Add(nc.segments[275]);
-                    _route3.Add(nc.segments[276]);
-                    _route3.Add(nc.segments[277]);
-                    _route3.Add(nc.segments[278]);
-                    _route3.Add(nc.segments[369]);
-                    _route3.Add(nc.segments[370]);
-                    _route3.Add(nc.segments[371]);
-                    _route3.Add(nc.segments[372]);
-                    _route3.Add(nc.segments[373]);
-                    _route3.Add(nc.segments[365]);
-                    _route3.Add(nc.segments[366]);
-                    _route3.Add(nc.segments[367]);
-                    _route3.Add(nc.segments[368]);
-
-                    _route4 = new List<WaySegment>();
-                    _route4.Add(nc.segments[32]);
-                    _route4.Add(nc.segments[33]);
-                    _route4.Add(nc.segments[34]);
-                    _route4.Add(nc.segments[35]);
-                    _route4.Add(nc.segments[36]);
-                    _route4.Add(nc.segments[131]);
-                    _route4.Add(nc.segments[132]);
-                    _route4.Add(nc.segments[133]);
-                    _route4.Add(nc.segments[212]);
-                    _route4.Add(nc.segments[213]);
-                    _route4.Add(nc.segments[214]);
-                    _route4.Add(nc.segments[215]);
-                    _route4.Add(nc.segments[216]);
-                    _route4.Add(nc.segments[217]);
-                    _route4.Add(nc.segments[218]);
-                    _route4.Add(nc.segments[219]);
-                    _route4.Add(nc.segments[220]);
-                    _route4.Add(nc.segments[221]);
-                    _route4.Add(nc.segments[222]);
-
-
-                    //_route[0].vehicles.Add(new IVehicle(
-                    //    _route[0],
-                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                    //    _route));
-
-                    ////_route[0].vehicles[0].dumb = true;
-                    //_route[0].vehicles[0].distance = 20;
-
-                    //_route[0].vehicles.Add(new IVehicle(
-                    //    _route[0],
-                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                    //    _route));
-
-                    //_route[0].vehicles[1].distance = 10;
-
-                    //_route[0].vehicles.Add(new IVehicle(
-                    //    _route[0],
-                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                    //    _route));
-
-                    //_route[0].vehicles[2].distance = 0;
-
-
-
-                    #endregion
+                    LoadOsmMap(ofd.FileName);
                 }
             }
-            #endregion
+                    //#region Load File
+                    //using (OpenFileDialog ofd = new OpenFileDialog())
+                    //{
+                    //    ofd.InitialDirectory = Application.ExecutablePath;
+                    //    ofd.AddExtension = true;
+                    //    ofd.DefaultExt = @".xml";
+                    //    ofd.Filter = @"OpenStreetMap|*.osm";
+
+                    //    if (ofd.ShowDialog() == DialogResult.OK)
+                    //    {
+                    //        GlobalTime.Instance.Reset();
+                    //        nc.Load();
+
+                    //        XmlDocument xd = new XmlDocument();
+                    //        xd.Load(ofd.FileName);
+
+                    //        XmlNode mainNode = xd.SelectSingleNode("//osm");
+                    //        XmlNode bounds = xd.SelectSingleNode("//osm/bounds");
+
+                    //        if (bounds == null)
+                    //        {
+                    //            Debug.WriteLine("bounds null");
+                    //        }
+
+                    //        double minLon;
+                    //        XmlNode minLonNode = bounds.Attributes.GetNamedItem("minlon");
+
+                    //        if (minLonNode != null)
+                    //            minLon = double.Parse(minLonNode.Value) / 10000000;
+                    //        else
+                    //            minLon = 0;
+
+                    //        double maxLat;
+                    //        XmlNode maxLatNode = bounds.Attributes.GetNamedItem("maxlat");
+
+                    //        if (maxLatNode != null)
+                    //            maxLat = double.Parse(maxLatNode.Value) / 10000000;
+                    //        else
+                    //            maxLat = 0;
+
+                    //        Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
+
+                    //        XmlNodeList xnlLineNode = xd.SelectNodes("//osm/node");
+                    //        foreach (XmlNode aXmlNode in xnlLineNode)
+                    //        {
+                    //            // Node in einen TextReader packen
+                    //            TextReader tr = new StringReader(aXmlNode.OuterXml);
+                    //            // und Deserializen
+                    //            XmlSerializer xs = new XmlSerializer(typeof(Node));
+                    //            Node n = (Node)xs.Deserialize(tr);
+                    //            n.latLonToPos(minLon, maxLat);
+
+                    //            // ab in die Liste
+                    //            nc._nodes.Add(n);
+                    //        }
+
+                    //        XmlNodeList xnlWayNode = xd.SelectNodes("//osm/way");
+                    //        foreach (XmlNode aXmlNode in xnlWayNode)
+                    //        {
+                    //            XmlNodeList nds = aXmlNode.SelectNodes("nd");
+                    //            List<XmlNode> lnd = new List<XmlNode>();
+
+                    //            foreach (XmlNode nd in nds)
+                    //            {
+                    //                lnd.Add(nd);
+                    //            }
+
+                    //            for (int i = 0; i < lnd.Count - 1; i++)
+                    //            {
+
+                    //                long ndId;
+                    //                XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
+                    //                if (ndIdNode != null)
+                    //                    ndId = long.Parse(ndIdNode.Value);
+                    //                else
+                    //                    ndId = 0;
+
+                    //                long ndNextId;
+                    //                XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
+                    //                if (ndIdNextNode != null)
+                    //                    ndNextId = long.Parse(ndIdNextNode.Value);
+                    //                else
+                    //                    ndNextId = 0;
+
+                    //                if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
+                    //                {
+                    //                    nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId)));
+                    //                }
+
+                    //                // Node in einen TextReader packen
+                    //                //TextReader tr = new StringReader(nd.OuterXml);
+
+                    //                // und Deserializen
+                    //                //XmlSerializer xs = new XmlSerializer(typeof(Node));
+                    //                //Node n = (Node)xs.Deserialize(tr);
+
+                    //                //// ab in die Liste
+                    //                //nc._nodes.Add(n);
+                    //            }
+                    //        }
+
+                    //        #region manually generate route
 
 
-            //#region Longitudinal Model Test
-            //GlobalTime.Instance.Reset();
-            //nc.Clear();
+                    //        Debug.WriteLine("Segment Count" + nc.segments.Count);
+                    //        _route = new List<WaySegment>();
+                    //        _route.Add(nc.segments[0]);
+                    //        _route.Add(nc.segments[1]);
+                    //        _route.Add(nc.segments[2]);
+                    //        _route.Add(nc.segments[39]);
+                    //        _route.Add(nc.segments[264]);
+                    //        _route.Add(nc.segments[262]);
+                    //        _route.Add(nc.segments[265]);
+                    //        _route.Add(nc.segments[266]);
+                    //        _route.Add(nc.segments[374]);
+                    //        _route.Add(nc.segments[349]);
+                    //        _route.Add(nc.segments[47]);
+                    //        _route.Add(nc.segments[350]);
+                    //        _route.Add(nc.segments[351]);
+                    //        _route.Add(nc.segments[352]);
+                    //        _route.Add(nc.segments[353]);
+                    //        _route.Add(nc.segments[354]);
+                    //        _route.Add(nc.segments[355]);
+                    //        _route.Add(nc.segments[356]);
+                    //        _route.Add(nc.segments[357]);
+                    //        _route.Add(nc.segments[358]);
+                    //        _route.Add(nc.segments[359]);
+                    //        _route.Add(nc.segments[360]);
+                    //        _route.Add(nc.segments[361]);
+                    //        _route.Add(nc.segments[362]);
+                    //        _route.Add(nc.segments[363]);
+                    //        _route.Add(nc.segments[364]);
 
-            //nc._nodes.Add(new Node(new Vector2(0, 200)));
-            //nc._nodes.Add(new Node(new Vector2(2000, 200)));
+                    //        nc.segments[374].endNode.tLight = new TrafficLight();                    
 
-            //nc.segments.Add(new WaySegment(nc._nodes[0], nc._nodes[1]));
-            //_route = new List<WaySegment>();
-            //_route.Add(nc.segments[0]);
+                    //        _route2 = new List<WaySegment>();
+                    //        _route2.Add(nc.segments[0]);
+                    //        _route2.Add(nc.segments[1]);
+                    //        _route2.Add(nc.segments[2]);
+                    //        _route2.Add(nc.segments[39]);
+                    //        _route2.Add(nc.segments[264]);
+                    //        _route2.Add(nc.segments[262]);
+                    //        _route2.Add(nc.segments[265]);
+                    //        _route2.Add(nc.segments[266]);
+                    //        _route2.Add(nc.segments[374]);
+                    //        _route2.Add(nc.segments[280]);
+                    //        _route2.Add(nc.segments[281]);
+                    //        _route2.Add(nc.segments[282]);
+                    //        _route2.Add(nc.segments[283]);
+                    //        _route2.Add(nc.segments[284]);
+                    //        _route2.Add(nc.segments[285]);
+                    //        _route2.Add(nc.segments[286]);
+                    //        _route2.Add(nc.segments[287]);
+                    //        _route2.Add(nc.segments[288]);
+                    //        _route2.Add(nc.segments[289]);
+                    //        _route2.Add(nc.segments[290]);
 
-            //_route[0].vehicles.Add(new IVehicle(
-            //    _route[0],
-            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-            //    _route));
+                    //        _route3 = new List<WaySegment>();
+                    //        _route3.Add(nc.segments[267]);
+                    //        _route3.Add(nc.segments[268]);
+                    //        _route3.Add(nc.segments[269]);
+                    //        _route3.Add(nc.segments[270]);
+                    //        _route3.Add(nc.segments[271]);
+                    //        _route3.Add(nc.segments[272]);
+                    //        _route3.Add(nc.segments[273]);
+                    //        _route3.Add(nc.segments[274]);
+                    //        _route3.Add(nc.segments[275]);
+                    //        _route3.Add(nc.segments[276]);
+                    //        _route3.Add(nc.segments[277]);
+                    //        _route3.Add(nc.segments[278]);
+                    //        _route3.Add(nc.segments[369]);
+                    //        _route3.Add(nc.segments[370]);
+                    //        _route3.Add(nc.segments[371]);
+                    //        _route3.Add(nc.segments[372]);
+                    //        _route3.Add(nc.segments[373]);
+                    //        _route3.Add(nc.segments[365]);
+                    //        _route3.Add(nc.segments[366]);
+                    //        _route3.Add(nc.segments[367]);
+                    //        _route3.Add(nc.segments[368]);
 
-            //_route[0].vehicles[0]._physics.targetVelocity = 7;
-            //_route[0].vehicles[0].distance = 100;
+                    //        _route4 = new List<WaySegment>();
+                    //        _route4.Add(nc.segments[32]);
+                    //        _route4.Add(nc.segments[33]);
+                    //        _route4.Add(nc.segments[34]);
+                    //        _route4.Add(nc.segments[35]);
+                    //        _route4.Add(nc.segments[36]);
+                    //        _route4.Add(nc.segments[131]);
+                    //        _route4.Add(nc.segments[132]);
+                    //        _route4.Add(nc.segments[133]);
+                    //        _route4.Add(nc.segments[212]);
+                    //        _route4.Add(nc.segments[213]);
+                    //        _route4.Add(nc.segments[214]);
+                    //        _route4.Add(nc.segments[215]);
+                    //        _route4.Add(nc.segments[216]);
+                    //        _route4.Add(nc.segments[217]);
+                    //        _route4.Add(nc.segments[218]);
+                    //        _route4.Add(nc.segments[219]);
+                    //        _route4.Add(nc.segments[220]);
+                    //        _route4.Add(nc.segments[221]);
+                    //        _route4.Add(nc.segments[222]);
 
-            //_route[0].vehicles.Add(new IVehicle(
-            //    _route[0],
-            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-            //    _route));
 
-            //_route[0].vehicles[1]._physics.targetVelocity = 13;
-            //_route[0].vehicles[1].distance = 50;
+                    //        //_route[0].vehicles.Add(new IVehicle(
+                    //        //    _route[0],
+                    //        //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //        //    _route));
 
-            //_route[0].vehicles.Add(new IVehicle(
-            //    _route[0],
-            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-            //    _route));
+                    //        ////_route[0].vehicles[0].dumb = true;
+                    //        //_route[0].vehicles[0].distance = 20;
 
-            //_route[0].vehicles[2]._physics.targetVelocity = 10;
-            //_route[0].vehicles[2].distance = 0;
+                    //        //_route[0].vehicles.Add(new IVehicle(
+                    //        //    _route[0],
+                    //        //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //        //    _route));
 
-            //#endregion
+                    //        //_route[0].vehicles[1].distance = 10;
+
+                    //        //_route[0].vehicles.Add(new IVehicle(
+                    //        //    _route[0],
+                    //        //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //        //    _route));
+
+                    //        //_route[0].vehicles[2].distance = 0;
 
 
-            Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
+
+                    //        #endregion
+                    //    }
+                    //}
+                    //#endregion
+
+
+                    //#region Longitudinal Model Test
+                    //GlobalTime.Instance.Reset();
+                    //nc.Clear();
+
+                    //nc._nodes.Add(new Node(new Vector2(0, 200)));
+                    //nc._nodes.Add(new Node(new Vector2(2000, 200)));
+
+                    //nc.segments.Add(new WaySegment(nc._nodes[0], nc._nodes[1]));
+                    //_route = new List<WaySegment>();
+                    //_route.Add(nc.segments[0]);
+
+                    //_route[0].vehicles.Add(new IVehicle(
+                    //    _route[0],
+                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //    _route));
+
+                    //_route[0].vehicles[0]._physics.targetVelocity = 7;
+                    //_route[0].vehicles[0].distance = 100;
+
+                    //_route[0].vehicles.Add(new IVehicle(
+                    //    _route[0],
+                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //    _route));
+
+                    //_route[0].vehicles[1]._physics.targetVelocity = 13;
+                    //_route[0].vehicles[1].distance = 50;
+
+                    //_route[0].vehicles.Add(new IVehicle(
+                    //    _route[0],
+                    //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+                    //    _route));
+
+                    //_route[0].vehicles[2]._physics.targetVelocity = 10;
+                    //_route[0].vehicles[2].distance = 0;
+
+                    //#endregion
+
+
+                    Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
 
         private void speedComboBox_SelectedIndexChanged(object sender, EventArgs e)
