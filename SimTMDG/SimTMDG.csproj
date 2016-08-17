@@ -68,6 +68,7 @@
     <Compile Include="Road\NodeControl.cs" />
     <Compile Include="Road\RoadSegment.cs" />
     <Compile Include="Road\Route.cs" />
+    <Compile Include="Road\TrafficLight.cs" />
     <Compile Include="Road\WaySegment.cs" />
     <Compile Include="Time\GlobalTime.cs" />
     <Compile Include="Tools\Interval.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Tools\Math2.cs" />
     <Compile Include="Tools\SortedLinkedList.cs" />
     <Compile Include="Tools\Vector2.cs" />
+    <Compile Include="Vehicle\IDM.cs" />
     <Compile Include="Vehicle\IVehicle.cs" />
     <Compile Include="Vehicle\VehicleDistance.cs" />
     <EmbeddedResource Include="MainForm\MainForm.resx">
