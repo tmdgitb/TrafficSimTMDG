@@ -610,8 +610,10 @@ namespace SimTMDG
 
 
                 lf.StepUpperProgress("Parsing Nodes...");
-
                 XmlNodeList xnlLineNode = xd.SelectNodes("//osm/node");
+                lf.SetupLowerProgress("Parsing Nodes", xnlLineNode.Count - 1);
+
+                Stopwatch sw = Stopwatch.StartNew();
                 foreach (XmlNode aXmlNode in xnlLineNode)
                 {
                     // Node in einen TextReader packen
@@ -623,18 +625,25 @@ namespace SimTMDG
 
                     // ab in die Liste
                     nc._nodes.Add(n);
+
+                    lf.StepLowerProgress();
                 }
+                sw.Stop();
+                Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
 
 
                 lf.StepUpperProgress("Parsing Ways / Roads...");
-
                 XmlNodeList xnlWayNode = xd.SelectNodes("//osm/way");
-                foreach (XmlNode aXmlNode in xnlWayNode)
-                {
-                    XmlNodeList nds = aXmlNode.SelectNodes("nd");
+                lf.SetupLowerProgress("Parsing Ways", xnlWayNode.Count - 1);
 
-                    XmlNode tagNode = aXmlNode.SelectSingleNode("tag[@k='oneway']");
-                    
+                sw = Stopwatch.StartNew();
+                foreach (XmlNode aXmlNode in xnlWayNode)
+                //Parallel.ForEach(xnlWayNode, (XmlNode aXmlNode) =>
+                {
+                    XmlNodeList nds     = aXmlNode.SelectNodes("nd");
+                    XmlNode onewayTag   = aXmlNode.SelectSingleNode("tag[@k='oneway']");
+                    XmlNode highwayTag  = aXmlNode.SelectSingleNode("tag[@k='highway']");
+                    XmlNode numlanesTag = aXmlNode.SelectSingleNode("tag[@k='lanes']");
 
                     List<XmlNode> lnd = new List<XmlNode>();
 
@@ -643,25 +652,30 @@ namespace SimTMDG
                         lnd.Add(nd);
                     }
 
-                    if (tagNode != null)
+                    if (onewayTag != null)
                     {
-                        string oneway = tagNode.Attributes.GetNamedItem("v").Value;
+                        string oneway = onewayTag.Attributes.GetNamedItem("v").Value;
 
-                        if (oneway == "-1")
-                        {
-                            makeWaySegment_old(lnd, false);
-                        }
-                        else
-                        {
-                            makeWaySegment_old(lnd, true);
-                        }
+                        //if (oneway == "-1")
+                        //{
+                        //    makeWaySegment_old(lnd, highwayTag, numlanesTag, oneway);
+                        //}
+                        //else
+                        //{
+                            makeWaySegment_old(lnd, highwayTag, numlanesTag, oneway);
+                        //}
                     }
                     else
                     {
-                        makeWaySegment_old(lnd, true);
+                        makeWaySegment_old(lnd, highwayTag, numlanesTag, "");
                     }
-                    
+
+                    lf.StepLowerProgress();
+
                 }
+                //});
+                sw.Stop();
+                Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
 
                 #region manually generate route
 
@@ -845,7 +859,8 @@ namespace SimTMDG
             lf.Text = "Loading file '" + path + "'...";
             lf.Show();
 
-            lf.SetupUpperProgress("Loading Document...", 8);
+            lf.SetupUpperProgress("Loading Document...", 5);
+            lf.StepUpperProgress("Parsing Header...");
 
             XDocument xd = new XDocument();
             xd = XDocument.Load(path);
@@ -887,9 +902,17 @@ namespace SimTMDG
                             .Select(g => g.Key)
                             .ToList();
 
-                //var query = mainNode.Elements("node").Select(g => (string) g.Attribute("id")).ToList();
+                //var query = from way in xd.Descendants("way")
+                //            where way.Elements("tag").Any(c => (string)c.Attribute("k") == "highway")
+                //            select way.Elements("nd")
+                //            group i by i.Attribute("ref").Value
 
+
+                //var query = mainNode.Elements("node").Select(g => (string) g.Attribute("id")).ToList();
                 lf.StepUpperProgress("Parsing nodes...");
+
+                lf.SetupLowerProgress("Parsing nodes...", query.Count() - 1);
+                Stopwatch sw = Stopwatch.StartNew();
 
                 // Deserialize XML for each <node> in query
                 // Find node by id, create new node, calculate position
@@ -907,8 +930,10 @@ namespace SimTMDG
                     nd.latLonToPos(minLon, maxLat);
                     nc._nodes.Add(nd);
 
-                    
+                    lf.StepLowerProgress();
                 }
+                sw.Stop();
+                Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
 
                 lf.StepUpperProgress("Parsing ways / roads...");
 
@@ -918,6 +943,8 @@ namespace SimTMDG
                                 ).ToList();
 
                 //List<XElement> wayQuery = mainNode.Elements("way").ToList();
+                lf.SetupLowerProgress("Parsing ways...", wayQuery.Count() - 1);
+                sw = Stopwatch.StartNew();
 
                 foreach (XElement way in wayQuery)
                 {
@@ -945,12 +972,11 @@ namespace SimTMDG
                     }
 
                     //Debug.WriteLine("values" + oneway);
-
-
-
-                    
+                    lf.StepLowerProgress();                    
                 }
 
+                sw.Stop();
+                Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
 
 
             }
@@ -962,10 +988,23 @@ namespace SimTMDG
             lf = null;
         }
 
-        private void makeWaySegment_old(List<XmlNode> lnd, Boolean forward)
+        private void makeWaySegment_old(List<XmlNode> lnd, XmlNode highwayTag, XmlNode numlanesTag, string oneway)
         {
-            if (forward)
-            {
+            #region road type and lanes
+            string highway;
+            int numlanes;
+
+            if (highwayTag != null) { highway = highwayTag.Attributes.GetNamedItem("v").Value; }
+            else { highway = ""; }
+
+            if (numlanesTag != null) { numlanes = int.Parse(numlanesTag.Attributes.GetNamedItem("v").Value); }
+            else { numlanes = -1; }
+            #endregion
+
+
+
+            if (oneway != "-1")
+            {                
                 for (int i = 0; i < lnd.Count - 1; i++)
                 {
 
@@ -985,7 +1024,7 @@ namespace SimTMDG
 
                     if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId)));
+                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
             }
@@ -1010,7 +1049,7 @@ namespace SimTMDG
 
                     if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId)));
+                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
             }

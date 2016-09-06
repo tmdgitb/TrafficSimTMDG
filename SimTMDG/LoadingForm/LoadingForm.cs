@@ -103,7 +103,7 @@ namespace SimTMDG.LoadingForm
 		/// </summary>
 		/// <param name="stepName">Beschreibung des aktuellen Vorgangs</param>
 		/// <param name="stepCount">Anzahl ingesamt benötigter Schritte im lowerProgress</param>
-		public void SetupLowerProgess(string stepName, int stepCount)
+		public void SetupLowerProgress(string stepName, int stepCount)
 			{
 			StepUpperProgress();
 
