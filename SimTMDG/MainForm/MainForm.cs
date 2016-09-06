@@ -35,6 +35,14 @@ namespace SimTMDG
         int vehCount = 0;
         int activeVehicles = 0;
         Double timeMod = 0.0;
+        Bitmap bmp;
+        Bitmap bmpZoom;
+        double minLon;
+        double maxLon;
+        double minLat;
+        double maxLat;
+        Boolean boundsDefined = false;
+        Rectangle renderedRect;
         #endregion
 
 
@@ -132,6 +140,7 @@ namespace SimTMDG
         //private List<GraphicsPath> additionalGraphics = new List<GraphicsPath>();
 
         private float[,] zoomMultipliers = new float[,] {
+            { 0.05f, 20},
             { 0.1f, 10},
             { 0.15f, 1f/0.15f},
             { 0.2f, 5},
@@ -166,8 +175,9 @@ namespace SimTMDG
 
             //
             speedComboBox.SelectedIndex = 0;
-            zoomComboBox.SelectedIndex = 7;
+            zoomComboBox.SelectedIndex = 8;
             daGridScrollPosition = new Point(0, 0);
+            renderedRect = new Rectangle();
             UpdateDaGridClippingRect();
             DaGrid.Dock = DockStyle.Fill;
 
@@ -209,39 +219,39 @@ namespace SimTMDG
             nc.Reset();
 
             #region tempVehGenerate
-            //if ((timeMod % 72) == 0.0)
-            //{
-            //    if ((vehCount % 2) == 0)
-            //    {
-            //        _route[0].vehicles.Add(new IVehicle(
-            //            _route[0],
-            //            Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-            //            _route));
-            //        //TODO Count of Active Vehicles
-            //        activeVehicles++;
+            if ((timeMod % 36) == 0.0)
+            {
+                if ((vehCount % 2) == 0)
+                {
+                    _route[0].vehicles.Add(new IVehicle(
+                        _route[0],
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                        _route));
+                    //TODO Count of Active Vehicles
+                    activeVehicles++;
 
-            //        //_route4[0].vehicles.Add(new IVehicle(
-            //        //    _route4[0],
-            //        //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-            //        //    _route4));
-            //    }
-            //    else
-            //    {
-            //        _route2[0].vehicles.Add(new IVehicle(
-            //            _route2[0],
-            //            Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-            //            _route2));
-            //        activeVehicles++;
+                    //_route4[0].vehicles.Add(new IVehicle(
+                    //    _route4[0],
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route4));
+                }
+                else
+                {
+                    _route2[0].vehicles.Add(new IVehicle(
+                        _route2[0],
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                        _route2));
+                    activeVehicles++;
 
-            //        //_route3[0].vehicles.Add(new IVehicle(
-            //        //    _route3[0],
-            //        //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-            //        //    _route3));
-            //    }
-            //    vehCount++;
-            //}
-            ////Debug.WriteLine("VehCount " + vehCount);
-            //timeMod++;
+                    //_route3[0].vehicles.Add(new IVehicle(
+                    //    _route3[0],
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route3));
+                }
+                vehCount++;
+            }
+            //Debug.WriteLine("VehCount " + vehCount);
+            timeMod++;
             #endregion
 
             ////tickCount++;
@@ -313,14 +323,41 @@ namespace SimTMDG
             renderStopwatch.Reset();
             renderStopwatch.Start();
 
+            //if (bmp != null)
+            //{
+            //    // Draw Background
+            //    //e.Graphics.DrawImage(bmp, Point.Empty);
+            //    Rectangle srcRect = new Rectangle(daGridScrollPosition.X, daGridScrollPosition.Y, DaGrid.Width, DaGrid.Height);
+            //    DrawZoom(e.Graphics, srcRect);
+            //}
+
+
             e.Graphics.Transform = new Matrix(
                 zoomMultipliers[zoomComboBox.SelectedIndex, 0], 0,
                 0, zoomMultipliers[zoomComboBox.SelectedIndex, 0],
                 -daGridScrollPosition.X * zoomMultipliers[zoomComboBox.SelectedIndex, 0], -daGridScrollPosition.Y * zoomMultipliers[zoomComboBox.SelectedIndex, 0]);
 
             //roadSegment.Draw(e.Graphics);  
-            nc.Draw(e.Graphics);          
-            
+            //nc.Draw(e.Graphics);
+
+            if (boundsDefined)
+            {
+                nc.Draw(e.Graphics);
+            }
+
+            //Pen pen = new Pen(Color.OrangeRed, 1);
+            //e.Graphics.DrawRectangle(pen, renderedRect.X, renderedRect.Y, renderedRect.Width, renderedRect.Height);
+
+            // Draw Foreground
+            //foreach (WaySegment ws in nc.segments)
+            //{
+            //    foreach (IVehicle v in ws.vehicles)
+            //    {
+            //        v.Draw(e.Graphics);
+            //    }
+            //}
+
+
 
             renderStopwatch.Stop();
 
@@ -386,10 +423,20 @@ namespace SimTMDG
                 //renderOptionsDaGrid.clippingRect.Y = daGridScrollPosition.Y;
                 //renderOptionsDaGrid.clippingRect.Width = (int)Math.Ceiling(pnlMainGrid.ClientSize.Width * zoomMultipliers[zoomComboBox.SelectedIndex, 1]);
                 //renderOptionsDaGrid.clippingRect.Height = (int)Math.Ceiling(pnlMainGrid.ClientSize.Height * zoomMultipliers[zoomComboBox.SelectedIndex, 1]);
+                renderedRect.X = daGridScrollPosition.X;
+                renderedRect.Y = daGridScrollPosition.Y;
+                renderedRect.Width = (int)Math.Ceiling(DaGrid.Width * zoomMultipliers[zoomComboBox.SelectedIndex, 1]);
+                renderedRect.Height = (int)Math.Ceiling(DaGrid.Height * zoomMultipliers[zoomComboBox.SelectedIndex, 1]);
 
                 daGridViewCenter = new PointF(
                     daGridScrollPosition.X + (DaGrid.Width / 2 * zoomMultipliers[zoomComboBox.SelectedIndex, 1]),
                     daGridScrollPosition.Y + (DaGrid.Height / 2 * zoomMultipliers[zoomComboBox.SelectedIndex, 1]));
+
+
+                if (nc != null)
+                {
+                    nc.setBounds(renderedRect);
+                }
 
                 //    RectangleF bounds = nodeSteuerung.GetLineNodeBounds();
                 //    float zoom = Math.Min(1.0f, Math.Min((float)thumbGrid.ClientSize.Width / bounds.Width, (float)thumbGrid.ClientSize.Height / bounds.Height));
@@ -497,6 +544,12 @@ namespace SimTMDG
         }
 
 
+        //void DrawZoom(Graphics g, Rectangle srcRect)
+        //{
+        //    Rectangle dstRect = new Rectangle(0, 0, DaGrid.Width, DaGrid.Height);
+        //    g.DrawImage(bmp, dstRect, srcRect, GraphicsUnit.Pixel);
+        //}
+
         #endregion
 
 
@@ -519,22 +572,39 @@ namespace SimTMDG
             {
                 Debug.WriteLine("bounds null");
             }else {
+                
 
-                double minLon;
                 XmlNode minLonNode = bounds.Attributes.GetNamedItem("minlon");
-
-                if (minLonNode != null)
-                    minLon = double.Parse(minLonNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
-                else
-                    minLon = 0;
-
-                double maxLat;
+                XmlNode maxLonNode = bounds.Attributes.GetNamedItem("maxlon");
+                XmlNode minLatNode = bounds.Attributes.GetNamedItem("minlat");
                 XmlNode maxLatNode = bounds.Attributes.GetNamedItem("maxlat");
 
+                if (minLonNode != null)
+                {
+                    minLon = double.Parse(minLonNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                    boundsDefined = true;
+                } else { minLon = 0; }
+
+                if (maxLonNode != null)
+                {
+                    maxLon = double.Parse(maxLonNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                    boundsDefined = true;
+                } else { maxLon = 0; }
+
+                if (minLatNode != null)
+                {
+                    minLat = double.Parse(minLatNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                    boundsDefined = true;
+                } else{ minLat = 0; }
+
                 if (maxLatNode != null)
+                {
                     maxLat = double.Parse(maxLatNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
-                else
-                    maxLat = 0;
+                    boundsDefined = true;
+                } else { maxLat = 0; }
+
+                UpdateDaGridClippingRect();
+
 
                 Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
 
@@ -748,6 +818,21 @@ namespace SimTMDG
 
 
                 #endregion
+
+                #region draw road as background
+                //bmp = new Bitmap((int)Math.Ceiling((maxLon - minLon) * 111111), (int)Math.Ceiling((maxLat - minLat) * 111111));
+                //using(Graphics g = Graphics.FromImage(bmp))
+                //{
+                //    g.SmoothingMode = SmoothingMode.HighQuality;
+                //    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                //    foreach (WaySegment ws in nc.Segments)
+                //    {
+                //        ws.Draw(g);
+                //    }
+                //}
+                //Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
+                #endregion
             }
 
 
@@ -776,8 +861,13 @@ namespace SimTMDG
             }
             else
             {
-                double minLon = double.Parse(bounds.Attribute("minlon").Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;                
-                double maxLat = double.Parse(bounds.Attribute("maxlat").Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                minLon = double.Parse(bounds.Attribute("minlon").Value, CultureInfo.InvariantCulture);
+                maxLon = double.Parse(bounds.Attribute("maxlon").Value, CultureInfo.InvariantCulture);
+                minLat = double.Parse(bounds.Attribute("minlat").Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;                
+                maxLat = double.Parse(bounds.Attribute("maxlat").Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                boundsDefined = true;
+
+                //nc.setBounds(minLon, maxLon, minLat, maxLat);
                 
                 Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
 

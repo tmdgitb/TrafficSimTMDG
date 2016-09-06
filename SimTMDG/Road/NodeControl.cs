@@ -9,6 +9,10 @@ namespace SimTMDG.Road
 {
     public class NodeControl : ITickable
     {
+        #region TEMP
+        Rectangle mapBound;
+        #endregion
+
         //private Routing _route;
         public List<Node> _nodes = new List<Node>();
         public List<WaySegment> segments = new List<WaySegment>();
@@ -150,18 +154,25 @@ namespace SimTMDG.Road
             //}
         }
 
+        public void setBounds(Rectangle bounds)
+        {
+            mapBound = bounds;
+        }
+
 
         #region draw
         public void Draw(Graphics g)
         {
             foreach (WaySegment ws in Segments)
             {
-                ws.Draw(g);
+                if ((IsInBound(ws.startNode.Position))||(IsInBound(ws.endNode.Position)))
+                    ws.Draw(g);
             }
 
             foreach (Node nd in _nodes)
             {
-                nd.Draw(g);
+                if (IsInBound(nd.Position))
+                    nd.Draw(g);
             }
 
             foreach (WaySegment ws in Segments)
@@ -169,12 +180,27 @@ namespace SimTMDG.Road
                 foreach (IVehicle v in ws.vehicles)
                 {
                     //if (v.distance <= v.CurrentSegment.Length)
+                    if (IsInBound(v.absCoord))
                         v.Draw(g);
                 }
             }
+
+            //Pen pen = new Pen(Color.OrangeRed, 1);
+
+            //g.DrawRectangle(pen, (float) minBound.X, (float)minBound.Y, (float) maxBound.X, (float) maxBound.Y);
         }
         #endregion
-    }
+
+        public bool IsInBound(Vector2 coord)
+        {
+            if  ((coord.X < mapBound.X)||(coord.Y < mapBound.Y)||
+                 (coord.X > mapBound.X + mapBound.Width)||(coord.Y > mapBound.Y + mapBound.Height)){
+                return false;
+            }else{
+                return true;
+            }
+        }
+    }    
 }
 
 

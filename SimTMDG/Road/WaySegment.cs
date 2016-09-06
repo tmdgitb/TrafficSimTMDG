@@ -13,7 +13,7 @@ namespace SimTMDG.Road
     public class WaySegment : ITickable
     {
         #region TEMP
-        Vector2 midCoord = new Vector2();
+        public Vector2 MidCoord = new Vector2();
         #endregion
 
         #region ID
@@ -122,8 +122,8 @@ namespace SimTMDG.Road
 
             //float segmentLength = (float) Vector2.GetDistance(start, end);
 
-            midCoord.X = (float)(difference.X * (Length / 2)) / (float) Length + (float) startNode.Position.X;
-            midCoord.Y = (float)(difference.Y * (Length / 2)) / (float) Length + (float) startNode.Position.Y;
+            MidCoord.X = (float)(difference.X * (Length / 2)) / (float) Length + (float) startNode.Position.X;
+            MidCoord.Y = (float)(difference.Y * (Length / 2)) / (float) Length + (float) startNode.Position.Y;
         }
         #endregion
 
@@ -136,7 +136,7 @@ namespace SimTMDG.Road
 
             //Font debugFont = new Font("Calibri", 6);
             //Brush blackBrush = new SolidBrush(Color.Black);
-            //g.DrawString(Id.ToString(), debugFont, blackBrush, midCoord);
+            //g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
         }
 
         public void Tick(double tickLength)

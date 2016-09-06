@@ -39,8 +39,8 @@ namespace SimTMDG
             this.stepButton = new System.Windows.Forms.Button();
             this.tempLoadButton = new System.Windows.Forms.Button();
             this.DaGrid = new SimTMDG.MainForm.CustUserControl();
-            this.timerSimulation = new System.Windows.Forms.Timer(this.components);
             this.buttonTLightTemp = new System.Windows.Forms.Button();
+            this.timerSimulation = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -109,6 +109,7 @@ namespace SimTMDG
             // 
             this.zoomComboBox.FormattingEnabled = true;
             this.zoomComboBox.Items.AddRange(new object[] {
+            "5%",
             "10%",
             "15%",
             "20%",
@@ -179,11 +180,6 @@ namespace SimTMDG
             this.DaGrid.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.DaGrid_MouseWheel);
             this.DaGrid.Resize += new System.EventHandler(this.DaGrid_Resize);
             // 
-            // timerSimulation
-            // 
-            this.timerSimulation.Interval = 67;
-            this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
-            // 
             // buttonTLightTemp
             // 
             this.buttonTLightTemp.Location = new System.Drawing.Point(3, 39);
@@ -193,6 +189,11 @@ namespace SimTMDG
             this.buttonTLightTemp.Text = "Change Traffic Light";
             this.buttonTLightTemp.UseVisualStyleBackColor = true;
             this.buttonTLightTemp.Click += new System.EventHandler(this.buttonTLightTemp_Click);
+            // 
+            // timerSimulation
+            // 
+            this.timerSimulation.Interval = 67;
+            this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
             // 
             // Main
             // 
