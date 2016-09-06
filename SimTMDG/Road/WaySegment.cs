@@ -12,6 +12,10 @@ namespace SimTMDG.Road
     [Serializable]
     public class WaySegment : ITickable
     {
+        #region TEMP
+        Vector2 midCoord = new Vector2();
+        #endregion
+
         #region ID
         /// <summary>
         /// WaySegment ID
@@ -111,6 +115,15 @@ namespace SimTMDG.Road
             startNode = _startNode;
             endNode = _endNode;
             _length = Vector2.GetDistance(startNode.Position, endNode.Position);
+
+            Vector2 difference = new Vector2();
+            difference.X = endNode.Position.X - startNode.Position.X;
+            difference.Y = endNode.Position.Y - startNode.Position.Y;
+
+            //float segmentLength = (float) Vector2.GetDistance(start, end);
+
+            midCoord.X = (float)(difference.X * (Length / 2)) / (float) Length + (float) startNode.Position.X;
+            midCoord.Y = (float)(difference.Y * (Length / 2)) / (float) Length + (float) startNode.Position.Y;
         }
         #endregion
 
@@ -119,7 +132,11 @@ namespace SimTMDG.Road
         public void Draw(Graphics g)
         {
             Pen pen = new Pen(Color.DarkGray, 1);
-            g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);            
+            g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
+
+            //Font debugFont = new Font("Calibri", 6);
+            //Brush blackBrush = new SolidBrush(Color.Black);
+            //g.DrawString(Id.ToString(), debugFont, blackBrush, midCoord);
         }
 
         public void Tick(double tickLength)

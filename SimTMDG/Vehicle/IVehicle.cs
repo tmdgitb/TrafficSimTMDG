@@ -389,7 +389,7 @@ namespace SimTMDG.Vehicle
             g.FillPath(fillBrush, gp);
             Font debugFont = new Font("Calibri", 6);
             Brush blackBrush = new SolidBrush(Color.Black);
-            g.DrawString(hashcode.ToString(), debugFont, blackBrush, this.absCoord);
+            //g.DrawString(hashcode.ToString(), debugFont, blackBrush, this.absCoord);
 
             //g.DrawString(hashcode.ToString() + " @ " + currentPosition.ToString("####") + "dm - " + physics.velocity.ToString("##.#") + "m/s - Mult.: ", debugFont, blackBrush, absCoord + new Vector2(0, -10));
         }
@@ -663,7 +663,11 @@ namespace SimTMDG.Vehicle
                     if(route[i].endNode.tLight != null)
                     {
                         if (route[i].endNode.tLight.trafficLightState == TrafficLight.State.RED)
-                            toReturn = route[i].Length + searchedDistance - (this.distance + this.length / 2 );
+                        {
+                            toReturn = route[i].Length + searchedDistance - (this.distance + this.length / 2);
+                            return toReturn;
+                        }
+                            
                     }else
                     {
                         searchedDistance += route[i].Length;
