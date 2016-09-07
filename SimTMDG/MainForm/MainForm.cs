@@ -27,10 +27,10 @@ namespace SimTMDG
         private double _temp_stepsPerSeconds = 24;
         private double _temp_simulationDuration = 15;
         private NodeControl nc;
-        private List<WaySegment> _route;
-        private List<WaySegment> _route2;
-        private List<WaySegment> _route3;
-        private List<WaySegment> _route4;
+        private List<RoadSegment> _route;
+        private List<RoadSegment> _route2;
+        private List<RoadSegment> _route3;
+        private List<RoadSegment> _route4;
         Random rnd = new Random();
         int vehCount = 0;
         int activeVehicles = 0;
@@ -223,8 +223,9 @@ namespace SimTMDG
             {
                 if ((vehCount % 2) == 0)
                 {
-                    _route[0].vehicles.Add(new IVehicle(
-                        _route[0],
+                    int laneidx = rnd.Next(0, _route2[0].lanes.Count);
+                    _route[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                        _route[0], laneidx,
                         Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route));
                     //TODO Count of Active Vehicles
@@ -237,8 +238,9 @@ namespace SimTMDG
                 }
                 else
                 {
-                    _route2[0].vehicles.Add(new IVehicle(
-                        _route2[0],
+                    int laneidx = rnd.Next(0, _route2[0].lanes.Count);
+                    _route2[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                        _route2[0], laneidx,
                         Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route2));
                     activeVehicles++;
@@ -685,7 +687,7 @@ namespace SimTMDG
                 // _route.segments.Find(x => x.Id == segmentToAddID)
 
                 Debug.WriteLine("Segment Count" + nc.segments.Count);
-                _route = new List<WaySegment>();
+                _route = new List<RoadSegment>();
                 for (int i = 1232; i < 1250; i++)
                 {
                     _route.Add(nc.segments.Find(x => x.Id == i));
@@ -693,10 +695,10 @@ namespace SimTMDG
 
                 nc.segments.Find(x => x.Id == 1243).startNode.tLight = new TrafficLight();
 
-                _route[0].vehicles.Add(new IVehicle(
-                            _route[0],
-                            Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                            _route));
+                //_route[0].lanes[rnd.Next(0, _route[0].lanes.Count)].vehicles.Add(new IVehicle(
+                //            _route[0],
+                //            Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                //            _route));
 
                 //_route.Add(nc.segments[0]);
                 //_route.Add(nc.segments[1]);
@@ -727,7 +729,7 @@ namespace SimTMDG
 
                 //nc.segments[374].endNode.tLight = new TrafficLight();
 
-                _route2 = new List<WaySegment>();
+                _route2 = new List<RoadSegment>();
                 for (int i = 9418; i < 9441; i++)
                 {
                     _route2.Add(nc.segments.Find(x => x.Id == i));
@@ -756,7 +758,7 @@ namespace SimTMDG
                 //_route2.Add(nc.segments[289]);
                 //_route2.Add(nc.segments[290]);
 
-                _route3 = new List<WaySegment>();
+                _route3 = new List<RoadSegment>();
                 _route3.Add(nc.segments[267]);
                 _route3.Add(nc.segments[268]);
                 _route3.Add(nc.segments[269]);
@@ -779,7 +781,7 @@ namespace SimTMDG
                 _route3.Add(nc.segments[367]);
                 _route3.Add(nc.segments[368]);
 
-                _route4 = new List<WaySegment>();
+                _route4 = new List<RoadSegment>();
                 _route4.Add(nc.segments[32]);
                 _route4.Add(nc.segments[33]);
                 _route4.Add(nc.segments[34]);
@@ -1024,7 +1026,7 @@ namespace SimTMDG
 
                     if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                        nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
             }
@@ -1049,7 +1051,7 @@ namespace SimTMDG
 
                     if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                        nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
             }
@@ -1067,7 +1069,7 @@ namespace SimTMDG
 
                     if ((nc._nodes.Find(x => x.Id == ndCurrId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndCurrId), nc._nodes.Find(y => y.Id == ndNextId)));
+                        //nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndCurrId), nc._nodes.Find(y => y.Id == ndNextId)));
                     }
                 }
             }
@@ -1080,7 +1082,7 @@ namespace SimTMDG
 
                     if ((nc._nodes.Find(x => x.Id == ndCurrId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        nc.segments.Add(new WaySegment(nc._nodes.Find(x => x.Id == ndCurrId), nc._nodes.Find(y => y.Id == ndNextId)));
+                        //nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndCurrId), nc._nodes.Find(y => y.Id == ndNextId)));
                     }
                 }
             }

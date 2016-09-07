@@ -10,125 +10,264 @@ using System.Threading.Tasks;
 
 namespace SimTMDG.Road
 {
-    class RoadSegment:ITickable
+    [Serializable]
+    public class RoadSegment : ITickable
     {
-        #region Variables
-        #region position
-        private Vector2 _startPoint;
+        #region road properties
 
-        public Vector2 StartPoint
+        #region TEMP
+        public Vector2 MidCoord = new Vector2();
+        #endregion
+
+        #region ID
+        /// <summary>
+        /// WaySegment ID
+        /// </summary>
+
+        private static int idIndex = 0;
+        private int _id = -1;
+
+        public int Id
         {
-            get { return _startPoint; }
+            get { return _id; }
 
-            set { _startPoint = value; }
+            set { _id = value; }
+        }
+        #endregion
+
+        #region primary properties
+        /// <summary>
+        /// Starting node of WaySegment
+        /// </summary>
+        public Node startNode;
+
+        /// <summary>
+        /// Ending node of WaySegment
+        /// </summary>
+        public Node endNode;
+
+        /// <summary>
+        /// WaySegment length from start node to end node
+        /// </summary>
+        private double _length;
+
+        public double Length
+        {
+            get { return _length; }
+
+            set { _length = value; }
         }
 
-        private Vector2 _endPoint;
+        public List<SegmentLane> lanes = new List<SegmentLane>();
 
-        public Vector2 EndPoint
+        int laneWidth = 4;
+        #endregion
+
+
+        /// <summary>
+        /// WaySegment target average speed
+        /// </summary>
+        private int _avgSpeed;
+
+        public int AvgSpeed
         {
-            get { return _endPoint; }
+            get { return _avgSpeed; }
 
-            set { _endPoint = value; }
+            set { _avgSpeed = value; }
+        }
+
+        /// <summary>
+        /// Way highway key / properties
+        /// </summary>
+        private string _highway;
+
+        public string Highway
+        {
+            get { return _highway; }
+
+            set { _highway = value; }
+        }
+
+        /// <summary>
+        /// Oneway / Reverse / Bi-way
+        /// </summary>
+        private string _oneWay;
+
+        public string OneWay
+        {
+            get { return _oneWay; }
+
+            set { _oneWay = value; }
+        }
+
+        /// <summary>
+        /// Way / Road name
+        /// </summary>
+        private string _roadName;
+
+        public string RoadName
+        {
+            get { return _roadName; }
+
+            set { _roadName = value; }
+        }
+
+        /// <summary>
+        /// Number of lanes
+        /// </summary>
+        private int _numLanes;
+        public int NumLanes
+        {
+            get { return _numLanes; }
+
+            set { _numLanes = value; }
         }
 
         #endregion
 
-        #region Vehicles
-        public List<IVehicle> vehicles = new List<IVehicle>();
-        #endregion
 
-        #endregion
-
-
-        #region contructor
+        #region Constructor
         public RoadSegment()
         {
-            _startPoint = new Vector2(0, 0);
-            _endPoint   = new Vector2(0, 0);
+            _id = idIndex++;
         }
 
-        public RoadSegment(Vector2 from, Vector2 to)
+        public RoadSegment(Node _startNode, Node _endNode, int numlanes, string highway, string oneway)
         {
-            _startPoint = from;
-            _endPoint   = to;
+            _id = idIndex++;
+            OneWay = oneway;
+            startNode = _startNode;
+            endNode = _endNode;
+            _length = Vector2.GetDistance(startNode.Position, endNode.Position);
+
+            Vector2 difference = new Vector2();
+            difference.X = endNode.Position.X - startNode.Position.X;
+            difference.Y = endNode.Position.Y - startNode.Position.Y;
+
+            //float segmentLength = (float) Vector2.GetDistance(start, end);
+
+            MidCoord.X = (float)(difference.X * (Length / 2)) / (float)Length + (float)startNode.Position.X;
+            MidCoord.Y = (float)(difference.Y * (Length / 2)) / (float)Length + (float)startNode.Position.Y;
+
+            _highway = highway;
+
+            // Num lanes assumptions based on: http://wiki.openstreetmap.org/wiki/Key:lanes#Assumptions
+            if ((_highway == "motorway") || (_highway == "trunk"))
+            {
+                if ((oneway == "true") || (oneway == "-1"))
+                {
+                    _numLanes = 2;
+                }
+                else
+                {
+                    _numLanes = 4;
+                }
+            }
+            else if ((_highway == "primary") || (_highway == "secondary")
+               || (_highway == "tertiary") || (_highway == "residential"))
+            {
+                if ((oneway == "true") || (oneway == "-1"))
+                {
+                    _numLanes = 1;
+                }
+                else
+                {
+                    _numLanes = 2;
+                }
+            }
+            else
+            {
+                _numLanes = 1;
+            }
+
+            // If numlanes provided in the tag, use it instead of assumtions
+            if (numlanes != -1)
+            {
+                _numLanes = numlanes;
+            }
+
+            generateLanes();
         }
         #endregion
 
 
-        #region methods
-        public Double Distance()
+
+        #region tick
+        public void Tick(double tickLength)
         {
-            return Vector2.GetDistance(_startPoint, _endPoint);
+            foreach (SegmentLane lane in lanes)
+            {
+                lane.Tick(tickLength);
+            }
         }
-
-
         #endregion
 
 
+
+        
         #region draw
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(Color.DarkGray, 0.125f);
-            g.DrawLine(pen, (Point)_startPoint, (Point)_endPoint);
-
-            foreach (IVehicle v in vehicles)
+            foreach(SegmentLane lane in lanes)
             {
-                v.Draw(g);
+                lane.Draw(g);
+            }
+        }
+        #endregion
+
+
+
+
+        #region helper
+        public void Reset()
+        {
+            foreach (SegmentLane lane in lanes)
+            {
+                lane.Reset();
             }
         }
 
-        public void Tick(double tickLength)
+        void generateLanes()
         {
-            //foreach (IVehicle v in vehicles)
-            //{
-            //    v.Think(tickLength);
-            //    v.absCoord = v.newCoord(_startPoint, _endPoint, v.distance);
+            //int distance;
 
-            //    if (v.distance >= EndPoint.X)
-            //    {
-            //        //v.distance = StartPoint.X;
-                    
-            //    }
-            //}
-            for(int i = 0; i < vehicles.Count; i++)
+            if((OneWay != "yes")||(OneWay != "-1"))
             {
-                vehicles[i].Think(tickLength);
-                vehicles[i].newCoord();
-                
-
-                if (vehicles[i].distance >= Length())
+                for(int i = 0; i < NumLanes; i++)
                 {
-                    vehicles.Remove(vehicles[i]);
+                    int distance = i * laneWidth;
+                    //if (i % 2 == 0)
+                    //{
+                        lanes.Add(generateSegmentLane(i * laneWidth, i));
+                    //}
+                    //else
+                    //{
+                    //    lanes.Add(generateSegmentLane(-1 * i * laneWidth, i));
+                    //}
+
+                    //lanes.Add(generateSegmentLane(i * laneWidth, i));
+                }
+            }else
+            {
+                for (int i = 0; i < NumLanes; i++)
+                {
+                    int distance = i * laneWidth;
+                    lanes.Add(generateSegmentLane(i * laneWidth, i));
                 }
             }
         }
 
-        public void Reset()
+        SegmentLane generateSegmentLane(int distance, int i)
         {
-            throw new NotImplementedException();
+            double angle = (Math.PI/2) - Vector2.AngleBetween(this.startNode.Position, this.endNode.Position);
+
+            Vector2 shift = new Vector2(distance * Math.Cos(angle), distance * Math.Sin(angle));
+            Node newStart = new Node(new Vector2(this.startNode.Position.X + shift.X, this.startNode.Position.Y - shift.Y));
+            Node newEnd   = new Node(new Vector2(this.endNode.Position.X + shift.X, this.endNode.Position.Y - shift.Y));
+
+            SegmentLane toReturn = new SegmentLane(newStart, newEnd, i);
+            return toReturn;
         }
         #endregion
-
-        Random rnd = new Random();
-        public void tempGenerateVeh(int vehNum) {
-            vehicles.RemoveRange(0, vehicles.Count);
-
-            for(int i=0; i< vehNum; i++)
-            {
-                vehicles.Add(new IVehicle());
-                vehicles[i].distance = i * (vehicles[i].length * 5);
-                vehicles[i].newCoord();
-                vehicles[i].rotation = Vector2.AngleBetween(_startPoint, _endPoint);
-                Debug.WriteLine("V rotate " + vehicles[i].rotation + "(" + _startPoint.X + ", " + _startPoint.Y + ") - (" + _endPoint.X + ", " + _endPoint.Y + ")");
-
-                vehicles[i].color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
-            }
-        }
-
-        public Double Length()
-        {
-            return Vector2.GetDistance(_startPoint, _endPoint);
-        }
     }
 }

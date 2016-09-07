@@ -74,6 +74,7 @@
     <Compile Include="Road\NodeControl.cs" />
     <Compile Include="Road\RoadSegment.cs" />
     <Compile Include="Road\Route.cs" />
+    <Compile Include="Road\SegmentLane.cs" />
     <Compile Include="Road\TrafficLight.cs" />
     <Compile Include="Road\WaySegment.cs" />
     <Compile Include="Time\GlobalTime.cs" />

@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace SimTMDG.Road
 {
-    public class Routing : IEnumerable<WaySegment>
+    public class Routing : IEnumerable<RoadSegment>
     {
         /// <summary>
 		/// Wegroute
 		/// </summary>
-		private LinkedList<WaySegment> route;
+		private LinkedList<RoadSegment> route;
 
         /// <summary>
 		/// Kosten der gesamten Route
 		/// </summary>
 		public double costs;
 
-        internal LinkedList<WaySegment> Route
+        internal LinkedList<RoadSegment> Route
         {
             get
             {
@@ -38,7 +38,7 @@ namespace SimTMDG.Road
         /// </summary>
         public Routing()
         {
-            Route = new LinkedList<WaySegment>();
+            Route = new LinkedList<RoadSegment>();
             costs = 0;
         }
         #endregion
@@ -47,13 +47,13 @@ namespace SimTMDG.Road
 		/// Pusht das übergebene RouteSegment auf den route-Stack und aktualisiert die Kosten und Anzahl benötigter Spurwechsel
 		/// </summary>
 		/// <param name="rs">einzufügendes RouteSegment</param>
-		public void Push(WaySegment ws)
+		public void Push(RoadSegment ws)
         {
             Route.AddLast(ws);
             costs += ws.Length; // TODO use length as cost for now
         }
 
-        public IEnumerator<WaySegment> GetEnumerator()
+        public IEnumerator<RoadSegment> GetEnumerator()
         {
             return Route.GetEnumerator();
         }

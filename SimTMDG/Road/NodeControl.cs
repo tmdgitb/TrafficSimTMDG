@@ -15,9 +15,9 @@ namespace SimTMDG.Road
 
         //private Routing _route;
         public List<Node> _nodes = new List<Node>();
-        public List<WaySegment> segments = new List<WaySegment>();
+        public List<RoadSegment> segments = new List<RoadSegment>();
 
-        internal List<WaySegment> Segments
+        internal List<RoadSegment> Segments
         {
             get
             {
@@ -111,9 +111,14 @@ namespace SimTMDG.Road
         {
             _nodes.Clear();
 
-            foreach (WaySegment ws in Segments)
+            foreach (RoadSegment ws in Segments)
             {
-                ws.vehicles.Clear();
+                //ws.vehicles.Clear();
+
+                foreach(SegmentLane lane in ws.lanes)
+                {
+                    lane.vehicles.Clear();
+                }
             }
 
             Segments.Clear();
@@ -131,7 +136,7 @@ namespace SimTMDG.Road
 
             //Segments.Clear();
 
-            foreach (WaySegment ws in segments)
+            foreach (RoadSegment ws in segments)
             {
                 ws.Reset();
             }
@@ -140,7 +145,7 @@ namespace SimTMDG.Road
 
         public void Tick(double tickLength)
         {
-            foreach(WaySegment ws in Segments)
+            foreach(RoadSegment ws in Segments)
             {
                 ws.Tick(tickLength);              
             }
@@ -163,7 +168,7 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            foreach (WaySegment ws in Segments)
+            foreach (RoadSegment ws in Segments)
             {
                 if ((IsInBound(ws.startNode.Position))||(IsInBound(ws.endNode.Position)))
                     ws.Draw(g);
@@ -175,13 +180,22 @@ namespace SimTMDG.Road
                     nd.Draw(g);
             }
 
-            foreach (WaySegment ws in Segments)
+            foreach (RoadSegment ws in Segments)
             {
-                foreach (IVehicle v in ws.vehicles)
+                //foreach (IVehicle v in ws.vehicles)
+                //{
+                //    //if (v.distance <= v.CurrentSegment.Length)
+                //    if (IsInBound(v.absCoord))
+                //        v.Draw(g);
+                //}
+
+                foreach (SegmentLane lane in ws.lanes)
                 {
-                    //if (v.distance <= v.CurrentSegment.Length)
-                    if (IsInBound(v.absCoord))
-                        v.Draw(g);
+                    foreach (IVehicle v in lane.vehicles)
+                    {
+                        if (IsInBound(v.absCoord))
+                            v.Draw(g);
+                    }
                 }
             }
 
