@@ -24,13 +24,14 @@ namespace SimTMDG
     public partial class Main : Form
     {
         #region TEMP
-        private double _temp_stepsPerSeconds = 24;
+        private double _temp_stepsPerSeconds = 10;
         private double _temp_simulationDuration = 15;
         private NodeControl nc;
         private List<RoadSegment> _route;
         private List<RoadSegment> _route2;
         private List<RoadSegment> _route3;
         private List<RoadSegment> _route4;
+        private List<RoadSegment> _route5;
         Random rnd = new Random();
         int vehCount = 0;
         int activeVehicles = 0;
@@ -200,6 +201,8 @@ namespace SimTMDG
             thinkStopwatch.Start();
 
             double tickLength = 1.0d / _temp_stepsPerSeconds; //(double)stepsPerSecondSpinEdit.Value;
+            //Debug.WriteLine("timerSimulation Interval " + timerSimulation.Interval + ", ticklength: " + tickLength);
+
 
             if (GlobalTime.Instance.currentTime < _temp_simulationDuration && (GlobalTime.Instance.currentTime + tickLength) >= _temp_simulationDuration)
             {
@@ -218,43 +221,7 @@ namespace SimTMDG
 
             nc.Reset();
 
-            #region tempVehGenerate
-            if ((timeMod % 36) == 0.0)
-            {
-                if ((vehCount % 2) == 0)
-                {
-                    int laneidx = rnd.Next(0, _route2[0].lanes.Count);
-                    _route[0].lanes[laneidx].vehicles.Add(new IVehicle(
-                        _route[0], laneidx,
-                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                        _route));
-                    //TODO Count of Active Vehicles
-                    activeVehicles++;
-
-                    //_route4[0].vehicles.Add(new IVehicle(
-                    //    _route4[0],
-                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                    //    _route4));
-                }
-                else
-                {
-                    int laneidx = rnd.Next(0, _route2[0].lanes.Count);
-                    _route2[0].lanes[laneidx].vehicles.Add(new IVehicle(
-                        _route2[0], laneidx,
-                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                        _route2));
-                    activeVehicles++;
-
-                    //_route3[0].vehicles.Add(new IVehicle(
-                    //    _route3[0],
-                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                    //    _route3));
-                }
-                vehCount++;
-            }
-            //Debug.WriteLine("VehCount " + vehCount);
-            timeMod++;
-            #endregion
+            generateVehicles();
 
             ////tickCount++;
 
@@ -687,149 +654,13 @@ namespace SimTMDG
                 // _route.segments.Find(x => x.Id == segmentToAddID)
 
                 Debug.WriteLine("Segment Count" + nc.segments.Count);
-                _route = new List<RoadSegment>();
-                for (int i = 1232; i < 1250; i++)
-                {
-                    _route.Add(nc.segments.Find(x => x.Id == i));
-                }
-
-                nc.segments.Find(x => x.Id == 1243).startNode.tLight = new TrafficLight();
-
-                //_route[0].lanes[rnd.Next(0, _route[0].lanes.Count)].vehicles.Add(new IVehicle(
-                //            _route[0],
-                //            Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                //            _route));
-
-                //_route.Add(nc.segments[0]);
-                //_route.Add(nc.segments[1]);
-                //_route.Add(nc.segments[2]);
-                //_route.Add(nc.segments[39]);
-                //_route.Add(nc.segments[264]);
-                //_route.Add(nc.segments[262]);
-                //_route.Add(nc.segments[265]);
-                //_route.Add(nc.segments[266]);
-                //_route.Add(nc.segments[374]);
-                //_route.Add(nc.segments[349]);
-                //_route.Add(nc.segments[47]);
-                //_route.Add(nc.segments[350]);
-                //_route.Add(nc.segments[351]);
-                //_route.Add(nc.segments[352]);
-                //_route.Add(nc.segments[353]);
-                //_route.Add(nc.segments[354]);
-                //_route.Add(nc.segments[355]);
-                //_route.Add(nc.segments[356]);
-                //_route.Add(nc.segments[357]);
-                //_route.Add(nc.segments[358]);
-                //_route.Add(nc.segments[359]);
-                //_route.Add(nc.segments[360]);
-                //_route.Add(nc.segments[361]);
-                //_route.Add(nc.segments[362]);
-                //_route.Add(nc.segments[363]);
-                //_route.Add(nc.segments[364]);
-
-                //nc.segments[374].endNode.tLight = new TrafficLight();
-
-                _route2 = new List<RoadSegment>();
-                for (int i = 9418; i < 9441; i++)
-                {
-                    _route2.Add(nc.segments.Find(x => x.Id == i));
-                }
-
-                nc.segments.Find(x => x.Id == 9428).startNode.tLight = new TrafficLight();
-
-                //_route2.Add(nc.segments[0]);
-                //_route2.Add(nc.segments[1]);
-                //_route2.Add(nc.segments[2]);
-                //_route2.Add(nc.segments[39]);
-                //_route2.Add(nc.segments[264]);
-                //_route2.Add(nc.segments[262]);
-                //_route2.Add(nc.segments[265]);
-                //_route2.Add(nc.segments[266]);
-                //_route2.Add(nc.segments[374]);
-                //_route2.Add(nc.segments[280]);
-                //_route2.Add(nc.segments[281]);
-                //_route2.Add(nc.segments[282]);
-                //_route2.Add(nc.segments[283]);
-                //_route2.Add(nc.segments[284]);
-                //_route2.Add(nc.segments[285]);
-                //_route2.Add(nc.segments[286]);
-                //_route2.Add(nc.segments[287]);
-                //_route2.Add(nc.segments[288]);
-                //_route2.Add(nc.segments[289]);
-                //_route2.Add(nc.segments[290]);
-
-                _route3 = new List<RoadSegment>();
-                _route3.Add(nc.segments[267]);
-                _route3.Add(nc.segments[268]);
-                _route3.Add(nc.segments[269]);
-                _route3.Add(nc.segments[270]);
-                _route3.Add(nc.segments[271]);
-                _route3.Add(nc.segments[272]);
-                _route3.Add(nc.segments[273]);
-                _route3.Add(nc.segments[274]);
-                _route3.Add(nc.segments[275]);
-                _route3.Add(nc.segments[276]);
-                _route3.Add(nc.segments[277]);
-                _route3.Add(nc.segments[278]);
-                _route3.Add(nc.segments[369]);
-                _route3.Add(nc.segments[370]);
-                _route3.Add(nc.segments[371]);
-                _route3.Add(nc.segments[372]);
-                _route3.Add(nc.segments[373]);
-                _route3.Add(nc.segments[365]);
-                _route3.Add(nc.segments[366]);
-                _route3.Add(nc.segments[367]);
-                _route3.Add(nc.segments[368]);
-
-                _route4 = new List<RoadSegment>();
-                _route4.Add(nc.segments[32]);
-                _route4.Add(nc.segments[33]);
-                _route4.Add(nc.segments[34]);
-                _route4.Add(nc.segments[35]);
-                _route4.Add(nc.segments[36]);
-                _route4.Add(nc.segments[131]);
-                _route4.Add(nc.segments[132]);
-                _route4.Add(nc.segments[133]);
-                _route4.Add(nc.segments[212]);
-                _route4.Add(nc.segments[213]);
-                _route4.Add(nc.segments[214]);
-                _route4.Add(nc.segments[215]);
-                _route4.Add(nc.segments[216]);
-                _route4.Add(nc.segments[217]);
-                _route4.Add(nc.segments[218]);
-                _route4.Add(nc.segments[219]);
-                _route4.Add(nc.segments[220]);
-                _route4.Add(nc.segments[221]);
-                _route4.Add(nc.segments[222]);
+                manuallyAddRoute();              
 
                 lf.StepUpperProgress("Done");
                 lf.ShowLog();
 
                 lf.Close();
                 lf = null;
-
-
-                //_route[0].vehicles.Add(new IVehicle(
-                //    _route[0],
-                //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                //    _route));
-
-                ////_route[0].vehicles[0].dumb = true;
-                //_route[0].vehicles[0].distance = 20;
-
-                //_route[0].vehicles.Add(new IVehicle(
-                //    _route[0],
-                //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                //    _route));
-
-                //_route[0].vehicles[1].distance = 10;
-
-                //_route[0].vehicles.Add(new IVehicle(
-                //    _route[0],
-                //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-                //    _route));
-
-                //_route[0].vehicles[2].distance = 0;
 
 
 
@@ -853,6 +684,7 @@ namespace SimTMDG
 
 
         }
+
 
 
         private void LoadOsmMap(string path)
@@ -1030,7 +862,7 @@ namespace SimTMDG
                     }
                 }
             }
-            else
+            else // Oneway: Reverse
             {
                 for (int i = lnd.Count - 1; i > 0; i--)
                 {
@@ -1190,6 +1022,244 @@ namespace SimTMDG
             }
 
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
+        }
+
+
+
+
+        private void manuallyAddRoute()
+        {
+            _route = new List<RoadSegment>();
+            _route2 = new List<RoadSegment>();
+            _route3 = new List<RoadSegment>();
+            _route4 = new List<RoadSegment>();
+            _route5 = new List<RoadSegment>();
+
+            // Route 1 : Pasteur
+            for (int i = 1232; i < 1250; i++)
+            {
+                _route.Add(nc.segments.Find(x => x.Id == i));
+            }
+            nc.segments.Find(x => x.Id == 1243).startNode.tLight = new TrafficLight();
+
+            // Route 2 : Pasteur
+            for (int i = 9418; i < 9441; i++)
+            {
+                _route2.Add(nc.segments.Find(x => x.Id == i));
+            }
+            nc.segments.Find(x => x.Id == 9428).startNode.tLight = new TrafficLight();
+
+
+            // Route 3 : DU
+            for (int i = 8221; i > 8210; i--)
+            {
+                _route3.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+            // Route 4 : DU
+            for (int i = 8211; i < 8222; i++)
+            {
+                _route4.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+
+            // Route 5 : Lembong - Tamblong
+            _route5.Add(nc.segments.Find(x => x.Id == 54));
+            _route5.Add(nc.segments.Find(x => x.Id == 55));
+            _route5.Add(nc.segments.Find(x => x.Id == 9181));
+            _route5.Add(nc.segments.Find(x => x.Id == 9182));
+            _route5.Add(nc.segments.Find(x => x.Id == 10176));
+            _route5.Add(nc.segments.Find(x => x.Id == 10177));
+            _route5.Add(nc.segments.Find(x => x.Id == 10178));
+            _route5.Add(nc.segments.Find(x => x.Id == 10179));
+            _route5.Add(nc.segments.Find(x => x.Id == 7755));
+            _route5.Add(nc.segments.Find(x => x.Id == 56));
+
+
+        }
+
+        #region oldRoute
+        private void oldRoute()
+        {
+            _route = new List<RoadSegment>();
+
+            //_route[0].lanes[rnd.Next(0, _route[0].lanes.Count)].vehicles.Add(new IVehicle(
+            //            _route[0],
+            //            Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+            //            _route));
+
+            //_route.Add(nc.segments[0]);
+            //_route.Add(nc.segments[1]);
+            //_route.Add(nc.segments[2]);
+            //_route.Add(nc.segments[39]);
+            //_route.Add(nc.segments[264]);
+            //_route.Add(nc.segments[262]);
+            //_route.Add(nc.segments[265]);
+            //_route.Add(nc.segments[266]);
+            //_route.Add(nc.segments[374]);
+            //_route.Add(nc.segments[349]);
+            //_route.Add(nc.segments[47]);
+            //_route.Add(nc.segments[350]);
+            //_route.Add(nc.segments[351]);
+            //_route.Add(nc.segments[352]);
+            //_route.Add(nc.segments[353]);
+            //_route.Add(nc.segments[354]);
+            //_route.Add(nc.segments[355]);
+            //_route.Add(nc.segments[356]);
+            //_route.Add(nc.segments[357]);
+            //_route.Add(nc.segments[358]);
+            //_route.Add(nc.segments[359]);
+            //_route.Add(nc.segments[360]);
+            //_route.Add(nc.segments[361]);
+            //_route.Add(nc.segments[362]);
+            //_route.Add(nc.segments[363]);
+            //_route.Add(nc.segments[364]);
+
+            //nc.segments[374].endNode.tLight = new TrafficLight();
+
+            //_route2 = new List<RoadSegment>();
+
+            //_route2.Add(nc.segments[0]);
+            //_route2.Add(nc.segments[1]);
+            //_route2.Add(nc.segments[2]);
+            //_route2.Add(nc.segments[39]);
+            //_route2.Add(nc.segments[264]);
+            //_route2.Add(nc.segments[262]);
+            //_route2.Add(nc.segments[265]);
+            //_route2.Add(nc.segments[266]);
+            //_route2.Add(nc.segments[374]);
+            //_route2.Add(nc.segments[280]);
+            //_route2.Add(nc.segments[281]);
+            //_route2.Add(nc.segments[282]);
+            //_route2.Add(nc.segments[283]);
+            //_route2.Add(nc.segments[284]);
+            //_route2.Add(nc.segments[285]);
+            //_route2.Add(nc.segments[286]);
+            //_route2.Add(nc.segments[287]);
+            //_route2.Add(nc.segments[288]);
+            //_route2.Add(nc.segments[289]);
+            //_route2.Add(nc.segments[290]);
+
+            //_route3 = new List<RoadSegment>();
+            //_route3.Add(nc.segments[267]);
+            //_route3.Add(nc.segments[268]);
+            //_route3.Add(nc.segments[269]);
+            //_route3.Add(nc.segments[270]);
+            //_route3.Add(nc.segments[271]);
+            //_route3.Add(nc.segments[272]);
+            //_route3.Add(nc.segments[273]);
+            //_route3.Add(nc.segments[274]);
+            //_route3.Add(nc.segments[275]);
+            //_route3.Add(nc.segments[276]);
+            //_route3.Add(nc.segments[277]);
+            //_route3.Add(nc.segments[278]);
+            //_route3.Add(nc.segments[369]);
+            //_route3.Add(nc.segments[370]);
+            //_route3.Add(nc.segments[371]);
+            //_route3.Add(nc.segments[372]);
+            //_route3.Add(nc.segments[373]);
+            //_route3.Add(nc.segments[365]);
+            //_route3.Add(nc.segments[366]);
+            //_route3.Add(nc.segments[367]);
+            //_route3.Add(nc.segments[368]);
+
+            //_route4 = new List<RoadSegment>();
+            //_route4.Add(nc.segments[32]);
+            //_route4.Add(nc.segments[33]);
+            //_route4.Add(nc.segments[34]);
+            //_route4.Add(nc.segments[35]);
+            //_route4.Add(nc.segments[36]);
+            //_route4.Add(nc.segments[131]);
+            //_route4.Add(nc.segments[132]);
+            //_route4.Add(nc.segments[133]);
+            //_route4.Add(nc.segments[212]);
+            //_route4.Add(nc.segments[213]);
+            //_route4.Add(nc.segments[214]);
+            //_route4.Add(nc.segments[215]);
+            //_route4.Add(nc.segments[216]);
+            //_route4.Add(nc.segments[217]);
+            //_route4.Add(nc.segments[218]);
+            //_route4.Add(nc.segments[219]);
+            //_route4.Add(nc.segments[220]);
+            //_route4.Add(nc.segments[221]);
+            //_route4.Add(nc.segments[222]);
+
+
+
+
+            //_route[0].vehicles.Add(new IVehicle(
+            //    _route[0],
+            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+            //    _route));
+
+            ////_route[0].vehicles[0].dumb = true;
+            //_route[0].vehicles[0].distance = 20;
+
+            //_route[0].vehicles.Add(new IVehicle(
+            //    _route[0],
+            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+            //    _route));
+
+            //_route[0].vehicles[1].distance = 10;
+
+            //_route[0].vehicles.Add(new IVehicle(
+            //    _route[0],
+            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+            //    _route));
+
+            //_route[0].vehicles[2].distance = 0;
+        }
+        #endregion
+
+        private void generateVehicles()
+        {
+            #region tempVehGenerate
+            if ((timeMod % 36) == 0.0)
+            {
+                if ((vehCount % 2) == 0)
+                {
+                    int laneidx = rnd.Next(0, _route[0].lanes.Count);
+                    _route[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                        _route[0], laneidx,
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                        _route));
+                    activeVehicles++;
+
+                    laneidx = rnd.Next(0, _route4[0].lanes.Count / 2) * 2;
+                    _route4[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                        _route4[0], laneidx,
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                        _route4));
+                    activeVehicles++;
+
+                    laneidx = 0;
+                    _route5[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                        _route5[0], laneidx,
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                        _route5));
+                    activeVehicles++;
+                }
+                else
+                {
+                    int laneidx = rnd.Next(0, _route2[0].lanes.Count);
+                    _route2[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                        _route2[0], laneidx,
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                        _route2));
+                    activeVehicles++;
+
+                    laneidx = rnd.Next(0, _route3[0].lanes.Count / 2) * 2 + 1;
+                    _route3[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                        _route3[0], laneidx,
+                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                        _route3));
+                    activeVehicles++;
+                }
+                vehCount++;
+            }
+            //Debug.WriteLine("VehCount " + vehCount);
+            timeMod++;
+            #endregion
         }
     }
 }

@@ -208,10 +208,17 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            foreach(SegmentLane lane in lanes)
+            //Pen pen = new Pen(Color.Red, 1);
+            //g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
+
+            foreach (SegmentLane lane in lanes)
             {
                 lane.Draw(g);
             }
+
+            Font debugFont = new Font("Calibri", 6);
+            Brush blackBrush = new SolidBrush(Color.Black);
+            g.DrawString(Id.ToString() + " oneway: " + OneWay, debugFont, blackBrush, MidCoord);
         }
         #endregion
 
@@ -229,35 +236,62 @@ namespace SimTMDG.Road
 
         void generateLanes()
         {
-            //int distance;
-
-            if((OneWay != "yes")||(OneWay != "-1"))
+            Boolean forward = true;      
+            
+            for (int i = 0; i < NumLanes; i++)
             {
-                for(int i = 0; i < NumLanes; i++)
+                if (NumLanes % 2 == 0) // Segment has even lanes (e.g. Numlanes= 2, 4, 6, ..)
                 {
-                    int distance = i * laneWidth;
-                    //if (i % 2 == 0)
-                    //{
-                        lanes.Add(generateSegmentLane(i * laneWidth, i));
-                    //}
-                    //else
-                    //{
-                    //    lanes.Add(generateSegmentLane(-1 * i * laneWidth, i));
-                    //}
+                    if (i % 2 == 0) // at even lane  (e.g. at lane 2)
+                    {
+                        lanes.Add(generateSegmentLane(((i + 1) * laneWidth / 2), i, forward));
+                    }
+                    else // at odd lane  (e.g. at lane 1)
+                    {
+                        if (OneWay == "yes")
+                        {
+                            forward = true;
+                        }
+                        else if (OneWay == "-1")
+                        {
+                            forward = true;
+                        }
+                        else
+                        {
+                            forward = false;
+                        }
 
-                    //lanes.Add(generateSegmentLane(i * laneWidth, i));
+                        lanes.Add(generateSegmentLane(-1 * i * laneWidth / 2, i, forward));
+                    }
                 }
-            }else
-            {
-                for (int i = 0; i < NumLanes; i++)
+                else // Segment has odd lanes  (e.g. Numlanes= 1, 3, 5, ..)
                 {
-                    int distance = i * laneWidth;
-                    lanes.Add(generateSegmentLane(i * laneWidth, i));
+                    if (i % 2 == 0) // at even lane
+                    {
+                        lanes.Add(generateSegmentLane((-1 * i * laneWidth / 2), i, forward));
+                    }
+                    else // at odd lane
+                    {
+                        if (OneWay == "yes")
+                        {
+                            forward = true;
+                        }
+                        else if (OneWay == "-1")
+                        {
+                            forward = true;
+                        }
+                        else
+                        {
+                            forward = false;
+                        }
+                        lanes.Add(generateSegmentLane(( i * laneWidth + laneWidth) / 2, i, forward));
+                    }
                 }
             }
+
         }
 
-        SegmentLane generateSegmentLane(int distance, int i)
+        SegmentLane generateSegmentLane(int distance, int i, Boolean forward)
         {
             double angle = (Math.PI/2) - Vector2.AngleBetween(this.startNode.Position, this.endNode.Position);
 
@@ -265,7 +299,16 @@ namespace SimTMDG.Road
             Node newStart = new Node(new Vector2(this.startNode.Position.X + shift.X, this.startNode.Position.Y - shift.Y));
             Node newEnd   = new Node(new Vector2(this.endNode.Position.X + shift.X, this.endNode.Position.Y - shift.Y));
 
-            SegmentLane toReturn = new SegmentLane(newStart, newEnd, i);
+            SegmentLane toReturn;
+
+            if (forward)
+            {
+                toReturn = new SegmentLane(newStart, newEnd, i);
+            }else
+            {
+                toReturn = new SegmentLane(newEnd, newStart, i);
+            }
+
             return toReturn;
         }
         #endregion
