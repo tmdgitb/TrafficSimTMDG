@@ -60,7 +60,7 @@ namespace SimTMDG.Road
 
         public List<SegmentLane> lanes = new List<SegmentLane>();
 
-        int laneWidth = 4;
+        public double laneWidth = 3.5;
         #endregion
 
 
@@ -208,7 +208,19 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            //Pen pen = new Pen(Color.Red, 1);
+            Pen pen;
+
+            if (OneWay == "yes")
+            {
+                pen = new Pen(Color.Red, 1);
+            } else if (OneWay == "-1")
+            {
+                pen = new Pen(Color.Aquamarine, 1);
+            }else
+            {
+                pen = new Pen(Color.LightGreen, 1);
+            }
+
             //g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
 
             foreach (SegmentLane lane in lanes)
@@ -216,9 +228,9 @@ namespace SimTMDG.Road
                 lane.Draw(g);
             }
 
-            Font debugFont = new Font("Calibri", 6);
-            Brush blackBrush = new SolidBrush(Color.Black);
-            g.DrawString(Id.ToString() + " oneway: " + OneWay, debugFont, blackBrush, MidCoord);
+            //Font debugFont = new Font("Calibri", 6);
+            //Brush blackBrush = new SolidBrush(Color.Black);
+            //g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
         }
         #endregion
 
@@ -236,62 +248,72 @@ namespace SimTMDG.Road
 
         void generateLanes()
         {
-            Boolean forward = true;      
-            
+            Boolean forward = true;
+
+            #region old approach
+            //for (int i = 0; i < NumLanes; i++)
+            //{
+            //    if (NumLanes % 2 == 0) // Segment has even lanes (e.g. Numlanes= 2, 4, 6, ..)
+            //    {
+            //        if (i % 2 == 0) // at even lane  (e.g. at lane 2)
+            //        {
+            //            lanes.Add(generateSegmentLane(((i + 1) * laneWidth / 2), i, forward));
+            //        }
+            //        else // at odd lane  (e.g. at lane 1)
+            //        {
+            //            if (OneWay == "yes")
+            //            {
+            //                forward = true;
+            //            }
+            //            else if (OneWay == "-1")
+            //            {
+            //                forward = true;
+            //            }
+            //            else
+            //            {
+            //                forward = false;
+            //            }
+
+            //            lanes.Add(generateSegmentLane(-1 * i * laneWidth / 2, i, forward));
+            //        }
+            //    }
+            //    else // Segment has odd lanes  (e.g. Numlanes= 1, 3, 5, ..)
+            //    {
+            //        if (i % 2 == 0) // at even lane
+            //        {
+            //            lanes.Add(generateSegmentLane((-1 * i * laneWidth / 2), i, forward));
+            //        }
+            //        else // at odd lane
+            //        {
+            //            if (OneWay == "yes")
+            //            {
+            //                forward = true;
+            //            }
+            //            else if (OneWay == "-1")
+            //            {
+            //                forward = true;
+            //            }
+            //            else
+            //            {
+            //                forward = false;
+            //            }
+            //            lanes.Add(generateSegmentLane((i * laneWidth + laneWidth) / 2, i, forward));
+            //        }
+            //    }
+            //}
+            #endregion
+
+            #region new approach
+            double maxShift = (double) (NumLanes - 1) / 2 * laneWidth;
             for (int i = 0; i < NumLanes; i++)
             {
-                if (NumLanes % 2 == 0) // Segment has even lanes (e.g. Numlanes= 2, 4, 6, ..)
-                {
-                    if (i % 2 == 0) // at even lane  (e.g. at lane 2)
-                    {
-                        lanes.Add(generateSegmentLane(((i + 1) * laneWidth / 2), i, forward));
-                    }
-                    else // at odd lane  (e.g. at lane 1)
-                    {
-                        if (OneWay == "yes")
-                        {
-                            forward = true;
-                        }
-                        else if (OneWay == "-1")
-                        {
-                            forward = true;
-                        }
-                        else
-                        {
-                            forward = false;
-                        }
-
-                        lanes.Add(generateSegmentLane(-1 * i * laneWidth / 2, i, forward));
-                    }
-                }
-                else // Segment has odd lanes  (e.g. Numlanes= 1, 3, 5, ..)
-                {
-                    if (i % 2 == 0) // at even lane
-                    {
-                        lanes.Add(generateSegmentLane((-1 * i * laneWidth / 2), i, forward));
-                    }
-                    else // at odd lane
-                    {
-                        if (OneWay == "yes")
-                        {
-                            forward = true;
-                        }
-                        else if (OneWay == "-1")
-                        {
-                            forward = true;
-                        }
-                        else
-                        {
-                            forward = false;
-                        }
-                        lanes.Add(generateSegmentLane(( i * laneWidth + laneWidth) / 2, i, forward));
-                    }
-                }
+                double shift = i * laneWidth - maxShift;
+                lanes.Add(generateSegmentLane(shift, i, true));
             }
-
+            #endregion
         }
 
-        SegmentLane generateSegmentLane(int distance, int i, Boolean forward)
+        SegmentLane generateSegmentLane(double distance, int i, Boolean forward)
         {
             double angle = (Math.PI/2) - Vector2.AngleBetween(this.startNode.Position, this.endNode.Position);
 

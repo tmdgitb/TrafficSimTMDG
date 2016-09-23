@@ -96,7 +96,7 @@ namespace SimTMDG.Vehicle
         /// <summary>
         /// maximale sichere Bremsverzögerung
         /// </summary>
-        protected double bSave = -3;
+        protected double bSafe = 3;
         //*/
 
         #endregion
@@ -198,6 +198,37 @@ namespace SimTMDG.Vehicle
 
             return vNeu;
         }
+
+
+
+        // =======================================================================
+        // ================================ MOBIL ================================
+        // =======================================================================
+
+        /// <summary>
+        /// Safety Criterion Check
+        /// </summary>
+        /// <param name="newAccNewFollower">New acceleration of new follower</param>
+        public Boolean SafetyCriterion(double newAccNewFollower)
+        {
+            return (newAccNewFollower >= -(this.bSafe));
+        }
+
+        /// <summary>
+        /// Decision to change lane or not
+        /// </summary>
+        /// <param name="newAcc">New acceleration of vehicle on the target lane</param>
+        /// <param name="acc">Acceleration of vehicle on current lane</param>
+        /// <param name="newAccNewFollower">New acceleration of new follower AFTER lane change</param>
+        /// <param name="accNewFollower">Acceleration of new follower BEFORE lane change</param>
+        /// <param name="newAccOldFollower">New acceleration of old follower AFTER lane change</param>
+        /// <param name="accOldFollower">Acceleration of old follower BEFORE lane change</param>
+        public Boolean LaneChangeDecision(double newAcc, double acc, double newAccNewFollower, double accNewFollower, double newAccOldFollower, double accOldFollower)
+        {
+            double incentive = (newAcc - acc) + this.p * (newAccNewFollower - accNewFollower + newAccOldFollower - accOldFollower);
+            return (incentive > lineChangeThreshold);
+        }
+
 
 
     }

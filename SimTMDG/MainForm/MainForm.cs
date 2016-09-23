@@ -32,6 +32,7 @@ namespace SimTMDG
         private List<RoadSegment> _route3;
         private List<RoadSegment> _route4;
         private List<RoadSegment> _route5;
+        private List<RoadSegment> _route6;
         Random rnd = new Random();
         int vehCount = 0;
         int activeVehicles = 0;
@@ -311,7 +312,7 @@ namespace SimTMDG
 
             if (boundsDefined)
             {
-                nc.Draw(e.Graphics);
+                nc.Draw(e.Graphics, zoomComboBox.SelectedIndex);
             }
 
             //Pen pen = new Pen(Color.OrangeRed, 1);
@@ -654,7 +655,7 @@ namespace SimTMDG
                 // _route.segments.Find(x => x.Id == segmentToAddID)
 
                 Debug.WriteLine("Segment Count" + nc.segments.Count);
-                manuallyAddRoute();              
+                manuallyAddRoute();
 
                 lf.StepUpperProgress("Done");
                 lf.ShowLog();
@@ -835,10 +836,9 @@ namespace SimTMDG
             else { numlanes = -1; }
             #endregion
 
-
-
-            if (oneway != "-1")
-            {                
+            #region new approach
+            if (oneway == "yes")        // Oneway Forward
+            {
                 for (int i = 0; i < lnd.Count - 1; i++)
                 {
 
@@ -861,8 +861,7 @@ namespace SimTMDG
                         nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
-            }
-            else // Oneway: Reverse
+            } else if (oneway == "-1") // Oneway Reverse
             {
                 for (int i = lnd.Count - 1; i > 0; i--)
                 {
@@ -886,7 +885,120 @@ namespace SimTMDG
                         nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
+            } else                     // Two Way
+            {
+                for (int i = 0; i < lnd.Count - 1; i++)
+                {
+                    long ndId;
+                    XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
+                    if (ndIdNode != null)
+                        ndId = long.Parse(ndIdNode.Value);
+                    else
+                        ndId = 0;
+
+                    long ndNextId;
+                    XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
+                    if (ndIdNextNode != null)
+                        ndNextId = long.Parse(ndIdNextNode.Value);
+                    else
+                        ndNextId = 0;
+
+                    RoadSegment tempSegment;
+
+                    if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
+                    {
+                        tempSegment = new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway);
+
+                        int lanePerDirection = (int)tempSegment.lanes.Count / 2;
+                        double distanceShift = (double)(tempSegment.lanes.Count / (double) 4) * (double)tempSegment.laneWidth;
+
+                        if (lanePerDirection < 1)
+                            lanePerDirection = 1;
+
+                        nc.segments.Add(generateShiftedSegment(tempSegment, distanceShift, lanePerDirection, tempSegment.Highway, true));
+                        nc.segments.Add(generateShiftedSegment(tempSegment, -distanceShift, lanePerDirection, tempSegment.Highway, false));
+
+                    }
+
+                }
             }
+            #endregion
+
+
+            #region prev approach
+            //if (oneway != "-1")
+            //{
+            //    for (int i = 0; i < lnd.Count - 1; i++)
+            //    {
+
+            //        long ndId;
+            //        XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
+            //        if (ndIdNode != null)
+            //            ndId = long.Parse(ndIdNode.Value);
+            //        else
+            //            ndId = 0;
+
+            //        long ndNextId;
+            //        XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
+            //        if (ndIdNextNode != null)
+            //            ndNextId = long.Parse(ndIdNextNode.Value);
+            //        else
+            //            ndNextId = 0;
+
+            //        if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
+            //        {
+            //            nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+            //        }
+            //    }
+            //}
+            //else // Oneway: Reverse
+            //{
+            //    for (int i = lnd.Count - 1; i > 0; i--)
+            //    {
+
+            //        long ndId;
+            //        XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
+            //        if (ndIdNode != null)
+            //            ndId = long.Parse(ndIdNode.Value);
+            //        else
+            //            ndId = 0;
+
+            //        long ndNextId;
+            //        XmlNode ndIdNextNode = lnd[i - 1].Attributes.GetNamedItem("ref");
+            //        if (ndIdNextNode != null)
+            //            ndNextId = long.Parse(ndIdNextNode.Value);
+            //        else
+            //            ndNextId = 0;
+
+            //        if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
+            //        {
+            //            nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+            //        }
+            //    }
+            //}
+            #endregion
+        }
+
+        RoadSegment generateShiftedSegment(RoadSegment oriSegment, double distance, int numlanes, string highway, Boolean forward)
+        {
+            double angle = (Math.PI / 2) - Vector2.AngleBetween(oriSegment.startNode.Position, oriSegment.endNode.Position);
+            Vector2 shift = new Vector2(distance * Math.Cos(angle), distance * Math.Sin(angle));
+
+            Node newStart = new Node(new Vector2(oriSegment.startNode.Position.X + shift.X, oriSegment.startNode.Position.Y - shift.Y));
+            Node newEnd = new Node(new Vector2(oriSegment.endNode.Position.X + shift.X, oriSegment.endNode.Position.Y - shift.Y));
+
+            RoadSegment toReturn;
+
+            if (forward)
+            {
+                toReturn = new RoadSegment(newStart, newEnd, numlanes, highway, "yes");
+            }
+            else
+            {
+                toReturn = new RoadSegment(newEnd, newStart, numlanes, highway, "yes");
+            }
+
+            return toReturn;
         }
 
 
@@ -1009,15 +1121,15 @@ namespace SimTMDG
 
         private void buttonTLightTemp_Click(object sender, EventArgs e)
         {
-            switch (nc.segments.Find(x => x.Id == 1243).startNode.tLight.trafficLightState)
+            switch (nc.segments.Find(x => x.Id == 2918).endNode.tLight.trafficLightState)
             {
                 case TrafficLight.State.GREEN:
-                    nc.segments.Find(x => x.Id == 1243).startNode.tLight.SwitchToRed();
-                    nc.segments.Find(x => x.Id == 9428).startNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 2918).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 25163).endNode.tLight.SwitchToRed();
                     break;
                 case TrafficLight.State.RED:
-                    nc.segments.Find(x => x.Id == 1243).startNode.tLight.SwitchToGreen();
-                    nc.segments.Find(x => x.Id == 9428).startNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 2918).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 25163).endNode.tLight.SwitchToGreen();
                     break;
             }
 
@@ -1034,47 +1146,58 @@ namespace SimTMDG
             _route3 = new List<RoadSegment>();
             _route4 = new List<RoadSegment>();
             _route5 = new List<RoadSegment>();
+            _route6 = new List<RoadSegment>();
 
             // Route 1 : Pasteur
-            for (int i = 1232; i < 1250; i++)
+            for (int i = 2908; i < 2926; i++)
             {
                 _route.Add(nc.segments.Find(x => x.Id == i));
             }
-            nc.segments.Find(x => x.Id == 1243).startNode.tLight = new TrafficLight();
+            nc.segments.Find(x => x.Id == 2918).endNode.tLight = new TrafficLight();
 
             // Route 2 : Pasteur
-            for (int i = 9418; i < 9441; i++)
+            for (int i = 25153; i < 25177; i++)
             {
                 _route2.Add(nc.segments.Find(x => x.Id == i));
             }
-            nc.segments.Find(x => x.Id == 9428).startNode.tLight = new TrafficLight();
+            nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
 
 
             // Route 3 : DU
-            for (int i = 8221; i > 8210; i--)
+            for (int i = 22273; i > 22245; i= i-3)
             {
                 _route3.Add(nc.segments.Find(x => x.Id == i));
             }
 
             // Route 4 : DU
-            for (int i = 8211; i < 8222; i++)
+            for (int i = 22245; i < 22273; i = i + 3)
             {
                 _route4.Add(nc.segments.Find(x => x.Id == i));
             }
 
 
-            // Route 5 : Lembong - Tamblong
-            _route5.Add(nc.segments.Find(x => x.Id == 54));
-            _route5.Add(nc.segments.Find(x => x.Id == 55));
-            _route5.Add(nc.segments.Find(x => x.Id == 9181));
-            _route5.Add(nc.segments.Find(x => x.Id == 9182));
-            _route5.Add(nc.segments.Find(x => x.Id == 10176));
-            _route5.Add(nc.segments.Find(x => x.Id == 10177));
-            _route5.Add(nc.segments.Find(x => x.Id == 10178));
-            _route5.Add(nc.segments.Find(x => x.Id == 10179));
-            _route5.Add(nc.segments.Find(x => x.Id == 7755));
-            _route5.Add(nc.segments.Find(x => x.Id == 56));
+            //// Route 5 : Lembong - Tamblong
+            //_route5.Add(nc.segments.Find(x => x.Id == 54));
+            //_route5.Add(nc.segments.Find(x => x.Id == 55));
+            //_route5.Add(nc.segments.Find(x => x.Id == 9181));
+            //_route5.Add(nc.segments.Find(x => x.Id == 9182));
+            //_route5.Add(nc.segments.Find(x => x.Id == 10176));
+            //_route5.Add(nc.segments.Find(x => x.Id == 10177));
+            //_route5.Add(nc.segments.Find(x => x.Id == 10178));
+            //_route5.Add(nc.segments.Find(x => x.Id == 10179));
+            //_route5.Add(nc.segments.Find(x => x.Id == 7755));
+            //_route5.Add(nc.segments.Find(x => x.Id == 56));
 
+
+            //// Route 5 : Siliwangi - Simpang Dago
+            //_route6.Add(nc.segments.Find(x => x.Id == 357));
+            //_route6.Add(nc.segments.Find(x => x.Id == 10554));
+            //_route6.Add(nc.segments.Find(x => x.Id == 10553));
+            //_route6.Add(nc.segments.Find(x => x.Id == 10551));
+            //_route6.Add(nc.segments.Find(x => x.Id == 10552));
+            //_route6.Add(nc.segments.Find(x => x.Id == 10259));
+            //nc.segments.Find(x => x.Id == 10259).endNode.tLight = new TrafficLight();
+            
 
         }
 
@@ -1225,19 +1348,19 @@ namespace SimTMDG
                         _route));
                     activeVehicles++;
 
-                    laneidx = rnd.Next(0, _route4[0].lanes.Count / 2) * 2;
+                    laneidx = rnd.Next(0, _route4[0].lanes.Count);
                     _route4[0].lanes[laneidx].vehicles.Add(new IVehicle(
                         _route4[0], laneidx,
                         Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route4));
                     activeVehicles++;
 
-                    laneidx = 0;
-                    _route5[0].lanes[laneidx].vehicles.Add(new IVehicle(
-                        _route5[0], laneidx,
-                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                        _route5));
-                    activeVehicles++;
+                    //laneidx = 0;
+                    //_route5[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                    //    _route5[0], laneidx,
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route5));
+                    //activeVehicles++;
                 }
                 else
                 {
@@ -1248,12 +1371,19 @@ namespace SimTMDG
                         _route2));
                     activeVehicles++;
 
-                    laneidx = rnd.Next(0, _route3[0].lanes.Count / 2) * 2 + 1;
+                    laneidx = rnd.Next(0, _route3[0].lanes.Count);
                     _route3[0].lanes[laneidx].vehicles.Add(new IVehicle(
                         _route3[0], laneidx,
                         Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
                         _route3));
                     activeVehicles++;
+
+                    //laneidx = rnd.Next(0, _route6[0].lanes.Count);
+                    //_route6[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                    //    _route6[0], laneidx,
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route6));
+                    //activeVehicles++;
                 }
                 vehCount++;
             }

@@ -184,10 +184,77 @@ namespace SimTMDG.Road
         }
 
 
+        #region tools
+        public int findVehicleInFront(double position)
+        {
+            //// Binary Search
+            //int low = 0;
+            //int high = vehicles.Count - 1;
+
+            //while (low <= high)
+            //{
+            //    int mid = (low + high) >> 1;
+            //    double rearPos = vehicles[mid].distance;
+            //    // final int compare = Double.compare(midPos, vehiclePos);
+            //    // note vehicles are sorted in reverse order of position
+            //    if (position > rearPos)
+            //    {
+            //        low = mid + 1;
+            //    }
+            //    else if (position < rearPos)
+            //    {
+            //        high = mid - 1;
+            //    }
+            //    else
+            //    {
+            //        return mid; // key found
+            //    }
+            //}
+            //return -(low + 1); // key not found
+
+            // naive search
+            if (vehicles.Count < 1)
+            {
+                return -1;
+            }
+
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                if (vehicles[i].RearPos > position)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public int findVehicleBehind(double position)
+        {
+            if (vehicles.Count < 1)
+            {
+                return -1;
+            }
+
+            int toReturn = -1;
+
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                if (vehicles[i].distance < position)
+                {
+                    toReturn = i;
+                }
+            }
+
+            return toReturn;
+        }
+        #endregion
 
 
 
-        
+
+
+
         #region draw
         public void Draw(Graphics g)
         {

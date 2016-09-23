@@ -120,8 +120,7 @@ namespace SimTMDG
             "100%",
             "150%",
             "200%",
-            "400%",
-            "800%"});
+            "400%"});
             this.zoomComboBox.Location = new System.Drawing.Point(130, 3);
             this.zoomComboBox.Name = "zoomComboBox";
             this.zoomComboBox.Size = new System.Drawing.Size(121, 21);

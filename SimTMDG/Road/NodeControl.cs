@@ -166,17 +166,42 @@ namespace SimTMDG.Road
 
 
         #region draw
-        public void Draw(Graphics g)
+        public void Draw(Graphics g, int zoomLvl)
         {
-            foreach (RoadSegment ws in Segments)
+            if (zoomLvl < 5)
             {
-                if ((IsInBound(ws.startNode.Position))||(IsInBound(ws.endNode.Position)))
-                    ws.Draw(g);
+                foreach (RoadSegment ws in Segments)
+                {
+                    if ((IsInBound(ws.MidCoord, 0)))
+                        ws.Draw(g);
+                }
+            }else if (zoomLvl < 8)
+            {
+                foreach (RoadSegment ws in Segments)
+                {
+                    if ((IsInBound(ws.startNode.Position, 0)) || (IsInBound(ws.endNode.Position, 0)))
+                        ws.Draw(g);
+                }
+            }else if (zoomLvl < 10)
+            {
+                foreach (RoadSegment ws in Segments)
+                {
+                    if ((IsInBound(ws.startNode.Position, (int)mapBound.Width / 2)) || (IsInBound(ws.endNode.Position, (int)mapBound.Width / 2)))
+                        ws.Draw(g);
+                }
+            }else
+            {
+                foreach (RoadSegment ws in Segments)
+                {
+                    if ((IsInBound(ws.startNode.Position, mapBound.Width)) || (IsInBound(ws.endNode.Position, mapBound.Width)))
+                        ws.Draw(g);
+                }
             }
+            
 
             foreach (Node nd in _nodes)
             {
-                if (IsInBound(nd.Position))
+                if (IsInBound(nd.Position, 0))
                     nd.Draw(g);
             }
 
@@ -193,7 +218,7 @@ namespace SimTMDG.Road
                 {
                     foreach (IVehicle v in lane.vehicles)
                     {
-                        if (IsInBound(v.absCoord))
+                        if (IsInBound(v.absCoord, 0))
                             v.Draw(g);
                     }
                 }
@@ -205,10 +230,11 @@ namespace SimTMDG.Road
         }
         #endregion
 
-        public bool IsInBound(Vector2 coord)
+        public bool IsInBound(Vector2 coord, int extension)
         {
-            if  ((coord.X < mapBound.X)||(coord.Y < mapBound.Y)||
-                 (coord.X > mapBound.X + mapBound.Width)||(coord.Y > mapBound.Y + mapBound.Height)){
+            if  ((coord.X < mapBound.X - extension)||(coord.Y < mapBound.Y - extension) ||
+                 (coord.X > mapBound.X + mapBound.Width + extension) ||
+                 (coord.Y > mapBound.Y + mapBound.Height + extension)){
                 return false;
             }else{
                 return true;
