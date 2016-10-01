@@ -139,7 +139,7 @@ namespace SimTMDG.Road
                 vehicles[i].Move(tickLength);
             }
 
-            RemoveAllVehiclesInRemoveList();
+            //RemoveAllVehiclesInRemoveList();
         }
 
 

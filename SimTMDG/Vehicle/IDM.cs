@@ -67,12 +67,12 @@ namespace SimTMDG.Vehicle
         /// <summary>
         /// maximale Beschleunigung
         /// </summary>
-        protected double a = 0.3;//1.2;
+        protected double a = 1.2;//0.3;
 
         /// <summary>
         /// komfortable Bremsverzögerung
         /// </summary>
-        protected double b = 3;//1.5;
+        protected double b = 1.5;//3;
 
         /// <summary>
         /// Mindestabstand im Stau

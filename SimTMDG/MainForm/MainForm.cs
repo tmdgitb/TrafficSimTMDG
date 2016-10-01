@@ -205,15 +205,15 @@ namespace SimTMDG
             //Debug.WriteLine("timerSimulation Interval " + timerSimulation.Interval + ", ticklength: " + tickLength);
 
 
-            if (GlobalTime.Instance.currentTime < _temp_simulationDuration && (GlobalTime.Instance.currentTime + tickLength) >= _temp_simulationDuration)
-            {
-                //cbEnableSimulation.Checked = false;
+            //if (GlobalTime.Instance.currentTime < _temp_simulationDuration && (GlobalTime.Instance.currentTime + tickLength) >= _temp_simulationDuration)
+            //{
+            //    //cbEnableSimulation.Checked = false;
 
-                // TODO playButton_click?
-                simIsPlaying = false;
-                timerSimulation.Enabled = simIsPlaying;
-                playButton.Text = "Play";
-            }
+            //    // TODO playButton_click?
+            //    simIsPlaying = false;
+            //    timerSimulation.Enabled = simIsPlaying;
+            //    playButton.Text = "Play";
+            //}
             //timelineSteuerung.Advance(tickLength);
             GlobalTime.Instance.Advance(tickLength);
 
@@ -1046,6 +1046,7 @@ namespace SimTMDG
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     GlobalTime.Instance.Reset();
+                    nc.Clear();
                     nc.Load();
 
                     LoadOsmMap_old(ofd.FileName);
@@ -1341,18 +1342,57 @@ namespace SimTMDG
             {
                 if ((vehCount % 2) == 0)
                 {
+                    //int laneidx = rnd.Next(0, _route[0].lanes.Count);
+
+                    //_route[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                    //    _route[0], laneidx,
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route));
+                    //activeVehicles++;
+
+                    //laneidx = rnd.Next(0, _route4[0].lanes.Count);
+                    //_route4[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                    //    _route4[0], laneidx,
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route4));
+                    //activeVehicles++;
+
                     int laneidx = rnd.Next(0, _route[0].lanes.Count);
-                    _route[0].lanes[laneidx].vehicles.Add(new IVehicle(
-                        _route[0], laneidx,
-                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                        _route));
+                    int vehType = rnd.Next(0, 2);
+                    IVehicle v = null;
+
+                    if (vehType == 0)
+                    {
+                        v = new Car(_route[0], laneidx, _route);
+                    }
+                    else if (vehType == 1)
+                    {
+                        v = new Bus(_route[0], laneidx, _route);
+                    } else
+                    {
+                        v = new Truck(_route[0], laneidx, _route);
+                    }
+
+                    _route[0].lanes[laneidx].vehicles.Add(v);
                     activeVehicles++;
 
                     laneidx = rnd.Next(0, _route4[0].lanes.Count);
-                    _route4[0].lanes[laneidx].vehicles.Add(new IVehicle(
-                        _route4[0], laneidx,
-                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                        _route4));
+                    vehType = rnd.Next(0, 2);
+
+                    if (vehType == 0)
+                    {
+                        v = new Car(_route4[0], laneidx, _route4);
+                    }
+                    else if (vehType == 1)
+                    {
+                        v = new Bus(_route4[0], laneidx, _route4);
+                    }
+                    else
+                    {
+                        v = new Truck(_route4[0], laneidx, _route4);
+                    }
+
+                    _route4[0].lanes[laneidx].vehicles.Add(v);
                     activeVehicles++;
 
                     //laneidx = 0;
@@ -1364,18 +1404,57 @@ namespace SimTMDG
                 }
                 else
                 {
+                    //int laneidx = rnd.Next(0, _route2[0].lanes.Count);
+                    //_route2[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                    //    _route2[0], laneidx,
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route2));
+                    //activeVehicles++;
+
+                    //laneidx = rnd.Next(0, _route3[0].lanes.Count);
+                    //_route3[0].lanes[laneidx].vehicles.Add(new IVehicle(
+                    //    _route3[0], laneidx,
+                    //    Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
+                    //    _route3));
+                    //activeVehicles++;
+
                     int laneidx = rnd.Next(0, _route2[0].lanes.Count);
-                    _route2[0].lanes[laneidx].vehicles.Add(new IVehicle(
-                        _route2[0], laneidx,
-                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                        _route2));
+                    int vehType = rnd.Next(0, 2);
+                    IVehicle v = null;
+
+                    if (vehType == 0)
+                    {
+                        v = new Car(_route2[0], laneidx, _route2);
+                    }
+                    else if (vehType == 1)
+                    {
+                        v = new Bus(_route2[0], laneidx, _route2);
+                    }
+                    else
+                    {
+                        v = new Truck(_route2[0], laneidx, _route2);
+                    }
+
+                    _route2[0].lanes[laneidx].vehicles.Add(v);
                     activeVehicles++;
 
                     laneidx = rnd.Next(0, _route3[0].lanes.Count);
-                    _route3[0].lanes[laneidx].vehicles.Add(new IVehicle(
-                        _route3[0], laneidx,
-                        Color.FromArgb(rnd.Next(64, 200), rnd.Next(64, 200), rnd.Next(64, 200)),
-                        _route3));
+                    vehType = rnd.Next(0, 2);
+
+                    if (vehType == 0)
+                    {
+                        v = new Car(_route3[0], laneidx, _route3);
+                    }
+                    else if (vehType == 1)
+                    {
+                        v = new Bus(_route3[0], laneidx, _route3);
+                    }
+                    else
+                    {
+                        v = new Truck(_route3[0], laneidx, _route3);
+                    }
+
+                    _route3[0].lanes[laneidx].vehicles.Add(v);
                     activeVehicles++;
 
                     //laneidx = rnd.Next(0, _route6[0].lanes.Count);

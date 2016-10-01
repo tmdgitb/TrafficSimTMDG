@@ -41,69 +41,6 @@ namespace SimTMDG.Road
         {
 
             Clear();
-
-
-            //_nodes.Add(new Node(new Vector2(100, 150)));
-            //_nodes.Add(new Node(new Vector2(250, 150)));
-            //_nodes.Add(new Node(new Vector2(300, 175)));
-            //_nodes.Add(new Node(new Vector2(350, 225)));
-            //_nodes.Add(new Node(new Vector2(400, 300)));
-            //_nodes.Add(new Node(new Vector2(400, 350)));
-            //_nodes.Add(new Node(new Vector2(400, 225)));
-            //_nodes.Add(new Node(new Vector2(425, 200)));
-
-            //_segments.Add(new WaySegment(_nodes[0], _nodes[1]));
-            //_segments.Add(new WaySegment(_nodes[1], _nodes[2]));
-            //_segments.Add(new WaySegment(_nodes[2], _nodes[3]));
-            //_segments.Add(new WaySegment(_nodes[3], _nodes[4]));
-            //_segments.Add(new WaySegment(_nodes[4], _nodes[5]));
-            //_segments.Add(new WaySegment(_nodes[3], _nodes[6]));
-            //_segments.Add(new WaySegment(_nodes[6], _nodes[7]));
-
-
-
-            //Routing _route = new Routing();
-            //_route.Push(_segments[0]);
-            //_route.Push(_segments[1]);
-            //_route.Push(_segments[2]);
-            //_route.Push(_segments[3]);
-            //_route.Push(_segments[4]);
-
-            //Routing _route2 = new Routing();
-            //_route2.Push(_segments[0]);
-            //_route2.Push(_segments[1]);
-            //_route2.Push(_segments[2]);
-            //_route2.Push(_segments[5]);
-            //_route2.Push(_segments[6]);
-
-            //Random rnd = new Random();
-
-            //_segments[0].vehicles.Add(new IVehicle());
-            //_segments[0].vehicles[0].CurrentSegment = _segments[0];
-            //_segments[0].vehicles[0].distance = 20;
-            //_segments[0].vehicles[0].color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
-            //_segments[0].vehicles[0]
-            //    .newCoord(
-            //        _segments[0].startNode.Position,
-            //        _segments[0].endNode.Position,
-            //        _segments[0].vehicles[0].distance);
-
-            //_segments[0].vehicles[0].Routing = _route;
-
-            //_segments[0].vehicles.Add(new IVehicle());
-            //_segments[0].vehicles[1].CurrentSegment = _segments[0];
-            //_segments[0].vehicles[1].distance = 0;
-            //_segments[0].vehicles[1].color = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
-            //_segments[0].vehicles[1]
-            //    .newCoord(
-            //        _segments[0].startNode.Position,
-            //        _segments[0].endNode.Position,
-            //        _segments[0].vehicles[1].distance);
-
-            //_segments[0].vehicles[1].Routing = _route2;
-
-            //Debug.WriteLine("veh[0] distance: " + _segments[0].vehicles[0].distance
-            //    + ", absCoord: " + _segments[0].vehicles[0].absCoord);
         }
 
 

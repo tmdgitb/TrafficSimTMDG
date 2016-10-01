@@ -78,14 +78,18 @@
     <Compile Include="Road\TrafficLight.cs" />
     <Compile Include="Road\WaySegment.cs" />
     <Compile Include="Time\GlobalTime.cs" />
+    <Compile Include="Tools\GlobalRandom.cs" />
     <Compile Include="Tools\Interval.cs" />
     <Compile Include="Tools\ISavable.cs" />
     <Compile Include="Tools\ITickable.cs" />
     <Compile Include="Tools\Math2.cs" />
     <Compile Include="Tools\SortedLinkedList.cs" />
     <Compile Include="Tools\Vector2.cs" />
+    <Compile Include="Vehicle\Bus.cs" />
+    <Compile Include="Vehicle\Car.cs" />
     <Compile Include="Vehicle\IDM.cs" />
     <Compile Include="Vehicle\IVehicle.cs" />
+    <Compile Include="Vehicle\Truck.cs" />
     <Compile Include="Vehicle\VehicleDistance.cs" />
     <EmbeddedResource Include="LoadingForm\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
