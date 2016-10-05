@@ -225,8 +225,8 @@ namespace OSMConverter
             double angle = (Math.PI / 2) - Vector2.AngleBetween(this.startNode.Position, this.endNode.Position);
 
             Vector2 shift = new Vector2(distance * Math.Cos(angle), distance * Math.Sin(angle));
-            NodeOSM newStart = new NodeOSM(new Vector2(this.startNode.Position.X + shift.X, this.startNode.Position.Y - shift.Y));
-            NodeOSM newEnd = new NodeOSM(new Vector2(this.endNode.Position.X + shift.X, this.endNode.Position.Y - shift.Y));
+            NodeOSM newStart = new NodeOSM(new Vector2(this.startNode.Position.X + shift.X, this.startNode.Position.Y - shift.Y), true);
+            NodeOSM newEnd = new NodeOSM(new Vector2(this.endNode.Position.X + shift.X, this.endNode.Position.Y - shift.Y), true);
 
             SegmentLaneOSM toReturn;
 

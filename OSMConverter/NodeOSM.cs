@@ -11,6 +11,12 @@ namespace OSMConverter
     [Serializable, XmlRoot("node"), XmlType("node")]
     public class NodeOSM
     {
+        #region Attributes
+        /// <summary>
+        /// ID index for generating ID in case of shifted RoadSegment
+        /// </summary>
+        private static int idIndex = 0;
+
         #region OSM Node
         /// <summary>
         /// Node ID
@@ -19,10 +25,16 @@ namespace OSMConverter
         [XmlAttribute("id")]
         public long Id { get { return _id; } set { _id = value; } }
 
+        /// <summary>
+        /// Node Latitude in OSM
+        /// </summary>
         private Double _lat;
         [XmlAttribute("lat")]
         public Double Lat { get { return _lat; } set { _lat = value / 1; } }
 
+        /// <summary>
+        /// Node Longitude in OSM
+        /// </summary>
         private Double _long;
         [XmlAttribute("lon")]
         public Double Long { get { return _long; } set { _long = value / 1; } }
@@ -31,7 +43,7 @@ namespace OSMConverter
 
         #region Position
         /// <summary>
-        /// Node position (Vector2D)
+        /// Node position in converted cartesian coordinate (Vector2D)
         /// </summary>
         private Vector2 _position;
 
@@ -44,10 +56,37 @@ namespace OSMConverter
         }
         #endregion
 
+        #endregion
 
 
 
 
+        #region Constructor
+        public NodeOSM()
+        {
+
+        }
+
+        public NodeOSM(Vector2 position)
+        {
+            _position = position;
+        }
+
+        public NodeOSM(Vector2 position, Boolean generateID)
+        {
+            if (generateID)
+            {
+                Id = idIndex++;
+            }
+
+            _position = position;
+        }
+        #endregion
+
+
+
+
+        #region Methods
 
         #region Tools
         public void latLonToPos(Double minLong, Double maxLat)
@@ -58,6 +97,8 @@ namespace OSMConverter
             );
             this.Position = toReturn;
         }
+        #endregion
+
         #endregion
     }
 }
