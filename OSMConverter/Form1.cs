@@ -1,5 +1,6 @@
 ﻿using SimTMDG.LoadingForm;
 using SimTMDG.Road;
+using SimTMDG.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,11 +21,14 @@ namespace OSMConverter
     public partial class Form1 : Form
     {
 
+        RoadNetwork rn;
         double minLon;
         double maxLon;
         double minLat;
         double maxLat;
         Boolean boundsDefined = false;
+
+
 
 
 
@@ -122,12 +126,12 @@ namespace OSMConverter
                     // Node in einen TextReader packen
                     TextReader tr = new StringReader(aXmlNode.OuterXml);
                     // und Deserializen
-                    XmlSerializer xs = new XmlSerializer(typeof(Node));
-                    Node n = (Node)xs.Deserialize(tr);
+                    XmlSerializer xs = new XmlSerializer(typeof(NodeOSM));
+                    NodeOSM n = (NodeOSM)xs.Deserialize(tr);
                     n.latLonToPos(minLon, maxLat);
 
                     // ab in die Liste
-                    nc._nodes.Add(n);
+                    rn.nodes.Add(n);
 
                     lf.StepLowerProgress();
                 }
@@ -158,19 +162,11 @@ namespace OSMConverter
                     if (onewayTag != null)
                     {
                         string oneway = onewayTag.Attributes.GetNamedItem("v").Value;
-
-                        //if (oneway == "-1")
-                        //{
-                        //    makeWaySegment_old(lnd, highwayTag, numlanesTag, oneway);
-                        //}
-                        //else
-                        //{
-                        makeWaySegment_old(lnd, highwayTag, numlanesTag, oneway);
-                        //}
+                        makeWaySegment(lnd, highwayTag, numlanesTag, oneway);
                     }
                     else
                     {
-                        makeWaySegment_old(lnd, highwayTag, numlanesTag, "");
+                        makeWaySegment(lnd, highwayTag, numlanesTag, "");
                     }
 
                     lf.StepLowerProgress();
@@ -178,12 +174,12 @@ namespace OSMConverter
                 }
 
                 lf.StepUpperProgress("Search segment connection...");
-                lf.SetupLowerProgress("Search segment connectio", nc.segments.Count - 1);
+                lf.SetupLowerProgress("Search segment connectio", rn.segments.Count - 1);
 
-                for (int i = 0; i < nc.segments.Count; i++)
+                for (int i = 0; i < rn.segments.Count; i++)
                 {
-                    nc.segments[i].nextSegment = nc.segments.FindAll(x => x.startNode == nc.segments[i].endNode);
-                    nc.segments[i].prevSegment = nc.segments.FindAll(x => x.endNode == nc.segments[i].startNode);
+                    rn.segments[i].nextSegment = rn.segments.FindAll(x => x.startNode == rn.segments[i].endNode);
+                    rn.segments[i].prevSegment = rn.segments.FindAll(x => x.endNode == rn.segments[i].startNode);
 
                     lf.StepLowerProgress();
                 }
@@ -209,6 +205,135 @@ namespace OSMConverter
 
                 #endregion
             }
+        }
+
+
+        private void makeWaySegment(List<XmlNode> lnd, XmlNode highwayTag, XmlNode numlanesTag, string oneway)
+        {
+            #region road type and lanes
+            string highway;
+            int numlanes;
+
+            if (highwayTag != null) { highway = highwayTag.Attributes.GetNamedItem("v").Value; }
+            else { highway = ""; }
+
+            if (numlanesTag != null) { numlanes = int.Parse(numlanesTag.Attributes.GetNamedItem("v").Value); }
+            else { numlanes = -1; }
+            #endregion
+
+            #region new approach
+            if (oneway == "yes")        // Oneway Forward
+            {
+                for (int i = 0; i < lnd.Count - 1; i++)
+                {
+
+                    long ndId;
+                    XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
+                    //if (ndIdNode != null)
+                    ndId = long.Parse(ndIdNode.Value);
+                    //else
+                    //    ndId = 0;
+
+                    long ndNextId;
+                    XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
+                    //if (ndIdNextNode != null)
+                    ndNextId = long.Parse(ndIdNextNode.Value);
+                    //else
+                    //    ndNextId = 0;
+
+                    if ((rn.nodes.Find(x => x.Id == ndId) != null) && (rn.nodes.Find(y => y.Id == ndNextId) != null))
+                    {
+                        rn.segments.Add(new RoadSegmentOSM(rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                    }
+                }
+            }
+            else if (oneway == "-1") // Oneway Reverse
+            {
+                for (int i = lnd.Count - 1; i > 0; i--)
+                {
+
+                    long ndId;
+                    XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
+                    if (ndIdNode != null)
+                        ndId = long.Parse(ndIdNode.Value);
+                    else
+                        ndId = 0;
+
+                    long ndNextId;
+                    XmlNode ndIdNextNode = lnd[i - 1].Attributes.GetNamedItem("ref");
+                    if (ndIdNextNode != null)
+                        ndNextId = long.Parse(ndIdNextNode.Value);
+                    else
+                        ndNextId = 0;
+
+                    if ((rn.nodes.Find(x => x.Id == ndId) != null) && (rn.nodes.Find(y => y.Id == ndNextId) != null))
+                    {
+                        rn.segments.Add(new RoadSegmentOSM(rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                    }
+                }
+            }
+            else                     // Two Way
+            {
+                for (int i = 0; i < lnd.Count - 1; i++)
+                {
+                    long ndId;
+                    XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
+                    if (ndIdNode != null)
+                        ndId = long.Parse(ndIdNode.Value);
+                    else
+                        ndId = 0;
+
+                    long ndNextId;
+                    XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
+                    if (ndIdNextNode != null)
+                        ndNextId = long.Parse(ndIdNextNode.Value);
+                    else
+                        ndNextId = 0;
+
+                    RoadSegmentOSM tempSegment;
+
+                    if ((rn.nodes.Find(x => x.Id == ndId) != null) && (rn.nodes.Find(y => y.Id == ndNextId) != null))
+                    {
+                        tempSegment = new RoadSegmentOSM(rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway);
+
+                        int lanePerDirection = (int)tempSegment.lanes.Count / 2;
+                        double distanceShift = (double)(tempSegment.lanes.Count / (double)4) * (double)tempSegment.laneWidth;
+
+                        if (lanePerDirection < 1)
+                            lanePerDirection = 1;
+
+                        rn.segments.Add(generateShiftedSegment(tempSegment, distanceShift, lanePerDirection, tempSegment.Highway, true));
+                        rn.segments.Add(generateShiftedSegment(tempSegment, -distanceShift, lanePerDirection, tempSegment.Highway, false));
+
+                    }
+
+                }
+            }
+            #endregion
+        }
+
+
+
+        RoadSegmentOSM generateShiftedSegment(RoadSegmentOSM oriSegment, double distance, int numlanes, string highway, Boolean forward)
+        {
+            double angle = (Math.PI / 2) - Vector2.AngleBetween(oriSegment.startNode.Position, oriSegment.endNode.Position);
+            Vector2 shift = new Vector2(distance * Math.Cos(angle), distance * Math.Sin(angle));
+
+            Node newStart = new Node(new Vector2(oriSegment.startNode.Position.X + shift.X, oriSegment.startNode.Position.Y - shift.Y));
+            Node newEnd = new Node(new Vector2(oriSegment.endNode.Position.X + shift.X, oriSegment.endNode.Position.Y - shift.Y));
+
+            RoadSegmentOSM toReturn;
+
+            if (forward)
+            {
+                toReturn = new RoadSegmentOSM(newStart, newEnd, numlanes, highway, "yes");
+            }
+            else
+            {
+                toReturn = new RoadSegmentOSM(newEnd, newStart, numlanes, highway, "yes");
+            }
+
+            return toReturn;
         }
     }
 }
