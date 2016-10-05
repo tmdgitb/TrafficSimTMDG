@@ -32,6 +32,7 @@ namespace SimTMDG.Road
 
         #endregion
 
+        private static int idIndex = 0;
 
         #region Position
         /// <summary>
@@ -63,6 +64,7 @@ namespace SimTMDG.Road
 
         public Node(Vector2 position)
         {
+            Id = idIndex++;
             _position = position;
         }
         #endregion
@@ -93,10 +95,14 @@ namespace SimTMDG.Road
                     penColor = Color.Red;
                 }
 
-                Pen pen = new Pen(penColor, 1);
-                Rectangle rec = new Rectangle((int) this.Position.X - 1, (int) this.Position.Y - 1, 2, 2);
-                g.DrawEllipse(pen, rec);
+                //Pen pen = new Pen(penColor, 1);
+                //Rectangle rec = new Rectangle((int) this.Position.X - 1, (int) this.Position.Y - 1, 2, 2);
+                //g.DrawEllipse(pen, rec);
             }
+
+            Pen pen = new Pen(penColor, 1);
+            Rectangle rec = new Rectangle((int)this.Position.X - 1, (int)this.Position.Y - 1, 2, 2);
+            g.DrawEllipse(pen, rec);
 
         }
         #endregion

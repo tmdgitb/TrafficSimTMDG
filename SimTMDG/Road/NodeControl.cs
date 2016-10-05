@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace SimTMDG.Road
 {
+    [Serializable]
     public class NodeControl : ITickable
     {
         #region TEMP

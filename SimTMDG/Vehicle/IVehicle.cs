@@ -195,6 +195,8 @@ namespace SimTMDG.Vehicle
             {
                 currentSegment = null;
                 laneIdx = -1;
+                targetLaneIdx = -1;
+                prevLaneIdx = -1;
                 m_Position = p;
                 //m_PositionAbs = null;
                 //m_Orientation = null;
@@ -214,6 +216,8 @@ namespace SimTMDG.Vehicle
             {
                 currentSegment = cs;
                 laneIdx = laneIndex;
+                targetLaneIdx = -1;
+                prevLaneIdx = -1;
                 m_Position = p;
 
                 //double t = currentNodeConnection.lineSegment.PosToTime(p);
@@ -235,6 +239,16 @@ namespace SimTMDG.Vehicle
             /// Lane index in current RoadSegment
             /// </summary>
             public int laneIdx;
+
+            /// <summary>
+            /// Target lane index in current RoadSegment
+            /// </summary>
+            public int targetLaneIdx;
+
+            /// <summary>
+            /// Previous lane index in current RoadSegment
+            /// </summary>
+            public int prevLaneIdx;
 
             /// <summary>
             /// relative Position auf der Line
@@ -542,71 +556,126 @@ namespace SimTMDG.Vehicle
                 //ConsiderLaneChange(direction, tickLength);
                 #region consider lane change
                 // Find idx of new Lead
-                int newLeadIdx = currentLane(direction).findVehicleInFront(distance);
+                //int newLeadIdx = currentLane(direction).findVehicleInFront(distance);
+                VehicleDistance newLeadVd = findVehicleInFront(route, direction);
+                VehicleDistance newLagVd = findVehicleInBehind(direction);
+                VehicleDistance lagVd = findVehicleInBehind();
+
                 double sNewLead;
                 double sNewLag;
+                double sLead;
+                double sLag;
                 double vNewLead;
                 double vNewLag;
+                double vLead;
+                double vLag;
                 double accNew;
                 double accNewLag;
                 double newAccNewLag;
-                double accOldLag;
+                double accLag;
                 double newAccOldLag;
 
-
-                if (newLeadIdx >= 0)    // If vehicle in front (in prospect lane) is found
+                if (newLeadVd != null)
                 {
-                    sNewLead = currentLane(direction).vehicles[newLeadIdx].rearPos - frontPos;
-                    vNewLead = currentLane(direction).vehicles[newLeadIdx].physics.velocity;
-
-                    if (newLeadIdx > 0)
-                    {
-                        sNewLag = rearPos - currentLane(direction).vehicles[newLeadIdx - 1].frontPos;
-                        vNewLag = currentLane(direction).vehicles[newLeadIdx - 1].physics.velocity;
-                        accNewLag = currentLane(direction).vehicles[newLeadIdx - 1].physics.acceleration;
-                    }
-                    else
-                    {
-                        sNewLag = 768;
-                        vNewLag = 0;
-                        accNewLag = 0;
-                    }
-                }
-                else                    // If vehicle in front (in prospect lane) is NOT found
+                    sNewLead = newLeadVd.distance;
+                    vNewLead = newLeadVd.vehicle.physics.velocity;
+                }else
                 {
                     sNewLead = 768;
                     vNewLead = physics.velocity;
-
-                    // TODO find vehicle in behind in prospect lane
-                    int newLagIdx = currentLane(direction).findVehicleBehind(distance);
-                    if (newLagIdx >= 0)
-                    {
-                        sNewLag = rearPos - currentLane(direction).vehicles[newLagIdx].frontPos;
-                        vNewLag = currentLane(direction).vehicles[newLagIdx].physics.velocity;
-                        accNewLag = currentLane(direction).vehicles[newLagIdx].physics.acceleration;
-                    }
-                    else
-                    {
-                        sNewLag = 768;
-                        vNewLag = 0;
-                        accNewLag = 0;
-                    }
                 }
+
+                if (newLagVd != null)
+                {
+                    sNewLag = newLagVd.distance;
+                    vNewLag = newLagVd.vehicle.physics.velocity;
+                    accNewLag = newLagVd.vehicle.physics.acceleration;
+                }else
+                {
+                    sNewLag = 768;
+                    vNewLag = 0;
+                    accNewLag = 0;
+                }
+
+                if (lagVd != null)
+                {
+                    sLag = lagVd.distance;
+                    vLag = lagVd.vehicle.physics.velocity;
+                    accLag = lagVd.vehicle.physics.acceleration;
+                }
+                else
+                {
+                    sLag = 768;
+                    vLag = 0;
+                    accLag = 0;
+                }
+
+                if (vd != null)
+                {
+                    sLead = vd.distance;
+                    vLead = vd.vehicle.physics.velocity;
+                }
+                else
+                {
+                    sLead = 768;
+                    vLead = 0;
+                }
+
+
+
+                //if (newLeadIdx >= 0)    // If vehicle in front (in prospect lane) is found
+                //{
+                //    sNewLead = currentLane(direction).vehicles[newLeadIdx].rearPos - frontPos;
+                //    vNewLead = currentLane(direction).vehicles[newLeadIdx].physics.velocity;
+
+                //    if (newLeadIdx > 0)
+                //    {
+                //        sNewLag = rearPos - currentLane(direction).vehicles[newLeadIdx - 1].frontPos;
+                //        vNewLag = currentLane(direction).vehicles[newLeadIdx - 1].physics.velocity;
+                //        accNewLag = currentLane(direction).vehicles[newLeadIdx - 1].physics.acceleration;
+                //    }
+                //    else
+                //    {
+                //        sNewLag = 768;
+                //        vNewLag = 0;
+                //        accNewLag = 0;
+                //    }
+                //}
+                //else                    // If vehicle in front (in prospect lane) is NOT found
+                //{
+                //    sNewLead = 768;
+                //    vNewLead = physics.velocity;
+
+                //    // TODO find vehicle in behind in prospect lane
+                //    int newLagIdx = currentLane(direction).findVehicleBehind(distance);
+                //    if (newLagIdx >= 0)
+                //    {
+                //        sNewLag = rearPos - currentLane(direction).vehicles[newLagIdx].frontPos;
+                //        vNewLag = currentLane(direction).vehicles[newLagIdx].physics.velocity;
+                //        accNewLag = currentLane(direction).vehicles[newLagIdx].physics.acceleration;
+                //    }
+                //    else
+                //    {
+                //        sNewLag = 768;
+                //        vNewLag = 0;
+                //        accNewLag = 0;
+                //    }
+                //}
 
                 accNew = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, sNewLead, physics.velocity - vNewLead);
                 newAccNewLag = CalculateAcceleration(vNewLag, effectiveDesiredVelocity, sNewLag, vNewLag - physics.velocity);
 
-                //newAccOldLag = CalculateAcceleration(
-                //    currentLane().vehicles[vd.vehicle.vehiclesIndex - 2].physics.velocity,
-                //    effectiveDesiredVelocity,
-                //    currentLane().vehicles[vd.vehicle.vehiclesIndex].distance - currentLane().vehicles[vd.vehicle.vehiclesIndex - 2].distance,
-                //    currentLane().vehicles[vd.vehicle.vehiclesIndex - 2].physics.velocity - currentLane().vehicles[vd.vehicle.vehiclesIndex].physics.velocity
-                //    );
+                newAccOldLag = CalculateAcceleration(
+                    vLag,
+                    effectiveDesiredVelocity,
+                    sLag + sLead + this.length,
+                    vLag - vLead
+                    );
 
 
                 if (SafetyCriterion(newAccNewLag))
                 {
-                    if (sNewLead > 0 && sNewLag > 0 && LaneChangeDecision(accNew, physics.acceleration, direction, 0, 0, 0))
+                    if (sNewLead > 0 && sNewLag > 0 && LaneChangeDecision(accNew, physics.acceleration, newAccNewLag, accNewLag, newAccOldLag, accLag))
                     {
                         // Do line change
                         thinkAboutLineChange = true;
@@ -702,26 +771,48 @@ namespace SimTMDG.Vehicle
 
         private void doLaneChange(int direction, double tickLength)
         {
+            //currentLane(direction).vehicles.Add(this);
+            ////currentLane().vehicles.Remove(this);
+            //currentLane().vehToRemove.Add(this);
+            //_state.laneIdx = state.laneIdx + direction;
+            ////thinkAboutLineChange = false;
+            //resetDelay(tickLength);
+
+            _state.targetLaneIdx = state.laneIdx + direction;
             currentLane(direction).vehicles.Add(this);
-            //currentLane().vehicles.Remove(this);
             currentLane().vehToRemove.Add(this);
-            _state.laneIdx = state.laneIdx + direction;
-            //thinkAboutLineChange = false;
+
+            _state.prevLaneIdx = state.laneIdx;
+            _state.laneIdx = state.targetLaneIdx;
+            _state.targetLaneIdx = -1;
+
             resetDelay(tickLength);
         }
 
         // TODO Move it to proper place
-        private double FINITE_LANE_CHANGE_TIME_S = 7;
+        private double FINITE_LANE_CHANGE_TIME_S = 4;
         private double tLaneChangeDelay = 0;
 
         private Boolean inProcessOfLaneChange()
         {
+            //if ((tLaneChangeDelay >= FINITE_LANE_CHANGE_TIME_S) && (state.targetLaneIdx != -1))
+            //{
+            //    _state.prevLaneIdx = state.laneIdx;                
+            //    _state.laneIdx = state.targetLaneIdx;
+            //    _state.targetLaneIdx = -1;
+
+            //    currentLane().vehToRemove.Add(this);
+            //}
+
+            // newCoordLaneChange
+
             return (tLaneChangeDelay > 0 && tLaneChangeDelay < FINITE_LANE_CHANGE_TIME_S);
         }
 
         private void resetDelay(double dt)
         {
             tLaneChangeDelay = 0;
+            //updateLaneChangeDelay(dt);
         }
 
         public void updateLaneChangeDelay(double dt)
@@ -730,34 +821,34 @@ namespace SimTMDG.Vehicle
         }
 
 
-        private VehicleDistance findVehicleInFront(List<RoadSegment> route)
+        private VehicleDistance findVehicleInFront(List<RoadSegment> route, int direction = 0)
         {
             VehicleDistance vd = null;
             double searchedDistance = 0;
 
             // Search in current segment
 
-            if ((this.vehiclesIndex < currentLane().vehicles.Count - 1) && (currentLane().vehicles.Count > 1))
+            if ((this.vehiclesIndex < currentLane(direction).vehicles.Count - 1) && (currentLane(direction).vehicles.Count > 1))
             {
-                double returnDistance = currentLane().vehicles[vehiclesIndex + 1].distance 
-                    - (currentLane().vehicles[vehiclesIndex + 1].length / 2 +
+                double returnDistance = currentLane(direction).vehicles[vehiclesIndex + 1].distance 
+                    - (currentLane(direction).vehicles[vehiclesIndex + 1].length / 2 +
                     this.distance + this.length / 2);
 
-                vd = new VehicleDistance(currentLane().vehicles[vehiclesIndex + 1], returnDistance);
+                vd = new VehicleDistance(currentLane(direction).vehicles[vehiclesIndex + 1], returnDistance);
             }
             else
             {
-                searchedDistance += route[0].Length - (this.distance + this.length / 2);
+                searchedDistance += route[0].Length - (this.frontPos);
                 if (searchedDistance < 768)
                 {
                     for (int i=1; i < route.Count; i++)
                     {
-                        if (route[i].lanes[state.laneIdx].vehicles.Count > 0)
+                        if (route[i].lanes[state.laneIdx + direction].vehicles.Count > 0)
                         {
-                            double returnDistance = (route[i].lanes[state.laneIdx].vehicles[0].distance 
-                                - route[i].lanes[state.laneIdx].vehicles[0].length / 2) + (searchedDistance);
+                            double returnDistance = (route[i].lanes[state.laneIdx + direction].vehicles[0].distance 
+                                - route[i].lanes[state.laneIdx + direction].vehicles[0].length / 2) + (searchedDistance);
 
-                            vd = new VehicleDistance(route[i].lanes[state.laneIdx].vehicles[0], returnDistance);
+                            vd = new VehicleDistance(route[i].lanes[state.laneIdx + direction].vehicles[0], returnDistance);
                             break;
                         }
                         else
@@ -859,6 +950,66 @@ namespace SimTMDG.Vehicle
 
             //frontVeh = currentSegment.vehicles[0];
 
+
+            return vd;
+        }
+
+
+        private VehicleDistance findVehicleInBehind(int direction = 0)
+        {
+            VehicleDistance vd = null;
+
+            if ((currentLane(direction).vehicles.Count > 1)&&(vehiclesIndex != 0))
+            {
+                vd = new VehicleDistance(currentLane(direction).vehicles[vehiclesIndex - 1], this.rearPos - vd.vehicle.frontPos);
+            }
+            else if (currentSegment.prevSegment.Count > 0)
+            {
+                vd = findVehicleInBehindRecursive(currentSegment, 0, direction);
+            }
+
+            return vd;
+        }
+
+
+        private VehicleDistance findVehicleInBehindRecursive(RoadSegment currSegment, double searchedDistance, int direction = 0)
+        {
+            VehicleDistance vd = null;
+            double tempDistance = 768;
+
+            if (searchedDistance > 768)
+            {
+                return vd;
+            }
+            else
+            {
+
+                for (int i = 0; i < currSegment.prevSegment.Count; i++)                             // Foreach prevSegment
+                {
+                    if (currSegment.prevSegment[i].lanes.Count > state.laneIdx + direction)         // If there's target lane in prev segment
+                    {
+                        if (currSegment.prevSegment[i].lanes[state.laneIdx + direction].vehicles.Count > 0)  // If there's a vehicle in target lane in prev segment
+                        {
+                            tempDistance = this.rearPos +
+                                currSegment.prevSegment[i].Length -
+                                currSegment.prevSegment[i].lanes[state.laneIdx + direction].vehicles[currSegment.prevSegment[i].lanes[state.laneIdx + direction].vehicles.Count - 1].frontPos;
+
+                            if (tempDistance < vd.distance)                                         // Only save the result if the vehicle is closer
+                            {
+                                // Return furthest vehicle
+                                vd = new VehicleDistance(null, 0);
+                                vd.vehicle = currSegment.prevSegment[i].lanes[state.laneIdx + direction].vehicles[currSegment.prevSegment[i].lanes[state.laneIdx + direction].vehicles.Count - 1];
+                                vd.distance = tempDistance;
+                            }
+                        }
+                        else                                                                        // Search for prev segment in prev segment :p
+                        {
+                            searchedDistance += currentSegment.Length;
+                            vd = findVehicleInBehindRecursive(currSegment.prevSegment[i], searchedDistance, direction);
+                        }
+                    }
+                }
+            }
 
             return vd;
         }
@@ -1014,9 +1165,6 @@ namespace SimTMDG.Vehicle
 
         public void newCoord()
         {
-            //Vector2 difference = new Vector2();
-            //difference.X = currentSegment.endNode.Position.X - currentSegment.startNode.Position.X;
-            //difference.Y = currentSegment.endNode.Position.Y - currentSegment.startNode.Position.Y;
             Vector2 difference = currentLane().endNode.Position - currentLane().startNode.Position;
 
             PointF toReturn = new PointF();

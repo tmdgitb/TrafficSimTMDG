@@ -61,6 +61,9 @@ namespace SimTMDG.Road
         public List<SegmentLane> lanes = new List<SegmentLane>();
 
         public double laneWidth = 3.5;
+
+        public List<RoadSegment> nextSegment = new List<RoadSegment>();
+        public List<RoadSegment> prevSegment = new List<RoadSegment>();
         #endregion
 
 
@@ -210,15 +213,21 @@ namespace SimTMDG.Road
         {
             Pen pen;
 
-            if (OneWay == "yes")
+            //if (OneWay == "yes")
+            //{
+            //    pen = new Pen(Color.Red, 1);
+            //} else if (OneWay == "-1")
+            //{
+            //    pen = new Pen(Color.Aquamarine, 1);
+            //}else
+            //{
+            //    pen = new Pen(Color.LightGreen, 1);
+            //}
+
+            if ((startNode.Id == 0) || (endNode.Id == 0))
             {
                 pen = new Pen(Color.Red, 1);
-            } else if (OneWay == "-1")
-            {
-                pen = new Pen(Color.Aquamarine, 1);
-            }else
-            {
-                pen = new Pen(Color.LightGreen, 1);
+                g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
             }
 
             //g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);

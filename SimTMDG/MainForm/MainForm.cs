@@ -530,7 +530,7 @@ namespace SimTMDG
             lf.Text = "Loading file '" + path + "'...";
             lf.Show();
 
-            lf.SetupUpperProgress("Loading Document...", 8);
+            lf.SetupUpperProgress("Loading Document...", 5);
 
             XmlDocument xd = new XmlDocument();
             xd.Load(path);
@@ -643,6 +643,18 @@ namespace SimTMDG
                     lf.StepLowerProgress();
 
                 }
+
+                lf.StepUpperProgress("Search segment connection...");
+                lf.SetupLowerProgress("Search segment connectio", nc.segments.Count - 1);
+
+                for (int i = 0; i < nc.segments.Count; i++)
+                {
+                    nc.segments[i].nextSegment = nc.segments.FindAll(x => x.startNode == nc.segments[i].endNode);
+                    nc.segments[i].prevSegment = nc.segments.FindAll(x => x.endNode == nc.segments[i].startNode);
+
+                    lf.StepLowerProgress();
+                }
+
                 //});
                 sw.Stop();
                 Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
@@ -844,17 +856,17 @@ namespace SimTMDG
 
                     long ndId;
                     XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
-                    if (ndIdNode != null)
+                    //if (ndIdNode != null)
                         ndId = long.Parse(ndIdNode.Value);
-                    else
-                        ndId = 0;
+                    //else
+                    //    ndId = 0;
 
                     long ndNextId;
                     XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
-                    if (ndIdNextNode != null)
+                    //if (ndIdNextNode != null)
                         ndNextId = long.Parse(ndIdNextNode.Value);
-                    else
-                        ndNextId = 0;
+                    //else
+                    //    ndNextId = 0;
 
                     if ((nc._nodes.Find(x => x.Id == ndId) != null) && (nc._nodes.Find(y => y.Id == ndNextId) != null))
                     {
