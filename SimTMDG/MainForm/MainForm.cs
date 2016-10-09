@@ -194,7 +194,7 @@ namespace SimTMDG
             nc = new NodeControl();
         }
 
-        
+
         #region timer
         private void timerSimulation_Tick(object sender, EventArgs e)
         {
@@ -248,7 +248,8 @@ namespace SimTMDG
                 playButton.Text = "Pause";
 
             }
-            else {
+            else
+            {
                 playButton.Text = "Play";
             }
 
@@ -365,14 +366,14 @@ namespace SimTMDG
                     //thumbGrid.Invalidate();
                     DaGrid.Invalidate();
                     break;
-				case InvalidationLevel.MAIN_CANVAS_AND_TIMELINE:
-					DaGrid.Invalidate();
+                case InvalidationLevel.MAIN_CANVAS_AND_TIMELINE:
+                    DaGrid.Invalidate();
                     break;
-				case InvalidationLevel.ONLY_MAIN_CANVAS:
-					DaGrid.Invalidate();
+                case InvalidationLevel.ONLY_MAIN_CANVAS:
+                    DaGrid.Invalidate();
                     break;
                 default:
-					break;
+                    break;
             }
         }
 
@@ -478,18 +479,18 @@ namespace SimTMDG
 
             //if (selectedLineNodes != null)
             //{
-                switch (howToDrag)
-                {
-                    case DragNDrop.MOVE_MAIN_GRID:
-                        clickedPosition = new Vector2(e.X, e.Y);
-                        clickedPosition *= zoomMultipliers[zoomComboBox.SelectedIndex, 1];
-                        daGridScrollPosition = new Point((int)Math.Round(-clickedPosition.X + daGridRubberband.X), (int)Math.Round(-clickedPosition.Y + daGridRubberband.Y));
-                        UpdateDaGridClippingRect();
-                        Invalidate(InvalidationLevel.ONLY_MAIN_CANVAS);
-                        break;
+            switch (howToDrag)
+            {
+                case DragNDrop.MOVE_MAIN_GRID:
+                    clickedPosition = new Vector2(e.X, e.Y);
+                    clickedPosition *= zoomMultipliers[zoomComboBox.SelectedIndex, 1];
+                    daGridScrollPosition = new Point((int)Math.Round(-clickedPosition.X + daGridRubberband.X), (int)Math.Round(-clickedPosition.Y + daGridRubberband.Y));
+                    UpdateDaGridClippingRect();
+                    Invalidate(InvalidationLevel.ONLY_MAIN_CANVAS);
+                    break;
                 default:
                     break;
-                }
+            }
             //}
         }
 
@@ -541,8 +542,10 @@ namespace SimTMDG
             if (bounds == null)
             {
                 Debug.WriteLine("bounds null");
-            }else {
-                
+            }
+            else
+            {
+
 
                 XmlNode minLonNode = bounds.Attributes.GetNamedItem("minlon");
                 XmlNode maxLonNode = bounds.Attributes.GetNamedItem("maxlon");
@@ -553,25 +556,29 @@ namespace SimTMDG
                 {
                     minLon = double.Parse(minLonNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
                     boundsDefined = true;
-                } else { minLon = 0; }
+                }
+                else { minLon = 0; }
 
                 if (maxLonNode != null)
                 {
                     maxLon = double.Parse(maxLonNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
                     boundsDefined = true;
-                } else { maxLon = 0; }
+                }
+                else { maxLon = 0; }
 
                 if (minLatNode != null)
                 {
                     minLat = double.Parse(minLatNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
                     boundsDefined = true;
-                } else{ minLat = 0; }
+                }
+                else { minLat = 0; }
 
                 if (maxLatNode != null)
                 {
                     maxLat = double.Parse(maxLatNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
                     boundsDefined = true;
-                } else { maxLat = 0; }
+                }
+                else { maxLat = 0; }
 
                 UpdateDaGridClippingRect();
 
@@ -610,9 +617,9 @@ namespace SimTMDG
                 foreach (XmlNode aXmlNode in xnlWayNode)
                 //Parallel.ForEach(xnlWayNode, (XmlNode aXmlNode) =>
                 {
-                    XmlNodeList nds     = aXmlNode.SelectNodes("nd");
-                    XmlNode onewayTag   = aXmlNode.SelectSingleNode("tag[@k='oneway']");
-                    XmlNode highwayTag  = aXmlNode.SelectSingleNode("tag[@k='highway']");
+                    XmlNodeList nds = aXmlNode.SelectNodes("nd");
+                    XmlNode onewayTag = aXmlNode.SelectSingleNode("tag[@k='oneway']");
+                    XmlNode highwayTag = aXmlNode.SelectSingleNode("tag[@k='highway']");
                     XmlNode numlanesTag = aXmlNode.SelectSingleNode("tag[@k='lanes']");
 
                     List<XmlNode> lnd = new List<XmlNode>();
@@ -632,7 +639,7 @@ namespace SimTMDG
                         //}
                         //else
                         //{
-                            makeWaySegment_old(lnd, highwayTag, numlanesTag, oneway);
+                        makeWaySegment_old(lnd, highwayTag, numlanesTag, oneway);
                         //}
                     }
                     else
@@ -714,7 +721,7 @@ namespace SimTMDG
             XElement mainNode = xd.Element("osm");
 
             XElement bounds = mainNode.Element("bounds");
-            
+
             // Check if there's a bounds or not
             // We need boundary for projecting lat lon to cartesian coord
             if (bounds == null)
@@ -730,7 +737,7 @@ namespace SimTMDG
                 boundsDefined = true;
 
                 //nc.setBounds(minLon, maxLon, minLat, maxLat);
-                
+
                 Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
 
 
@@ -768,11 +775,11 @@ namespace SimTMDG
                     Node nd = (from node in mainNode.Elements("node")
                                where node.Attribute("id").Value == query[i]
                                select new Node()
-                                {
-                                    Id = Convert.ToInt64(node.Attribute("id").Value),
-                                    Lat = double.Parse(node.Attribute("lat").Value, CultureInfo.InvariantCulture),// / 10000000,
-                                    Long = double.Parse(node.Attribute("lon").Value, CultureInfo.InvariantCulture)// / 10000000
-                                }).Single();
+                               {
+                                   Id = Convert.ToInt64(node.Attribute("id").Value),
+                                   Lat = double.Parse(node.Attribute("lat").Value, CultureInfo.InvariantCulture),// / 10000000,
+                                   Long = double.Parse(node.Attribute("lon").Value, CultureInfo.InvariantCulture)// / 10000000
+                               }).Single();
 
                     nd.latLonToPos(minLon, maxLat);
                     nc._nodes.Add(nd);
@@ -799,10 +806,10 @@ namespace SimTMDG
                     //Debug.WriteLine("query " + wayQuery[i] + " elem" + nodeQuery);
 
                     var oneway = from tag in way.Elements("tag")
-                                   where tag.Attribute("k").Value == "oneway"
-                                   select (string) tag.Attribute("v").Value;
+                                 where tag.Attribute("k").Value == "oneway"
+                                 select (string)tag.Attribute("v").Value;
 
-                    if(oneway.Count() > 0)
+                    if (oneway.Count() > 0)
                     {
                         if (oneway.Single() == "-1")
                         {
@@ -819,7 +826,7 @@ namespace SimTMDG
                     }
 
                     //Debug.WriteLine("values" + oneway);
-                    lf.StepLowerProgress();                    
+                    lf.StepLowerProgress();
                 }
 
                 sw.Stop();
@@ -857,14 +864,14 @@ namespace SimTMDG
                     long ndId;
                     XmlNode ndIdNode = lnd[i].Attributes.GetNamedItem("ref");
                     //if (ndIdNode != null)
-                        ndId = long.Parse(ndIdNode.Value);
+                    ndId = long.Parse(ndIdNode.Value);
                     //else
                     //    ndId = 0;
 
                     long ndNextId;
                     XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
                     //if (ndIdNextNode != null)
-                        ndNextId = long.Parse(ndIdNextNode.Value);
+                    ndNextId = long.Parse(ndIdNextNode.Value);
                     //else
                     //    ndNextId = 0;
 
@@ -873,7 +880,8 @@ namespace SimTMDG
                         nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
-            } else if (oneway == "-1") // Oneway Reverse
+            }
+            else if (oneway == "-1") // Oneway Reverse
             {
                 for (int i = lnd.Count - 1; i > 0; i--)
                 {
@@ -897,7 +905,8 @@ namespace SimTMDG
                         nc.segments.Add(new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
                     }
                 }
-            } else                     // Two Way
+            }
+            else                     // Two Way
             {
                 for (int i = 0; i < lnd.Count - 1; i++)
                 {
@@ -922,7 +931,7 @@ namespace SimTMDG
                         tempSegment = new RoadSegment(nc._nodes.Find(x => x.Id == ndId), nc._nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway);
 
                         int lanePerDirection = (int)tempSegment.lanes.Count / 2;
-                        double distanceShift = (double)(tempSegment.lanes.Count / (double) 4) * (double)tempSegment.laneWidth;
+                        double distanceShift = (double)(tempSegment.lanes.Count / (double)4) * (double)tempSegment.laneWidth;
 
                         if (lanePerDirection < 1)
                             lanePerDirection = 1;
@@ -1046,7 +1055,7 @@ namespace SimTMDG
 
 
         private void tempLoadButton_Click(object sender, EventArgs e)
-        {            
+        {
             #region Load File
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -1111,14 +1120,14 @@ namespace SimTMDG
 
         private void speedComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            timerSimulation.Interval =(int) (1000 / (int) _temp_stepsPerSeconds / speedMultipliers[speedComboBox.SelectedIndex]);
+            timerSimulation.Interval = (int)(1000 / (int)_temp_stepsPerSeconds / speedMultipliers[speedComboBox.SelectedIndex]);
             Debug.WriteLine("timerSimulation Interval " + timerSimulation.Interval + ", " + speedMultipliers[speedComboBox.SelectedIndex]);
         }
 
 
         private void zoomComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             // neue Autoscrollposition berechnen und setzen
             daGridScrollPosition = new Point(
                 (int)Math.Round(daGridViewCenter.X - (DaGrid.Width / 2 * zoomMultipliers[zoomComboBox.SelectedIndex, 1])),
@@ -1177,7 +1186,7 @@ namespace SimTMDG
 
 
             // Route 3 : DU
-            for (int i = 22273; i > 22245; i= i-3)
+            for (int i = 22273; i > 22245; i = i - 3)
             {
                 _route3.Add(nc.segments.Find(x => x.Id == i));
             }
@@ -1210,7 +1219,7 @@ namespace SimTMDG
             //_route6.Add(nc.segments.Find(x => x.Id == 10552));
             //_route6.Add(nc.segments.Find(x => x.Id == 10259));
             //nc.segments.Find(x => x.Id == 10259).endNode.tLight = new TrafficLight();
-            
+
 
         }
 
@@ -1380,7 +1389,8 @@ namespace SimTMDG
                     else if (vehType == 1)
                     {
                         v = new Bus(_route[0], laneidx, _route);
-                    } else
+                    }
+                    else
                     {
                         v = new Truck(_route[0], laneidx, _route);
                     }

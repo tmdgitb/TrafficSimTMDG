@@ -207,7 +207,7 @@ namespace SimTMDG.Road
 
 
 
-        
+
         #region draw
         public void Draw(Graphics g)
         {
@@ -313,7 +313,7 @@ namespace SimTMDG.Road
             #endregion
 
             #region new approach
-            double maxShift = (double) (NumLanes - 1) / 2 * laneWidth;
+            double maxShift = (double)(NumLanes - 1) / 2 * laneWidth;
             for (int i = 0; i < NumLanes; i++)
             {
                 double shift = i * laneWidth - maxShift;
@@ -324,18 +324,19 @@ namespace SimTMDG.Road
 
         SegmentLane generateSegmentLane(double distance, int i, Boolean forward)
         {
-            double angle = (Math.PI/2) - Vector2.AngleBetween(this.startNode.Position, this.endNode.Position);
+            double angle = (Math.PI / 2) - Vector2.AngleBetween(this.startNode.Position, this.endNode.Position);
 
             Vector2 shift = new Vector2(distance * Math.Cos(angle), distance * Math.Sin(angle));
             Node newStart = new Node(new Vector2(this.startNode.Position.X + shift.X, this.startNode.Position.Y - shift.Y));
-            Node newEnd   = new Node(new Vector2(this.endNode.Position.X + shift.X, this.endNode.Position.Y - shift.Y));
+            Node newEnd = new Node(new Vector2(this.endNode.Position.X + shift.X, this.endNode.Position.Y - shift.Y));
 
             SegmentLane toReturn;
 
             if (forward)
             {
                 toReturn = new SegmentLane(newStart, newEnd, i);
-            }else
+            }
+            else
             {
                 toReturn = new SegmentLane(newEnd, newStart, i);
             }

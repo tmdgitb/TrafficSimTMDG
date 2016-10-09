@@ -39,7 +39,7 @@ namespace SimTMDG.Road
         /// Node position (Vector2D)
         /// </summary>
         private Vector2 _position;
-        
+
         [XmlIgnore]
         public Vector2 Position
         {
