@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace OSMConverter
 {
-    [Serializable]
+    [Serializable, XmlType("RoadSegment")]
     public class RoadSegmentOSM
     {
 
@@ -69,12 +70,12 @@ namespace OSMConverter
         /// <summary>
         /// Previous RoadSegment that connect to this startNode
         /// </summary>
-        public List<RoadSegmentOSM> nextSegment = new List<RoadSegmentOSM>();
+        public List<int> nextSegment = new List<int>();
 
         /// <summary>
         /// Next RoadSegment that connect to this endNode
         /// </summary>
-        public List<RoadSegmentOSM> prevSegment = new List<RoadSegmentOSM>();
+        public List<int> prevSegment = new List<int>();
         #endregion
 
 

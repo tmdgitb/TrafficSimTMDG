@@ -178,8 +178,19 @@ namespace OSMConverter
 
                 for (int i = 0; i < rn.segments.Count; i++)
                 {
-                    rn.segments[i].nextSegment = rn.segments.FindAll(x => x.startNode == rn.segments[i].endNode);
-                    rn.segments[i].prevSegment = rn.segments.FindAll(x => x.endNode == rn.segments[i].startNode);
+                    List<RoadSegmentOSM> nextSegmentObj = rn.segments.FindAll(x => x.startNode == rn.segments[i].endNode);
+                    List<RoadSegmentOSM> prevSegmentObj = rn.segments.FindAll(x => x.endNode == rn.segments[i].startNode);
+
+                    for (int j = 0; j < nextSegmentObj.Count; j++)
+                    {
+                        rn.segments[i].nextSegment.Add(nextSegmentObj[j].Id);                       
+                    }
+
+                    for (int j = 0; j < prevSegmentObj.Count; j++)
+                    {
+                        rn.segments[i].prevSegment.Add(prevSegmentObj[j].Id);
+                    }
+                    
 
                     lf.StepLowerProgress();
                 }
@@ -198,9 +209,13 @@ namespace OSMConverter
 
                 try
                 {
-                    XmlSerializer xs2 = new XmlSerializer(typeof(RoadNetwork));
-                    TextWriter tw = new StreamWriter(path + ".xml");
-                    xs2.Serialize(tw, rn);
+                    using (TextWriter writer = new StreamWriter(path + ".xml"))
+                    {
+                        XmlSerializer xs2 = new XmlSerializer(typeof(RoadNetwork));
+                        xs2.Serialize(writer, rn);
+                        writer.Flush();
+                    }
+
                 } catch (Exception e)
                 {
                     Console.WriteLine("Caught: {0}", e.Message);
