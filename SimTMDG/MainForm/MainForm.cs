@@ -524,6 +524,194 @@ namespace SimTMDG
         #endregion
 
 
+        // Flag -- new load
+        private List<XmlNodeList> nextSegmentNodesList = new List<XmlNodeList>();
+        private List<XmlNodeList> prevSegmentNodesList = new List<XmlNodeList>();
+
+        private void LoadMap(string path)
+        {
+            LoadingForm.LoadingForm lf = new LoadingForm.LoadingForm();
+            lf.Text = "Loading file '" + path + "'...";
+            lf.Show();
+
+            lf.SetupUpperProgress("Loading Document...", 3);
+
+            XmlDocument xd = new XmlDocument();
+            xd.Load(path);
+
+            XmlNode mainNode = xd.SelectSingleNode("//RoadNetwork");
+
+
+            #region parsing boundary
+
+            if (mainNode == null)
+            {
+                Debug.WriteLine("bounds null");
+            }
+            else
+            {
+
+
+                XmlNode minLonNode = mainNode.Attributes.GetNamedItem("minlon");
+                XmlNode maxLonNode = mainNode.Attributes.GetNamedItem("maxlon");
+                XmlNode minLatNode = mainNode.Attributes.GetNamedItem("minlat");
+                XmlNode maxLatNode = mainNode.Attributes.GetNamedItem("maxlat");
+
+                if (minLonNode != null)
+                {
+                    minLon = double.Parse(minLonNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                    boundsDefined = true;
+                }
+                else { minLon = 0; }
+
+                if (maxLonNode != null)
+                {
+                    maxLon = double.Parse(maxLonNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                    boundsDefined = true;
+                }
+                else { maxLon = 0; }
+
+                if (minLatNode != null)
+                {
+                    minLat = double.Parse(minLatNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                    boundsDefined = true;
+                }
+                else { minLat = 0; }
+
+                if (maxLatNode != null)
+                {
+                    maxLat = double.Parse(maxLatNode.Value, CultureInfo.InvariantCulture);// / 1000;// 10000000;
+                    boundsDefined = true;
+                }
+                else { maxLat = 0; }
+
+                UpdateDaGridClippingRect();
+
+
+                Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
+                #endregion
+
+
+
+                #region parsing nodes
+                lf.StepUpperProgress("Parsing Nodes...");
+                XmlNodeList xnlLineNode = mainNode.SelectNodes("nodes/node");
+                lf.SetupLowerProgress("Parsing Nodes", xnlLineNode.Count - 1);
+
+                Stopwatch sw = Stopwatch.StartNew();
+                foreach (XmlNode aXmlNode in xnlLineNode)
+                {
+                    TextReader tr = new StringReader(aXmlNode.OuterXml);
+                    XmlSerializer xs = new XmlSerializer(typeof(Node));
+                    Node n = (Node)xs.Deserialize(tr);
+
+                    nc._nodes.Add(n);
+
+                    lf.StepLowerProgress();
+                }
+                sw.Stop();
+                Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
+                #endregion
+
+
+                #region parsing segments
+                lf.StepUpperProgress("Parsing Road Segments...");
+                XmlNodeList xnlSegments = mainNode.SelectNodes("segments/RoadSegment");
+                lf.SetupLowerProgress("Parsing Segments", xnlSegments.Count - 1);
+
+                sw = Stopwatch.StartNew();
+                foreach (XmlNode aXmlNode in xnlSegments)
+                {
+                    TextReader tr = new StringReader(aXmlNode.OuterXml);
+                    XmlSerializer xs = new XmlSerializer(typeof(RoadSegment));
+                    RoadSegment s = (RoadSegment)xs.Deserialize(tr);
+
+                    // parse start & end node
+                    XmlNode startNode = aXmlNode.SelectSingleNode("startNodeIdx");
+                    XmlNode endNode = aXmlNode.SelectSingleNode("endNodeIdx");
+
+                    s.startNode = nc._nodes[Int32.Parse(startNode.FirstChild.Value)];
+                    s.endNode = nc._nodes[Int32.Parse(endNode.FirstChild.Value)];
+
+
+                    // parse next & prev segments
+                    // TODO move to next upper progress. Needs to list all the segments before doing this!!!
+                    XmlNodeList nextSegmentNodes = aXmlNode.SelectNodes("nextSegment/int");
+                    XmlNodeList prevSegmentNodes = aXmlNode.SelectNodes("prevSegment/int");
+
+
+                    // parse lane segments
+                    XmlNodeList laneNodes = aXmlNode.SelectNodes("lanes/SegmentLaneOSM");
+
+                    foreach (XmlNode laneNode in laneNodes)
+                    {
+                        TextReader trLane = new StringReader(laneNode.OuterXml);
+                        XmlSerializer xsLane = new XmlSerializer(typeof(SegmentLane));
+                        SegmentLane lane = (SegmentLane)xsLane.Deserialize(trLane);
+
+                        // parse start & end node
+                        XmlNode startLaneNode = laneNode.SelectSingleNode("startNodeIdx");
+                        XmlNode endLaneNode = laneNode.SelectSingleNode("endNodeIdx");
+
+                        lane.setStartEndNode(nc._nodes[Int32.Parse(startLaneNode.FirstChild.Value)],
+                            nc._nodes[Int32.Parse(endLaneNode.FirstChild.Value)]);
+
+                        // Calculate Length
+
+                        s.lanes.Add(lane);
+                    }
+
+
+                    nc.segments.Add(s);
+                    nextSegmentNodesList.Add(nextSegmentNodes);
+                    prevSegmentNodesList.Add(prevSegmentNodes);
+                    //nextSegmentNodesList[nc.segments.Count - 1] = nextSegmentNodes;
+                    //prevSegmentNodesList[nc.segments.Count - 1] = prevSegmentNodes;
+
+                    lf.StepLowerProgress();
+                }
+                sw.Stop();
+                Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
+                #endregion
+
+
+                #region Segments Connections
+                lf.StepUpperProgress("Search for Segments Connections...");
+                lf.SetupLowerProgress("Searching for Connections", nc.Segments.Count - 1);
+
+                sw = Stopwatch.StartNew();
+                for (int i = 0; i < nc.Segments.Count; i++)
+                {
+                    foreach (XmlNode nextSegmentNode in nextSegmentNodesList[i])
+                    {
+                        nc.segments[i].nextSegment.Add(nc.segments[Int32.Parse(nextSegmentNode.FirstChild.Value)]);
+                    }
+
+                    foreach (XmlNode prevSegmentNode in prevSegmentNodesList[i])
+                    {
+                        nc.segments[i].prevSegment.Add(nc.segments[Int32.Parse(prevSegmentNode.FirstChild.Value)]);
+                    }
+
+                    lf.StepLowerProgress();
+                }
+
+                nextSegmentNodesList.Clear();
+                prevSegmentNodesList.Clear();
+
+                sw.Stop();
+                Console.WriteLine("Total query time: {0} ms", sw.ElapsedMilliseconds);
+                #endregion
+
+                lf.StepUpperProgress("Done");
+                lf.ShowLog();
+
+                lf.Close();
+                lf = null;
+
+                nc._nodes.Clear();
+            }
+        }
+
 
         private void LoadOsmMap_old(string path)
         {
@@ -674,7 +862,7 @@ namespace SimTMDG
                 // _route.segments.Find(x => x.Id == segmentToAddID)
 
                 Debug.WriteLine("Segment Count" + nc.segments.Count);
-                manuallyAddRoute();
+                //manuallyAddRoute();
 
                 lf.StepUpperProgress("Done");
                 lf.ShowLog();
@@ -867,7 +1055,7 @@ namespace SimTMDG
                     ndId = long.Parse(ndIdNode.Value);
                     //else
                     //    ndId = 0;
-
+                    
                     long ndNextId;
                     XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
                     //if (ndIdNextNode != null)
@@ -1062,7 +1250,8 @@ namespace SimTMDG
                 ofd.InitialDirectory = Application.ExecutablePath;
                 ofd.AddExtension = true;
                 ofd.DefaultExt = @".xml";
-                ofd.Filter = @"OpenStreetMap|*.osm";
+                // Flag -- new load
+                //ofd.Filter = @"OpenStreetMap|*.osm";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -1070,7 +1259,8 @@ namespace SimTMDG
                     nc.Clear();
                     nc.Load();
 
-                    LoadOsmMap_old(ofd.FileName);
+                    LoadMap(ofd.FileName);
+                    //LoadOsmMap_old(ofd.FileName);
                     //LoadOsmMap(ofd.FileName);
                 }
             }
@@ -1183,6 +1373,37 @@ namespace SimTMDG
                 _route2.Add(nc.segments.Find(x => x.Id == i));
             }
             nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
+
+
+            #region temp test obstacle
+            IVehicle mogok1 = new IVehicle();
+            IVehicle.Physics p1 = new IVehicle.Physics(0, 0, 0);
+            mogok1.color = Color.Black;
+            mogok1._physics = p1;
+            mogok1.length = 1;
+            mogok1._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
+            mogok1._state.laneIdx = 0;
+            mogok1.distance = mogok1.currentLane().Length - 2;
+            mogok1.dumb = true;
+
+            mogok1.currentLane().vehicles.Add(mogok1);
+            mogok1.newCoord();
+            mogok1.RotateVehicle(mogok1.currentLane().startNode, mogok1.currentLane().endNode);
+
+            IVehicle mogok2 = new IVehicle();
+            mogok2.color = Color.Black;
+            mogok2._physics = p1;
+            mogok2.length = 1;
+            mogok2._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
+            mogok2._state.laneIdx = 1;
+            mogok2.distance = mogok1.currentLane().Length - 2;
+            mogok2.dumb = true;
+
+            mogok2.currentLane().vehicles.Add(mogok2);
+            mogok2.newCoord();
+            mogok2.RotateVehicle(mogok2.currentLane().startNode, mogok2.currentLane().endNode);
+            #endregion
+
 
 
             // Route 3 : DU
@@ -1398,24 +1619,24 @@ namespace SimTMDG
                     _route[0].lanes[laneidx].vehicles.Add(v);
                     activeVehicles++;
 
-                    laneidx = rnd.Next(0, _route4[0].lanes.Count);
-                    vehType = rnd.Next(0, 2);
+                    //laneidx = rnd.Next(0, _route4[0].lanes.Count);
+                    //vehType = rnd.Next(0, 2);
 
-                    if (vehType == 0)
-                    {
-                        v = new Car(_route4[0], laneidx, _route4);
-                    }
-                    else if (vehType == 1)
-                    {
-                        v = new Bus(_route4[0], laneidx, _route4);
-                    }
-                    else
-                    {
-                        v = new Truck(_route4[0], laneidx, _route4);
-                    }
+                    //if (vehType == 0)
+                    //{
+                    //    v = new Car(_route4[0], laneidx, _route4);
+                    //}
+                    //else if (vehType == 1)
+                    //{
+                    //    v = new Bus(_route4[0], laneidx, _route4);
+                    //}
+                    //else
+                    //{
+                    //    v = new Truck(_route4[0], laneidx, _route4);
+                    //}
 
-                    _route4[0].lanes[laneidx].vehicles.Add(v);
-                    activeVehicles++;
+                    //_route4[0].lanes[laneidx].vehicles.Add(v);
+                    //activeVehicles++;
 
                     //laneidx = 0;
                     //_route5[0].lanes[laneidx].vehicles.Add(new IVehicle(
@@ -1460,24 +1681,24 @@ namespace SimTMDG
                     _route2[0].lanes[laneidx].vehicles.Add(v);
                     activeVehicles++;
 
-                    laneidx = rnd.Next(0, _route3[0].lanes.Count);
-                    vehType = rnd.Next(0, 2);
+                    //laneidx = rnd.Next(0, _route3[0].lanes.Count);
+                    //vehType = rnd.Next(0, 2);
 
-                    if (vehType == 0)
-                    {
-                        v = new Car(_route3[0], laneidx, _route3);
-                    }
-                    else if (vehType == 1)
-                    {
-                        v = new Bus(_route3[0], laneidx, _route3);
-                    }
-                    else
-                    {
-                        v = new Truck(_route3[0], laneidx, _route3);
-                    }
+                    //if (vehType == 0)
+                    //{
+                    //    v = new Car(_route3[0], laneidx, _route3);
+                    //}
+                    //else if (vehType == 1)
+                    //{
+                    //    v = new Bus(_route3[0], laneidx, _route3);
+                    //}
+                    //else
+                    //{
+                    //    v = new Truck(_route3[0], laneidx, _route3);
+                    //}
 
-                    _route3[0].lanes[laneidx].vehicles.Add(v);
-                    activeVehicles++;
+                    //_route3[0].lanes[laneidx].vehicles.Add(v);
+                    //activeVehicles++;
 
                     //laneidx = rnd.Next(0, _route6[0].lanes.Count);
                     //_route6[0].lanes[laneidx].vehicles.Add(new IVehicle(

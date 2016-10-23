@@ -320,7 +320,7 @@ namespace SimTMDG.Vehicle
         /// <summary>
 		/// aktueller State des Fahrezeuges
 		/// </summary>
-        protected IVehicle.State _state;
+        public IVehicle.State _state;
 
         /// <summary>
         /// aktueller State des Fahrezeuges
@@ -467,13 +467,14 @@ namespace SimTMDG.Vehicle
         #region think
         public void Think(double tickLength)
         {
-            List<RoadSegment> route = new List<RoadSegment>();
-            foreach (RoadSegment ws in routing.Route)
-                route.Add(ws);
-
             double acceleration;
+
             if (!dumb)
             {
+                List<RoadSegment> route = new List<RoadSegment>();
+                foreach (RoadSegment ws in routing.Route)
+                    route.Add(ws);
+                            
                 acceleration = Think(route, tickLength);
             } else { acceleration = 0; }
             
@@ -534,29 +535,29 @@ namespace SimTMDG.Vehicle
 
 
             #region lane changing
-            if (inProcessOfLaneChange())
-            {
-                updateLaneChangeDelay(tickLength);
-            }
-            else if (!(currentSegment.lanes.Count < 2))
-            {
-                int direction = 0;
+            //if (inProcessOfLaneChange())
+            //{
+            //    updateLaneChangeDelay(tickLength);
+            //}
+            //else if (!(currentSegment.lanes.Count < 2))
+            //{
+            //    int direction = 0;
 
-                // Check lane + 1
-                if (state.laneIdx < currentSegment.lanes.Count - 1)
-                {
-                    direction = 1;
-                    lowestAcceleration = ConsiderLaneChange(direction, tickLength, route, lowestAcceleration);
-                }
+            //    // Check lane + 1
+            //    if (state.laneIdx < currentSegment.lanes.Count - 1)
+            //    {
+            //        direction = 1;
+            //        lowestAcceleration = ConsiderLaneChange(direction, tickLength, route, lowestAcceleration);
+            //    }
 
-                // Check lane - 1
-                if (state.laneIdx > 0)
-                {
-                    direction = -1;
-                    lowestAcceleration = ConsiderLaneChange(direction, tickLength, route, lowestAcceleration);
-                }
+            //    // Check lane - 1
+            //    if (state.laneIdx > 0)
+            //    {
+            //        direction = -1;
+            //        lowestAcceleration = ConsiderLaneChange(direction, tickLength, route, lowestAcceleration);
+            //    }
                 
-            }
+            //}
             #endregion
 
 
@@ -1102,7 +1103,7 @@ namespace SimTMDG.Vehicle
 
 
 
-        private SegmentLane currentLane(int direction = 0)
+        public SegmentLane currentLane(int direction = 0)
         {
             return currentSegment.lanes[state.laneIdx + direction];
         }

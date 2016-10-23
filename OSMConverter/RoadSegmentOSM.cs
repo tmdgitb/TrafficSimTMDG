@@ -28,6 +28,9 @@ namespace OSMConverter
 
             set { _id = value; }
         }
+
+        [XmlIgnore]
+        public int idx;
         #endregion
 
 
@@ -35,12 +38,25 @@ namespace OSMConverter
         /// <summary>
         /// Starting node of RoadSegment
         /// </summary>
+        [XmlIgnore]
         public NodeOSM startNode;
 
         /// <summary>
         /// Ending node of RoadSegment
         /// </summary>
+        [XmlIgnore]
         public NodeOSM endNode;
+
+        public int startNodeIdx;
+        public int endNodeIdx;
+
+        [XmlIgnore]
+        public NodeOSM parentStartNode = null;
+        [XmlIgnore]
+        public NodeOSM parentEndNode = null;
+        [XmlIgnore]
+        public int forward = -1;
+
 
 
         /// <summary>
@@ -151,7 +167,7 @@ namespace OSMConverter
             _id = idIndex++;
         }
 
-        public RoadSegmentOSM(NodeOSM _startNode, NodeOSM _endNode, int numlanes, string highway, string oneway)
+        public RoadSegmentOSM(RoadNetwork rn, NodeOSM _startNode, NodeOSM _endNode, int numlanes, string highway, string oneway)
         {
             _id = idIndex++;
             OneWay = oneway;
@@ -200,7 +216,7 @@ namespace OSMConverter
                 _numLanes = numlanes;
             }
 
-            generateLanes();
+            generateLanes(rn);
         }
         #endregion
 
@@ -211,23 +227,27 @@ namespace OSMConverter
 
         #region helper
 
-        void generateLanes()
+        void generateLanes(RoadNetwork rn)
         {
             double maxShift = (double)(NumLanes - 1) / 2 * laneWidth;
             for (int i = 0; i < NumLanes; i++)
             {
                 double shift = i * laneWidth - maxShift;
-                lanes.Add(generateSegmentLane(shift, i, true));
+                lanes.Add(generateSegmentLane(rn, shift, i, true));
             }
         }
 
-        SegmentLaneOSM generateSegmentLane(double distance, int i, Boolean forward)
+        SegmentLaneOSM generateSegmentLane(RoadNetwork rn, double distance, int i, Boolean forward)
         {
             double angle = (Math.PI / 2) - Vector2.AngleBetween(this.startNode.Position, this.endNode.Position);
 
             Vector2 shift = new Vector2(distance * Math.Cos(angle), distance * Math.Sin(angle));
             NodeOSM newStart = new NodeOSM(new Vector2(this.startNode.Position.X + shift.X, this.startNode.Position.Y - shift.Y), true);
+            rn.nodes.Add(newStart);
+            rn.nodes[rn.nodes.Count - 1].idx = rn.nodes.Count - 1;
             NodeOSM newEnd = new NodeOSM(new Vector2(this.endNode.Position.X + shift.X, this.endNode.Position.Y - shift.Y), true);
+            rn.nodes.Add(newEnd);
+            rn.nodes[rn.nodes.Count - 1].idx = rn.nodes.Count - 1;
 
             SegmentLaneOSM toReturn;
 
@@ -239,6 +259,9 @@ namespace OSMConverter
             {
                 toReturn = new SegmentLaneOSM(newEnd, newStart, i);
             }
+
+            toReturn.startNodeIdx = toReturn.startNode.idx;
+            toReturn.endNodeIdx = toReturn.endNode.idx;
 
             return toReturn;
         }

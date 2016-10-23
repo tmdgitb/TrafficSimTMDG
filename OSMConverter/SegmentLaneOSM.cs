@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace OSMConverter
 {
@@ -33,18 +34,24 @@ namespace OSMConverter
         /// <summary>
         /// Starting node of WaySegment
         /// </summary>
+        [XmlIgnore]
         public NodeOSM startNode;
 
         /// <summary>
         /// Ending node of WaySegment
         /// </summary>
+        [XmlIgnore]
         public NodeOSM endNode;
+
+        public int startNodeIdx;
+        public int endNodeIdx;
 
         /// <summary>
         /// WaySegment length from start node to end node
         /// </summary>
+        [XmlIgnore]
         private double _length;
-
+        [XmlIgnore]
         public double Length
         {
             get { return _length; }
@@ -56,8 +63,9 @@ namespace OSMConverter
         /// <summary>
         /// WaySegment target average speed
         /// </summary>
+        [XmlIgnore]
         private int _avgSpeed;
-
+        [XmlIgnore]
         public int AvgSpeed
         {
             get { return _avgSpeed; }
@@ -68,8 +76,9 @@ namespace OSMConverter
         /// <summary>
         /// Way highway key / properties
         /// </summary>
+        [XmlIgnore]
         private string _highway;
-
+        [XmlIgnore]
         public string Highway
         {
             get { return _highway; }
@@ -80,24 +89,14 @@ namespace OSMConverter
         /// <summary>
         /// Way / Road name
         /// </summary>
+        [XmlIgnore]
         private string _roadName;
-
+        [XmlIgnore]
         public string RoadName
         {
             get { return _roadName; }
 
             set { _roadName = value; }
-        }
-
-        /// <summary>
-        /// Number of lanes
-        /// </summary>
-        private int _numLanes;
-        public int NumLanes
-        {
-            get { return _numLanes; }
-
-            set { _numLanes = value; }
         }
         #endregion
 

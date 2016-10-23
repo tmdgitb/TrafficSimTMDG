@@ -25,6 +25,9 @@ namespace OSMConverter
         [XmlAttribute("id")]
         public long Id { get { return _id; } set { _id = value; } }
 
+        [XmlIgnore]
+        public int idx;
+
         /// <summary>
         /// Node Latitude in OSM
         /// </summary>

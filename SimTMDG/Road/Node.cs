@@ -9,7 +9,9 @@ using System.Xml.Serialization;
 
 namespace SimTMDG.Road
 {
-    [Serializable, XmlRoot("node"), XmlType("node")]
+    // Flag -- new load
+    //[Serializable, XmlRoot("node"), XmlType("node")]
+    [XmlRoot("node"), XmlType("node")]
     public class Node
     {
         #region OSM Node
@@ -40,7 +42,8 @@ namespace SimTMDG.Road
         /// </summary>
         private Vector2 _position;
 
-        [XmlIgnore]
+        // Flag -- new load
+        //[XmlIgnore]
         public Vector2 Position
         {
             get { return _position; }
@@ -100,9 +103,9 @@ namespace SimTMDG.Road
                 //g.DrawEllipse(pen, rec);
             }
 
-            Pen pen = new Pen(penColor, 1);
-            Rectangle rec = new Rectangle((int)this.Position.X - 1, (int)this.Position.Y - 1, 2, 2);
-            g.DrawEllipse(pen, rec);
+            //Pen pen = new Pen(penColor, 1);
+            //Rectangle rec = new Rectangle((int)this.Position.X - 1, (int)this.Position.Y - 1, 2, 2);
+            //g.DrawEllipse(pen, rec);
 
         }
         #endregion

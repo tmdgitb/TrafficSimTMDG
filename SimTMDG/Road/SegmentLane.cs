@@ -6,9 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SimTMDG.Road
 {
+    // Flag -- new load
+    [XmlRoot("SegmentLaneOSM"), XmlType("SegmentLaneOSM")]
     public class SegmentLane : ITickable
     {
         #region lane properties
@@ -107,17 +110,21 @@ namespace SimTMDG.Road
         #endregion
 
         #region constructor
+        public SegmentLane()
+        {
+            _id = idIndex++;
+        }
+
+
         public SegmentLane(Node _startNode, Node _endNode, int laneIdx)
         {
             _id = idIndex++;
             LaneIdx = laneIdx;
-            startNode = _startNode;
-            endNode = _endNode;
-            _length = Vector2.GetDistance(startNode.Position, endNode.Position);
+            setStartEndNode(_startNode, _endNode);
 
-            Vector2 difference = new Vector2();
-            difference.X = endNode.Position.X - startNode.Position.X;
-            difference.Y = endNode.Position.Y - startNode.Position.Y;
+            //Vector2 difference = new Vector2();
+            //difference.X = endNode.Position.X - startNode.Position.X;
+            //difference.Y = endNode.Position.Y - startNode.Position.Y;
         }
         #endregion
 
@@ -139,7 +146,7 @@ namespace SimTMDG.Road
                 vehicles[i].Move(tickLength);
             }
 
-            //RemoveAllVehiclesInRemoveList();
+            RemoveAllVehiclesInRemoveList();
         }
 
 
@@ -247,6 +254,14 @@ namespace SimTMDG.Road
             }
 
             return toReturn;
+        }
+
+
+        public void setStartEndNode(Node _start, Node _end)
+        {
+            startNode = _start;
+            endNode = _end;
+            _length = Vector2.GetDistance(startNode.Position, endNode.Position);
         }
         #endregion
 

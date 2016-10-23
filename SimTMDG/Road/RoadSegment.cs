@@ -7,10 +7,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SimTMDG.Road
 {
-    [Serializable]
+    // Flag -- new load
+    //[Serializable]
+    [XmlRoot("RoadSegment"), XmlType("RoadSegment")]
     public class RoadSegment : ITickable
     {
         #region road properties
@@ -58,6 +61,8 @@ namespace SimTMDG.Road
             set { _length = value; }
         }
 
+        // Flag -- new load
+        [XmlIgnore]
         public List<SegmentLane> lanes = new List<SegmentLane>();
 
         public double laneWidth = 3.5;
@@ -237,9 +242,9 @@ namespace SimTMDG.Road
                 lane.Draw(g);
             }
 
-            //Font debugFont = new Font("Calibri", 6);
-            //Brush blackBrush = new SolidBrush(Color.Black);
-            //g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
+            Font debugFont = new Font("Calibri", 6);
+            Brush blackBrush = new SolidBrush(Color.Black);
+            g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
         }
         #endregion
 

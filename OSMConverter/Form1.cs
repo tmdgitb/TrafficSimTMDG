@@ -22,11 +22,11 @@ namespace OSMConverter
     {
 
         RoadNetwork rn = new RoadNetwork();
-        double minLon;
-        double maxLon;
-        double minLat;
-        double maxLat;
-        Boolean boundsDefined = false;
+        //double minLon;
+        //double maxLon;
+        //double minLat;
+        //double maxLat;
+        //Boolean boundsDefined = false;
 
 
 
@@ -87,33 +87,33 @@ namespace OSMConverter
 
                 if (minLonNode != null)
                 {
-                    minLon = double.Parse(minLonNode.Value, CultureInfo.InvariantCulture);
-                    boundsDefined = true;
+                    rn.minLon = double.Parse(minLonNode.Value, CultureInfo.InvariantCulture);
+                    //boundsDefined = true;
                 }
-                else { minLon = 0; }
+                else { rn.minLon = 0; }
 
                 if (maxLonNode != null)
                 {
-                    maxLon = double.Parse(maxLonNode.Value, CultureInfo.InvariantCulture);
-                    boundsDefined = true;
+                    rn.maxLon = double.Parse(maxLonNode.Value, CultureInfo.InvariantCulture);
+                    //boundsDefined = true;
                 }
-                else { maxLon = 0; }
+                else { rn.maxLon = 0; }
 
                 if (minLatNode != null)
                 {
-                    minLat = double.Parse(minLatNode.Value, CultureInfo.InvariantCulture);
-                    boundsDefined = true;
+                    rn.minLat = double.Parse(minLatNode.Value, CultureInfo.InvariantCulture);
+                    //boundsDefined = true;
                 }
-                else { minLat = 0; }
+                else { rn.minLat = 0; }
 
                 if (maxLatNode != null)
                 {
-                    maxLat = double.Parse(maxLatNode.Value, CultureInfo.InvariantCulture);
-                    boundsDefined = true;
+                    rn.maxLat = double.Parse(maxLatNode.Value, CultureInfo.InvariantCulture);
+                    //boundsDefined = true;
                 }
-                else { maxLat = 0; }
+                else { rn.maxLat = 0; }
 
-                Debug.WriteLine("minLong maxLat: " + minLon + ", " + maxLat);
+                Debug.WriteLine("minLong maxLat: " + rn.minLon + ", " + rn.maxLat);
 
 
                 lf.StepUpperProgress("Parsing Nodes...");
@@ -128,10 +128,11 @@ namespace OSMConverter
                     // und Deserializen
                     XmlSerializer xs = new XmlSerializer(typeof(NodeOSM));
                     NodeOSM n = (NodeOSM)xs.Deserialize(tr);
-                    n.latLonToPos(minLon, maxLat);
+                    n.latLonToPos(rn.minLon, rn.maxLat);
 
                     // ab in die Liste
                     rn.nodes.Add(n);
+                    n.idx = rn.nodes.Count - 1;
 
                     lf.StepLowerProgress();
                 }
@@ -178,17 +179,68 @@ namespace OSMConverter
 
                 for (int i = 0; i < rn.segments.Count; i++)
                 {
-                    List<RoadSegmentOSM> nextSegmentObj = rn.segments.FindAll(x => x.startNode == rn.segments[i].endNode);
-                    List<RoadSegmentOSM> prevSegmentObj = rn.segments.FindAll(x => x.endNode == rn.segments[i].startNode);
+                    List<RoadSegmentOSM> nextSegmentObj = new List<RoadSegmentOSM>();
+                    List<RoadSegmentOSM> prevSegmentObj = new List<RoadSegmentOSM>();
+
+                    //nextSegmentObj = rn.segments.FindAll(x => x.startNode == rn.segments[i].endNode);
+                    //prevSegmentObj = rn.segments.FindAll(x => x.endNode == rn.segments[i].startNode);
+
+                    NodeOSM tempStart;
+                    NodeOSM tempEnd;
+
+                    if (rn.segments[i].parentStartNode == null)
+                    {
+                        tempStart = rn.segments[i].startNode;
+                        tempEnd = rn.segments[i].endNode;
+                    }else
+                    {
+                        tempStart = rn.segments[i].parentStartNode;
+                        tempEnd = rn.segments[i].parentEndNode;
+                    }
+
+
+                    for (int k = 0; k < rn.segments.Count; k++)                                             // search next / prev for each segments
+                    {
+                        if (rn.segments[k] != rn.segments[i])
+                        {
+
+                            if (rn.segments[k].forward == rn.segments[i].forward)
+                            {
+                                if (rn.segments[k].parentStartNode == null)                                         // if current search is not generated segment
+                                {
+                                    if (rn.segments[k].startNode == tempEnd)
+                                    {
+                                        nextSegmentObj.Add(rn.segments[k]);
+                                    }
+                                    else if (rn.segments[k].endNode == tempStart)
+                                    {
+                                        prevSegmentObj.Add(rn.segments[k]);
+                                    }
+                                }
+                                else                                                                                // current search is generated segment
+                                {
+                                    if (rn.segments[k].parentStartNode == tempEnd)
+                                    {
+                                        nextSegmentObj.Add(rn.segments[k]);
+                                    }
+                                    else if (rn.segments[k].parentEndNode == tempStart)
+                                    {
+                                        prevSegmentObj.Add(rn.segments[k]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
 
                     for (int j = 0; j < nextSegmentObj.Count; j++)
                     {
-                        rn.segments[i].nextSegment.Add(nextSegmentObj[j].Id);                       
+                        rn.segments[i].nextSegment.Add(nextSegmentObj[j].idx);
                     }
 
                     for (int j = 0; j < prevSegmentObj.Count; j++)
                     {
-                        rn.segments[i].prevSegment.Add(prevSegmentObj[j].Id);
+                        rn.segments[i].prevSegment.Add(prevSegmentObj[j].idx);
                     }
                     
 
@@ -272,7 +324,10 @@ namespace OSMConverter
 
                     if ((rn.nodes.Find(x => x.Id == ndId) != null) && (rn.nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        rn.segments.Add(new RoadSegmentOSM(rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                        rn.segments.Add(new RoadSegmentOSM(rn, rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                        rn.segments[rn.segments.Count - 1].idx = rn.segments.Count - 1;
+                        rn.segments[rn.segments.Count - 1].startNodeIdx = rn.segments[rn.segments.Count - 1].startNode.idx;
+                        rn.segments[rn.segments.Count - 1].endNodeIdx = rn.segments[rn.segments.Count - 1].endNode.idx;
                     }
                 }
             }
@@ -297,7 +352,10 @@ namespace OSMConverter
 
                     if ((rn.nodes.Find(x => x.Id == ndId) != null) && (rn.nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        rn.segments.Add(new RoadSegmentOSM(rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                        rn.segments.Add(new RoadSegmentOSM(rn, rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway));
+                        rn.segments[rn.segments.Count - 1].idx = rn.segments.Count - 1;
+                        rn.segments[rn.segments.Count - 1].startNodeIdx = rn.segments[rn.segments.Count - 1].startNode.idx;
+                        rn.segments[rn.segments.Count - 1].endNodeIdx = rn.segments[rn.segments.Count - 1].endNode.idx;
                     }
                 }
             }
@@ -323,7 +381,8 @@ namespace OSMConverter
 
                     if ((rn.nodes.Find(x => x.Id == ndId) != null) && (rn.nodes.Find(y => y.Id == ndNextId) != null))
                     {
-                        tempSegment = new RoadSegmentOSM(rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway);
+                        tempSegment = new RoadSegmentOSM(rn, rn.nodes.Find(x => x.Id == ndId), rn.nodes.Find(y => y.Id == ndNextId), numlanes, highway, oneway);
+                        //tempSegments.Add(tempSegment);
 
                         int lanePerDirection = (int)tempSegment.lanes.Count / 2;
                         double distanceShift = (double)(tempSegment.lanes.Count / (double)4) * (double)tempSegment.laneWidth;
@@ -331,8 +390,21 @@ namespace OSMConverter
                         if (lanePerDirection < 1)
                             lanePerDirection = 1;
 
+
                         rn.segments.Add(generateShiftedSegment(tempSegment, distanceShift, lanePerDirection, tempSegment.Highway, true));
+
+                        rn.segments[rn.segments.Count - 1].idx = rn.segments.Count - 1;
+                        //rn.segments[rn.segments.Count - 1].parentSegment = tempSegment;
+                        //rn.segments[rn.segments.Count - 1].startNodeIdx = rn.segments[rn.segments.Count - 1].startNode.idx;
+                        //rn.segments[rn.segments.Count - 1].endNodeIdx = rn.segments[rn.segments.Count - 1].endNode.idx;
+
+
                         rn.segments.Add(generateShiftedSegment(tempSegment, -distanceShift, lanePerDirection, tempSegment.Highway, false));
+
+                        rn.segments[rn.segments.Count - 1].idx = rn.segments.Count - 1;
+                        //rn.segments[rn.segments.Count - 1].parentSegment = tempSegment;
+                        //rn.segments[rn.segments.Count - 1].startNodeIdx = rn.segments[rn.segments.Count - 1].startNode.idx;
+                        //rn.segments[rn.segments.Count - 1].endNodeIdx = rn.segments[rn.segments.Count - 1].endNode.idx;
 
                     }
 
@@ -349,18 +421,31 @@ namespace OSMConverter
             Vector2 shift = new Vector2(distance * Math.Cos(angle), distance * Math.Sin(angle));
 
             NodeOSM newStart = new NodeOSM(new Vector2(oriSegment.startNode.Position.X + shift.X, oriSegment.startNode.Position.Y - shift.Y), true);
+            rn.nodes.Add(newStart);
+            newStart.idx = rn.nodes.Count - 1;
             NodeOSM newEnd = new NodeOSM(new Vector2(oriSegment.endNode.Position.X + shift.X, oriSegment.endNode.Position.Y - shift.Y), true);
+            rn.nodes.Add(newEnd);
+            newEnd.idx = rn.nodes.Count - 1;
 
             RoadSegmentOSM toReturn;
 
             if (forward)
             {
-                toReturn = new RoadSegmentOSM(newStart, newEnd, numlanes, highway, "yes");
+                toReturn = new RoadSegmentOSM(rn, newStart, newEnd, numlanes, highway, "yes");
+                toReturn.parentStartNode = oriSegment.startNode;
+                toReturn.parentEndNode = oriSegment.endNode;
+                toReturn.forward = 1;
             }
             else
             {
-                toReturn = new RoadSegmentOSM(newEnd, newStart, numlanes, highway, "yes");
+                toReturn = new RoadSegmentOSM(rn, newEnd, newStart, numlanes, highway, "yes");
+                toReturn.parentStartNode = oriSegment.endNode;
+                toReturn.parentEndNode = oriSegment.startNode;
+                toReturn.forward = 0;
             }
+
+            toReturn.startNodeIdx = toReturn.startNode.idx;
+            toReturn.endNodeIdx = toReturn.endNode.idx;
 
             return toReturn;
         }
