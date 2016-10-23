@@ -1,0 +1,1678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RoadNetwork xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" minlon="107.6141" maxlon="107.61437" minlat="-6.88545" maxlat="-6.8852">
+  <nodes>
+    <node id="1341983793" lat="-6.8904229" lon="107.6166689">
+      <Position>
+        <X>286</X>
+        <Y>581</Y>
+      </Position>
+    </node>
+    <node id="25448696" lat="-6.88521" lon="107.6138095">
+      <Position>
+        <X>-32</X>
+        <Y>2</Y>
+      </Position>
+    </node>
+    <node id="1857160610" lat="-6.8874818" lon="107.615218">
+      <Position>
+        <X>125</X>
+        <Y>254</Y>
+      </Position>
+    </node>
+    <node id="1857160628" lat="-6.8891589" lon="107.6158901">
+      <Position>
+        <X>199</X>
+        <Y>440</Y>
+      </Position>
+    </node>
+    <node id="1857160630" lat="-6.8878168" lon="107.6153322">
+      <Position>
+        <X>137</X>
+        <Y>291</Y>
+      </Position>
+    </node>
+    <node id="1857160669" lat="-6.8856758" lon="107.6146026">
+      <Position>
+        <X>56</X>
+        <Y>53</Y>
+      </Position>
+    </node>
+    <node id="1857160701" lat="-6.890895" lon="107.6170488">
+      <Position>
+        <X>328</X>
+        <Y>633</Y>
+      </Position>
+    </node>
+    <node id="1857160706" lat="-6.8854847" lon="107.6143988">
+      <Position>
+        <X>34</X>
+        <Y>32</Y>
+      </Position>
+    </node>
+    <node id="1857160709" lat="-6.8916726" lon="107.6174672">
+      <Position>
+        <X>375</X>
+        <Y>720</Y>
+      </Position>
+    </node>
+    <node id="1857160826" lat="-6.8923543" lon="107.6178213">
+      <Position>
+        <X>414</X>
+        <Y>795</Y>
+      </Position>
+    </node>
+    <node id="1857160520" lat="-6.8853637" lon="107.6142462">
+      <Position>
+        <X>17</X>
+        <Y>19</Y>
+      </Position>
+    </node>
+    <node id="3375793672" lat="-6.8902382" lon="107.6165551">
+      <Position>
+        <X>273</X>
+        <Y>560</Y>
+      </Position>
+    </node>
+    <node id="2034531646" lat="-6.8853885" lon="107.6141791">
+      <Position>
+        <X>9</X>
+        <Y>21</Y>
+      </Position>
+    </node>
+    <node id="2034531654" lat="-6.8853301" lon="107.6142191">
+      <Position>
+        <X>14</X>
+        <Y>15</Y>
+      </Position>
+    </node>
+    <node id="2034531652" lat="-6.8852971" lon="107.6138026">
+      <Position>
+        <X>-33</X>
+        <Y>11</Y>
+      </Position>
+    </node>
+    <node id="3377329066" lat="-6.8852597" lon="107.613979">
+      <Position>
+        <X>-13</X>
+        <Y>7</Y>
+      </Position>
+    </node>
+    <node id="3419797993" lat="-6.8894395" lon="107.6160584">
+      <Position>
+        <X>218</X>
+        <Y>472</Y>
+      </Position>
+    </node>
+    <node id="0" lat="0" lon="0">
+      <Position>
+        <X>-32.445363273739375</X>
+        <Y>3.6923804402096314</Y>
+      </Position>
+    </node>
+    <node id="1" lat="0" lon="0">
+      <Position>
+        <X>-13.445363273739377</X>
+        <Y>8.69238044020963</Y>
+      </Position>
+    </node>
+    <node id="2" lat="0" lon="0">
+      <Position>
+        <X>-31.554636726260622</X>
+        <Y>0.30761955979036881</Y>
+      </Position>
+    </node>
+    <node id="3" lat="0" lon="0">
+      <Position>
+        <X>-12.554636726260624</X>
+        <Y>5.3076195597903686</Y>
+      </Position>
+    </node>
+    <node id="4" lat="0" lon="0">
+      <Position>
+        <X>-13.497154576959904</X>
+        <Y>8.677896697239678</Y>
+      </Position>
+    </node>
+    <node id="5" lat="0" lon="0">
+      <Position>
+        <X>13.502845423040096</X>
+        <Y>16.677896697239678</Y>
+      </Position>
+    </node>
+    <node id="6" lat="0" lon="0">
+      <Position>
+        <X>-12.502845423040096</X>
+        <Y>5.322103302760322</Y>
+      </Position>
+    </node>
+    <node id="7" lat="0" lon="0">
+      <Position>
+        <X>14.497154576959904</X>
+        <Y>13.322103302760322</Y>
+      </Position>
+    </node>
+    <node id="8" lat="0" lon="0">
+      <Position>
+        <X>12.6</X>
+        <Y>16.05</Y>
+      </Position>
+    </node>
+    <node id="9" lat="0" lon="0">
+      <Position>
+        <X>15.6</X>
+        <Y>20.05</Y>
+      </Position>
+    </node>
+    <node id="10" lat="0" lon="0">
+      <Position>
+        <X>15.4</X>
+        <Y>13.95</Y>
+      </Position>
+    </node>
+    <node id="11" lat="0" lon="0">
+      <Position>
+        <X>18.4</X>
+        <Y>17.95</Y>
+      </Position>
+    </node>
+    <node id="12" lat="0" lon="0">
+      <Position>
+        <X>17</X>
+        <Y>19</Y>
+      </Position>
+    </node>
+    <node id="13" lat="0" lon="0">
+      <Position>
+        <X>9</X>
+        <Y>21</Y>
+      </Position>
+    </node>
+    <node id="14" lat="0" lon="0">
+      <Position>
+        <X>9</X>
+        <Y>21</Y>
+      </Position>
+    </node>
+    <node id="15" lat="0" lon="0">
+      <Position>
+        <X>-33</X>
+        <Y>11</Y>
+      </Position>
+    </node>
+    <node id="16" lat="0" lon="0">
+      <Position>
+        <X>15.936962311751104</X>
+        <Y>20.390126207710093</Y>
+      </Position>
+    </node>
+    <node id="17" lat="0" lon="0">
+      <Position>
+        <X>32.9369623117511</X>
+        <Y>33.3901262077101</Y>
+      </Position>
+    </node>
+    <node id="18" lat="0" lon="0">
+      <Position>
+        <X>18.063037688248894</X>
+        <Y>17.609873792289907</Y>
+      </Position>
+    </node>
+    <node id="19" lat="0" lon="0">
+      <Position>
+        <X>35.0630376882489</X>
+        <Y>30.609873792289907</Y>
+      </Position>
+    </node>
+    <node id="20" lat="0" lon="0">
+      <Position>
+        <X>18.063037688248894</X>
+        <Y>17.609873792289907</Y>
+      </Position>
+    </node>
+    <node id="21" lat="0" lon="0">
+      <Position>
+        <X>35.0630376882489</X>
+        <Y>30.609873792289907</Y>
+      </Position>
+    </node>
+    <node id="22" lat="0" lon="0">
+      <Position>
+        <X>18.063037688248894</X>
+        <Y>17.609873792289907</Y>
+      </Position>
+    </node>
+    <node id="23" lat="0" lon="0">
+      <Position>
+        <X>35.0630376882489</X>
+        <Y>30.609873792289907</Y>
+      </Position>
+    </node>
+    <node id="24" lat="0" lon="0">
+      <Position>
+        <X>15.936962311751104</X>
+        <Y>20.390126207710093</Y>
+      </Position>
+    </node>
+    <node id="25" lat="0" lon="0">
+      <Position>
+        <X>32.9369623117511</X>
+        <Y>33.3901262077101</Y>
+      </Position>
+    </node>
+    <node id="26" lat="0" lon="0">
+      <Position>
+        <X>32.9369623117511</X>
+        <Y>33.3901262077101</Y>
+      </Position>
+    </node>
+    <node id="27" lat="0" lon="0">
+      <Position>
+        <X>15.936962311751104</X>
+        <Y>20.390126207710093</Y>
+      </Position>
+    </node>
+    <node id="28" lat="0" lon="0">
+      <Position>
+        <X>32.791667443305627</X>
+        <Y>33.265872202251252</Y>
+      </Position>
+    </node>
+    <node id="29" lat="0" lon="0">
+      <Position>
+        <X>54.791667443305627</X>
+        <Y>54.265872202251252</Y>
+      </Position>
+    </node>
+    <node id="30" lat="0" lon="0">
+      <Position>
+        <X>35.208332556694373</X>
+        <Y>30.734127797748748</Y>
+      </Position>
+    </node>
+    <node id="31" lat="0" lon="0">
+      <Position>
+        <X>57.208332556694373</X>
+        <Y>51.734127797748748</Y>
+      </Position>
+    </node>
+    <node id="32" lat="0" lon="0">
+      <Position>
+        <X>35.208332556694373</X>
+        <Y>30.734127797748748</Y>
+      </Position>
+    </node>
+    <node id="33" lat="0" lon="0">
+      <Position>
+        <X>57.208332556694373</X>
+        <Y>51.734127797748748</Y>
+      </Position>
+    </node>
+    <node id="34" lat="0" lon="0">
+      <Position>
+        <X>35.208332556694373</X>
+        <Y>30.734127797748748</Y>
+      </Position>
+    </node>
+    <node id="35" lat="0" lon="0">
+      <Position>
+        <X>57.208332556694373</X>
+        <Y>51.734127797748748</Y>
+      </Position>
+    </node>
+    <node id="36" lat="0" lon="0">
+      <Position>
+        <X>32.791667443305627</X>
+        <Y>33.265872202251252</Y>
+      </Position>
+    </node>
+    <node id="37" lat="0" lon="0">
+      <Position>
+        <X>54.791667443305627</X>
+        <Y>54.265872202251252</Y>
+      </Position>
+    </node>
+    <node id="38" lat="0" lon="0">
+      <Position>
+        <X>54.791667443305627</X>
+        <Y>54.265872202251252</Y>
+      </Position>
+    </node>
+    <node id="39" lat="0" lon="0">
+      <Position>
+        <X>32.791667443305627</X>
+        <Y>33.265872202251252</Y>
+      </Position>
+    </node>
+    <node id="40" lat="0" lon="0">
+      <Position>
+        <X>54.344811261257227</X>
+        <Y>53.568199119269906</Y>
+      </Position>
+    </node>
+    <node id="41" lat="0" lon="0">
+      <Position>
+        <X>123.34481126125722</X>
+        <Y>254.56819911926991</Y>
+      </Position>
+    </node>
+    <node id="42" lat="0" lon="0">
+      <Position>
+        <X>57.655188738742773</X>
+        <Y>52.431800880730094</Y>
+      </Position>
+    </node>
+    <node id="43" lat="0" lon="0">
+      <Position>
+        <X>126.65518873874278</X>
+        <Y>253.43180088073009</Y>
+      </Position>
+    </node>
+    <node id="44" lat="0" lon="0">
+      <Position>
+        <X>57.655188738742773</X>
+        <Y>52.431800880730094</Y>
+      </Position>
+    </node>
+    <node id="45" lat="0" lon="0">
+      <Position>
+        <X>126.65518873874278</X>
+        <Y>253.43180088073009</Y>
+      </Position>
+    </node>
+    <node id="46" lat="0" lon="0">
+      <Position>
+        <X>57.655188738742773</X>
+        <Y>52.431800880730094</Y>
+      </Position>
+    </node>
+    <node id="47" lat="0" lon="0">
+      <Position>
+        <X>126.65518873874278</X>
+        <Y>253.43180088073009</Y>
+      </Position>
+    </node>
+    <node id="48" lat="0" lon="0">
+      <Position>
+        <X>54.344811261257227</X>
+        <Y>53.568199119269906</Y>
+      </Position>
+    </node>
+    <node id="49" lat="0" lon="0">
+      <Position>
+        <X>123.34481126125722</X>
+        <Y>254.56819911926991</Y>
+      </Position>
+    </node>
+    <node id="50" lat="0" lon="0">
+      <Position>
+        <X>123.34481126125722</X>
+        <Y>254.56819911926991</Y>
+      </Position>
+    </node>
+    <node id="51" lat="0" lon="0">
+      <Position>
+        <X>54.344811261257227</X>
+        <Y>53.568199119269906</Y>
+      </Position>
+    </node>
+    <node id="52" lat="0" lon="0">
+      <Position>
+        <X>123.33536006683967</X>
+        <Y>254.5398832215655</Y>
+      </Position>
+    </node>
+    <node id="53" lat="0" lon="0">
+      <Position>
+        <X>135.33536006683966</X>
+        <Y>291.5398832215655</Y>
+      </Position>
+    </node>
+    <node id="54" lat="0" lon="0">
+      <Position>
+        <X>126.66463993316033</X>
+        <Y>253.4601167784345</Y>
+      </Position>
+    </node>
+    <node id="55" lat="0" lon="0">
+      <Position>
+        <X>138.66463993316035</X>
+        <Y>290.4601167784345</Y>
+      </Position>
+    </node>
+    <node id="56" lat="0" lon="0">
+      <Position>
+        <X>126.66463993316033</X>
+        <Y>253.4601167784345</Y>
+      </Position>
+    </node>
+    <node id="57" lat="0" lon="0">
+      <Position>
+        <X>138.66463993316035</X>
+        <Y>290.4601167784345</Y>
+      </Position>
+    </node>
+    <node id="58" lat="0" lon="0">
+      <Position>
+        <X>126.66463993316033</X>
+        <Y>253.4601167784345</Y>
+      </Position>
+    </node>
+    <node id="59" lat="0" lon="0">
+      <Position>
+        <X>138.66463993316035</X>
+        <Y>290.4601167784345</Y>
+      </Position>
+    </node>
+    <node id="60" lat="0" lon="0">
+      <Position>
+        <X>123.33536006683967</X>
+        <Y>254.5398832215655</Y>
+      </Position>
+    </node>
+    <node id="61" lat="0" lon="0">
+      <Position>
+        <X>135.33536006683966</X>
+        <Y>291.5398832215655</Y>
+      </Position>
+    </node>
+    <node id="62" lat="0" lon="0">
+      <Position>
+        <X>135.33536006683966</X>
+        <Y>291.5398832215655</Y>
+      </Position>
+    </node>
+    <node id="63" lat="0" lon="0">
+      <Position>
+        <X>123.33536006683967</X>
+        <Y>254.5398832215655</Y>
+      </Position>
+    </node>
+    <node id="64" lat="0" lon="0">
+      <Position>
+        <X>135.38429474978952</X>
+        <Y>291.67230688263794</Y>
+      </Position>
+    </node>
+    <node id="65" lat="0" lon="0">
+      <Position>
+        <X>197.38429474978952</X>
+        <Y>440.67230688263794</Y>
+      </Position>
+    </node>
+    <node id="66" lat="0" lon="0">
+      <Position>
+        <X>138.61570525021048</X>
+        <Y>290.32769311736206</Y>
+      </Position>
+    </node>
+    <node id="67" lat="0" lon="0">
+      <Position>
+        <X>200.61570525021048</X>
+        <Y>439.32769311736206</Y>
+      </Position>
+    </node>
+    <node id="68" lat="0" lon="0">
+      <Position>
+        <X>138.61570525021048</X>
+        <Y>290.32769311736206</Y>
+      </Position>
+    </node>
+    <node id="69" lat="0" lon="0">
+      <Position>
+        <X>200.61570525021048</X>
+        <Y>439.32769311736206</Y>
+      </Position>
+    </node>
+    <node id="70" lat="0" lon="0">
+      <Position>
+        <X>138.61570525021048</X>
+        <Y>290.32769311736206</Y>
+      </Position>
+    </node>
+    <node id="71" lat="0" lon="0">
+      <Position>
+        <X>200.61570525021048</X>
+        <Y>439.32769311736206</Y>
+      </Position>
+    </node>
+    <node id="72" lat="0" lon="0">
+      <Position>
+        <X>135.38429474978952</X>
+        <Y>291.67230688263794</Y>
+      </Position>
+    </node>
+    <node id="73" lat="0" lon="0">
+      <Position>
+        <X>197.38429474978952</X>
+        <Y>440.67230688263794</Y>
+      </Position>
+    </node>
+    <node id="74" lat="0" lon="0">
+      <Position>
+        <X>197.38429474978952</X>
+        <Y>440.67230688263794</Y>
+      </Position>
+    </node>
+    <node id="75" lat="0" lon="0">
+      <Position>
+        <X>135.38429474978952</X>
+        <Y>291.67230688263794</Y>
+      </Position>
+    </node>
+    <node id="76" lat="0" lon="0">
+      <Position>
+        <X>197.4952541982787</X>
+        <Y>440.893442819772</Y>
+      </Position>
+    </node>
+    <node id="77" lat="0" lon="0">
+      <Position>
+        <X>216.4952541982787</X>
+        <Y>472.893442819772</Y>
+      </Position>
+    </node>
+    <node id="78" lat="0" lon="0">
+      <Position>
+        <X>200.5047458017213</X>
+        <Y>439.106557180228</Y>
+      </Position>
+    </node>
+    <node id="79" lat="0" lon="0">
+      <Position>
+        <X>219.5047458017213</X>
+        <Y>471.106557180228</Y>
+      </Position>
+    </node>
+    <node id="80" lat="0" lon="0">
+      <Position>
+        <X>200.5047458017213</X>
+        <Y>439.106557180228</Y>
+      </Position>
+    </node>
+    <node id="81" lat="0" lon="0">
+      <Position>
+        <X>219.5047458017213</X>
+        <Y>471.106557180228</Y>
+      </Position>
+    </node>
+    <node id="82" lat="0" lon="0">
+      <Position>
+        <X>200.5047458017213</X>
+        <Y>439.106557180228</Y>
+      </Position>
+    </node>
+    <node id="83" lat="0" lon="0">
+      <Position>
+        <X>219.5047458017213</X>
+        <Y>471.106557180228</Y>
+      </Position>
+    </node>
+    <node id="84" lat="0" lon="0">
+      <Position>
+        <X>197.4952541982787</X>
+        <Y>440.893442819772</Y>
+      </Position>
+    </node>
+    <node id="85" lat="0" lon="0">
+      <Position>
+        <X>216.4952541982787</X>
+        <Y>472.893442819772</Y>
+      </Position>
+    </node>
+    <node id="86" lat="0" lon="0">
+      <Position>
+        <X>216.4952541982787</X>
+        <Y>472.893442819772</Y>
+      </Position>
+    </node>
+    <node id="87" lat="0" lon="0">
+      <Position>
+        <X>197.4952541982787</X>
+        <Y>440.893442819772</Y>
+      </Position>
+    </node>
+    <node id="88" lat="0" lon="0">
+      <Position>
+        <X>216.51600296799109</X>
+        <Y>472.92749814500559</Y>
+      </Position>
+    </node>
+    <node id="89" lat="0" lon="0">
+      <Position>
+        <X>271.51600296799108</X>
+        <Y>560.92749814500553</Y>
+      </Position>
+    </node>
+    <node id="90" lat="0" lon="0">
+      <Position>
+        <X>219.48399703200892</X>
+        <Y>471.07250185499441</Y>
+      </Position>
+    </node>
+    <node id="91" lat="0" lon="0">
+      <Position>
+        <X>274.48399703200892</X>
+        <Y>559.07250185499447</Y>
+      </Position>
+    </node>
+    <node id="92" lat="0" lon="0">
+      <Position>
+        <X>219.48399703200892</X>
+        <Y>471.07250185499441</Y>
+      </Position>
+    </node>
+    <node id="93" lat="0" lon="0">
+      <Position>
+        <X>274.48399703200892</X>
+        <Y>559.07250185499447</Y>
+      </Position>
+    </node>
+    <node id="94" lat="0" lon="0">
+      <Position>
+        <X>219.48399703200892</X>
+        <Y>471.07250185499441</Y>
+      </Position>
+    </node>
+    <node id="95" lat="0" lon="0">
+      <Position>
+        <X>274.48399703200892</X>
+        <Y>559.07250185499447</Y>
+      </Position>
+    </node>
+    <node id="96" lat="0" lon="0">
+      <Position>
+        <X>216.51600296799109</X>
+        <Y>472.92749814500559</Y>
+      </Position>
+    </node>
+    <node id="97" lat="0" lon="0">
+      <Position>
+        <X>271.51600296799108</X>
+        <Y>560.92749814500553</Y>
+      </Position>
+    </node>
+    <node id="98" lat="0" lon="0">
+      <Position>
+        <X>271.51600296799108</X>
+        <Y>560.92749814500553</Y>
+      </Position>
+    </node>
+    <node id="99" lat="0" lon="0">
+      <Position>
+        <X>216.51600296799109</X>
+        <Y>472.92749814500559</Y>
+      </Position>
+    </node>
+    <node id="100" lat="0" lon="0">
+      <Position>
+        <X>271.51203599329625</X>
+        <Y>560.92112057557847</Y>
+      </Position>
+    </node>
+    <node id="101" lat="0" lon="0">
+      <Position>
+        <X>284.51203599329625</X>
+        <Y>581.92112057557847</Y>
+      </Position>
+    </node>
+    <node id="102" lat="0" lon="0">
+      <Position>
+        <X>274.48796400670375</X>
+        <Y>559.07887942442153</Y>
+      </Position>
+    </node>
+    <node id="103" lat="0" lon="0">
+      <Position>
+        <X>287.48796400670375</X>
+        <Y>580.07887942442153</Y>
+      </Position>
+    </node>
+    <node id="104" lat="0" lon="0">
+      <Position>
+        <X>274.48796400670375</X>
+        <Y>559.07887942442153</Y>
+      </Position>
+    </node>
+    <node id="105" lat="0" lon="0">
+      <Position>
+        <X>287.48796400670375</X>
+        <Y>580.07887942442153</Y>
+      </Position>
+    </node>
+    <node id="106" lat="0" lon="0">
+      <Position>
+        <X>274.48796400670375</X>
+        <Y>559.07887942442153</Y>
+      </Position>
+    </node>
+    <node id="107" lat="0" lon="0">
+      <Position>
+        <X>287.48796400670375</X>
+        <Y>580.07887942442153</Y>
+      </Position>
+    </node>
+    <node id="108" lat="0" lon="0">
+      <Position>
+        <X>271.51203599329625</X>
+        <Y>560.92112057557847</Y>
+      </Position>
+    </node>
+    <node id="109" lat="0" lon="0">
+      <Position>
+        <X>284.51203599329625</X>
+        <Y>581.92112057557847</Y>
+      </Position>
+    </node>
+    <node id="110" lat="0" lon="0">
+      <Position>
+        <X>284.51203599329625</X>
+        <Y>581.92112057557847</Y>
+      </Position>
+    </node>
+    <node id="111" lat="0" lon="0">
+      <Position>
+        <X>271.51203599329625</X>
+        <Y>560.92112057557847</Y>
+      </Position>
+    </node>
+    <node id="112" lat="0" lon="0">
+      <Position>
+        <X>284.63860293464347</X>
+        <Y>582.09958993740338</Y>
+      </Position>
+    </node>
+    <node id="113" lat="0" lon="0">
+      <Position>
+        <X>326.63860293464347</X>
+        <Y>634.09958993740338</Y>
+      </Position>
+    </node>
+    <node id="114" lat="0" lon="0">
+      <Position>
+        <X>287.36139706535653</X>
+        <Y>579.90041006259662</Y>
+      </Position>
+    </node>
+    <node id="115" lat="0" lon="0">
+      <Position>
+        <X>329.36139706535653</X>
+        <Y>631.90041006259662</Y>
+      </Position>
+    </node>
+    <node id="116" lat="0" lon="0">
+      <Position>
+        <X>287.36139706535653</X>
+        <Y>579.90041006259662</Y>
+      </Position>
+    </node>
+    <node id="117" lat="0" lon="0">
+      <Position>
+        <X>329.36139706535653</X>
+        <Y>631.90041006259662</Y>
+      </Position>
+    </node>
+    <node id="118" lat="0" lon="0">
+      <Position>
+        <X>287.36139706535653</X>
+        <Y>579.90041006259662</Y>
+      </Position>
+    </node>
+    <node id="119" lat="0" lon="0">
+      <Position>
+        <X>329.36139706535653</X>
+        <Y>631.90041006259662</Y>
+      </Position>
+    </node>
+    <node id="120" lat="0" lon="0">
+      <Position>
+        <X>284.63860293464347</X>
+        <Y>582.09958993740338</Y>
+      </Position>
+    </node>
+    <node id="121" lat="0" lon="0">
+      <Position>
+        <X>326.63860293464347</X>
+        <Y>634.09958993740338</Y>
+      </Position>
+    </node>
+    <node id="122" lat="0" lon="0">
+      <Position>
+        <X>326.63860293464347</X>
+        <Y>634.09958993740338</Y>
+      </Position>
+    </node>
+    <node id="123" lat="0" lon="0">
+      <Position>
+        <X>284.63860293464347</X>
+        <Y>582.09958993740338</Y>
+      </Position>
+    </node>
+    <node id="124" lat="0" lon="0">
+      <Position>
+        <X>326.460313560437</X>
+        <Y>633.8317846282697</Y>
+      </Position>
+    </node>
+    <node id="125" lat="0" lon="0">
+      <Position>
+        <X>373.460313560437</X>
+        <Y>720.8317846282697</Y>
+      </Position>
+    </node>
+    <node id="126" lat="0" lon="0">
+      <Position>
+        <X>329.539686439563</X>
+        <Y>632.1682153717303</Y>
+      </Position>
+    </node>
+    <node id="127" lat="0" lon="0">
+      <Position>
+        <X>376.539686439563</X>
+        <Y>719.1682153717303</Y>
+      </Position>
+    </node>
+    <node id="128" lat="0" lon="0">
+      <Position>
+        <X>329.539686439563</X>
+        <Y>632.1682153717303</Y>
+      </Position>
+    </node>
+    <node id="129" lat="0" lon="0">
+      <Position>
+        <X>376.539686439563</X>
+        <Y>719.1682153717303</Y>
+      </Position>
+    </node>
+    <node id="130" lat="0" lon="0">
+      <Position>
+        <X>329.539686439563</X>
+        <Y>632.1682153717303</Y>
+      </Position>
+    </node>
+    <node id="131" lat="0" lon="0">
+      <Position>
+        <X>376.539686439563</X>
+        <Y>719.1682153717303</Y>
+      </Position>
+    </node>
+    <node id="132" lat="0" lon="0">
+      <Position>
+        <X>326.460313560437</X>
+        <Y>633.8317846282697</Y>
+      </Position>
+    </node>
+    <node id="133" lat="0" lon="0">
+      <Position>
+        <X>373.460313560437</X>
+        <Y>720.8317846282697</Y>
+      </Position>
+    </node>
+    <node id="134" lat="0" lon="0">
+      <Position>
+        <X>373.460313560437</X>
+        <Y>720.8317846282697</Y>
+      </Position>
+    </node>
+    <node id="135" lat="0" lon="0">
+      <Position>
+        <X>326.460313560437</X>
+        <Y>633.8317846282697</Y>
+      </Position>
+    </node>
+    <node id="136" lat="0" lon="0">
+      <Position>
+        <X>373.44737059783944</X>
+        <Y>720.80736728912348</Y>
+      </Position>
+    </node>
+    <node id="137" lat="0" lon="0">
+      <Position>
+        <X>412.44737059783944</X>
+        <Y>795.80736728912348</Y>
+      </Position>
+    </node>
+    <node id="138" lat="0" lon="0">
+      <Position>
+        <X>376.55262940216056</X>
+        <Y>719.19263271087652</Y>
+      </Position>
+    </node>
+    <node id="139" lat="0" lon="0">
+      <Position>
+        <X>415.55262940216056</X>
+        <Y>794.19263271087652</Y>
+      </Position>
+    </node>
+    <node id="140" lat="0" lon="0">
+      <Position>
+        <X>376.55262940216056</X>
+        <Y>719.19263271087652</Y>
+      </Position>
+    </node>
+    <node id="141" lat="0" lon="0">
+      <Position>
+        <X>415.55262940216056</X>
+        <Y>794.19263271087652</Y>
+      </Position>
+    </node>
+    <node id="142" lat="0" lon="0">
+      <Position>
+        <X>376.55262940216056</X>
+        <Y>719.19263271087652</Y>
+      </Position>
+    </node>
+    <node id="143" lat="0" lon="0">
+      <Position>
+        <X>415.55262940216056</X>
+        <Y>794.19263271087652</Y>
+      </Position>
+    </node>
+    <node id="144" lat="0" lon="0">
+      <Position>
+        <X>373.44737059783944</X>
+        <Y>720.80736728912348</Y>
+      </Position>
+    </node>
+    <node id="145" lat="0" lon="0">
+      <Position>
+        <X>412.44737059783944</X>
+        <Y>795.80736728912348</Y>
+      </Position>
+    </node>
+    <node id="146" lat="0" lon="0">
+      <Position>
+        <X>412.44737059783944</X>
+        <Y>795.80736728912348</Y>
+      </Position>
+    </node>
+    <node id="147" lat="0" lon="0">
+      <Position>
+        <X>373.44737059783944</X>
+        <Y>720.80736728912348</Y>
+      </Position>
+    </node>
+  </nodes>
+  <segments>
+    <RoadSegment>
+      <startNodeIdx>1</startNodeIdx>
+      <endNodeIdx>15</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>17</startNodeIdx>
+          <endNodeIdx>18</endNodeIdx>
+          <Id>0</Id>
+        </SegmentLaneOSM>
+        <SegmentLaneOSM>
+          <LaneIdx>1</LaneIdx>
+          <startNodeIdx>19</startNodeIdx>
+          <endNodeIdx>20</endNodeIdx>
+          <Id>1</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>1</int>
+      </nextSegment>
+      <prevSegment />
+      <Id>0</Id>
+      <Length>19.6468827043885</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>primary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>2</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>15</startNodeIdx>
+      <endNodeIdx>13</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>21</startNodeIdx>
+          <endNodeIdx>22</endNodeIdx>
+          <Id>2</Id>
+        </SegmentLaneOSM>
+        <SegmentLaneOSM>
+          <LaneIdx>1</LaneIdx>
+          <startNodeIdx>23</startNodeIdx>
+          <endNodeIdx>24</endNodeIdx>
+          <Id>3</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>2</int>
+      </nextSegment>
+      <prevSegment>
+        <int>0</int>
+      </prevSegment>
+      <Id>1</Id>
+      <Length>28.160255680657446</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>primary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>2</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>13</startNodeIdx>
+      <endNodeIdx>10</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>25</startNodeIdx>
+          <endNodeIdx>26</endNodeIdx>
+          <Id>4</Id>
+        </SegmentLaneOSM>
+        <SegmentLaneOSM>
+          <LaneIdx>1</LaneIdx>
+          <startNodeIdx>27</startNodeIdx>
+          <endNodeIdx>28</endNodeIdx>
+          <Id>5</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>3</int>
+      </nextSegment>
+      <prevSegment>
+        <int>1</int>
+      </prevSegment>
+      <Id>2</Id>
+      <Length>5</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>primary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>2</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>10</startNodeIdx>
+      <endNodeIdx>12</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>29</startNodeIdx>
+          <endNodeIdx>30</endNodeIdx>
+          <Id>6</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>4</int>
+      </nextSegment>
+      <prevSegment>
+        <int>2</int>
+      </prevSegment>
+      <Id>3</Id>
+      <Length>8.2462112512353212</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>primary_link</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>12</startNodeIdx>
+      <endNodeIdx>14</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>31</startNodeIdx>
+          <endNodeIdx>32</endNodeIdx>
+          <Id>7</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment />
+      <prevSegment>
+        <int>3</int>
+      </prevSegment>
+      <Id>4</Id>
+      <Length>43.174066289845804</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>primary_link</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>37</startNodeIdx>
+      <endNodeIdx>38</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>39</startNodeIdx>
+          <endNodeIdx>40</endNodeIdx>
+          <Id>10</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>7</int>
+      </nextSegment>
+      <prevSegment />
+      <Id>6</Id>
+      <Length>21.4009345590327</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>42</startNodeIdx>
+      <endNodeIdx>41</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>43</startNodeIdx>
+          <endNodeIdx>44</endNodeIdx>
+          <Id>11</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment />
+      <prevSegment>
+        <int>8</int>
+      </prevSegment>
+      <Id>7</Id>
+      <Length>21.4009345590327</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>49</startNodeIdx>
+      <endNodeIdx>50</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>51</startNodeIdx>
+          <endNodeIdx>52</endNodeIdx>
+          <Id>14</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>9</int>
+      </nextSegment>
+      <prevSegment>
+        <int>5</int>
+      </prevSegment>
+      <Id>9</Id>
+      <Length>30.4138126514911</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>54</startNodeIdx>
+      <endNodeIdx>53</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>55</startNodeIdx>
+          <endNodeIdx>56</endNodeIdx>
+          <Id>15</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>6</int>
+      </nextSegment>
+      <prevSegment>
+        <int>10</int>
+      </prevSegment>
+      <Id>10</Id>
+      <Length>30.4138126514911</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>61</startNodeIdx>
+      <endNodeIdx>62</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>63</startNodeIdx>
+          <endNodeIdx>64</endNodeIdx>
+          <Id>18</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>11</int>
+      </nextSegment>
+      <prevSegment>
+        <int>7</int>
+      </prevSegment>
+      <Id>12</Id>
+      <Length>212.51352898109803</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>66</startNodeIdx>
+      <endNodeIdx>65</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>67</startNodeIdx>
+          <endNodeIdx>68</endNodeIdx>
+          <Id>19</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>8</int>
+      </nextSegment>
+      <prevSegment>
+        <int>12</int>
+      </prevSegment>
+      <Id>13</Id>
+      <Length>212.51352898109803</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>73</startNodeIdx>
+      <endNodeIdx>74</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>75</startNodeIdx>
+          <endNodeIdx>76</endNodeIdx>
+          <Id>22</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>13</int>
+      </nextSegment>
+      <prevSegment>
+        <int>9</int>
+      </prevSegment>
+      <Id>15</Id>
+      <Length>38.897300677553453</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>78</startNodeIdx>
+      <endNodeIdx>77</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>79</startNodeIdx>
+          <endNodeIdx>80</endNodeIdx>
+          <Id>23</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>10</int>
+      </nextSegment>
+      <prevSegment>
+        <int>14</int>
+      </prevSegment>
+      <Id>16</Id>
+      <Length>38.897300677553446</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>85</startNodeIdx>
+      <endNodeIdx>86</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>87</startNodeIdx>
+          <endNodeIdx>88</endNodeIdx>
+          <Id>26</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>15</int>
+      </nextSegment>
+      <prevSegment>
+        <int>11</int>
+      </prevSegment>
+      <Id>18</Id>
+      <Length>161.38463371709216</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>90</startNodeIdx>
+      <endNodeIdx>89</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>91</startNodeIdx>
+          <endNodeIdx>92</endNodeIdx>
+          <Id>27</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>12</int>
+      </nextSegment>
+      <prevSegment>
+        <int>16</int>
+      </prevSegment>
+      <Id>19</Id>
+      <Length>161.38463371709216</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>97</startNodeIdx>
+      <endNodeIdx>98</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>99</startNodeIdx>
+          <endNodeIdx>100</endNodeIdx>
+          <Id>30</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>17</int>
+      </nextSegment>
+      <prevSegment>
+        <int>13</int>
+      </prevSegment>
+      <Id>21</Id>
+      <Length>37.215588131856791</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>102</startNodeIdx>
+      <endNodeIdx>101</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>103</startNodeIdx>
+          <endNodeIdx>104</endNodeIdx>
+          <Id>31</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>14</int>
+      </nextSegment>
+      <prevSegment>
+        <int>18</int>
+      </prevSegment>
+      <Id>22</Id>
+      <Length>37.215588131856791</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>109</startNodeIdx>
+      <endNodeIdx>110</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>111</startNodeIdx>
+          <endNodeIdx>112</endNodeIdx>
+          <Id>34</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>19</int>
+      </nextSegment>
+      <prevSegment>
+        <int>15</int>
+      </prevSegment>
+      <Id>24</Id>
+      <Length>103.7737924526227</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>114</startNodeIdx>
+      <endNodeIdx>113</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>115</startNodeIdx>
+          <endNodeIdx>116</endNodeIdx>
+          <Id>35</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>16</int>
+      </nextSegment>
+      <prevSegment>
+        <int>20</int>
+      </prevSegment>
+      <Id>25</Id>
+      <Length>103.77379245262259</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>121</startNodeIdx>
+      <endNodeIdx>122</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>123</startNodeIdx>
+          <endNodeIdx>124</endNodeIdx>
+          <Id>38</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>21</int>
+      </nextSegment>
+      <prevSegment>
+        <int>17</int>
+      </prevSegment>
+      <Id>27</Id>
+      <Length>24.698178070456937</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>126</startNodeIdx>
+      <endNodeIdx>125</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>127</startNodeIdx>
+          <endNodeIdx>128</endNodeIdx>
+          <Id>39</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>18</int>
+      </nextSegment>
+      <prevSegment>
+        <int>22</int>
+      </prevSegment>
+      <Id>28</Id>
+      <Length>24.698178070456937</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>133</startNodeIdx>
+      <endNodeIdx>134</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>135</startNodeIdx>
+          <endNodeIdx>136</endNodeIdx>
+          <Id>42</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>23</int>
+      </nextSegment>
+      <prevSegment>
+        <int>19</int>
+      </prevSegment>
+      <Id>30</Id>
+      <Length>66.843099868273612</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>138</startNodeIdx>
+      <endNodeIdx>137</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>139</startNodeIdx>
+          <endNodeIdx>140</endNodeIdx>
+          <Id>43</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>20</int>
+      </nextSegment>
+      <prevSegment>
+        <int>24</int>
+      </prevSegment>
+      <Id>31</Id>
+      <Length>66.843099868273612</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>145</startNodeIdx>
+      <endNodeIdx>146</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>147</startNodeIdx>
+          <endNodeIdx>148</endNodeIdx>
+          <Id>46</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>25</int>
+      </nextSegment>
+      <prevSegment>
+        <int>21</int>
+      </prevSegment>
+      <Id>33</Id>
+      <Length>98.883770154661889</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>150</startNodeIdx>
+      <endNodeIdx>149</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>151</startNodeIdx>
+          <endNodeIdx>152</endNodeIdx>
+          <Id>47</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>22</int>
+      </nextSegment>
+      <prevSegment>
+        <int>26</int>
+      </prevSegment>
+      <Id>34</Id>
+      <Length>98.883770154661889</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>157</startNodeIdx>
+      <endNodeIdx>158</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>159</startNodeIdx>
+          <endNodeIdx>160</endNodeIdx>
+          <Id>50</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment />
+      <prevSegment>
+        <int>23</int>
+      </prevSegment>
+      <Id>36</Id>
+      <Length>84.534016821632221</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+    <RoadSegment>
+      <startNodeIdx>162</startNodeIdx>
+      <endNodeIdx>161</endNodeIdx>
+      <lanes>
+        <SegmentLaneOSM>
+          <LaneIdx>0</LaneIdx>
+          <startNodeIdx>163</startNodeIdx>
+          <endNodeIdx>164</endNodeIdx>
+          <Id>51</Id>
+        </SegmentLaneOSM>
+      </lanes>
+      <laneWidth>3.5</laneWidth>
+      <nextSegment>
+        <int>24</int>
+      </nextSegment>
+      <prevSegment />
+      <Id>37</Id>
+      <Length>84.534016821632221</Length>
+      <AvgSpeed>0</AvgSpeed>
+      <Highway>secondary</Highway>
+      <OneWay>yes</OneWay>
+      <NumLanes>1</NumLanes>
+    </RoadSegment>
+  </segments>
+</RoadNetwork>

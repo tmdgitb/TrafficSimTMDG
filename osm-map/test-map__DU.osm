@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.5.5 (7703 thorn-03.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <bounds minlat="-6.8854500" minlon="107.6141000" maxlat="-6.8852000" maxlon="107.6143700"/>
+ <node id="1341983793" visible="true" version="1" changeset="8568609" timestamp="2011-06-28T06:45:42Z" user="wonderchook" uid="95488" lat="-6.8904229" lon="107.6166689"/>
+ <node id="25448696" visible="true" version="7" changeset="27536894" timestamp="2014-12-17T19:14:05Z" user="gnocin" uid="2526082" lat="-6.8852100" lon="107.6138095"/>
+ <node id="1857160610" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:48Z" user="ArjanO" uid="38066" lat="-6.8874818" lon="107.6152180"/>
+ <node id="1857160628" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:48Z" user="ArjanO" uid="38066" lat="-6.8891589" lon="107.6158901"/>
+ <node id="1857160630" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:48Z" user="ArjanO" uid="38066" lat="-6.8878168" lon="107.6153322"/>
+ <node id="1857160669" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:48Z" user="ArjanO" uid="38066" lat="-6.8856758" lon="107.6146026"/>
+ <node id="1857160701" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:49Z" user="ArjanO" uid="38066" lat="-6.8908950" lon="107.6170488"/>
+ <node id="1857160706" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:49Z" user="ArjanO" uid="38066" lat="-6.8854847" lon="107.6143988"/>
+ <node id="1857160709" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:49Z" user="ArjanO" uid="38066" lat="-6.8916726" lon="107.6174672"/>
+ <node id="1857160826" visible="true" version="1" changeset="12657346" timestamp="2012-08-08T13:31:50Z" user="ArjanO" uid="38066" lat="-6.8923543" lon="107.6178213"/>
+ <node id="1857160520" visible="true" version="2" changeset="13464254" timestamp="2012-10-12T09:16:00Z" user="hers" uid="913401" lat="-6.8853637" lon="107.6142462"/>
+ <node id="3375793672" visible="true" version="2" changeset="29147690" timestamp="2015-02-28T00:55:54Z" user="gnocin" uid="2526082" lat="-6.8902382" lon="107.6165551">
+  <tag k="bus" v="yes"/>
+  <tag k="highway" v="bus_stop"/>
+  <tag k="name" v="Sekeloa"/>
+  <tag k="public_transport" v="stop_position"/>
+  <tag k="ref" v="Sekeloa"/>
+ </node>
+ <node id="2034531646" visible="true" version="1" changeset="14043394" timestamp="2012-11-26T11:22:00Z" user="yudiwbs" uid="268765" lat="-6.8853885" lon="107.6141791"/>
+ <node id="2034531654" visible="true" version="1" changeset="14043394" timestamp="2012-11-26T11:22:00Z" user="yudiwbs" uid="268765" lat="-6.8853301" lon="107.6142191"/>
+ <node id="2034531652" visible="true" version="2" changeset="14043394" timestamp="2012-11-26T11:28:44Z" user="yudiwbs" uid="268765" lat="-6.8852971" lon="107.6138026"/>
+ <node id="3377329066" visible="true" version="1" changeset="29168814" timestamp="2015-03-01T01:35:04Z" user="gnocin" uid="2526082" lat="-6.8852597" lon="107.6139790">
+  <tag k="bus" v="yes"/>
+  <tag k="highway" v="bus_stop"/>
+  <tag k="name" v="Simpang Dago"/>
+  <tag k="public_transport" v="stop_position"/>
+  <tag k="ref" v="Simpang Dago"/>
+ </node>
+ <node id="3419797993" visible="true" version="1" changeset="29755175" timestamp="2015-03-26T14:48:05Z" user="buditux" uid="2705468" lat="-6.8894395" lon="107.6160584"/>
+ <way id="175071635" visible="true" version="4" changeset="29168814" timestamp="2015-03-01T01:35:07Z" user="gnocin" uid="2526082">
+  <nd ref="25448696"/>
+  <nd ref="3377329066"/>
+  <nd ref="2034531654"/>
+  <nd ref="1857160520"/>
+  <tag k="highway" v="primary"/>
+  <tag k="oneway" v="yes"/>
+ </way>
+ <way id="192917042" visible="true" version="2" changeset="27680655" timestamp="2014-12-24T22:10:37Z" user="gnocin" uid="2526082">
+  <nd ref="1857160520"/>
+  <nd ref="2034531646"/>
+  <nd ref="2034531652"/>
+  <tag k="highway" v="primary_link"/>
+  <tag k="oneway" v="yes"/>
+ </way>
+ <way id="192917041" visible="true" version="7" changeset="29755175" timestamp="2015-03-26T14:48:06Z" user="buditux" uid="2705468">
+  <nd ref="1857160520"/>
+  <nd ref="1857160706"/>
+  <nd ref="1857160669"/>
+  <nd ref="1857160610"/>
+  <nd ref="1857160630"/>
+  <nd ref="1857160628"/>
+  <nd ref="3419797993"/>
+  <nd ref="3375793672"/>
+  <nd ref="1341983793"/>
+  <nd ref="1857160701"/>
+  <nd ref="1857160709"/>
+  <nd ref="1857160826"/>
+  <tag k="bicycle" v="yes"/>
+  <tag k="foot" v="yes"/>
+  <tag k="highway" v="secondary"/>
+  <tag k="horse" v="yes"/>
+  <tag k="name" v="Jalan Dipatiukur"/>
+  <tag k="oneway" v="no"/>
+  <tag k="surface" v="asphalt"/>
+ </way>
+ <relation id="4830731" visible="true" version="1" changeset="30471228" timestamp="2015-04-25T10:27:05Z" user="gnocin" uid="2526082">
+  <member type="relation" ref="4830729" role="forward"/>
+  <member type="relation" ref="4830730" role="backward"/>
+  <tag k="colour" v="#096fbc"/>
+  <tag k="name" v="Bus Damri V. DIPATIUKUR-LEUWIPANJANG"/>
+  <tag k="network" v="Damri Bandung"/>
+  <tag k="ref" v="V"/>
+  <tag k="route_master" v="bus"/>
+  <tag k="type" v="route_master"/>
+ </relation>
+ <relation id="4284600" visible="true" version="44" changeset="30471228" timestamp="2015-04-25T10:27:11Z" user="gnocin" uid="2526082">
+  <member type="way" ref="159457434" role=""/>
+  <member type="way" ref="318231944" role=""/>
+  <member type="way" ref="331000515" role=""/>
+  <member type="way" ref="175071635" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="318729557" role=""/>
+  <member type="way" ref="4623302" role=""/>
+  <member type="way" ref="330996293" role=""/>
+  <member type="way" ref="175071632" role=""/>
+  <member type="way" ref="340400259" role=""/>
+  <member type="way" ref="318729556" role=""/>
+  <member type="way" ref="318100669" role=""/>
+  <member type="way" ref="175071657" role=""/>
+  <member type="way" ref="318053625" role=""/>
+  <member type="way" ref="318051977" role=""/>
+  <member type="way" ref="153517384" role=""/>
+  <member type="way" ref="318102033" role=""/>
+  <member type="way" ref="4569020" role=""/>
+  <member type="way" ref="331309153" role=""/>
+  <member type="way" ref="331309154" role=""/>
+  <member type="way" ref="330592460" role=""/>
+  <member type="way" ref="318896300" role=""/>
+  <member type="way" ref="244703793" role=""/>
+  <member type="way" ref="244703791" role=""/>
+  <member type="way" ref="4279967" role=""/>
+  <member type="way" ref="330592462" role=""/>
+  <member type="way" ref="320423245" role=""/>
+  <member type="way" ref="4279968" role=""/>
+  <member type="way" ref="154078520" role=""/>
+  <member type="way" ref="330976388" role=""/>
+  <member type="way" ref="319178847" role=""/>
+  <member type="way" ref="318052002" role=""/>
+  <member type="way" ref="244802256" role=""/>
+  <member type="way" ref="244802255" role=""/>
+  <member type="way" ref="321072382" role=""/>
+  <member type="way" ref="330592464" role=""/>
+  <member type="way" ref="245264635" role=""/>
+  <member type="way" ref="330635687" role=""/>
+  <member type="way" ref="244799594" role=""/>
+  <member type="way" ref="318481950" role=""/>
+  <member type="way" ref="318729566" role=""/>
+  <member type="way" ref="4279691" role=""/>
+  <member type="way" ref="330996291" role=""/>
+  <member type="way" ref="318490791" role=""/>
+  <member type="way" ref="320510129" role=""/>
+  <member type="way" ref="330976387" role=""/>
+  <member type="way" ref="330976386" role=""/>
+  <member type="way" ref="330635690" role=""/>
+  <member type="way" ref="321083497" role=""/>
+  <member type="way" ref="321083500" role=""/>
+  <member type="way" ref="106846227" role=""/>
+  <member type="way" ref="106846225" role=""/>
+  <member type="way" ref="106846224" role=""/>
+  <member type="way" ref="321083505" role=""/>
+  <member type="way" ref="321083503" role=""/>
+  <member type="way" ref="330635691" role=""/>
+  <member type="way" ref="223676620" role=""/>
+  <member type="way" ref="318051983" role=""/>
+  <member type="way" ref="320650432" role=""/>
+  <member type="way" ref="320650435" role=""/>
+  <member type="way" ref="319178854" role=""/>
+  <member type="way" ref="320652300" role=""/>
+  <member type="way" ref="320652301" role=""/>
+  <member type="way" ref="318051984" role=""/>
+  <member type="way" ref="318051986" role=""/>
+  <member type="way" ref="320652299" role=""/>
+  <member type="way" ref="320652298" role=""/>
+  <member type="way" ref="318051988" role=""/>
+  <member type="way" ref="153807427" role=""/>
+  <member type="way" ref="318051989" role=""/>
+  <member type="way" ref="153807720" role=""/>
+  <member type="way" ref="153812752" role=""/>
+  <member type="way" ref="153812753" role=""/>
+  <member type="way" ref="153812830" role=""/>
+  <member type="way" ref="318051995" role=""/>
+  <member type="way" ref="318051996" role=""/>
+  <member type="way" ref="153812845" role=""/>
+  <member type="way" ref="153812749" role=""/>
+  <member type="node" ref="3373712056" role="stop"/>
+  <member type="node" ref="3373712057" role="stop"/>
+  <member type="node" ref="3373712061" role="stop"/>
+  <member type="node" ref="3373712063" role="stop"/>
+  <member type="node" ref="3373712065" role="stop"/>
+  <member type="node" ref="3373712067" role="stop"/>
+  <member type="node" ref="3240012631" role="stop"/>
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="3375793675" role="platform"/>
+  <member type="node" ref="3375793673" role="stop"/>
+  <member type="node" ref="3375793676" role="platform"/>
+  <member type="node" ref="3248969441" role="stop"/>
+  <member type="node" ref="3375793677" role="platform"/>
+  <member type="node" ref="3375793674" role="stop"/>
+  <member type="node" ref="3375793678" role="platform"/>
+  <member type="node" ref="3375793679" role="platform"/>
+  <member type="node" ref="3375793680" role="stop"/>
+  <member type="node" ref="3375793682" role="platform"/>
+  <member type="node" ref="3375793681" role="stop"/>
+  <member type="node" ref="3375689654" role="stop"/>
+  <member type="node" ref="3375793684" role="stop"/>
+  <member type="node" ref="3375793685" role="stop"/>
+  <member type="node" ref="3375793687" role="stop"/>
+  <member type="node" ref="3375689656" role="stop"/>
+  <member type="node" ref="3375793689" role="platform"/>
+  <member type="node" ref="3375793690" role="stop"/>
+  <member type="node" ref="3248969440" role="stop"/>
+  <member type="node" ref="3248882518" role="stop"/>
+  <member type="node" ref="3248882520" role="stop"/>
+  <member type="node" ref="3375689663" role="stop"/>
+  <member type="node" ref="3375689664" role="stop"/>
+  <member type="node" ref="3375689667" role="stop"/>
+  <member type="node" ref="1664514926" role="stop"/>
+  <tag k="colour" v="#DDDDDD"/>
+  <tag k="from" v="Dago"/>
+  <tag k="name" v="Rute Angkot 16. Dago - Riung Bandung"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="ref" v="16"/>
+  <tag k="route" v="bus"/>
+  <tag k="to" v="Riung Bandung"/>
+  <tag k="type" v="route"/>
+  <tag k="wikipedia" v="id:Daftar Angkutan Umum di Kota Bandung"/>
+ </relation>
+ <relation id="4631528" visible="true" version="6" changeset="29212187" timestamp="2015-03-03T00:36:12Z" user="gnocin" uid="2526082">
+  <member type="relation" ref="4643111" role="forward"/>
+  <member type="relation" ref="4643109" role="backward"/>
+  <member type="relation" ref="4631469" role="backward"/>
+  <member type="relation" ref="4283719" role="forward"/>
+  <tag k="colour" v="#f59b00"/>
+  <tag k="name" v="Angkot 02"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="ref" v="02"/>
+  <tag k="route_master" v="bus"/>
+  <tag k="type" v="route_master"/>
+ </relation>
+ <relation id="4643109" visible="true" version="3" changeset="30471228" timestamp="2015-04-25T10:27:06Z" user="gnocin" uid="2526082">
+  <member type="way" ref="159457434" role=""/>
+  <member type="way" ref="318231944" role=""/>
+  <member type="way" ref="331000515" role=""/>
+  <member type="way" ref="175071635" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="318729557" role=""/>
+  <member type="way" ref="4623302" role=""/>
+  <member type="way" ref="330996293" role=""/>
+  <member type="way" ref="175071632" role=""/>
+  <member type="way" ref="340400259" role=""/>
+  <member type="way" ref="4623282" role=""/>
+  <member type="way" ref="318732962" role=""/>
+  <member type="way" ref="318732963" role=""/>
+  <member type="way" ref="319191950" role=""/>
+  <member type="way" ref="4569037" role=""/>
+  <member type="way" ref="4251272" role=""/>
+  <member type="way" ref="317742821" role=""/>
+  <member type="way" ref="317743189" role=""/>
+  <member type="way" ref="177627670" role=""/>
+  <member type="way" ref="174309310" role=""/>
+  <member type="way" ref="317742824" role=""/>
+  <member type="way" ref="174309305" role=""/>
+  <member type="way" ref="174269821" role=""/>
+  <member type="way" ref="174269784" role=""/>
+  <member type="way" ref="174269805" role=""/>
+  <member type="way" ref="4257880" role=""/>
+  <member type="way" ref="174269832" role=""/>
+  <member type="way" ref="331562849" role=""/>
+  <member type="way" ref="4637738" role=""/>
+  <member type="way" ref="331562848" role=""/>
+  <member type="way" ref="105231309" role=""/>
+  <member type="way" ref="105231312" role=""/>
+  <member type="way" ref="318899762" role=""/>
+  <member type="way" ref="166336046" role=""/>
+  <member type="way" ref="317742826" role=""/>
+  <member type="way" ref="4627151" role=""/>
+  <member type="node" ref="3373712056" role="stop"/>
+  <member type="node" ref="3373712057" role="stop"/>
+  <member type="node" ref="3373712061" role="stop"/>
+  <member type="node" ref="3373712063" role="stop"/>
+  <member type="node" ref="3373712065" role="stop"/>
+  <member type="node" ref="3373712067" role="stop"/>
+  <member type="node" ref="3240012631" role="stop"/>
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="3375793673" role="stop"/>
+  <member type="node" ref="25448775" role="stop"/>
+  <member type="node" ref="3373959228" role="stop"/>
+  <member type="node" ref="3374026391" role="stop"/>
+  <member type="node" ref="3240442661" role="stop"/>
+  <member type="node" ref="3374033494" role="stop"/>
+  <member type="node" ref="3374033496" role="stop"/>
+  <member type="node" ref="3374033498" role="stop"/>
+  <member type="node" ref="3374033499" role="stop"/>
+  <member type="node" ref="3374033502" role="stop"/>
+  <member type="node" ref="3374033503" role="stop"/>
+  <member type="node" ref="3374033505" role="stop"/>
+  <member type="node" ref="3374033507" role="stop"/>
+  <member type="node" ref="3376332195" role="stop"/>
+  <member type="node" ref="3374033509" role="stop"/>
+  <member type="node" ref="3374033510" role="platform_exit_only"/>
+  <member type="node" ref="3373712058" role="platform_entry_only"/>
+  <member type="node" ref="3373712060" role="platform"/>
+  <member type="node" ref="3374033495" role="platform"/>
+  <member type="node" ref="3374033493" role="platform"/>
+  <tag k="colour" v="#f59b00"/>
+  <tag k="from" v="Dago"/>
+  <tag k="name" v="Rute Angkot 02. Dago - Abdul Muis &quot;Belok&quot;"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="public_transport:version" v="2"/>
+  <tag k="ref" v="02"/>
+  <tag k="route" v="bus"/>
+  <tag k="to" v="Abdul Muis/Kebon Kalapa"/>
+  <tag k="type" v="route"/>
+ </relation>
+ <relation id="4830729" visible="true" version="2" changeset="35925733" timestamp="2015-12-13T13:08:55Z" user="gnocin" uid="2526082">
+  <member type="way" ref="330996293" role=""/>
+  <member type="way" ref="175071632" role=""/>
+  <member type="way" ref="334857874" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="192917042" role=""/>
+  <member type="way" ref="318756511" role=""/>
+  <member type="way" ref="318732963" role=""/>
+  <member type="way" ref="319191950" role=""/>
+  <member type="way" ref="4569037" role=""/>
+  <member type="way" ref="4251272" role=""/>
+  <member type="way" ref="317742820" role=""/>
+  <member type="way" ref="32388797" role=""/>
+  <member type="way" ref="32388798" role=""/>
+  <member type="way" ref="235830729" role=""/>
+  <member type="way" ref="4569035" role=""/>
+  <member type="way" ref="4627125" role=""/>
+  <member type="way" ref="235829199" role=""/>
+  <member type="way" ref="331559931" role=""/>
+  <member type="way" ref="4623316" role=""/>
+  <member type="way" ref="319194429" role=""/>
+  <member type="way" ref="4567721" role=""/>
+  <member type="way" ref="318193823" role=""/>
+  <member type="way" ref="318191410" role=""/>
+  <member type="way" ref="318191412" role=""/>
+  <member type="way" ref="318222722" role=""/>
+  <member type="way" ref="318222721" role=""/>
+  <member type="way" ref="223676320" role=""/>
+  <member type="way" ref="223676343" role=""/>
+  <member type="way" ref="340400246" role=""/>
+  <member type="way" ref="385695761" role=""/>
+  <member type="way" ref="340400255" role=""/>
+  <member type="way" ref="321073716" role=""/>
+  <member type="node" ref="3375793673" role="stop"/>
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="3476230983" role="stop"/>
+  <member type="node" ref="3373959225" role="stop"/>
+  <member type="node" ref="32524033" role="stop"/>
+  <member type="node" ref="3373959228" role="stop"/>
+  <member type="node" ref="3374026391" role="stop"/>
+  <member type="node" ref="3240442661" role="stop"/>
+  <member type="node" ref="3376669065" role="stop"/>
+  <member type="node" ref="25435314" role="stop"/>
+  <member type="node" ref="364365930" role="stop"/>
+  <member type="node" ref="29354702" role="stop"/>
+  <member type="node" ref="2250562868" role="stop"/>
+  <member type="node" ref="1837401646" role="stop"/>
+  <member type="node" ref="1837401659" role="stop"/>
+  <member type="node" ref="3246190447" role="stop"/>
+  <member type="node" ref="3277886365" role="stop"/>
+  <tag k="colour" v="#096fbc"/>
+  <tag k="from" v="Dipati Ukur"/>
+  <tag k="name" v="Rute Bus Damri V. DIPATIUKUR-LEUWIPANJANG"/>
+  <tag k="network" v="Damri Bandung"/>
+  <tag k="ref" v="V"/>
+  <tag k="route" v="bus"/>
+  <tag k="source" v="http://www.newdamribandung.com/trayek"/>
+  <tag k="to" v="Leuwipanjang"/>
+  <tag k="type" v="route"/>
+  <tag k="wikipedia" v="id:Daftar Angkutan Umum di Kota Bandung"/>
+ </relation>
+ <relation id="4631488" visible="true" version="7" changeset="34927197" timestamp="2015-10-28T14:06:30Z" user="okono0403" uid="421748">
+  <member type="node" ref="3476230983" role="stop"/>
+  <member type="node" ref="2034531651" role="stop"/>
+  <member type="node" ref="3377329066" role="stop"/>
+  <member type="node" ref="3376871358" role="stop"/>
+  <member type="node" ref="3376871359" role="platform"/>
+  <member type="node" ref="3240012631" role="stop"/>
+  <member type="node" ref="1662376678" role="stop"/>
+  <tag k="name" v="Simpang Dago"/>
+  <tag k="public_transport" v="stop_area"/>
+  <tag k="type" v="public_transport"/>
+ </relation>
+ <relation id="4637686" visible="true" version="9" changeset="38981530" timestamp="2016-04-29T14:06:53Z" user="ArjanO" uid="38066">
+  <member type="way" ref="4625281" role=""/>
+  <member type="way" ref="4625254" role=""/>
+  <member type="way" ref="4569057" role=""/>
+  <member type="way" ref="318804217" role=""/>
+  <member type="way" ref="331188295" role=""/>
+  <member type="way" ref="192031850" role=""/>
+  <member type="way" ref="190605663" role=""/>
+  <member type="way" ref="190605657" role=""/>
+  <member type="way" ref="4567636" role=""/>
+  <member type="way" ref="330736325" role=""/>
+  <member type="way" ref="223676540" role=""/>
+  <member type="way" ref="318670701" role=""/>
+  <member type="way" ref="247064779" role=""/>
+  <member type="way" ref="4623260" role=""/>
+  <member type="way" ref="4716962" role=""/>
+  <member type="way" ref="4716961" role=""/>
+  <member type="way" ref="4625729" role=""/>
+  <member type="way" ref="4716963" role=""/>
+  <member type="way" ref="318100677" role=""/>
+  <member type="way" ref="330736324" role=""/>
+  <member type="way" ref="318054783" role=""/>
+  <member type="way" ref="318478987" role=""/>
+  <member type="way" ref="318102560" role=""/>
+  <member type="way" ref="153305903" role=""/>
+  <member type="way" ref="339026889" role=""/>
+  <member type="way" ref="153305906" role=""/>
+  <member type="way" ref="330713250" role=""/>
+  <member type="way" ref="168549936" role=""/>
+  <member type="way" ref="168549935" role=""/>
+  <member type="way" ref="153340105" role=""/>
+  <member type="way" ref="4623277" role=""/>
+  <member type="way" ref="318222716" role=""/>
+  <member type="way" ref="318222715" role=""/>
+  <member type="way" ref="318222714" role=""/>
+  <member type="way" ref="318054781" role=""/>
+  <member type="way" ref="318756515" role=""/>
+  <member type="way" ref="175071635" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="318729557" role=""/>
+  <member type="way" ref="4623302" role=""/>
+  <member type="way" ref="330996293" role=""/>
+  <member type="way" ref="175071632" role=""/>
+  <member type="way" ref="340400259" role=""/>
+  <member type="way" ref="318729556" role=""/>
+  <member type="way" ref="175071643" role=""/>
+  <member type="way" ref="175071646" role=""/>
+  <member type="way" ref="318100671" role=""/>
+  <member type="way" ref="318102033" role=""/>
+  <member type="way" ref="318051978" role=""/>
+  <member type="way" ref="318100673" role=""/>
+  <member type="way" ref="241791694" role=""/>
+  <member type="way" ref="331309152" role=""/>
+  <member type="way" ref="153483321" role=""/>
+  <member type="way" ref="331287579" role=""/>
+  <member type="way" ref="4627223" role=""/>
+  <member type="way" ref="318481954" role=""/>
+  <member type="way" ref="32360437" role=""/>
+  <member type="way" ref="32360440" role=""/>
+  <member type="way" ref="320405968" role=""/>
+  <member type="way" ref="320605375" role=""/>
+  <member type="way" ref="414435678" role=""/>
+  <member type="way" ref="239944112" role=""/>
+  <member type="way" ref="318100676" role=""/>
+  <member type="node" ref="3244745033" role="stop"/>
+  <member type="node" ref="25434098" role="stop"/>
+  <member type="node" ref="3377329064" role="stop"/>
+  <member type="node" ref="3377321677" role="stop"/>
+  <member type="node" ref="3377321682" role="stop"/>
+  <member type="node" ref="3377322396" role="stop"/>
+  <member type="node" ref="29357744" role="stop"/>
+  <member type="node" ref="3377329065" role="stop"/>
+  <member type="node" ref="3376669085" role="stop"/>
+  <member type="node" ref="3376669088" role="stop"/>
+  <member type="node" ref="3376669091" role="stop"/>
+  <member type="node" ref="1660116948" role="stop"/>
+  <member type="node" ref="3376871360" role="stop"/>
+  <member type="node" ref="3377329066" role="stop"/>
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="3375793673" role="stop"/>
+  <member type="node" ref="1857160503" role="stop"/>
+  <member type="node" ref="3248969441" role="stop"/>
+  <member type="node" ref="25773421" role="stop"/>
+  <member type="node" ref="3377321691" role="stop"/>
+  <member type="node" ref="3377321689" role="stop"/>
+  <member type="node" ref="3376171462" role="stop"/>
+  <member type="node" ref="3376171464" role="stop"/>
+  <member type="node" ref="3376171466" role="stop"/>
+  <member type="node" ref="3376171468" role="stop"/>
+  <member type="node" ref="3244754744" role="stop"/>
+  <tag k="colour" v="#ff9900"/>
+  <tag k="from" v="Ciroyom"/>
+  <tag k="name" v="Rute Angkot 06. Ciroyom-Cicaheum"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="ref" v="06"/>
+  <tag k="route" v="bus"/>
+  <tag k="to" v="Cicaheum"/>
+  <tag k="type" v="route"/>
+  <tag k="wikipedia" v="id:Daftar Angkutan Umum di Kota Bandung"/>
+ </relation>
+ <relation id="4291189" visible="true" version="37" changeset="38981530" timestamp="2016-04-29T14:06:52Z" user="ArjanO" uid="38066">
+  <member type="way" ref="318100676" role=""/>
+  <member type="way" ref="239944112" role=""/>
+  <member type="way" ref="414435678" role=""/>
+  <member type="way" ref="320605375" role=""/>
+  <member type="way" ref="320405968" role=""/>
+  <member type="way" ref="32360440" role=""/>
+  <member type="way" ref="32360437" role=""/>
+  <member type="way" ref="318481954" role=""/>
+  <member type="way" ref="4627223" role=""/>
+  <member type="way" ref="331287579" role=""/>
+  <member type="way" ref="153483321" role=""/>
+  <member type="way" ref="331309152" role=""/>
+  <member type="way" ref="241791694" role=""/>
+  <member type="way" ref="153315564" role=""/>
+  <member type="way" ref="331309155" role=""/>
+  <member type="way" ref="340405404" role=""/>
+  <member type="way" ref="153517385" role=""/>
+  <member type="way" ref="318054779" role=""/>
+  <member type="way" ref="319191949" role=""/>
+  <member type="way" ref="318053623" role=""/>
+  <member type="way" ref="318053626" role=""/>
+  <member type="way" ref="4632671" role=""/>
+  <member type="way" ref="318053625" role=""/>
+  <member type="way" ref="175071657" role=""/>
+  <member type="way" ref="318100669" role=""/>
+  <member type="way" ref="318729556" role=""/>
+  <member type="way" ref="340400259" role=""/>
+  <member type="way" ref="175071632" role=""/>
+  <member type="way" ref="330996293" role=""/>
+  <member type="way" ref="4623302" role=""/>
+  <member type="way" ref="318729557" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="192917042" role=""/>
+  <member type="way" ref="318756512" role=""/>
+  <member type="way" ref="192917039" role=""/>
+  <member type="way" ref="318054780" role=""/>
+  <member type="way" ref="4910295" role=""/>
+  <member type="way" ref="153340105" role=""/>
+  <member type="way" ref="168549935" role=""/>
+  <member type="way" ref="168549936" role=""/>
+  <member type="way" ref="4698220" role=""/>
+  <member type="way" ref="153306178" role=""/>
+  <member type="way" ref="166687310" role=""/>
+  <member type="way" ref="4567624" role=""/>
+  <member type="way" ref="318054782" role=""/>
+  <member type="way" ref="319083572" role=""/>
+  <member type="way" ref="319083569" role=""/>
+  <member type="way" ref="292274154" role=""/>
+  <member type="way" ref="153175500" role=""/>
+  <member type="way" ref="292668298" role=""/>
+  <member type="way" ref="292668301" role=""/>
+  <member type="way" ref="292668297" role=""/>
+  <member type="way" ref="318100677" role=""/>
+  <member type="way" ref="292668296" role=""/>
+  <member type="way" ref="330736326" role=""/>
+  <member type="way" ref="331559930" role=""/>
+  <member type="way" ref="4716962" role=""/>
+  <member type="way" ref="4623260" role=""/>
+  <member type="way" ref="247064779" role=""/>
+  <member type="way" ref="223676546" role=""/>
+  <member type="way" ref="331558799" role=""/>
+  <member type="way" ref="318670699" role=""/>
+  <member type="way" ref="318478988" role=""/>
+  <member type="way" ref="330736325" role=""/>
+  <member type="way" ref="331425545" role=""/>
+  <member type="way" ref="190605660" role=""/>
+  <member type="way" ref="4567635" role=""/>
+  <member type="way" ref="318892821" role=""/>
+  <member type="way" ref="190605650" role=""/>
+  <member type="way" ref="192031850" role=""/>
+  <member type="way" ref="318804217" role=""/>
+  <member type="way" ref="331188295" role=""/>
+  <member type="way" ref="257232274" role=""/>
+  <member type="way" ref="257232272" role=""/>
+  <member type="way" ref="318891912" role=""/>
+  <member type="way" ref="318891913" role=""/>
+  <member type="way" ref="318891922" role=""/>
+  <member type="node" ref="3244754744" role="stop"/>
+  <member type="node" ref="3376171468" role="stop"/>
+  <member type="node" ref="3376171466" role="stop"/>
+  <member type="node" ref="3376171464" role="stop"/>
+  <member type="node" ref="3376171462" role="stop"/>
+  <member type="node" ref="3377321689" role="stop"/>
+  <member type="node" ref="3377321691" role="stop"/>
+  <member type="node" ref="25773421" role="stop"/>
+  <member type="node" ref="3377321678" role="stop"/>
+  <member type="node" ref="3376171440" role="stop"/>
+  <member type="node" ref="3375793673" role="stop"/>
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="1660434179" role="stop"/>
+  <member type="node" ref="3376871360" role="stop"/>
+  <member type="node" ref="3376673094" role="stop"/>
+  <member type="node" ref="3376669092" role="stop"/>
+  <member type="node" ref="3376669089" role="stop"/>
+  <member type="node" ref="3376669082" role="stop"/>
+  <member type="node" ref="29357744" role="stop"/>
+  <member type="node" ref="3377322397" role="stop"/>
+  <member type="node" ref="3377321684" role="stop"/>
+  <member type="node" ref="3377321677" role="stop"/>
+  <member type="node" ref="3377321681" role="stop"/>
+  <member type="node" ref="3377321680" role="stop"/>
+  <member type="node" ref="3244745033" role="stop"/>
+  <tag k="colour" v="#ff9900"/>
+  <tag k="from" v="Cicaheum"/>
+  <tag k="name" v="Rute Angkot 06. Cicaheum-Ciroyom"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="ref" v="06"/>
+  <tag k="route" v="bus"/>
+  <tag k="to" v="Ciroyom"/>
+  <tag k="type" v="route"/>
+  <tag k="wikipedia" v="id:Daftar Angkutan Umum di Kota Bandung"/>
+ </relation>
+ <relation id="4637689" visible="true" version="1" changeset="29168814" timestamp="2015-03-01T01:35:04Z" user="gnocin" uid="2526082">
+  <member type="relation" ref="4291189" role="forward"/>
+  <member type="relation" ref="4637686" role="backward"/>
+  <tag k="colour" v="#ff9900"/>
+  <tag k="name" v="Angkot 06"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="ref" v="06"/>
+  <tag k="route_master" v="bus"/>
+  <tag k="type" v="route_master"/>
+ </relation>
+ <relation id="4830823" visible="true" version="1" changeset="30472196" timestamp="2015-04-25T11:22:36Z" user="gnocin" uid="2526082">
+  <member type="relation" ref="4830729" role="forward"/>
+  <member type="relation" ref="4830730" role="backward"/>
+  <tag k="colour" v="#096fbc"/>
+  <tag k="name" v="Bus Damri VII. DIPATIUKUR-JATINANGOR"/>
+  <tag k="network" v="Damri Bandung"/>
+  <tag k="ref" v="VII"/>
+  <tag k="route_master" v="bus"/>
+  <tag k="type" v="route_master"/>
+ </relation>
+ <relation id="4634057" visible="true" version="21" changeset="32442209" timestamp="2015-07-06T08:02:12Z" user="sbekti" uid="3038573">
+  <member type="way" ref="153812749" role=""/>
+  <member type="way" ref="153812845" role=""/>
+  <member type="way" ref="318051996" role=""/>
+  <member type="way" ref="318051995" role=""/>
+  <member type="way" ref="153812830" role=""/>
+  <member type="way" ref="153812753" role=""/>
+  <member type="way" ref="153812752" role=""/>
+  <member type="way" ref="153807720" role=""/>
+  <member type="way" ref="318051989" role=""/>
+  <member type="way" ref="153807427" role=""/>
+  <member type="way" ref="318051988" role=""/>
+  <member type="way" ref="318051987" role=""/>
+  <member type="way" ref="319178858" role=""/>
+  <member type="way" ref="330976389" role=""/>
+  <member type="way" ref="320650426" role=""/>
+  <member type="way" ref="320650429" role=""/>
+  <member type="way" ref="255736735" role=""/>
+  <member type="way" ref="223676588" role=""/>
+  <member type="way" ref="331404490" role=""/>
+  <member type="way" ref="4637765" role=""/>
+  <member type="way" ref="321083505" role=""/>
+  <member type="way" ref="106846224" role=""/>
+  <member type="way" ref="106846225" role=""/>
+  <member type="way" ref="106846227" role=""/>
+  <member type="way" ref="321083500" role=""/>
+  <member type="way" ref="320617422" role=""/>
+  <member type="way" ref="330594960" role=""/>
+  <member type="way" ref="320616150" role=""/>
+  <member type="way" ref="320616149" role=""/>
+  <member type="way" ref="330635689" role=""/>
+  <member type="way" ref="244799598" role=""/>
+  <member type="way" ref="301544694" role=""/>
+  <member type="way" ref="174307815" role=""/>
+  <member type="way" ref="318052001" role=""/>
+  <member type="way" ref="318053628" role=""/>
+  <member type="way" ref="330853617" role=""/>
+  <member type="way" ref="4280039" role=""/>
+  <member type="way" ref="244802258" role=""/>
+  <member type="way" ref="244802256" role=""/>
+  <member type="way" ref="243453323" role=""/>
+  <member type="way" ref="174303682" role=""/>
+  <member type="way" ref="174269822" role=""/>
+  <member type="way" ref="318486207" role=""/>
+  <member type="way" ref="318052005" role=""/>
+  <member type="way" ref="175069458" role=""/>
+  <member type="way" ref="263441149" role=""/>
+  <member type="way" ref="244792412" role=""/>
+  <member type="way" ref="244807186" role=""/>
+  <member type="way" ref="320423244" role=""/>
+  <member type="way" ref="318052007" role=""/>
+  <member type="way" ref="321031842" role=""/>
+  <member type="way" ref="4632680" role=""/>
+  <member type="way" ref="318054779" role=""/>
+  <member type="way" ref="319191949" role=""/>
+  <member type="way" ref="318053623" role=""/>
+  <member type="way" ref="318053626" role=""/>
+  <member type="way" ref="4632671" role=""/>
+  <member type="way" ref="318053625" role=""/>
+  <member type="way" ref="175071657" role=""/>
+  <member type="way" ref="318100669" role=""/>
+  <member type="way" ref="318729556" role=""/>
+  <member type="way" ref="340400259" role=""/>
+  <member type="way" ref="175071632" role=""/>
+  <member type="way" ref="330996293" role=""/>
+  <member type="way" ref="4623302" role=""/>
+  <member type="way" ref="318729557" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="192917042" role=""/>
+  <member type="way" ref="318756512" role=""/>
+  <member type="way" ref="318729558" role=""/>
+  <member type="node" ref="3375689668" role="stop"/>
+  <member type="node" ref="3375689670" role="stop"/>
+  <member type="node" ref="3375689669" role="stop"/>
+  <member type="node" ref="2325453187" role="stop"/>
+  <member type="node" ref="3248882518" role="stop"/>
+  <member type="node" ref="3375793691" role="stop"/>
+  <member type="node" ref="3375794694" role="stop"/>
+  <member type="node" ref="3375794696" role="stop"/>
+  <member type="node" ref="3376171439" role="stop"/>
+  <member type="node" ref="3375793688" role="platform"/>
+  <member type="node" ref="3375793687" role="stop"/>
+  <member type="node" ref="3375794698" role="stop"/>
+  <member type="node" ref="3375794697" role="platform"/>
+  <member type="node" ref="3375794699" role="stop"/>
+  <member type="node" ref="3375794700" role="platform"/>
+  <member type="node" ref="3375794701" role="stop"/>
+  <member type="node" ref="3376171440" role="stop"/>
+  <member type="node" ref="3375793676" role="platform"/>
+  <member type="node" ref="3375793673" role="stop"/>
+  <member type="node" ref="3375793675" role="platform"/>
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="1662376678" role="stop"/>
+  <member type="node" ref="3375219864" role="stop"/>
+  <member type="node" ref="3373712068" role="platform"/>
+  <member type="node" ref="3375211646" role="stop"/>
+  <member type="node" ref="3375211647" role="stop"/>
+  <member type="node" ref="3375211648" role="stop"/>
+  <member type="node" ref="3373712059" role="stop"/>
+  <member type="node" ref="3373712056" role="stop"/>
+  <tag k="colour" v="#DDDDDD"/>
+  <tag k="from" v="Riung Bandung"/>
+  <tag k="name" v="Rute Angkot 16. Riung Bandung - Dago"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="ref" v="16"/>
+  <tag k="route" v="bus"/>
+  <tag k="to" v="Dago"/>
+  <tag k="type" v="route"/>
+  <tag k="wikipedia" v="id:Daftar Angkutan Umum di Kota Bandung"/>
+ </relation>
+ <relation id="4634058" visible="true" version="1" changeset="29144773" timestamp="2015-02-27T21:16:22Z" user="gnocin" uid="2526082">
+  <member type="relation" ref="4634057" role="backward"/>
+  <member type="relation" ref="4284600" role="forward"/>
+  <tag k="colour" v="#DDDDDD"/>
+  <tag k="name" v="Angkot 16"/>
+  <tag k="network" v="Angkot Kota Bandung"/>
+  <tag k="ref" v="16"/>
+  <tag k="route_master" v="bus"/>
+  <tag k="type" v="route_master"/>
+ </relation>
+ <relation id="4634574" visible="true" version="1" changeset="29147690" timestamp="2015-02-28T00:55:53Z" user="gnocin" uid="2526082">
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="3375793675" role="platform"/>
+  <tag k="name" v="Sekeloa"/>
+  <tag k="public_transport" v="stop_area"/>
+  <tag k="type" v="public_transport"/>
+ </relation>
+ <relation id="4830730" visible="true" version="2" changeset="32442209" timestamp="2015-07-06T08:02:15Z" user="sbekti" uid="3038573">
+  <member type="way" ref="340400250" role=""/>
+  <member type="way" ref="321074318" role=""/>
+  <member type="way" ref="255736438" role=""/>
+  <member type="way" ref="255736437" role=""/>
+  <member type="way" ref="255736439" role=""/>
+  <member type="way" ref="223676446" role=""/>
+  <member type="way" ref="321086426" role=""/>
+  <member type="way" ref="318191416" role=""/>
+  <member type="way" ref="318222719" role=""/>
+  <member type="way" ref="4567705" role=""/>
+  <member type="way" ref="4567660" role=""/>
+  <member type="way" ref="4567659" role=""/>
+  <member type="way" ref="318222717" role=""/>
+  <member type="way" ref="318104555" role=""/>
+  <member type="way" ref="319194428" role=""/>
+  <member type="way" ref="4627124" role=""/>
+  <member type="way" ref="4627123" role=""/>
+  <member type="way" ref="318670707" role=""/>
+  <member type="way" ref="4623313" role=""/>
+  <member type="way" ref="32388790" role=""/>
+  <member type="way" ref="4623315" role=""/>
+  <member type="way" ref="318896304" role=""/>
+  <member type="way" ref="318479413" role=""/>
+  <member type="way" ref="235830733" role=""/>
+  <member type="way" ref="292668884" role=""/>
+  <member type="way" ref="318233616" role=""/>
+  <member type="way" ref="223676392" role=""/>
+  <member type="way" ref="4255981" role=""/>
+  <member type="way" ref="318231949" role=""/>
+  <member type="way" ref="153699089" role=""/>
+  <member type="way" ref="153699092" role=""/>
+  <member type="way" ref="318053623" role=""/>
+  <member type="way" ref="318053627" role=""/>
+  <member type="way" ref="318729559" role=""/>
+  <member type="way" ref="318231946" role=""/>
+  <member type="way" ref="318729558" role=""/>
+  <member type="way" ref="318756515" role=""/>
+  <member type="way" ref="175071635" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="318729557" role=""/>
+  <member type="way" ref="4623302" role=""/>
+  <member type="node" ref="3277886365" role="stop"/>
+  <member type="node" ref="2325452881" role="stop"/>
+  <member type="node" ref="2325452725" role="stop"/>
+  <member type="node" ref="1911634930" role="stop"/>
+  <member type="node" ref="25434237" role="stop"/>
+  <member type="node" ref="1013407725" role="stop"/>
+  <member type="node" ref="29354374" role="stop"/>
+  <member type="node" ref="3376669067" role="stop"/>
+  <member type="node" ref="3240442661" role="stop"/>
+  <member type="node" ref="3375103670" role="stop"/>
+  <member type="node" ref="3375103672" role="stop"/>
+  <member type="node" ref="3375211644" role="stop"/>
+  <member type="node" ref="3375268885" role="stop"/>
+  <member type="node" ref="2034531651" role="stop"/>
+  <member type="node" ref="3375793672" role="stop"/>
+  <member type="node" ref="3375793673" role="stop"/>
+  <tag k="colour" v="#096fbc"/>
+  <tag k="from" v="Leuwipanjang"/>
+  <tag k="name" v="Rute Bus Damri V. LEUWIPANJANG-DIPATIUKUR"/>
+  <tag k="network" v="Damri Bandung"/>
+  <tag k="ref" v="V"/>
+  <tag k="route" v="bus"/>
+  <tag k="to" v="Dipati Ukur"/>
+  <tag k="type" v="route"/>
+  <tag k="wikipedia" v="id:Daftar Angkutan Umum di Kota Bandung"/>
+ </relation>
+ <relation id="4432958" visible="true" version="17" changeset="39373846" timestamp="2016-05-17T11:05:03Z" user="mgeh" uid="1819255">
+  <member type="node" ref="3256049561" role="stop"/>
+  <member type="way" ref="319191947" role=""/>
+  <member type="way" ref="319191948" role=""/>
+  <member type="way" ref="358799393" role=""/>
+  <member type="way" ref="159457434" role=""/>
+  <member type="way" ref="318231944" role=""/>
+  <member type="way" ref="331000515" role=""/>
+  <member type="way" ref="175071635" role=""/>
+  <member type="way" ref="192917041" role=""/>
+  <member type="way" ref="318729557" role=""/>
+  <member type="way" ref="4623302" role=""/>
+  <member type="way" ref="330996293" role=""/>
+  <member type="way" ref="175071632" role=""/>
+  <member type="way" ref="340400259" role=""/>
+  <member type="way" ref="4623282" role=""/>
+  <member type="way" ref="318732962" role=""/>
+  <member type="way" ref="318732963" role=""/>
+  <member type="way" ref="319191949" role=""/>
+  <member type="way" ref="292274159" role=""/>
+  <member type="way" ref="4623279" role=""/>
+  <member type="node" ref="3240012632" role="stop"/>
+  <member type="node" ref="1662376687" role="stop"/>
+  <member type="way" ref="318729558" role=""/>
+  <member type="node" ref="3240012631" role="stop"/>
+  <member type="way" ref="153315568" role=""/>
+  <member type="way" ref="4633273" role=""/>
+  <member type="way" ref="186246670" role=""/>
+  <member type="way" ref="330713251" role=""/>
+  <member type="way" ref="330997300" role=""/>
+  <member type="way" ref="174270181" role=""/>
+  <member type="way" ref="174270180" role=""/>
+  <member type="way" ref="299081906" role=""/>
+  <member type="way" ref="174270184" role=""/>
+  <member type="way" ref="331287580" role=""/>
+  <member type="way" ref="174270182" role=""/>
+  <member type="way" ref="318729561" role=""/>
+  <member type="way" ref="318729562" role=""/>
+  <member type="way" ref="318222726" role=""/>
+  <member type="way" ref="4255951" role=""/>
+  <member type="way" ref="318478990" role=""/>
+  <member type="way" ref="4255981" role=""/>
+  <member type="way" ref="4255990" role=""/>
+  <member type="way" ref="32388792" role=""/>
+  <member type="way" ref="318233616" role=""/>
+  <member type="way" ref="340400262" role=""/>
+  <member type="way" ref="4256015" role=""/>
+  <member type="way" ref="168569217" role=""/>
+  <member type="way" ref="418942771" role=""/>
+  <member type="way" ref="4251274" role=""/>
+  <member type="way" ref="4567655" role=""/>
+  <member type="node" ref="3246270248" role="stop"/>
+  <member type="way" ref="318100678" role=""/>
+  <member type="way" ref="4256037" role=""/>
+  <member type="way" ref="318222725" role=""/>
+  <member type="way" ref="319068174" role=""/>
+  <member type="way" ref="4567490" role=""/>
+  <member type="way" ref="330853612" role=""/>
+  <member type="way" ref="292668641" role=""/>
+  <member type="way" ref="330853620" role=""/>
+  <member type="way" ref="321030145" role=""/>
+  <member type="way" ref="292668470" role=""/>
+  <member type="way" ref="235830734" role=""/>
+  <member type="way" ref="4567652" role=""/>
+  <member type="way" ref="330964190" role=""/>
+  <member type="way" ref="330853619" role=""/>
+  <member type="way" ref="257227478" role=""/>
+  <member type="way" ref="330853616" role=""/>
+  <member type="way" ref="190605653" role=""/>
+  <member type="way" ref="330853621" role=""/>
+  <member type="node" ref="293384756" role="stop"/>
+  <member type="way" ref="190605650" role=""/>
+  <member type="way" ref="192031850" role=""/>
+  <member type="way" ref="318804217" role=""/>
+  <member type="way" ref="331188295" role=""/>
+  <member type="way" ref="257232274" role=""/>
+  <member type="way" ref="257232272" role=""/>
+  <member type="way" ref="318891912" role=""/>
+  <member type="way" ref="318891913" role=""/>
+  <member type="way" ref="318891922" role=""/>
+  <member type="way" ref="4625281" role=""/>
+  <member type="way" ref="4625254" role=""/>
+  <member type="way" ref="4569057" role=""/>
+  <member type="node" ref="3244745033" role="stop"/>
+  <member type="way" ref="257229926" role="stop"/>
+  <member type="node" ref="3373712056" role="stop"/>
+  <tag k="name" v="Rute Angkot Ciburial (Dago Atas) -- Ciroyom"/>
+  <tag k="network" v="Angkot Lintas Kota Bandung"/>
+  <tag k="ref" v="Ciburial-Ciroyom"/>
+  <tag k="route" v="bus"/>
+  <tag k="source" v="http://www.transportasiumum.com/content/rute-angkot-bandung"/>
+  <tag k="type" v="route"/>
+ </relation>
+</osm>
