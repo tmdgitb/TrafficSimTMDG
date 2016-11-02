@@ -165,8 +165,8 @@ namespace SimTMDG.Vehicle
         {
             get
             {
-                //return (routing.Route != null) ? Math.Min(_physics.targetVelocity, currentNodeConnection.targetVelocity) : _physics.targetVelocity;
-                return _physics.targetVelocity;
+                return (currentSegment.TargetSpeed != -1) ? Math.Min(_physics.targetVelocity, currentSegment.TargetSpeed) : _physics.targetVelocity;
+                //return _physics.targetVelocity;
             }
         }
 

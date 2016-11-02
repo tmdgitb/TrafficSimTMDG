@@ -85,6 +85,18 @@ namespace SimTMDG.Road
         }
 
         /// <summary>
+        /// WaySegment target average speed
+        /// </summary>
+        private int _targetSpeed = -1;
+
+        public int TargetSpeed
+        {
+            get { return _targetSpeed; }
+
+            set { _targetSpeed = value; }
+        }
+
+        /// <summary>
         /// Way highway key / properties
         /// </summary>
         private string _highway;
@@ -201,11 +213,11 @@ namespace SimTMDG.Road
 
 
         #region tick
-        public void Tick(double tickLength)
+        public void Tick(double tickLength, NodeControl nc)
         {
             foreach (SegmentLane lane in lanes)
             {
-                lane.Tick(tickLength);
+                lane.Tick(tickLength, nc);
             }
         }
         #endregion
@@ -242,9 +254,36 @@ namespace SimTMDG.Road
                 lane.Draw(g);
             }
 
-            Font debugFont = new Font("Calibri", 6);
-            Brush blackBrush = new SolidBrush(Color.Black);
-            g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
+            //Font debugFont = new Font("Calibri", 3);
+            //Brush blackBrush = new SolidBrush(Color.Black);
+            //g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
+        }
+
+        bool drawDebug = false;
+
+        public void ToggleDebugID()
+        {
+            drawDebug = !drawDebug;
+        }
+
+        public void DrawRoadID(Graphics g)
+        {
+            if (drawDebug)
+            {
+                Font debugFont = new Font("Calibri", 3);
+                Brush blackBrush = new SolidBrush(Color.Black);
+
+                String toPrint = Id.ToString() + "\n";
+                                    //"laneCount: " + lanes.Count + "\n" +
+                                    //"oneway: " + this.OneWay + "\n\n";
+
+                for(int i = 0; i < lanes.Count; i++)
+                {
+                    toPrint += "lane: " + i + " - " + lanes[i].Id + "\n";
+                }
+
+                g.DrawString(toPrint, debugFont, blackBrush, MidCoord);
+            }
         }
         #endregion
 
@@ -348,6 +387,10 @@ namespace SimTMDG.Road
 
             return toReturn;
         }
+
+
+        
+
         #endregion
     }
 }

@@ -204,7 +204,7 @@ namespace SimTMDG.Road
             //g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
         }
 
-        public void Tick(double tickLength)
+        public void Tick(double tickLength, NodeControl nc)
         {
             SortVehicles();
 

@@ -17,6 +17,7 @@ namespace SimTMDG.Road
         //private Routing _route;
         public List<Node> _nodes = new List<Node>();
         public List<RoadSegment> segments = new List<RoadSegment>();
+        public int ActiveVehicles = 0;
 
         internal List<RoadSegment> Segments
         {
@@ -81,11 +82,11 @@ namespace SimTMDG.Road
 
         }
 
-        public void Tick(double tickLength)
+        public void Tick(double tickLength, NodeControl nc = null)
         {
             foreach(RoadSegment ws in Segments)
             {
-                ws.Tick(tickLength);              
+                ws.Tick(tickLength, this);
             }
 
             //foreach (WaySegment ws in Segments)
@@ -135,12 +136,18 @@ namespace SimTMDG.Road
                         ws.Draw(g);
                 }
             }
-            
 
-            foreach (Node nd in _nodes)
+
+            foreach (RoadSegment ws in Segments)
             {
-                if (IsInBound(nd.Position, 0))
-                    nd.Draw(g);
+                ws.startNode.Draw(g);
+                ws.endNode.Draw(g);
+            }
+
+             //if Debug
+            foreach (RoadSegment ws in Segments)
+            {
+                ws.DrawRoadID(g);
             }
 
             foreach (RoadSegment ws in Segments)

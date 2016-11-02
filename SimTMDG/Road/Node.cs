@@ -50,6 +50,14 @@ namespace SimTMDG.Road
 
             set { _position = value; }
         }
+
+        /// <summary>
+        /// Quadrat der Kantenlänge 8 um die absolute Position des LineNodes in Weltkoordinaten
+        /// </summary>
+        public RectangleF positionRect
+        {
+            get { return new RectangleF((float)Position.X - 1, (float)Position.Y - 1, 2, 2); }
+        }
         #endregion
 
         /// <summary>
@@ -98,9 +106,9 @@ namespace SimTMDG.Road
                     penColor = Color.Red;
                 }
 
-                //Pen pen = new Pen(penColor, 1);
-                //Rectangle rec = new Rectangle((int) this.Position.X - 1, (int) this.Position.Y - 1, 2, 2);
-                //g.DrawEllipse(pen, rec);
+                Pen pen = new Pen(penColor, 1);
+                Rectangle rec = new Rectangle((int)this.Position.X - 1, (int)this.Position.Y - 1, 2, 2);
+                g.DrawEllipse(pen, rec);
             }
 
             //Pen pen = new Pen(penColor, 1);

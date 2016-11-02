@@ -17,6 +17,7 @@
  *  Mail: software@cszb.net
  */
 
+using SimTMDG.Road;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace SimTMDG.Tools
         /// advance the time by one tick
         /// </summary>
         /// <param name="tickLength">Length of a tick in seconds (calculated with 1 / # ticks per second)</param>
-        void Tick(double tickLength);
+        void Tick(double tickLength, NodeControl nc);
 
         /// <summary>
         /// says the object communication that the tick is over.

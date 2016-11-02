@@ -323,7 +323,7 @@ namespace SimTMDG.Road
 
         #region tempTickable
         List<IVehicle> vehicles;
-        public void Tick(double tickLength)
+        public void Tick(double tickLength, NodeControl nc)
         {
             //for (int i = 0; i < vehicles.Count; i++)
             //{

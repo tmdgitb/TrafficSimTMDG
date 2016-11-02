@@ -349,7 +349,7 @@ namespace SimTMDG
                 56);
 
             e.Graphics.DrawString(
-                "Active Vehicles: " + activeVehicles,
+                "Active Vehicles: " + nc.ActiveVehicles,
                 new Font("Arial", 10),
                 new SolidBrush(Color.Black),
                 8,
@@ -462,6 +462,17 @@ namespace SimTMDG
 
                     break;
 
+                case MouseButtons.Left:
+                    foreach (RoadSegment rs in nc.segments)
+                    {
+                        if ((rs.startNode.positionRect.Contains(clickedPosition)) ||
+                            (rs.endNode.positionRect.Contains(clickedPosition)))
+                        {
+                            rs.ToggleDebugID();
+                        }
+                    }
+                    break;
+
                 default:
                     break;
             }
@@ -520,6 +531,7 @@ namespace SimTMDG
         //    Rectangle dstRect = new Rectangle(0, 0, DaGrid.Width, DaGrid.Height);
         //    g.DrawImage(bmp, dstRect, srcRect, GraphicsUnit.Pixel);
         //}
+
 
         #endregion
 
@@ -633,6 +645,13 @@ namespace SimTMDG
                     s.startNode = nc._nodes[Int32.Parse(startNode.FirstChild.Value)];
                     s.endNode = nc._nodes[Int32.Parse(endNode.FirstChild.Value)];
 
+                    Vector2 difference = new Vector2();
+                    difference.X = s.endNode.Position.X - s.startNode.Position.X;
+                    difference.Y = s.endNode.Position.Y - s.startNode.Position.Y;
+
+                    s.MidCoord.X = (float)(difference.X * (s.Length / 2)) / (float)s.Length + (float)s.startNode.Position.X;
+                    s.MidCoord.Y = (float)(difference.Y * (s.Length / 2)) / (float)s.Length + (float)s.startNode.Position.Y;
+
 
                     // parse next & prev segments
                     // TODO move to next upper progress. Needs to list all the segments before doing this!!!
@@ -704,6 +723,8 @@ namespace SimTMDG
 
                 lf.StepUpperProgress("Done");
                 lf.ShowLog();
+                
+                manuallyAddRoute();
 
                 lf.Close();
                 lf = null;
@@ -1333,17 +1354,33 @@ namespace SimTMDG
 
         private void buttonTLightTemp_Click(object sender, EventArgs e)
         {
-            switch (nc.segments.Find(x => x.Id == 2918).endNode.tLight.trafficLightState)
+            //switch (nc.segments.Find(x => x.Id == 2918).endNode.tLight.trafficLightState)
+            //{
+            //    case TrafficLight.State.GREEN:
+            //        nc.segments.Find(x => x.Id == 2918).endNode.tLight.SwitchToRed();
+            //        nc.segments.Find(x => x.Id == 25163).endNode.tLight.SwitchToRed();
+            //        break;
+            //    case TrafficLight.State.RED:
+            //        nc.segments.Find(x => x.Id == 2918).endNode.tLight.SwitchToGreen();
+            //        nc.segments.Find(x => x.Id == 25163).endNode.tLight.SwitchToGreen();
+            //        break;
+            //}
+
+            switch (nc.segments.Find(x => x.Id == 28586).startNode.tLight.trafficLightState)
             {
                 case TrafficLight.State.GREEN:
-                    nc.segments.Find(x => x.Id == 2918).endNode.tLight.SwitchToRed();
-                    nc.segments.Find(x => x.Id == 25163).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 2925).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 28583).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToRed();
                     break;
                 case TrafficLight.State.RED:
-                    nc.segments.Find(x => x.Id == 2918).endNode.tLight.SwitchToGreen();
-                    nc.segments.Find(x => x.Id == 25163).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 2925).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 28583).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
                     break;
             }
+
+            
 
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
@@ -1365,58 +1402,123 @@ namespace SimTMDG
             {
                 _route.Add(nc.segments.Find(x => x.Id == i));
             }
-            nc.segments.Find(x => x.Id == 2918).endNode.tLight = new TrafficLight();
+
+            _route.Add(nc.segments.Find(x => x.Id == 421));
+
+            for (int i = 28456; i < 28469; i++)
+            {
+                _route.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+            for (int i = 422; i < 431; i++)
+            {
+                _route.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+            //nc.segments.Find(x => x.Id == 2918).endNode.tLight = new TrafficLight();
 
             // Route 2 : Pasteur
+            for (int i = 591; i < 607; i++)
+            {
+                _route2.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+            for (int i = 8986; i < 8997; i++)
+            {
+                _route2.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+            
+
+            for (int i = 28584; i < 28587; i++)
+            {
+                _route2.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+            //_route2.Add(nc.segments.Find(x => x.Id == 34087));
+            //_route2.Add(nc.segments.Find(x => x.Id == 34084));
+
             for (int i = 25153; i < 25177; i++)
             {
                 _route2.Add(nc.segments.Find(x => x.Id == i));
             }
-            nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
+            //nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
 
 
-            #region temp test obstacle
-            IVehicle mogok1 = new IVehicle();
-            IVehicle.Physics p1 = new IVehicle.Physics(0, 0, 0);
-            mogok1.color = Color.Black;
-            mogok1._physics = p1;
-            mogok1.length = 1;
-            mogok1._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
-            mogok1._state.laneIdx = 0;
-            mogok1.distance = mogok1.currentLane().Length - 2;
-            mogok1.dumb = true;
-
-            mogok1.currentLane().vehicles.Add(mogok1);
-            mogok1.newCoord();
-            mogok1.RotateVehicle(mogok1.currentLane().startNode, mogok1.currentLane().endNode);
-
-            IVehicle mogok2 = new IVehicle();
-            mogok2.color = Color.Black;
-            mogok2._physics = p1;
-            mogok2.length = 1;
-            mogok2._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
-            mogok2._state.laneIdx = 1;
-            mogok2.distance = mogok1.currentLane().Length - 2;
-            mogok2.dumb = true;
-
-            mogok2.currentLane().vehicles.Add(mogok2);
-            mogok2.newCoord();
-            mogok2.RotateVehicle(mogok2.currentLane().startNode, mogok2.currentLane().endNode);
-            #endregion
-
-
-
-            // Route 3 : DU
-            for (int i = 22273; i > 22245; i = i - 3)
+            // Route 3 : Pasteur
+            for (int i = 2908; i < 2926; i++)
             {
                 _route3.Add(nc.segments.Find(x => x.Id == i));
             }
 
-            // Route 4 : DU
-            for (int i = 22245; i < 22273; i = i + 3)
+            _route3.Add(nc.segments.Find(x => x.Id == 26040));
+            _route3.Add(nc.segments.Find(x => x.Id == 34069));
+
+            for (int i = 28587; i < 28601; i++)
+            {
+                _route3.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+
+            // Route 4 : Pasteur
+            for (int i = 28483; i < 28493; i++)
             {
                 _route4.Add(nc.segments.Find(x => x.Id == i));
             }
+
+            _route4.Add(nc.segments.Find(x => x.Id == 28455));
+            _route4.Add(nc.segments.Find(x => x.Id == 28583));
+            _route4.Add(nc.segments.Find(x => x.Id == 26062));
+
+            for (int i = 25153; i < 25177; i++)
+            {
+                _route4.Add(nc.segments.Find(x => x.Id == i));
+            }
+
+
+
+            #region temp test obstacle
+            //IVehicle mogok1 = new IVehicle();
+            //IVehicle.Physics p1 = new IVehicle.Physics(0, 0, 0);
+            //mogok1.color = Color.Black;
+            //mogok1._physics = p1;
+            //mogok1.length = 1;
+            //mogok1._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
+            //mogok1._state.laneIdx = 0;
+            //mogok1.distance = mogok1.currentLane().Length - 2;
+            //mogok1.dumb = true;
+
+            //mogok1.currentLane().vehicles.Add(mogok1);
+            //mogok1.newCoord();
+            //mogok1.RotateVehicle(mogok1.currentLane().startNode, mogok1.currentLane().endNode);
+
+            //IVehicle mogok2 = new IVehicle();
+            //mogok2.color = Color.Black;
+            //mogok2._physics = p1;
+            //mogok2.length = 1;
+            //mogok2._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
+            //mogok2._state.laneIdx = 1;
+            //mogok2.distance = mogok1.currentLane().Length - 2;
+            //mogok2.dumb = true;
+
+            //mogok2.currentLane().vehicles.Add(mogok2);
+            //mogok2.newCoord();
+            //mogok2.RotateVehicle(mogok2.currentLane().startNode, mogok2.currentLane().endNode);
+            #endregion
+
+
+
+            //// Route 3 : DU
+            //for (int i = 22273; i > 22245; i = i - 3)
+            //{
+            //    _route3.Add(nc.segments.Find(x => x.Id == i));
+            //}
+
+            //// Route 4 : DU
+            //for (int i = 22245; i < 22273; i = i + 3)
+            //{
+            //    _route4.Add(nc.segments.Find(x => x.Id == i));
+            //}
 
 
             //// Route 5 : Lembong - Tamblong
@@ -1442,6 +1544,14 @@ namespace SimTMDG
             //nc.segments.Find(x => x.Id == 10259).endNode.tLight = new TrafficLight();
 
 
+            nc.segments.Find(x => x.Id == 2925).endNode.tLight = new TrafficLight();
+            nc.segments.Find(x => x.Id == 28583).endNode.tLight = new TrafficLight();
+            nc.segments.Find(x => x.Id == 28586).startNode.tLight = new TrafficLight();
+            nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
+
+
+            nc.segments.Find(x => x.Id == 2919).TargetSpeed = 2;
+            nc.segments.Find(x => x.Id == 25163).TargetSpeed = 5;
         }
 
         #region oldRoute
@@ -1603,21 +1713,53 @@ namespace SimTMDG
                     int vehType = rnd.Next(0, 2);
                     IVehicle v = null;
 
-                    if (vehType == 0)
+                    if ((_route[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route[0].lanes[laneidx].vehicles[_route[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route[0].lanes[laneidx].Length - 20))
                     {
-                        v = new Car(_route[0], laneidx, _route);
-                    }
-                    else if (vehType == 1)
-                    {
-                        v = new Bus(_route[0], laneidx, _route);
-                    }
-                    else
-                    {
-                        v = new Truck(_route[0], laneidx, _route);
+
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route[0], laneidx, _route);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route[0], laneidx, _route);
+                        }
+                        else
+                        {
+                            v = new Truck(_route[0], laneidx, _route);
+                        }
+
+                        _route[0].lanes[laneidx].vehicles.Add(v);
+                        nc.ActiveVehicles++;
                     }
 
-                    _route[0].lanes[laneidx].vehicles.Add(v);
-                    activeVehicles++;
+
+                    laneidx = rnd.Next(0, _route2[0].lanes.Count);
+                    vehType = rnd.Next(0, 2);
+                    v = null;
+
+                    if ((_route2[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route2[0].lanes[laneidx].vehicles[_route2[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route2[0].lanes[laneidx].Length - 20))
+                    {
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route2[0], laneidx, _route2);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route2[0], laneidx, _route2);
+                        }
+                        else
+                        {
+                            v = new Truck(_route2[0], laneidx, _route2);
+                        }
+
+                        _route2[0].lanes[laneidx].vehicles.Add(v);
+                        nc.ActiveVehicles++;
+                    }
 
                     //laneidx = rnd.Next(0, _route4[0].lanes.Count);
                     //vehType = rnd.Next(0, 2);
@@ -1661,25 +1803,58 @@ namespace SimTMDG
                     //    _route3));
                     //activeVehicles++;
 
-                    int laneidx = rnd.Next(0, _route2[0].lanes.Count);
+                    int laneidx = rnd.Next(0, _route3[0].lanes.Count);
                     int vehType = rnd.Next(0, 2);
                     IVehicle v = null;
 
-                    if (vehType == 0)
+                    if ((_route3[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route3[0].lanes[laneidx].vehicles[_route3[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route3[0].lanes[laneidx].Length - 20))
                     {
-                        v = new Car(_route2[0], laneidx, _route2);
-                    }
-                    else if (vehType == 1)
-                    {
-                        v = new Bus(_route2[0], laneidx, _route2);
-                    }
-                    else
-                    {
-                        v = new Truck(_route2[0], laneidx, _route2);
+
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route3[0], laneidx, _route3);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route3[0], laneidx, _route3);
+                        }
+                        else
+                        {
+                            v = new Truck(_route3[0], laneidx, _route3);
+                        }
+
+                        _route3[0].lanes[laneidx].vehicles.Add(v);
+                        nc.ActiveVehicles++;
                     }
 
-                    _route2[0].lanes[laneidx].vehicles.Add(v);
-                    activeVehicles++;
+
+                    laneidx = rnd.Next(0, _route4[0].lanes.Count);
+                    vehType = rnd.Next(0, 2);
+                    v = null;
+
+                    if ((_route4[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route4[0].lanes[laneidx].vehicles[_route4[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route4[0].lanes[laneidx].Length - 20))
+                    {
+
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route4[0], laneidx, _route4);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route4[0], laneidx, _route4);
+                        }
+                        else
+                        {
+                            v = new Truck(_route4[0], laneidx, _route4);
+                        }
+
+                        _route4[0].lanes[laneidx].vehicles.Add(v);
+                        nc.ActiveVehicles++;
+                    }
 
                     //laneidx = rnd.Next(0, _route3[0].lanes.Count);
                     //vehType = rnd.Next(0, 2);

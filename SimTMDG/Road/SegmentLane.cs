@@ -130,7 +130,7 @@ namespace SimTMDG.Road
 
 
         #region tick
-        public void Tick(double tickLength)
+        public void Tick(double tickLength, NodeControl nc)
         {
             SortVehicles();
 
@@ -139,22 +139,27 @@ namespace SimTMDG.Road
                 vehicles[i].Think(tickLength);
             }
 
-            RemoveAllVehiclesInRemoveList();
+            RemoveAllVehiclesInRemoveList(nc);
 
             for (int i = 0; i < vehicles.Count; i++)
             {
                 vehicles[i].Move(tickLength);
             }
 
-            RemoveAllVehiclesInRemoveList();
+            RemoveAllVehiclesInRemoveList(nc);
         }
 
 
         #region remove vehicle
-        public void RemoveAllVehiclesInRemoveList()
+        public void RemoveAllVehiclesInRemoveList(NodeControl nc)
         {
             foreach (IVehicle v in vehToRemove)
             {
+                if (v.Routing.Route.Count == 0)
+                {
+                    nc.ActiveVehicles--;
+                }
+
                 vehicles.Remove(v);
             }
 
@@ -274,6 +279,12 @@ namespace SimTMDG.Road
         public void Draw(Graphics g)
         {
             Pen pen = new Pen(Color.DarkGray, 1);
+
+            //if (LaneIdx % 2 == 0)
+            //{
+            //    pen = new Pen(Color.Khaki, 1);
+            //}
+
             g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
 
             //Font debugFont = new Font("Calibri", 6);
