@@ -515,12 +515,47 @@ namespace SimTMDG.Vehicle
 
             #endregion
 
+            #region intersection
+            //if (route[1].prevSegment.Count > 1) // Move this, not efficient
+            //{
+            //    if (route[0].Length - (distance + length / 2) <= route[1].startNode.intersectionRadius)
+            //    {
+
+            //        VehicleDistance closestVeh = null;
+
+            //        for (int i = 0; i < route[1].prevSegment.Count; i++)
+            //        {
+            //            for (int j = 0; i < route[1].prevSegment[i].lanes.Count; j++)
+            //            {
+            //                if (closestVeh == null)
+            //                {
+            //                    closestVeh = new VehicleDistance(
+            //                        route[i].prevSegment[i].lanes[j].vehicles[route[i].prevSegment[i].lanes[j].vehicles.Count],
+            //                        route[i].prevSegment[i].lanes[j].Length - route[i].prevSegment[i].lanes[j].vehicles[route[i].prevSegment[i].lanes[j].vehicles.Count].distance);
+            //                }
+            //                else if (route[i].prevSegment[i].lanes[j].Length - route[i].prevSegment[i].lanes[j].vehicles[route[i].prevSegment[i].lanes[j].vehicles.Count]
+            //                    .distance
+            //                    < closestVeh.distance)
+            //                {
+            //                    closestVeh.vehicle = route[i].prevSegment[i].lanes[j].vehicles[route[i].prevSegment[i].lanes[j].vehicles.Count];
+            //                    closestVeh.distance = route[i].prevSegment[i].lanes[j].Length - route[i].prevSegment[i].lanes[j].vehicles[route[i].prevSegment[i].lanes[j].vehicles.Count]
+            //                    .distance;
+            //                }
+            //            }
+            //        }
+
+            //        route[1].startNode.registeredVeh = closestVeh.vehicle;
+            //    }
+                
+            //}
+            #endregion
+
 
             #region Traffic lights
 
             // Check for red traffic lights on route
             double distanceToTrafficLight = GetDistanceToNextTrafficLightOnRoute(route, this.distance, 768, true);
-            intersectionLookaheadDistance = distanceToTrafficLight;
+            //intersectionLookaheadDistance = distanceToTrafficLight;
 
             // If the next TrafficLight is closer than the next vehicle, no free line change shall be performed
             if (distanceToTrafficLight < lookaheadDistance)
@@ -539,7 +574,7 @@ namespace SimTMDG.Vehicle
             //{
             //    updateLaneChangeDelay(tickLength);
             //}
-            //else if (!(currentSegment.lanes.Count < 2))
+            //else if ((currentSegment.lanes.Count > 1))
             //{
             //    int direction = 0;
 
@@ -556,7 +591,7 @@ namespace SimTMDG.Vehicle
             //        direction = -1;
             //        lowestAcceleration = ConsiderLaneChange(direction, tickLength, route, lowestAcceleration);
             //    }
-                
+
             //}
             #endregion
 
@@ -879,9 +914,9 @@ namespace SimTMDG.Vehicle
         private VehicleDistance findVehicleInBehindRecursive(RoadSegment currSegment, double searchedDistance, int direction = 0)
         {
             VehicleDistance vd = null;
-            double tempDistance = 768;
+            double tempDistance = 168;
 
-            if (searchedDistance > 768)
+            if (searchedDistance > 168)
             {
                 return vd;
             }

@@ -1,4 +1,5 @@
 ﻿using SimTMDG.Tools;
+using SimTMDG.Vehicle;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -116,6 +117,12 @@ namespace SimTMDG.Road
             //g.DrawEllipse(pen, rec);
 
         }
+        #endregion
+
+
+        #region temp intersection node
+        public int intersectionRadius = 10;
+        public IVehicle registeredVeh = null;
         #endregion
     }
 }

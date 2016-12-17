@@ -101,6 +101,8 @@ namespace SimTMDG.Vehicle
 
         #endregion
 
+        public double sstar;
+
         /// <summary>
         /// Berechnet den Wunschabstand nach dem IDM
         /// </summary>
@@ -132,10 +134,10 @@ namespace SimTMDG.Vehicle
         public double CalculateAcceleration(double velocity, double desiredVelocity, double distance, double vDiff)
         {
             // berechne s* = Wunschabstand
-            double ss = CalculateWantedDistance(velocity, vDiff);
+            sstar = CalculateWantedDistance(velocity, vDiff);
 
             // Neue Geschwindigkeit berechnen
-            double vNeu = a * (1 - Math.Pow((velocity / desiredVelocity), 2) - Math2.Square(ss / distance));
+            double vNeu = a * (1 - Math.Pow((velocity / desiredVelocity), 2) - Math2.Square(sstar / distance));
 
             return vNeu;
         }

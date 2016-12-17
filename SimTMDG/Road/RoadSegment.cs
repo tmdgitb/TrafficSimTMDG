@@ -215,6 +215,44 @@ namespace SimTMDG.Road
         #region tick
         public void Tick(double tickLength, NodeControl nc)
         {
+            //#region segment merge
+            //if (prevSegment.Count > 1) // Move this, not efficient
+            //{
+
+            //    VehicleDistance closestVeh = null;
+
+            //    for (int i = 0; i < prevSegment.Count; i++)
+            //    {
+            //        for (int j = 0; j < prevSegment[i].lanes.Count; j++)
+            //        {
+            //            if (prevSegment[i].lanes[j].vehicles.Count > 0)
+            //            {
+            //                if (closestVeh == null)
+            //                {
+            //                    closestVeh = new VehicleDistance(
+            //                        prevSegment[i].lanes[j].vehicles[prevSegment[i].lanes[j].vehicles.Count],
+            //                        prevSegment[i].lanes[j].Length - prevSegment[i].lanes[j].vehicles[prevSegment[i].lanes[j].vehicles.Count].distance);
+
+            //                    startNode.registeredVeh = closestVeh.vehicle;
+            //                }
+            //                else if (prevSegment[i].lanes[j].Length - prevSegment[i].lanes[j].vehicles[prevSegment[i].lanes[j].vehicles.Count]
+            //                        .distance
+            //                        < closestVeh.distance)
+            //                {
+            //                    closestVeh.vehicle = prevSegment[i].lanes[j].vehicles[prevSegment[i].lanes[j].vehicles.Count];
+            //                    closestVeh.distance = prevSegment[i].lanes[j].Length - prevSegment[i].lanes[j].vehicles[prevSegment[i].lanes[j].vehicles.Count]
+            //                    .distance;
+
+            //                    startNode.registeredVeh = closestVeh.vehicle;
+            //                }
+            //            }
+            //        }
+            //    }
+                
+            //}
+            //#endregion
+
+
             foreach (SegmentLane lane in lanes)
             {
                 lane.Tick(tickLength, nc);
@@ -228,24 +266,26 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            Pen pen;
+            //Pen pen;
 
             //if (OneWay == "yes")
             //{
             //    pen = new Pen(Color.Red, 1);
-            //} else if (OneWay == "-1")
+            //}
+            //else if (OneWay == "-1")
             //{
             //    pen = new Pen(Color.Aquamarine, 1);
-            //}else
+            //}
+            //else
             //{
             //    pen = new Pen(Color.LightGreen, 1);
             //}
 
-            if ((startNode.Id == 0) || (endNode.Id == 0))
-            {
-                pen = new Pen(Color.Red, 1);
-                g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
-            }
+            //if ((startNode.Id == 0) || (endNode.Id == 0))
+            //{
+            //    pen = new Pen(Color.Red, 1);
+            //    g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
+            //}
 
             //g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
 
@@ -254,8 +294,14 @@ namespace SimTMDG.Road
                 lane.Draw(g);
             }
 
-            //Font debugFont = new Font("Calibri", 3);
-            //Brush blackBrush = new SolidBrush(Color.Black);
+            Font debugFont = new Font("Calibri", 3);
+            Brush blackBrush = new SolidBrush(Color.Black);
+
+            if (startNode.registeredVeh != null)
+            {
+                g.DrawString(startNode.registeredVeh.vehiclesIndex.ToString(), debugFont, blackBrush,
+                    startNode.Position);
+            }
             //g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
         }
 
@@ -361,6 +407,11 @@ namespace SimTMDG.Road
             for (int i = 0; i < NumLanes; i++)
             {
                 double shift = i * laneWidth - maxShift;
+                if(Id == 8986)
+                {
+                    lanes.Add(generateSegmentLane(shift, i, true));
+                }
+
                 lanes.Add(generateSegmentLane(shift, i, true));
             }
             #endregion

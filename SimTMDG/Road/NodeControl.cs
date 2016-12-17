@@ -17,6 +17,7 @@ namespace SimTMDG.Road
         //private Routing _route;
         public List<Node> _nodes = new List<Node>();
         public List<RoadSegment> segments = new List<RoadSegment>();
+        private List<VehicleGenerator> vehGenerators = new List<VehicleGenerator>();
         public int ActiveVehicles = 0;
 
         internal List<RoadSegment> Segments
@@ -82,21 +83,7 @@ namespace SimTMDG.Road
 
         }
 
-        public void Tick(double tickLength, NodeControl nc = null)
-        {
-            foreach(RoadSegment ws in Segments)
-            {
-                ws.Tick(tickLength, this);
-            }
-
-            //foreach (WaySegment ws in Segments)
-            //{
-            //    foreach (IVehicle v in ws.vehicles)
-            //    {
-            //        v.newCoord();
-            //    }
-            //}
-        }
+        
 
         public void setBounds(Rectangle bounds)
         {
@@ -185,208 +172,313 @@ namespace SimTMDG.Road
                 return true;
             }
         }
+
+        public void Tick(double tickLength, NodeControl nc = null)
+        {
+            foreach(RoadSegment ws in Segments)
+            {
+                ws.Tick(tickLength, this);
+            }
+
+            //generateVehicles();
+            foreach(VehicleGenerator vehGen in vehGenerators)
+            {
+                ActiveVehicles += vehGen.generate(tickLength);
+            }
+
+            //foreach (WaySegment ws in Segments)
+            //{
+            //    foreach (IVehicle v in ws.vehicles)
+            //    {
+            //        v.newCoord();
+            //    }
+            //}
+        }
+
+
+
+        private List<RoadSegment> _route;
+        private List<RoadSegment> _route2;
+        private List<RoadSegment> _route3;
+        private List<RoadSegment> _route4;
+        private List<RoadSegment> _route5;
+        private List<RoadSegment> _route6;
+
+
+        Random rnd = new Random();
+        int vehCount = 0;
+        //int activeVehicles = 0;
+        Double timeMod = 0.0;
+
+        private void generateVehicles()
+        {
+            #region tempVehGenerate
+            if ((timeMod % 36) == 0.0)
+            {
+                if ((vehCount % 2) == 0)
+                {
+                    int laneidx = rnd.Next(0, _route[0].lanes.Count);
+                    int vehType = rnd.Next(0, 2);
+                    IVehicle v = null;
+
+                    if ((_route[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route[0].lanes[laneidx].vehicles[_route[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route[0].lanes[laneidx].Length - 20))
+                    {
+
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route[0], laneidx, _route);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route[0], laneidx, _route);
+                        }
+                        else
+                        {
+                            v = new Truck(_route[0], laneidx, _route);
+                        }
+
+                        _route[0].lanes[laneidx].vehicles.Add(v);
+                        ActiveVehicles++;
+                    }
+
+
+                    laneidx = rnd.Next(0, _route2[0].lanes.Count);
+                    vehType = rnd.Next(0, 2);
+                    v = null;
+
+                    if ((_route2[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route2[0].lanes[laneidx].vehicles[_route2[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route2[0].lanes[laneidx].Length - 20))
+                    {
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route2[0], laneidx, _route2);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route2[0], laneidx, _route2);
+                        }
+                        else
+                        {
+                            v = new Truck(_route2[0], laneidx, _route2);
+                        }
+
+                        _route2[0].lanes[laneidx].vehicles.Add(v);
+                        ActiveVehicles++;
+                    }
+
+                }
+                else
+                {
+
+                    int laneidx = rnd.Next(0, _route3[0].lanes.Count);
+                    int vehType = rnd.Next(0, 2);
+                    IVehicle v = null;
+
+                    if ((_route3[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route3[0].lanes[laneidx].vehicles[_route3[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route3[0].lanes[laneidx].Length - 20))
+                    {
+
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route3[0], laneidx, _route3);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route3[0], laneidx, _route3);
+                        }
+                        else
+                        {
+                            v = new Truck(_route3[0], laneidx, _route3);
+                        }
+
+                        _route3[0].lanes[laneidx].vehicles.Add(v);
+                        ActiveVehicles++;
+                    }
+
+
+                    laneidx = rnd.Next(0, _route4[0].lanes.Count);
+                    vehType = rnd.Next(0, 2);
+                    v = null;
+
+                    if ((_route4[0].lanes[laneidx].vehicles.Count == 0) ||
+                        (_route4[0].lanes[laneidx].vehicles[_route4[0].lanes[laneidx].vehicles.Count - 1].RearPos <
+                        _route4[0].lanes[laneidx].Length - 20))
+                    {
+
+                        if (vehType == 0)
+                        {
+                            v = new Car(_route4[0], laneidx, _route4);
+                        }
+                        else if (vehType == 1)
+                        {
+                            v = new Bus(_route4[0], laneidx, _route4);
+                        }
+                        else
+                        {
+                            v = new Truck(_route4[0], laneidx, _route4);
+                        }
+
+                        _route4[0].lanes[laneidx].vehicles.Add(v);
+                        ActiveVehicles++;
+                    }
+                }
+                vehCount++;
+            }
+
+            timeMod++;
+            #endregion
+        }
+
+        public void manuallyAddRoute()
+        {
+            _route = new List<RoadSegment>();
+            _route2 = new List<RoadSegment>();
+            _route3 = new List<RoadSegment>();
+            _route4 = new List<RoadSegment>();
+            _route5 = new List<RoadSegment>();
+            _route6 = new List<RoadSegment>();
+
+            // Route 1 : Pasteur
+            for (int i = 2908; i < 2926; i++)
+            {
+                _route.Add(segments.Find(x => x.Id == i));
+            }
+
+            _route.Add(segments.Find(x => x.Id == 421));
+
+            for (int i = 28456; i < 28469; i++)
+            {
+                _route.Add(segments.Find(x => x.Id == i));
+            }
+
+            for (int i = 422; i < 431; i++)
+            {
+                _route.Add(segments.Find(x => x.Id == i));
+            }
+
+            //nc.segments.Find(x => x.Id == 2918).endNode.tLight = new TrafficLight();
+
+            // Route 2 : Pasteur
+            for (int i = 591; i < 607; i++)
+            {
+                _route2.Add(segments.Find(x => x.Id == i));
+            }
+
+            for (int i = 8986; i < 8997; i++)
+            {
+                _route2.Add(segments.Find(x => x.Id == i));
+            }
+
+
+
+            for (int i = 28584; i < 28587; i++)
+            {
+                _route2.Add(segments.Find(x => x.Id == i));
+            }
+
+            //_route2.Add(nc.segments.Find(x => x.Id == 34087));
+            //_route2.Add(nc.segments.Find(x => x.Id == 34084));
+
+            for (int i = 25153; i < 25177; i++)
+            {
+                _route2.Add(segments.Find(x => x.Id == i));
+            }
+            //nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
+
+
+            // Route 3 : Pasteur
+            for (int i = 2908; i < 2926; i++)
+            {
+                _route3.Add(segments.Find(x => x.Id == i));
+            }
+
+            _route3.Add(segments.Find(x => x.Id == 26040));
+            _route3.Add(segments.Find(x => x.Id == 34069));
+
+            for (int i = 28587; i < 28601; i++)
+            {
+                _route3.Add(segments.Find(x => x.Id == i));
+            }
+
+
+            // Route 4 : Pasteur
+            for (int i = 28483; i < 28493; i++)
+            {
+                _route4.Add(segments.Find(x => x.Id == i));
+            }
+
+            _route4.Add(segments.Find(x => x.Id == 28455));
+            _route4.Add(segments.Find(x => x.Id == 28583));
+            _route4.Add(segments.Find(x => x.Id == 26062));
+
+            for (int i = 25153; i < 25177; i++)
+            {
+                _route4.Add(segments.Find(x => x.Id == i));
+            }
+
+
+
+            #region temp test obstacle
+            #endregion
+            
+
+
+            segments.Find(x => x.Id == 2925).endNode.tLight = new TrafficLight();
+            segments.Find(x => x.Id == 28583).endNode.tLight = new TrafficLight();
+            segments.Find(x => x.Id == 28586).startNode.tLight = new TrafficLight();
+            segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
+
+
+            segments.Find(x => x.Id == 2919).TargetSpeed = 4;
+            segments.Find(x => x.Id == 25163).TargetSpeed = 5;
+
+
+
+            List<RoadSegment> origin_1__destinations = new List<RoadSegment>();
+            List<double> origin_1__q_outs = new List<double>();
+
+            List<RoadSegment> origin_2__destinations = new List<RoadSegment>();
+            List<double> origin_2__q_outs = new List<double>();
+
+            List<RoadSegment> origin_3__destinations = new List<RoadSegment>();
+            List<double> origin_3__q_outs = new List<double>();
+
+
+            origin_1__destinations.Add(segments.Find(x => x.Id == 430));
+            origin_1__destinations.Add(segments.Find(x => x.Id == 28600));
+
+            origin_1__q_outs.Add(0.3);
+            origin_1__q_outs.Add(0.7);
+
+            vehGen1 = new VehicleGenerator(segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
+            vehGen1.segments = segments;
+
+
+            origin_2__destinations.Add(segments.Find(x => x.Id == 25176));
+            origin_2__q_outs.Add(1);
+
+            vehGen2 = new VehicleGenerator(segments.Find(x => x.Id == 591), .3, origin_2__destinations, origin_2__q_outs);
+            vehGen2.segments = segments;
+
+
+            origin_3__destinations.Add(segments.Find(x => x.Id == 25176));
+            origin_3__q_outs.Add(1);
+
+            vehGen3 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .7, origin_3__destinations, origin_3__q_outs);
+            vehGen3.segments = segments;
+
+            vehGenerators.Add(vehGen1);
+            vehGenerators.Add(vehGen2);
+            vehGenerators.Add(vehGen3);
+        }
+
+        VehicleGenerator vehGen1;
+        VehicleGenerator vehGen2;
+        VehicleGenerator vehGen3;
+
     }    
 }
-
-
-
-//using SimTMDG.Time;
-//using SimTMDG.Tools;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace SimTMDG.Road
-//{
-//    public class NodeControl: ITickable
-//    {
-//        #region Variablen und Felder
-
-//        /// <summary>
-//        /// alle verwendenten LineNodes
-//        /// </summary>
-//        private List<LineNode> _nodes = new List<LineNode>();
-//        /// <summary>
-//        /// alle verwendenten LineNodes
-//        /// </summary>
-//        public List<LineNode> nodes
-//        {
-//            get { return _nodes; }
-//            set { _nodes = value; }
-//        }
-
-//        /// <summary>
-//        /// alle verwendeten NodeConnections
-//        /// </summary>
-//        private List<NodeConnection> _connections = new List<NodeConnection>();
-//        /// <summary>
-//        /// alle verwendeten NodeConnections
-//        /// </summary>
-//        public List<NodeConnection> connections
-//        {
-//            get { return _connections; }
-//            set { _connections = value; }
-//        }
-
-//        ///// <summary>
-//        ///// Liste aller bekannten Intersections
-//        ///// </summary>
-//        //private List<Intersection> _intersections = new List<Intersection>();
-//        ///// <summary>
-//        ///// Liste aller bekannten Intersections
-//        ///// </summary>
-//        //public List<Intersection> intersections
-//        //{
-//        //    get { return _intersections; }
-//        //    set { _intersections = value; }
-//        //}
-
-//        /// <summary>
-//        /// List of all known network layers
-//        /// </summary>
-//        public List<NetworkLayer> _networkLayers { get; private set; }
-
-//        /// <summary>
-//        /// Titel dieses Layouts
-//        /// </summary>
-//        private string m_title;
-//        /// <summary>
-//        /// Titel dieses Layouts
-//        /// </summary>
-//        public string title
-//        {
-//            get { return m_title; }
-//            set { m_title = value; }
-//        }
-
-
-//        /// <summary>
-//        /// Informationstext zum Layout
-//        /// </summary>
-//        private string _infoText;
-//        /// <summary>
-//        /// Informationstext zum Layout
-//        /// </summary>
-//        public string infoText
-//        {
-//            get { return _infoText; }
-//            set { _infoText = value; }
-//        }
-
-
-//        #endregion
-
-//        #region Konstruktoren
-
-//        /// <summary>
-//        /// leerer Standardkonstruktor
-//        /// </summary>
-//        public NodeControl()
-//        {
-//            _networkLayers = new List<NetworkLayer>();
-//        }
-
-//        #endregion
-
-
-//        #region ITickable Member
-
-//        /// <summary>
-//        /// sagt allen verwalteten Objekten Bescheid, dass sie ticken dürfen *g*
-//        /// </summary>
-//        public void Tick(double tickLength)
-//        {
-//            foreach (LineNode ln in nodes)
-//            {
-//                ln.Tick(tickLength);
-//            }
-
-//            int bucketNumber = GlobalTime.Instance.currentCycleTick;
-//            foreach (NodeConnection nc in _connections)
-//            {
-//                nc.GatherStatistics(bucketNumber);
-//            }
-//        }
-
-//        /// <summary>
-//        /// setzt den Tick-Zustand aller LineNodes zurück
-//        /// </summary>
-//        public void Reset()
-//        {
-//            foreach (LineNode ln in nodes)
-//            {
-//                ln.Reset();
-//            }
-//        }
-
-//        #endregion
-
-
-//        public void tempLoad()
-//        {
-//            Vector2 position = new Vector2();
-//            Vector2 inSlope = new Vector2();
-//            Vector2 outSlope = new Vector2();
-//            NetworkLayer networkLayer = new NetworkLayer("Layer 1", true);
-//            bool stopSign = false;
-
-
-//            position.X = 268;
-//            position.Y = 148;
-//            inSlope.X = 0;
-//            inSlope.Y = 0;
-//            outSlope.X = 0;
-//            outSlope.Y = 0;
-
-//            nodes.Add(new LineNode(position, inSlope, outSlope, networkLayer, stopSign));
-
-
-//            position.X = 464;
-//            position.Y = 180;
-//            inSlope.X = -56;
-//            inSlope.Y = -96;
-//            outSlope.X = 56;
-//            outSlope.Y = 96;
-
-//            nodes.Add(new LineNode(position, inSlope, outSlope, networkLayer, stopSign));
-
-
-//            position.X = 634;
-//            position.Y = 490;
-//            inSlope.X = -156;
-//            inSlope.Y = -90;
-//            outSlope.X = 156;
-//            outSlope.Y = 90;
-
-//            nodes.Add(new LineNode(position, inSlope, outSlope, networkLayer, stopSign));
-
-
-//            position.X = 942;
-//            position.Y = 282;
-//            inSlope.X = -29;
-//            inSlope.Y = 4;
-//            outSlope.X = 29;
-//            outSlope.Y = -4;
-
-//            nodes.Add(new LineNode(position, inSlope, outSlope, networkLayer, stopSign));
-
-
-//            position.X = 1044;
-//            position.Y = 454;
-//            inSlope.X = -128;
-//            inSlope.Y = 70;
-//            outSlope.X = 128;
-//            outSlope.Y = -70;
-
-//            nodes.Add(new LineNode(position, inSlope, outSlope, networkLayer, stopSign));
-
-
-
-//            connections.Add(nodes[0], );
-
-
-//        }
-//    }
-//}
