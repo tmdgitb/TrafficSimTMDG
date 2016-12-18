@@ -1,4 +1,5 @@
 ﻿using SimTMDG.Road;
+using SimTMDG.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,7 +108,7 @@ namespace SimTMDG.Vehicle
                             }
 
                             //success = true;
-                            route = findRoute(startSegment, endSegments[destination]);
+                            route = new AStar(segments, startSegment, endSegments[destination]).cameFrom;
                             vehGenerate(laneIdxList[i]);
                             toReturn = 1;
                             return toReturn;
@@ -231,6 +232,7 @@ namespace SimTMDG.Vehicle
                 }
             }
 
+            //List<RoadSegment> toReturn = AStar astar = 
             return toReturn;
         }
         #endregion
