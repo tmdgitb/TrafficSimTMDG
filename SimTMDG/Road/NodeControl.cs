@@ -471,8 +471,8 @@ namespace SimTMDG.Road
             vehGen3 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .7, origin_3__destinations, origin_3__q_outs);
             vehGen3.segments = segments;
 
-            vehGenerators.Add(vehGen1);
-            vehGenerators.Add(vehGen2);
+            //vehGenerators.Add(vehGen1);
+            //vehGenerators.Add(vehGen2);
             vehGenerators.Add(vehGen3);
         }
 

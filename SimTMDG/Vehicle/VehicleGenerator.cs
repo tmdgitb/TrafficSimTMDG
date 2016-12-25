@@ -24,6 +24,7 @@ namespace SimTMDG.Vehicle
 
         /// Temp
         public List<RoadSegment> segments;
+        List<AStar> astars;
         #endregion
 
 
@@ -40,7 +41,21 @@ namespace SimTMDG.Vehicle
             this.q_in = _q_in;
             this.startSegment = _startSegment;
             this.endSegments = _endSegments;
+
+            astars = new List<AStar>();
+            for(int i=0; i<_endSegments.Count; i++)
+            {
+                astars.Add(new AStar(segments, startSegment, endSegments[i]));
+
+                List<RoadSegment> test = new List<RoadSegment>(astars[i].costSoFar.Keys);
+                foreach (RoadSegment segment in test)
+                {
+                    segment.debugColor = System.Drawing.Color.Red;
+                }
+            }
+
             this.q_outs = _q_outs;
+
         }
         #endregion
 
@@ -108,7 +123,9 @@ namespace SimTMDG.Vehicle
                             }
 
                             //success = true;
-                            route = new AStar(segments, startSegment, endSegments[destination]).cameFrom;
+
+                            //route = new List<RoadSegment>(astars[destination].costSoFar.Keys);
+                            route = findRoute(this.startSegment, this.endSegments[destination]);
                             vehGenerate(laneIdxList[i]);
                             toReturn = 1;
                             return toReturn;
