@@ -88,10 +88,8 @@ namespace SimTMDG.Tools
 
                 foreach (var next in current.nextSegment)
                 {
-                    double newCost = costSoFar[current]
-                        + next.Length;
-                    if (!costSoFar.ContainsKey(next)
-                        || newCost < costSoFar[next])
+                    double newCost = costSoFar[current] + next.Length;
+                    if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next])
                     {
                         costSoFar[next] = newCost;
                         double priority = newCost + Heuristic(next, goal);

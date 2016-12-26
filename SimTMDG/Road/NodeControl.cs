@@ -335,90 +335,90 @@ namespace SimTMDG.Road
 
         public void manuallyAddRoute()
         {
-            _route = new List<RoadSegment>();
-            _route2 = new List<RoadSegment>();
-            _route3 = new List<RoadSegment>();
-            _route4 = new List<RoadSegment>();
-            _route5 = new List<RoadSegment>();
-            _route6 = new List<RoadSegment>();
+            //_route = new List<RoadSegment>();
+            //_route2 = new List<RoadSegment>();
+            //_route3 = new List<RoadSegment>();
+            //_route4 = new List<RoadSegment>();
+            //_route5 = new List<RoadSegment>();
+            //_route6 = new List<RoadSegment>();
 
-            // Route 1 : Pasteur
-            for (int i = 2908; i < 2926; i++)
-            {
-                _route.Add(segments.Find(x => x.Id == i));
-            }
+            //// Route 1 : Pasteur
+            //for (int i = 2908; i < 2926; i++)
+            //{
+            //    _route.Add(segments.Find(x => x.Id == i));
+            //}
 
-            _route.Add(segments.Find(x => x.Id == 421));
+            //_route.Add(segments.Find(x => x.Id == 421));
 
-            for (int i = 28456; i < 28469; i++)
-            {
-                _route.Add(segments.Find(x => x.Id == i));
-            }
+            //for (int i = 28456; i < 28469; i++)
+            //{
+            //    _route.Add(segments.Find(x => x.Id == i));
+            //}
 
-            for (int i = 422; i < 431; i++)
-            {
-                _route.Add(segments.Find(x => x.Id == i));
-            }
+            //for (int i = 422; i < 431; i++)
+            //{
+            //    _route.Add(segments.Find(x => x.Id == i));
+            //}
 
-            //nc.segments.Find(x => x.Id == 2918).endNode.tLight = new TrafficLight();
+            ////nc.segments.Find(x => x.Id == 2918).endNode.tLight = new TrafficLight();
 
-            // Route 2 : Pasteur
-            for (int i = 591; i < 607; i++)
-            {
-                _route2.Add(segments.Find(x => x.Id == i));
-            }
+            //// Route 2 : Pasteur
+            //for (int i = 591; i < 607; i++)
+            //{
+            //    _route2.Add(segments.Find(x => x.Id == i));
+            //}
 
-            for (int i = 8986; i < 8997; i++)
-            {
-                _route2.Add(segments.Find(x => x.Id == i));
-            }
-
-
-
-            for (int i = 28584; i < 28587; i++)
-            {
-                _route2.Add(segments.Find(x => x.Id == i));
-            }
-
-            //_route2.Add(nc.segments.Find(x => x.Id == 34087));
-            //_route2.Add(nc.segments.Find(x => x.Id == 34084));
-
-            for (int i = 25153; i < 25177; i++)
-            {
-                _route2.Add(segments.Find(x => x.Id == i));
-            }
-            //nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
+            //for (int i = 8986; i < 8997; i++)
+            //{
+            //    _route2.Add(segments.Find(x => x.Id == i));
+            //}
 
 
-            // Route 3 : Pasteur
-            for (int i = 2908; i < 2926; i++)
-            {
-                _route3.Add(segments.Find(x => x.Id == i));
-            }
 
-            _route3.Add(segments.Find(x => x.Id == 26040));
-            _route3.Add(segments.Find(x => x.Id == 34069));
+            //for (int i = 28584; i < 28587; i++)
+            //{
+            //    _route2.Add(segments.Find(x => x.Id == i));
+            //}
 
-            for (int i = 28587; i < 28601; i++)
-            {
-                _route3.Add(segments.Find(x => x.Id == i));
-            }
+            ////_route2.Add(nc.segments.Find(x => x.Id == 34087));
+            ////_route2.Add(nc.segments.Find(x => x.Id == 34084));
+
+            //for (int i = 25153; i < 25177; i++)
+            //{
+            //    _route2.Add(segments.Find(x => x.Id == i));
+            //}
+            ////nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
 
 
-            // Route 4 : Pasteur
-            for (int i = 28483; i < 28493; i++)
-            {
-                _route4.Add(segments.Find(x => x.Id == i));
-            }
+            //// Route 3 : Pasteur
+            //for (int i = 2908; i < 2926; i++)
+            //{
+            //    _route3.Add(segments.Find(x => x.Id == i));
+            //}
 
-            _route4.Add(segments.Find(x => x.Id == 28455));
-            _route4.Add(segments.Find(x => x.Id == 28583));
-            _route4.Add(segments.Find(x => x.Id == 26062));
+            //_route3.Add(segments.Find(x => x.Id == 26040));
+            //_route3.Add(segments.Find(x => x.Id == 34069));
 
-            for (int i = 25153; i < 25177; i++)
-            {
-                _route4.Add(segments.Find(x => x.Id == i));
-            }
+            //for (int i = 28587; i < 28601; i++)
+            //{
+            //    _route3.Add(segments.Find(x => x.Id == i));
+            //}
+
+
+            //// Route 4 : Pasteur
+            //for (int i = 28483; i < 28493; i++)
+            //{
+            //    _route4.Add(segments.Find(x => x.Id == i));
+            //}
+
+            //_route4.Add(segments.Find(x => x.Id == 28455));
+            //_route4.Add(segments.Find(x => x.Id == 28583));
+            //_route4.Add(segments.Find(x => x.Id == 26062));
+
+            //for (int i = 25153; i < 25177; i++)
+            //{
+            //    _route4.Add(segments.Find(x => x.Id == i));
+            //}
 
 
 
@@ -458,22 +458,22 @@ namespace SimTMDG.Road
             vehGen1.segments = segments;
 
 
-            origin_2__destinations.Add(segments.Find(x => x.Id == 25176));
-            origin_2__q_outs.Add(1);
+            //origin_2__destinations.Add(segments.Find(x => x.Id == 25176));
+            //origin_2__q_outs.Add(1);
 
-            vehGen2 = new VehicleGenerator(segments.Find(x => x.Id == 591), .3, origin_2__destinations, origin_2__q_outs);
-            vehGen2.segments = segments;
+            //vehGen2 = new VehicleGenerator(segments.Find(x => x.Id == 591), .3, origin_2__destinations, origin_2__q_outs);
+            //vehGen2.segments = segments;
 
 
-            origin_3__destinations.Add(segments.Find(x => x.Id == 25176));
-            origin_3__q_outs.Add(1);
+            //origin_3__destinations.Add(segments.Find(x => x.Id == 25176));
+            //origin_3__q_outs.Add(1);
 
-            vehGen3 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .7, origin_3__destinations, origin_3__q_outs);
-            vehGen3.segments = segments;
+            //vehGen3 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .7, origin_3__destinations, origin_3__q_outs);
+            //vehGen3.segments = segments;
 
-            //vehGenerators.Add(vehGen1);
+            vehGenerators.Add(vehGen1);
             //vehGenerators.Add(vehGen2);
-            vehGenerators.Add(vehGen3);
+            //vehGenerators.Add(vehGen3);
         }
 
         VehicleGenerator vehGen1;

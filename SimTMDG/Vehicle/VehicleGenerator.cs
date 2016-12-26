@@ -17,13 +17,14 @@ namespace SimTMDG.Vehicle
         RoadSegment startSegment;
         List<RoadSegment> endSegments;
         double inVehBuffer = 0;
-        List<RoadSegment> route;// = new List<RoadSegment>();
+        //List<RoadSegment> route;// = new List<RoadSegment>();
 
         static Random rnd = new Random();
 
 
         /// Temp
         public List<RoadSegment> segments;
+        public List<List<RoadSegment>> routes = new List<List<RoadSegment>>();
         List<AStar> astars;
         #endregion
 
@@ -46,6 +47,7 @@ namespace SimTMDG.Vehicle
             for(int i=0; i<_endSegments.Count; i++)
             {
                 astars.Add(new AStar(segments, startSegment, endSegments[i]));
+                routes.Add(generatePath(astars[i], startSegment, endSegments[i]));
 
                 List<RoadSegment> test = new List<RoadSegment>(astars[i].costSoFar.Keys);
                 foreach (RoadSegment segment in test)
@@ -59,6 +61,23 @@ namespace SimTMDG.Vehicle
         }
         #endregion
 
+        public List<RoadSegment> generatePath(AStar astar, RoadSegment start, RoadSegment end)
+        {
+            List<RoadSegment> toReturn = new List<RoadSegment>();
+            RoadSegment current = end;
+            toReturn.Add(current);
+
+            while (current != start)
+            {
+                astar.cameFrom.TryGetValue(current, out current);
+                toReturn.Add(current);
+            }
+
+            toReturn.Reverse();
+
+
+            return toReturn;
+        }
 
 
 
@@ -124,9 +143,9 @@ namespace SimTMDG.Vehicle
 
                             //success = true;
 
-                            //route = new List<RoadSegment>(astars[destination].costSoFar.Keys);
-                            route = findRoute(this.startSegment, this.endSegments[destination]);
-                            vehGenerate(laneIdxList[i]);
+                            //route = routes[destination];
+                            //route = findRoute(this.startSegment, this.endSegments[destination]);
+                            vehGenerate(laneIdxList[i], destination);
                             toReturn = 1;
                             return toReturn;
                             //break;
@@ -140,7 +159,7 @@ namespace SimTMDG.Vehicle
         }
 
 
-        void vehGenerate(int laneidx)
+        void vehGenerate(int laneidx, int destination)
         {
             /// Generate Vehicle
             int vehType = rnd.Next(0, 2);
@@ -148,15 +167,15 @@ namespace SimTMDG.Vehicle
 
             if (vehType == 0)
             {
-                v = new Car(startSegment, laneidx, route);
+                v = new Car(startSegment, laneidx, routes[destination]);
             }
             else if (vehType == 1)
             {
-                v = new Bus(startSegment, laneidx, route);
+                v = new Bus(startSegment, laneidx, routes[destination]);
             }
             else
             {
-                v = new Truck(startSegment, laneidx, route);
+                v = new Truck(startSegment, laneidx, routes[destination]);
             }
 
 

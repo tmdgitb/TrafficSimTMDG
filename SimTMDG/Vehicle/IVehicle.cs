@@ -505,7 +505,14 @@ namespace SimTMDG.Vehicle
             if (leadVd != null && leadVd.distance < lookaheadDistance)
             {
                 lookaheadDistance = leadVd.distance;
-                lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity - leadVd.vehicle._physics.velocity);
+
+                if (leadVd.vehicle != null)
+                {
+                    lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity - leadVd.vehicle._physics.velocity);
+                }else
+                {
+                    lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
+                }
             }
             else
             {
@@ -772,18 +779,27 @@ namespace SimTMDG.Vehicle
                 {
                     for (int i=1; i < route.Count; i++)
                     {
-                        if (route[i].lanes[state.laneIdx + direction].vehicles.Count > 0)
+                        if (route[i].lanes.Count - 1 >= state.laneIdx)
                         {
-                            double returnDistance = (route[i].lanes[state.laneIdx + direction].vehicles[0].distance 
-                                - route[i].lanes[state.laneIdx + direction].vehicles[0].length / 2) + (searchedDistance);
+                            if (route[i].lanes[state.laneIdx + direction].vehicles.Count > 0)
+                            {
+                                double returnDistance = (route[i].lanes[state.laneIdx + direction].vehicles[0].distance
+                                    - route[i].lanes[state.laneIdx + direction].vehicles[0].length / 2) + (searchedDistance);
 
-                            vd = new VehicleDistance(route[i].lanes[state.laneIdx + direction].vehicles[0], returnDistance);
-                            break;
+                                vd = new VehicleDistance(route[i].lanes[state.laneIdx + direction].vehicles[0], returnDistance);
+                                break;
+                            }
+                            else
+                            {
+                                searchedDistance += route[i].Length;
+                            }
                         }
                         else
                         {
-                            searchedDistance += route[i].Length;
+                            vd = new VehicleDistance(null, searchedDistance);
+                            break;
                         }
+                        
                     }
                 }
             }
