@@ -14,6 +14,9 @@ namespace SimTMDG.Road
     [XmlRoot("SegmentLaneOSM"), XmlType("SegmentLaneOSM")]
     public class SegmentLane : ITickable
     {
+        // Temp
+        public Color debugColor = Color.DarkGray;
+
         #region lane properties
         #region ID
         /// <summary>
@@ -278,7 +281,7 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(Color.DarkGray, 1);
+            Pen pen = new Pen(debugColor, 1);
 
             //if (LaneIdx % 2 == 0)
             //{

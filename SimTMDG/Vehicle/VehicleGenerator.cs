@@ -46,13 +46,18 @@ namespace SimTMDG.Vehicle
             astars = new List<AStar>();
             for(int i=0; i<_endSegments.Count; i++)
             {
-                astars.Add(new AStar(segments, startSegment, endSegments[i]));
-                routes.Add(generatePath(astars[i], startSegment, endSegments[i]));
-
-                List<RoadSegment> test = new List<RoadSegment>(astars[i].costSoFar.Keys);
-                foreach (RoadSegment segment in test)
+                AStar newAStar = new AStar(segments, startSegment, endSegments[i]);
+                List<RoadSegment> newRoute = generatePath(newAStar, startSegment, endSegments[i]);
+                
+                astars.Add(newAStar);
+                routes.Add(newRoute);
+                                
+                foreach (RoadSegment segment in newRoute)
                 {
-                    segment.debugColor = System.Drawing.Color.Red;
+                    for (int j=0; j < segment.lanes.Count; j++)
+                    {
+                        segment.lanes[j].debugColor = System.Drawing.Color.Red;
+                    }
                 }
             }
 
@@ -69,7 +74,10 @@ namespace SimTMDG.Vehicle
 
             while (current != start)
             {
-                astar.cameFrom.TryGetValue(current, out current);
+                RoadSegment value;
+                astar.cameFrom.TryGetValue(current, out value);
+
+                current = value;
                 toReturn.Add(current);
             }
 

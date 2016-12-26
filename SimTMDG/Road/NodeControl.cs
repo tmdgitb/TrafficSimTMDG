@@ -448,20 +448,20 @@ namespace SimTMDG.Road
             List<double> origin_3__q_outs = new List<double>();
 
 
-            origin_1__destinations.Add(segments.Find(x => x.Id == 430));
-            origin_1__destinations.Add(segments.Find(x => x.Id == 28600));
+            //origin_1__destinations.Add(segments.Find(x => x.Id == 9515));
+            //origin_1__destinations.Add(segments.Find(x => x.Id == 28753));
 
-            origin_1__q_outs.Add(0.3);
-            origin_1__q_outs.Add(0.7);
+            //origin_1__q_outs.Add(0.3);
+            //origin_1__q_outs.Add(0.7);
 
-            vehGen1 = new VehicleGenerator(segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
-            vehGen1.segments = segments;
+            //vehGen1 = new VehicleGenerator(segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
+            //vehGen1.segments = segments;
 
 
-            //origin_2__destinations.Add(segments.Find(x => x.Id == 25176));
+            //origin_2__destinations.Add(segments.Find(x => x.Id == 35115));
             //origin_2__q_outs.Add(1);
 
-            //vehGen2 = new VehicleGenerator(segments.Find(x => x.Id == 591), .3, origin_2__destinations, origin_2__q_outs);
+            //vehGen2 = new VehicleGenerator(segments.Find(x => x.Id == 27692), .3, origin_2__destinations, origin_2__q_outs);
             //vehGen2.segments = segments;
 
 
@@ -471,7 +471,7 @@ namespace SimTMDG.Road
             //vehGen3 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .7, origin_3__destinations, origin_3__q_outs);
             //vehGen3.segments = segments;
 
-            vehGenerators.Add(vehGen1);
+            //vehGenerators.Add(vehGen1);
             //vehGenerators.Add(vehGen2);
             //vehGenerators.Add(vehGen3);
         }

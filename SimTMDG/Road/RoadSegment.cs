@@ -20,7 +20,7 @@ namespace SimTMDG.Road
 
         #region TEMP
         public Vector2 MidCoord = new Vector2();
-        public Color debugColor = Color.White;
+        //public Color debugColor = Color.White;
         #endregion
 
         #region ID
@@ -267,7 +267,7 @@ namespace SimTMDG.Road
         #region draw
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(debugColor, 1);
+            //Pen pen = new Pen(debugColor, 1);
 
             //if (OneWay == "yes")
             //{
@@ -295,7 +295,7 @@ namespace SimTMDG.Road
                 lane.Draw(g);
             }
 
-            g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
+            //g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
 
             Font debugFont = new Font("Calibri", 3);
             Brush blackBrush = new SolidBrush(Color.Black);

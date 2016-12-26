@@ -1688,6 +1688,92 @@ namespace SimTMDG
 
             //_route[0].vehicles[2].distance = 0;
         }
+
+        #region AStar Testing Temp
+        private void btnAstar_Click(object sender, EventArgs e)
+        {
+            List<List<RoadSegment>> routes = new List<List<RoadSegment>>();
+            RoadSegment startSegment, endSegment;
+
+            startSegment = nc.segments.Find(x => x.Id == Int32.Parse(textBox1.Text));
+            endSegment = nc.segments.Find(x => x.Id == Int32.Parse(textBox2.Text));
+
+            if ((startSegment != null) && (endSegment != null))
+            {
+                AStar newAStar = new AStar(nc.segments, startSegment, endSegment);
+
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> newRoute = generatePath(newAStar, startSegment, endSegment);
+
+                    foreach (RoadSegment segment in nc.segments)
+                    {
+                        for (int j = 0; j < segment.lanes.Count; j++)
+                        {
+                            segment.lanes[j].debugColor = Color.DarkGray;
+                        }
+                    }
+
+                    foreach (RoadSegment segment in newRoute)
+                    {
+                        for (int j = 0; j < segment.lanes.Count; j++)
+                        {
+                            segment.lanes[j].debugColor = Color.Red;
+                        }
+                    }
+
+                    Invalidate(InvalidationLevel.ONLY_MAIN_CANVAS);
+
+                    astarStatus.Text = "The path is found";
+                }
+                else
+                {
+                    astarStatus.Text = "The path is not found";
+                }
+                
+            }else if (startSegment == null)
+            {
+                astarStatus.Text = "Start Segment is not found";
+            }
+            else if (endSegment == null)
+            {
+                astarStatus.Text = "End Segment is not found";
+            }else
+            {
+                astarStatus.Text = "Start & End Segment is not found";
+            }
+
+
+
+        }
+
+        public List<RoadSegment> generatePath(AStar astar, RoadSegment start, RoadSegment end)
+        {
+            List<RoadSegment> toReturn = new List<RoadSegment>();
+            RoadSegment current = end;
+            toReturn.Add(current);
+
+            while (current != start)
+            {
+                RoadSegment value;
+                astar.cameFrom.TryGetValue(current, out value);
+
+                current = value;
+                toReturn.Add(current);
+            }
+
+            toReturn.Reverse();
+
+
+            return toReturn;
+        }
+
+
+        #endregion
+
+
+
+
         #endregion
 
         //    private void generateVehicles()

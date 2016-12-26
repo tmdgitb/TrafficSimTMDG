@@ -41,8 +41,17 @@ namespace SimTMDG
             this.DaGrid = new SimTMDG.MainForm.CustUserControl();
             this.buttonTLightTemp = new System.Windows.Forms.Button();
             this.timerSimulation = new System.Windows.Forms.Timer(this.components);
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnAstar = new System.Windows.Forms.Button();
+            this.astarStatus = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -52,7 +61,7 @@ namespace SimTMDG
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.DaGrid, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.buttonTLightTemp, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -181,9 +190,9 @@ namespace SimTMDG
             // 
             // buttonTLightTemp
             // 
-            this.buttonTLightTemp.Location = new System.Drawing.Point(3, 39);
+            this.buttonTLightTemp.Location = new System.Drawing.Point(3, 3);
             this.buttonTLightTemp.Name = "buttonTLightTemp";
-            this.buttonTLightTemp.Size = new System.Drawing.Size(214, 23);
+            this.buttonTLightTemp.Size = new System.Drawing.Size(211, 23);
             this.buttonTLightTemp.TabIndex = 4;
             this.buttonTLightTemp.Text = "Change Traffic Light";
             this.buttonTLightTemp.UseVisualStyleBackColor = true;
@@ -193,6 +202,80 @@ namespace SimTMDG
             // 
             this.timerSimulation.Interval = 67;
             this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.buttonTLightTemp);
+            this.flowLayoutPanel2.Controls.Add(this.label1);
+            this.flowLayoutPanel2.Controls.Add(this.label2);
+            this.flowLayoutPanel2.Controls.Add(this.textBox1);
+            this.flowLayoutPanel2.Controls.Add(this.label3);
+            this.flowLayoutPanel2.Controls.Add(this.textBox2);
+            this.flowLayoutPanel2.Controls.Add(this.btnAstar);
+            this.flowLayoutPanel2.Controls.Add(this.astarStatus);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 39);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(214, 530);
+            this.flowLayoutPanel2.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 59);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 30, 3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(211, 23);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "PathFinding Test";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(3, 82);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 23);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "From";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(109, 85);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 7;
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(3, 108);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 23);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "To";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(109, 111);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 9;
+            // 
+            // btnAstar
+            // 
+            this.btnAstar.Location = new System.Drawing.Point(3, 137);
+            this.btnAstar.Name = "btnAstar";
+            this.btnAstar.Size = new System.Drawing.Size(206, 23);
+            this.btnAstar.TabIndex = 10;
+            this.btnAstar.Text = "Find Path";
+            this.btnAstar.UseVisualStyleBackColor = true;
+            this.btnAstar.Click += new System.EventHandler(this.btnAstar_Click);
+            // 
+            // astarStatus
+            // 
+            this.astarStatus.Location = new System.Drawing.Point(3, 163);
+            this.astarStatus.Name = "astarStatus";
+            this.astarStatus.Size = new System.Drawing.Size(206, 77);
+            this.astarStatus.TabIndex = 11;
+            this.astarStatus.Text = "status";
             // 
             // Main
             // 
@@ -204,6 +287,8 @@ namespace SimTMDG
             this.Text = "SimTMDG";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -219,6 +304,14 @@ namespace SimTMDG
         private MainForm.CustUserControl DaGrid;
         private System.Windows.Forms.Button tempLoadButton;
         private System.Windows.Forms.Button buttonTLightTemp;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button btnAstar;
+        private System.Windows.Forms.Label astarStatus;
     }
 }
 

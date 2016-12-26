@@ -62,6 +62,8 @@ namespace SimTMDG.Tools
         public Dictionary<RoadSegment, double> costSoFar
             = new Dictionary<RoadSegment, double>();
 
+        public Boolean goalIsFound = false;
+
         // Note: a generic version of A* would abstract over Location and
         // also Heuristic
         static public double Heuristic(RoadSegment a, RoadSegment b)
@@ -83,6 +85,7 @@ namespace SimTMDG.Tools
 
                 if (current.Equals(goal))
                 {
+                    goalIsFound = true;
                     break;
                 }
 
