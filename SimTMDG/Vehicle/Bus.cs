@@ -32,6 +32,11 @@ namespace SimTMDG.Vehicle
             _state.currentSegment = cs;
             _state.laneIdx = laneIndex;
 
+            a *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            b *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            T *= (GlobalRandom.Instance.NextDouble() + 0.25);
+
             length = (GlobalRandom.Instance.Next(2) == 0) ? 12 : 14;
 
             color = Color.FromArgb(GlobalRandom.Instance.Next(64, 200), GlobalRandom.Instance.Next(64, 200), GlobalRandom.Instance.Next(64, 200));

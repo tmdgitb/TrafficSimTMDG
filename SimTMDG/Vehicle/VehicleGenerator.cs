@@ -37,29 +37,33 @@ namespace SimTMDG.Vehicle
 
         }
 
-        public VehicleGenerator(RoadSegment _startSegment, double _q_in, List<RoadSegment> _endSegments, List<double> _q_outs)
+        public VehicleGenerator(List<RoadSegment> _segments, RoadSegment _startSegment, double _q_in, List<RoadSegment> _endSegments, List<double> _q_outs)
         {
             this.q_in = _q_in;
+            this.segments = _segments;
             this.startSegment = _startSegment;
             this.endSegments = _endSegments;
 
-            astars = new List<AStar>();
-            for(int i=0; i<_endSegments.Count; i++)
+            //astars = new List<AStar>();
+            for (int i = 0; i < _endSegments.Count; i++)
             {
-                AStar newAStar = new AStar(segments, startSegment, endSegments[i]);
-                List<RoadSegment> newRoute = generatePath(newAStar, startSegment, endSegments[i]);
-                
-                astars.Add(newAStar);
-                routes.Add(newRoute);
-                                
-                foreach (RoadSegment segment in newRoute)
-                {
-                    for (int j=0; j < segment.lanes.Count; j++)
-                    {
-                        segment.lanes[j].debugColor = System.Drawing.Color.Red;
-                    }
-                }
+                //    AStar newAStar = new AStar(segments, startSegment, endSegments[i]);
+                //    List<RoadSegment> newRoute = generatePath(newAStar, startSegment, endSegments[i]);
+
+                //    astars.Add(newAStar);
+                //    routes.Add(newRoute);
+
+                //    foreach (RoadSegment segment in newRoute)
+                //    {
+                //        for (int j=0; j < segment.lanes.Count; j++)
+                //        {
+                //            segment.lanes[j].debugColor = System.Drawing.Color.Red;
+                //        }
+                //    }
+
+                routes.Add(findRoute(startSegment, endSegments[i]));
             }
+
 
             this.q_outs = _q_outs;
 
@@ -201,82 +205,92 @@ namespace SimTMDG.Vehicle
         {
             List<RoadSegment> toReturn = new List<RoadSegment>();
 
-            /// Manual Route
-            /// Route 1: Pasteur
-            if ((start.Id == 2908) && (end.Id == 430))
+            #region manual route
+            ///// Manual Route
+            ///// Route 1: Pasteur
+            //if ((start.Id == 2908) && (end.Id == 430))
+            //{
+            //    for (int i = 2908; i < 2926; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+
+            //    toReturn.Add(segments.Find(x => x.Id == 421));
+
+            //    for (int i = 28456; i < 28469; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+
+            //    for (int i = 422; i < 431; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+            //}
+            //else if ((start.Id == 2908) && (end.Id == 28600))
+            //{
+            //    for (int i = 2908; i < 2926; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+
+            //    toReturn.Add(segments.Find(x => x.Id == 26040));
+            //    toReturn.Add(segments.Find(x => x.Id == 34069));
+
+            //    for (int i = 28587; i < 28601; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+            //}
+            //else if ((start.Id == 591) && (end.Id == 25176))
+            //{
+            //    for (int i = 591; i < 607; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+
+            //    for (int i = 8986; i < 8997; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+
+            //    for (int i = 28584; i < 28587; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+
+            //    for (int i = 25153; i < 25177; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+            //}
+            //else if ((start.Id == 28483) && (end.Id == 25176))
+            //{
+            //    for (int i = 28483; i < 28493; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+
+            //    toReturn.Add(segments.Find(x => x.Id == 28455));
+            //    toReturn.Add(segments.Find(x => x.Id == 28583));
+            //    toReturn.Add(segments.Find(x => x.Id == 26062));
+
+            //    for (int i = 25153; i < 25177; i++)
+            //    {
+            //        toReturn.Add(segments.Find(x => x.Id == i));
+            //    }
+            //}
+            #endregion
+
+            #region AStar route
+            AStar newAStar = new AStar(this.segments, start, end);
+            if (newAStar.goalIsFound)
             {
-                for (int i = 2908; i < 2926; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                toReturn.Add(segments.Find(x => x.Id == 421));
-
-                for (int i = 28456; i < 28469; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                for (int i = 422; i < 431; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-            }
-            else if ((start.Id == 2908) && (end.Id == 28600))
-            {
-                for (int i = 2908; i < 2926; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                toReturn.Add(segments.Find(x => x.Id == 26040));
-                toReturn.Add(segments.Find(x => x.Id == 34069));
-
-                for (int i = 28587; i < 28601; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-            }
-            else if ((start.Id == 591) && (end.Id == 25176))
-            {
-                for (int i = 591; i < 607; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                for (int i = 8986; i < 8997; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                for (int i = 28584; i < 28587; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                for (int i = 25153; i < 25177; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-            }
-            else if ((start.Id == 28483) && (end.Id == 25176))
-            {
-                for (int i = 28483; i < 28493; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                toReturn.Add(segments.Find(x => x.Id == 28455));
-                toReturn.Add(segments.Find(x => x.Id == 28583));
-                toReturn.Add(segments.Find(x => x.Id == 26062));
-
-                for (int i = 25153; i < 25177; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
+                toReturn = generatePath(newAStar, start, end);
             }
 
-            //List<RoadSegment> toReturn = AStar astar = 
+            #endregion
+
             return toReturn;
         }
         #endregion
