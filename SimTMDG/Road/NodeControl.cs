@@ -432,7 +432,11 @@ namespace SimTMDG.Road
             segments.Find(x => x.Id == 28583).endNode.tLight = new TrafficLight();
             segments.Find(x => x.Id == 28586).startNode.tLight = new TrafficLight();
             segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
-
+            //RSHS
+            segments.Find(x => x.Id == 28606).endNode.tLight = new TrafficLight();
+            segments.Find(x => x.Id == 28606).startNode.tLight.SwitchToGreen();
+            segments.Find(x => x.Id == 28611).startNode.tLight = new TrafficLight();
+            segments.Find(x => x.Id == 28611).startNode.tLight.SwitchToGreen();
 
             segments.Find(x => x.Id == 2919).TargetSpeed = 4;
             segments.Find(x => x.Id == 25163).TargetSpeed = 5;
@@ -464,7 +468,7 @@ namespace SimTMDG.Road
             origin_1__q_outs.Add(0.3);
             origin_1__q_outs.Add(0.7);
 
-            vehGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
+            vehGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
             //vehGen1 = new VehicleGenerator(segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
             //vehGen1.segments = segments;
 
@@ -477,7 +481,7 @@ namespace SimTMDG.Road
             origin_2__q_outs.Add(.3);
             origin_2__q_outs.Add(.3);
 
-            vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1), .3, origin_2__destinations, origin_2__q_outs);
+            vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1), .3, origin_2__destinations, origin_2__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
             //vehGen2 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .3, origin_2__destinations, origin_2__q_outs);
             //vehGen2.segments = segments;
 
@@ -494,7 +498,7 @@ namespace SimTMDG.Road
             origin_3__q_outs.Add(.5);
             origin_3__q_outs.Add(.5);
 
-            vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs);
+            vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
 
 
             origin_4__destinations.Add(segments.Find(x => x.Id == 245));
@@ -503,7 +507,7 @@ namespace SimTMDG.Road
             origin_4__q_outs.Add(.5);
             origin_4__q_outs.Add(.5);
 
-            vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs);
+            vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
 
 
             //origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
@@ -512,7 +516,7 @@ namespace SimTMDG.Road
             //origin_5__q_outs.Add(.5);
             origin_5__q_outs.Add(1);
 
-            vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
+            vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
 
 
             origin_6__destinations.Add(segments.Find(x => x.Id == 33630));
@@ -521,7 +525,7 @@ namespace SimTMDG.Road
             origin_6__q_outs.Add(.5);
             origin_6__q_outs.Add(.5);
 
-            vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs);
+            vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
 
 
             vehGenerators.Add(vehGen1);
