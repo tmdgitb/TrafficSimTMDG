@@ -100,7 +100,7 @@ namespace SimTMDG.Vehicle
         /// Then we generate 1 vehicle every tick IF ONLY we have 1 or more inVehBuffer
         /// With this we generate a vehicle every 2 tick or 2 vehicles every 4 tick, with tickLength 0.25s it means 2 veh / s
         /// </summary>
-        public int generate(double tickLength)
+        public int generate(double tickLength, NodeControl nc)
         {
             int toReturn = 0;
             int destination = 0;
@@ -157,7 +157,7 @@ namespace SimTMDG.Vehicle
 
                             //route = routes[destination];
                             //route = findRoute(this.startSegment, this.endSegments[destination]);
-                            vehGenerate(laneIdxList[i], destination);
+                            vehGenerate(laneIdxList[i], destination, nc);
                             toReturn = 1;
                             return toReturn;
                             //break;
@@ -171,23 +171,37 @@ namespace SimTMDG.Vehicle
         }
 
 
-        void vehGenerate(int laneidx, int destination)
+        void vehGenerate(int laneidx, int destination, NodeControl nc)
         {
-            /// Generate Vehicle
-            int vehType = rnd.Next(0, 2);
             IVehicle v = null;
+            if ((nc.ActiveVehicles > 30) && (nc.unusedVehicles.Count > 0))
+            {
+                v = nc.unusedVehicles[0];
+                nc.unusedVehicles.RemoveAt(0);
 
-            if (vehType == 0)
-            {
-                v = new Car(startSegment, laneidx, routes[destination]);
-            }
-            else if (vehType == 1)
-            {
-                v = new Bus(startSegment, laneidx, routes[destination]);
+                v._state.currentSegment = startSegment;
+                v._state.laneIdx = laneidx;
+                v.Routing.Route.Clear();
+                v.Routing.PushAll(routes[destination]);               
+
             }
             else
             {
-                v = new Truck(startSegment, laneidx, routes[destination]);
+                /// Generate Vehicle
+                int vehType = rnd.Next(0, 2);
+
+                if (vehType == 0)
+                {
+                    v = new Car(startSegment, laneidx, routes[destination]);
+                }
+                else if (vehType == 1)
+                {
+                    v = new Bus(startSegment, laneidx, routes[destination]);
+                }
+                else
+                {
+                    v = new Truck(startSegment, laneidx, routes[destination]);
+                }
             }
 
 

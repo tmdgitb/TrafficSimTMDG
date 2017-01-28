@@ -53,6 +53,14 @@ namespace SimTMDG.Road
             costs += ws.Length; // TODO use length as cost for now
         }
 
+        public void PushAll(List<RoadSegment> route)
+        {
+            for (int i = 0; i < route.Count; i++)
+            {
+                Push(route[i]);
+            }
+        }
+
         public IEnumerator<RoadSegment> GetEnumerator()
         {
             return Route.GetEnumerator();

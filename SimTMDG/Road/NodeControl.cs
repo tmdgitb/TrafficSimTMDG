@@ -18,6 +18,7 @@ namespace SimTMDG.Road
         public List<Node> _nodes = new List<Node>();
         public List<RoadSegment> segments = new List<RoadSegment>();
         private List<VehicleGenerator> vehGenerators = new List<VehicleGenerator>();
+        public List<IVehicle> unusedVehicles = new List<IVehicle>();
         public int ActiveVehicles = 0;
 
         internal List<RoadSegment> Segments
@@ -183,7 +184,7 @@ namespace SimTMDG.Road
             //generateVehicles();
             foreach(VehicleGenerator vehGen in vehGenerators)
             {
-                ActiveVehicles += vehGen.generate(tickLength);
+                ActiveVehicles += vehGen.generate(tickLength, this);
             }
 
             //foreach (WaySegment ws in Segments)
@@ -505,11 +506,11 @@ namespace SimTMDG.Road
             vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs);
 
 
-            origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
+            //origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
             origin_5__destinations.Add(segments.Find(x => x.Id == 33238));
 
-            origin_5__q_outs.Add(.5);
-            origin_5__q_outs.Add(.5);
+            //origin_5__q_outs.Add(.5);
+            origin_5__q_outs.Add(1);
 
             vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
 
@@ -527,7 +528,7 @@ namespace SimTMDG.Road
             vehGenerators.Add(vehGen2);
             vehGenerators.Add(vehGen3);
             vehGenerators.Add(vehGen4);
-            //vehGenerators.Add(vehGen5);
+            vehGenerators.Add(vehGen5);
             vehGenerators.Add(vehGen6);
         }
 

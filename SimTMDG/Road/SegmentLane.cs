@@ -161,12 +161,14 @@ namespace SimTMDG.Road
                 if (v.Routing.Route.Count == 0)
                 {
                     nc.ActiveVehicles--;
+                    nc.unusedVehicles.Add(v);
                 }
 
                 vehicles.Remove(v);
             }
 
-            vehToRemove.Clear();
+            //nc.ActiveVehicles = nc.ActiveVehicles - vehToRemove.Count;
+            //vehToRemove.Clear();
         }
 
         #endregion
