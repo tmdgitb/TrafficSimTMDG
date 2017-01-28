@@ -82,15 +82,24 @@ namespace SimTMDG.Vehicle
             _state.laneIdx = laneIndex;
             color = c;
             Routing = new Routing();
-            for(int i = 0; i < r.Count; i++)
-            {
-                Routing.Push(r[i]);
-            }
+            Routing.PushAll(r);
 
             Random rnd = new Random();
             _physics = new IVehicle.Physics(14, 14, 0); //( rnd.Next(7, 14), 14, 0);
 
             dumb = false;
+
+            newCoord();
+            RotateVehicle(currentSegment.startNode, currentSegment.endNode);
+        }
+
+        public void Reuse(RoadSegment cs, int laneIndex, List<RoadSegment> r)
+        {
+            distance = 0;
+            _state.currentSegment = cs;
+            _state.laneIdx = laneIndex;
+            Routing.Route.Clear();
+            Routing.PushAll(r);
 
             newCoord();
             RotateVehicle(currentSegment.startNode, currentSegment.endNode);

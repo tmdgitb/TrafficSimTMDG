@@ -168,7 +168,7 @@ namespace SimTMDG.Road
             }
 
             //nc.ActiveVehicles = nc.ActiveVehicles - vehToRemove.Count;
-            //vehToRemove.Clear();
+            vehToRemove.Clear();
         }
 
         #endregion

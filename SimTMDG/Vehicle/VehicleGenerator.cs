@@ -179,10 +179,9 @@ namespace SimTMDG.Vehicle
                 v = nc.unusedVehicles[0];
                 nc.unusedVehicles.RemoveAt(0);
 
-                v._state.currentSegment = startSegment;
-                v._state.laneIdx = laneidx;
-                v.Routing.Route.Clear();
-                v.Routing.PushAll(routes[destination]);               
+                v.Reuse(startSegment, laneidx, routes[destination]);
+
+                v.color = System.Drawing.Color.Pink;
 
             }
             else

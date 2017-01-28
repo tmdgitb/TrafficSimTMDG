@@ -515,7 +515,7 @@ namespace SimTMDG.Road
             vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
 
 
-            origin_6__destinations.Add(segments.Find(x => x.Id == 7439));
+            origin_6__destinations.Add(segments.Find(x => x.Id == 33630));
             origin_6__destinations.Add(segments.Find(x => x.Id == 22168));
 
             origin_6__q_outs.Add(.5);
