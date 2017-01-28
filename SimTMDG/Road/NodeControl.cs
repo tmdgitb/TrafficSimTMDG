@@ -442,26 +442,9 @@ namespace SimTMDG.Road
             segments.Find(x => x.Id == 25163).TargetSpeed = 5;
 
 
-
+            #region VehGen 1: #2908
             List<RoadSegment> origin_1__destinations = new List<RoadSegment>();
             List<double> origin_1__q_outs = new List<double>();
-
-            List<RoadSegment> origin_2__destinations = new List<RoadSegment>();
-            List<double> origin_2__q_outs = new List<double>();
-
-            List<RoadSegment> origin_3__destinations = new List<RoadSegment>();
-            List<double> origin_3__q_outs = new List<double>();
-
-            List<RoadSegment> origin_4__destinations = new List<RoadSegment>();
-            List<double> origin_4__q_outs = new List<double>();
-
-            List<RoadSegment> origin_5__destinations = new List<RoadSegment>();
-            List<double> origin_5__q_outs = new List<double>();
-
-            List<RoadSegment> origin_6__destinations = new List<RoadSegment>();
-            List<double> origin_6__q_outs = new List<double>();
-
-
             origin_1__destinations.Add(segments.Find(x => x.Id == 430));        // 430));
             origin_1__destinations.Add(segments.Find(x => x.Id == 28735));      // 28598));
 
@@ -469,9 +452,15 @@ namespace SimTMDG.Road
             origin_1__q_outs.Add(0.7);
 
             vehGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
-            //vehGen1 = new VehicleGenerator(segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
-            //vehGen1.segments = segments;
 
+
+            vehGenerators.Add(vehGen1); 
+            #endregion
+
+
+            #region VehGen 2: #1
+            List<RoadSegment> origin_2__destinations = new List<RoadSegment>();
+            List<double> origin_2__q_outs = new List<double>();
 
             origin_2__destinations.Add(segments.Find(x => x.Id == 25176));
             origin_2__destinations.Add(segments.Find(x => x.Id == 266));
@@ -482,15 +471,15 @@ namespace SimTMDG.Road
             origin_2__q_outs.Add(.3);
 
             vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1), .3, origin_2__destinations, origin_2__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
-            //vehGen2 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .3, origin_2__destinations, origin_2__q_outs);
-            //vehGen2.segments = segments;
 
 
-            //origin_3__destinations.Add(segments.Find(x => x.Id == 25176));
-            //origin_3__q_outs.Add(1);
+            vehGenerators.Add(vehGen2);
+            #endregion
 
-            //vehGen3 = new VehicleGenerator(segments.Find(x => x.Id == 28483), .7, origin_3__destinations, origin_3__q_outs);
-            //vehGen3.segments = segments;
+
+            #region VehGen 3: #29103
+            List<RoadSegment> origin_3__destinations = new List<RoadSegment>();
+            List<double> origin_3__q_outs = new List<double>();
 
             origin_3__destinations.Add(segments.Find(x => x.Id == 988));
             origin_3__destinations.Add(segments.Find(x => x.Id == 8818));
@@ -499,7 +488,15 @@ namespace SimTMDG.Road
             origin_3__q_outs.Add(.5);
 
             vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
+            
+            
+            vehGenerators.Add(vehGen3);
+            #endregion
 
+
+            #region VehGen 4: #20390
+            List<RoadSegment> origin_4__destinations = new List<RoadSegment>();
+            List<double> origin_4__q_outs = new List<double>();
 
             origin_4__destinations.Add(segments.Find(x => x.Id == 245));
             origin_4__destinations.Add(segments.Find(x => x.Id == 30022));
@@ -510,6 +507,14 @@ namespace SimTMDG.Road
             vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
 
 
+            vehGenerators.Add(vehGen4);
+            #endregion
+
+
+            #region VehGen 5: #23059
+            List<RoadSegment> origin_5__destinations = new List<RoadSegment>();
+            List<double> origin_5__q_outs = new List<double>();
+
             //origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
             origin_5__destinations.Add(segments.Find(x => x.Id == 33238));
 
@@ -518,6 +523,14 @@ namespace SimTMDG.Road
 
             vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
 
+
+            vehGenerators.Add(vehGen5);
+            #endregion
+
+
+            #region VehGen 6: #286
+            List<RoadSegment> origin_6__destinations = new List<RoadSegment>();
+            List<double> origin_6__q_outs = new List<double>();
 
             origin_6__destinations.Add(segments.Find(x => x.Id == 33630));
             origin_6__destinations.Add(segments.Find(x => x.Id == 22168));
@@ -528,12 +541,71 @@ namespace SimTMDG.Road
             vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs, VehicleGenerator.VehRouteType.DEFAULT);
 
 
-            vehGenerators.Add(vehGen1);
-            vehGenerators.Add(vehGen2);
-            vehGenerators.Add(vehGen3);
-            vehGenerators.Add(vehGen4);
-            vehGenerators.Add(vehGen5);
             vehGenerators.Add(vehGen6);
+            #endregion
+
+
+            #region Angkot 1: Cibaduyut - Kr Setra 529 22825
+            List<RoadSegment> origin_7__destinations = new List<RoadSegment>();
+            List<double> origin_7__q_outs = new List<double>();
+
+            origin_7__destinations.Add(segments.Find(x => x.Id == 529));
+            origin_7__q_outs.Add(1);
+            anGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 22825), 0.8, origin_7__destinations, origin_7__q_outs, VehicleGenerator.VehRouteType.FIXED);
+
+
+            vehGenerators.Add(anGen1);
+            #endregion
+
+            #region Angkot Cicaheum Ledeng
+            List<RoadSegment> origin_8__destinations = new List<RoadSegment>();
+            List<double> origin_8__q_outs = new List<double>();
+
+            origin_8__destinations.Add(segments.Find(x => x.Id == 33168));
+            origin_8__q_outs.Add(1);
+            anGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 27149), 0.8, origin_8__destinations, origin_8__q_outs, VehicleGenerator.VehRouteType.FIXED);
+
+
+            vehGenerators.Add(anGen2);
+            #endregion
+
+            #region Angkot Kelapa - Dago
+            List<RoadSegment> origin_9__destinations = new List<RoadSegment>();
+            List<double> origin_9__q_outs = new List<double>();
+
+            origin_9__destinations.Add(segments.Find(x => x.Id == 28803));
+            origin_9__q_outs.Add(1);
+            anGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 19683), 0.8, origin_9__destinations, origin_9__q_outs, VehicleGenerator.VehRouteType.FIXED);
+
+
+            vehGenerators.Add(anGen3);
+            #endregion
+
+            #region Angkot Stasiun - Dago
+            List<RoadSegment> origin_10__destinations = new List<RoadSegment>();
+            List<double> origin_10__q_outs = new List<double>();
+
+            origin_10__destinations.Add(segments.Find(x => x.Id == 28804));
+            origin_10__q_outs.Add(1);
+            anGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 19684), 0.8, origin_10__destinations, origin_10__q_outs, VehicleGenerator.VehRouteType.FIXED);
+
+
+            vehGenerators.Add(anGen4);
+            #endregion
+
+            #region coba
+            List<RoadSegment> origin_11__destinations = new List<RoadSegment>();
+            List<double> origin_11__q_outs = new List<double>();
+
+            origin_11__destinations.Add(segments.Find(x => x.Id == 1510));
+            origin_11__q_outs.Add(1);
+            anGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1533), 0.8, origin_11__destinations, origin_11__q_outs, VehicleGenerator.VehRouteType.FIXED);
+
+
+            vehGenerators.Add(anGen5);
+            #endregion
+
+
         }
 
         VehicleGenerator vehGen1;
@@ -542,6 +614,11 @@ namespace SimTMDG.Road
         VehicleGenerator vehGen4;
         VehicleGenerator vehGen5;
         VehicleGenerator vehGen6;
+        VehicleGenerator anGen1;
+        VehicleGenerator anGen2;
+        VehicleGenerator anGen3;
+        VehicleGenerator anGen4;
+        VehicleGenerator anGen5;
 
     }    
 }
