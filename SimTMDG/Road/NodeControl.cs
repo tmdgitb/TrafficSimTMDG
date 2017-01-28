@@ -605,7 +605,6 @@ namespace SimTMDG.Road
             vehGenerators.Add(anGen5);
             #endregion
 
-
         }
 
         VehicleGenerator vehGen1;
