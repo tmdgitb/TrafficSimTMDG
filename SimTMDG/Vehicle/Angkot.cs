@@ -28,17 +28,19 @@ namespace SimTMDG.Vehicle
             List<int> R = new List<int>();
             List<int> G = new List<int>();
             List<int> B = new List<int>();
-            R.Add(255); G.Add(0); B.Add(255);// 0
-            R.Add(100); G.Add(149); B.Add(237);//1
-            R.Add(255); G.Add(0); B.Add(0); // 2
-            R.Add(125); G.Add(125); B.Add(0);//3
-            R.Add(50); G.Add(0); B.Add(125);//4
-            R.Add(100); G.Add(100); B.Add(125);//5
-            R.Add(255); G.Add(160); B.Add(122);//6
-            R.Add(255); G.Add(165); B.Add(0);//7
-            R.Add(238); G.Add(232); B.Add(170);//8
-            R.Add(255); G.Add(255); B.Add(0);//9
-            R.Add(173); G.Add(255); B.Add(47);//10
+            R.Add(255); G.Add(0); B.Add(255);// 0 Pink fanta
+            R.Add(100); G.Add(149); B.Add(237);//1 Biru muda
+            R.Add(255); G.Add(0); B.Add(0); // 2 Merah
+            R.Add(125); G.Add(125); B.Add(0);//3 Hijau lumut
+            R.Add(82); G.Add(0); B.Add(204);//4 Ungu
+            R.Add(255); G.Add(128); B.Add(255);//5 Soft Pink 
+            R.Add(255); G.Add(160); B.Add(122);//6 Salem
+            R.Add(153); G.Add(0); B.Add(0);//7 Maroon
+            R.Add(255); G.Add(255); B.Add(0);//8 Kuning
+            R.Add(151); G.Add(75); B.Add(0);//9 Cokelat
+            R.Add(173); G.Add(255); B.Add(47);//10 Hijau pupus
+            R.Add(0); G.Add(128); B.Add(255);//11 Biru jeans
+            R.Add(0); G.Add(0); B.Add(160);//12 Biru Navy
 
             color = Color.FromArgb((R[colorCode]), (G[colorCode]), (B[colorCode]));
 

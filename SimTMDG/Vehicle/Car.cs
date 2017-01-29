@@ -39,8 +39,8 @@ namespace SimTMDG.Vehicle
 
             length = GlobalRandom.Instance.Next(6, 8);
 
-            color = Color.FromArgb(GlobalRandom.Instance.Next(64, 200), GlobalRandom.Instance.Next(64, 200), GlobalRandom.Instance.Next(64, 200));
-
+            //color = Color.FromArgb(GlobalRandom.Instance.Next(64, 200), GlobalRandom.Instance.Next(64, 200), GlobalRandom.Instance.Next(64, 200));
+            color = Color.FromArgb(39, 39,39);
             Routing = new Routing();
             for (int i = 0; i < r.Count; i++)
             {

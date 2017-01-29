@@ -19,7 +19,9 @@ namespace SimTMDG.Vehicle
             LEDENG,
             CIROYOM,
             CIBADUYUT,
-            KR_SETRA
+            KR_SETRA,
+            BUAHBATU,
+            MARGAHAYU
         }
 
         /// <summary>
@@ -61,6 +63,22 @@ namespace SimTMDG.Vehicle
             {
                 startSegment = segments.Find(x => x.Id == 22825);
             }
+            //else if (startPoint == AngkotPoint.KALAPA)
+            //{
+            //    startSegment = segments.Find(x => x.Id == 22825);
+            //}
+            //else if (startPoint == AngkotPoint.CICAHEUM)
+            //{
+            //    startSegment = segments.Find(x => x.Id == 22825);
+            //}
+            //else if (startPoint == AngkotPoint.MARGAHAYU)
+            //{
+            //    startSegment = segments.Find(x => x.Id == 22825);
+            //}
+            //else if (startPoint == AngkotPoint.BUAHBATU)
+            //{
+            //    startSegment = segments.Find(x => x.Id == 22825);
+            //}
 
             this.q_outs = _q_outs;
         }

@@ -553,7 +553,7 @@ namespace SimTMDG.Road
             #endregion
 
 
-            #region Angkot 1: Cibaduyut - Kr Setra 529 22825
+            #region Angkot 1: Cibaduyut - Kr Setra 
             List<AngkotGenerator.AngkotPoint> origin_7__destinations = new List<AngkotGenerator.AngkotPoint>();
             List<double> origin_7__q_outs = new List<double>();
 
@@ -604,6 +604,41 @@ namespace SimTMDG.Road
             angGenerators.Add(anGen4);
             #endregion
 
+            //Angkot Buah Batu Kelapa
+            List<AngkotGenerator.AngkotPoint> origin_11__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_11__q_outs = new List<double>();
+            origin_11__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
+            origin_11__q_outs.Add(1);
+            anGen5 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.BUAHBATU, 0.1, origin_11__destinations, origin_11__q_outs);
+            vehGenerators.Add(anGen5);
+
+            //Angkot Margahayu Ledeng
+            List<AngkotGenerator.AngkotPoint> origin_12__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_12__q_outs = new List<double>();
+            origin_12__destinations.Add(AngkotGenerator.AngkotPoint.MARGAHAYU);
+            origin_12__q_outs.Add(1);
+            anGen6 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_12__destinations, origin_12__q_outs);
+            vehGenerators.Add(anGen6);
+
+            //Angkot Ledeng Kelapa
+            List<AngkotGenerator.AngkotPoint> origin_13__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_13__q_outs = new List<double>();
+            origin_13__destinations.Add(AngkotGenerator.AngkotPoint.LEDENG);
+            origin_13__q_outs.Add(1);
+            anGen7 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KALAPA, 0.1, origin_13__destinations, origin_13__q_outs);
+            vehGenerators.Add(anGen7);
+
+            //Angkot Kelapa Ledeng
+            List<AngkotGenerator.AngkotPoint> origin_14__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_14__q_outs = new List<double>();
+            origin_14__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
+            origin_14__q_outs.Add(1);
+            anGen8 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_14__destinations, origin_14__q_outs);
+            vehGenerators.Add(anGen8);
+
+
+
+
             #region coba
             //List<RoadSegment> origin_11__destinations = new List<RoadSegment>();
             //List<double> origin_11__q_outs = new List<double>();
@@ -628,7 +663,12 @@ namespace SimTMDG.Road
         AngkotGenerator anGen2;
         AngkotGenerator anGen3;
         AngkotGenerator anGen4;
-        //VehicleGenerator anGen5;
+        AngkotGenerator anGen5;
+        AngkotGenerator anGen6;
+        AngkotGenerator anGen7;
+        AngkotGenerator anGen8;
+        AngkotGenerator anGen9;
+        
 
     }    
 }
