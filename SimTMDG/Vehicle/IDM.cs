@@ -86,7 +86,7 @@ namespace SimTMDG.Vehicle
         /// <summary>
         /// Politeness-Faktor von MOBIL
         /// </summary>
-        protected double p = 0.2;
+        protected double p = 0.5;
 
         /// <summary>
         /// Mindest-Vorteilswert für Spurwechsel
@@ -96,7 +96,7 @@ namespace SimTMDG.Vehicle
         /// <summary>
         /// maximale sichere Bremsverzögerung
         /// </summary>
-        protected double bSafe = 3;
+        protected double bSafe = 4;
         //*/
 
         #endregion
