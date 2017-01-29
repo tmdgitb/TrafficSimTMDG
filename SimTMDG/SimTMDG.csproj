@@ -86,6 +86,8 @@
     <Compile Include="Tools\Math2.cs" />
     <Compile Include="Tools\SortedLinkedList.cs" />
     <Compile Include="Tools\Vector2.cs" />
+    <Compile Include="Vehicle\Angkot.cs" />
+    <Compile Include="Vehicle\AngkotGenerator.cs" />
     <Compile Include="Vehicle\Bus.cs" />
     <Compile Include="Vehicle\Car.cs" />
     <Compile Include="Vehicle\IDM.cs" />

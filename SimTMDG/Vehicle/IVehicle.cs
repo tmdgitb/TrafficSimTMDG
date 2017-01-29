@@ -1113,7 +1113,7 @@ namespace SimTMDG.Vehicle
         {
             currentLane().vehToRemove.Add(this);
 
-            if (nextSegment != null)
+            if ((nextSegment != null) && (nextSegment.lanes.Count > state.laneIdx))
             {
                 distance = startPosition;
                 nextSegment.lanes[state.laneIdx].vehicles.Add(this);                
