@@ -108,6 +108,9 @@ namespace SimTMDG.Road
         #endregion
 
         #region vehicles on segment
+        /// <summary>
+        /// Vehicles on this lane segment. It's sorted by their distance to the start point. 0 < n
+        /// </summary>
         public List<IVehicle> vehicles = new List<IVehicle>();
         public List<IVehicle> vehToRemove = new List<IVehicle>();
         #endregion
@@ -175,6 +178,10 @@ namespace SimTMDG.Road
 
 
         #region sort vehicles
+        /// <summary>
+        /// Sorting the vehicles based on their distance to the start point.
+        /// veh[0] = most behind
+        /// </summary>
         public void SortVehicles()
         {
             if (vehicles.Count > 1)

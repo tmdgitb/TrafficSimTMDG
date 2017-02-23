@@ -311,7 +311,7 @@ namespace SimTMDG.Tools
         public static double AngleBetween(Vector2 v1, Vector2 v2)
         {
             //return Math.Acos((v1._x * v2._x + v1._y * v2._y) / (v1.Abs * v2.Abs));
-            return Math.Atan((v2._y - v1._y) / (v2._x - v1._x));
+            return Math.Atan2((v2._y - v1._y) , (v2._x - v1._x));
         }
 
         /// <summary>
@@ -330,6 +330,72 @@ namespace SimTMDG.Tools
         public bool IsNotZeroVector()
         {
             return (_x != 0 || _y != 0);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start">Start point of line 1</param>
+        /// <param name="intersectionPoint">End of line 1 & start of line 2</param>
+        /// <param name="end">End point of line 2</param>
+        /// <returns>den Winkel kleiner pi zwischen v1 und v2</returns>
+        public static Vector2 parallelLaneCoord(Vector2 start, Vector2 intersectionPoint, Vector2 end, double distance)
+        { 
+            double angle1, angle2, angle3, angle4, tempAngle, sin, cos;
+            double s;
+            Vector2 toReturn = new Vector2();
+
+            angle1 = Vector2.AngleBetween(start, intersectionPoint);
+            angle2 = Vector2.AngleBetween(intersectionPoint, end);
+
+            if (angle1 > angle2)
+            {
+                tempAngle = angle1;
+                angle1 = angle2;
+                angle2 = tempAngle;
+            }
+
+            angle3 = (angle2 - angle1) / 2;
+            angle4 = angle1 + angle3;
+            sin = Math.Sin(angle4);
+            cos = Math.Cos(angle4);
+
+            s = distance / Math.Cos(angle3);
+
+            if ((angle2 >= 0) && (angle4 >= 0))
+            {
+                toReturn.X = intersectionPoint.X - (s * sin);
+                toReturn.Y = intersectionPoint.Y + (s * cos);
+            }
+            else if ((angle2 >= 0) && (angle4 < 0))
+            {
+                toReturn.X = intersectionPoint.X + (s * sin);
+                toReturn.Y = intersectionPoint.Y - (s * cos);
+            }
+            else if ((angle2 < 0) && (angle4 >= 0))
+            {
+                toReturn.X = intersectionPoint.X - (s * sin);
+                toReturn.Y = intersectionPoint.Y - (s * cos);
+            }
+            else if ((angle2 < 0) && (angle4 < 0))
+            {
+                toReturn.X = intersectionPoint.X + (s * sin);
+                toReturn.Y = intersectionPoint.Y + (s * cos);
+            }
+
+            //if (angle2 >= 0)
+            //{
+            //    toReturn.X = intersectionPoint.X - (s * sin);
+            //    toReturn.Y = intersectionPoint.Y + (s * cos);
+            //}
+            //else if (angle2 < 0)
+            //{
+            //    toReturn.X = intersectionPoint.X - (s * sin);
+            //    toReturn.Y = intersectionPoint.Y - (s * cos);
+            //}
+
+            return toReturn;
         }
     }
 }

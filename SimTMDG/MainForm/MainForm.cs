@@ -25,27 +25,40 @@ namespace SimTMDG
     {
         #region TEMP
         private static double _temp_stepsPerSeconds = 30;
-        private double _temp_simulationDuration = 15;
+        //private double _temp_simulationDuration = 15;
         private double tickLength = 1.0d / _temp_stepsPerSeconds;
         private NodeControl nc;
         private List<RoadSegment> _route;
-        private List<RoadSegment> _route2;
-        private List<RoadSegment> _route3;
-        private List<RoadSegment> _route4;
-        private List<RoadSegment> _route5;
-        private List<RoadSegment> _route6;
+        //private List<RoadSegment> _route2;
+        //private List<RoadSegment> _route3;
+        //private List<RoadSegment> _route4;
+        //private List<RoadSegment> _route5;
+        //private List<RoadSegment> _route6;
         Random rnd = new Random();
-        int vehCount = 0;
-        int activeVehicles = 0;
-        Double timeMod = 0.0;
-        Bitmap bmp;
-        Bitmap bmpZoom;
+        //int vehCount = 0;
+        //int activeVehicles = 0;
+        //Double timeMod = 0.0;
+        //Bitmap bmp;
+        //Bitmap bmpZoom;
         double minLon;
         double maxLon;
         double minLat;
         double maxLat;
         Boolean boundsDefined = false;
         Rectangle renderedRect;
+
+
+        #region perf test temp
+        /// <summary>
+        ///  Performance test
+        /// </summary>
+        Process proc = Process.GetCurrentProcess();
+        string logActiveVeh = "";
+        string logThinkTime = "";
+        string logMemUsed   = "";
+        int prevActVeh = -1;
+        #endregion
+
         #endregion
 
 
@@ -201,38 +214,24 @@ namespace SimTMDG
         {
             thinkStopwatch.Reset();
             thinkStopwatch.Start();
-
-            //double tickLength = 1.0d / (_temp_stepsPerSeconds); //(double)stepsPerSecondSpinEdit.Value;
-            //Debug.WriteLine("timerSimulation Interval " + timerSimulation.Interval + ", ticklength: " + tickLength);
-
-
-            //if (GlobalTime.Instance.currentTime < _temp_simulationDuration && (GlobalTime.Instance.currentTime + tickLength) >= _temp_simulationDuration)
-            //{
-            //    //cbEnableSimulation.Checked = false;
-
-            //    // TODO playButton_click?
-            //    simIsPlaying = false;
-            //    timerSimulation.Enabled = simIsPlaying;
-            //    playButton.Text = "Play";
-            //}
-            //timelineSteuerung.Advance(tickLength);
+            
             GlobalTime.Instance.Advance(tickLength);
 
-            //roadSegment.Tick(tickLength);
             nc.Tick(tickLength);
 
             nc.Reset();
 
-            //generateVehicles();
-
-            ////tickCount++;
-
-            //nodeSteuerung.Tick(tickLength);
-            //trafficVolumeSteuerung.Tick(tickLength);
-
-            //nodeSteuerung.Reset();
-
             thinkStopwatch.Stop();
+
+
+            if (nc.ActiveVehicles > prevActVeh)
+            {
+                logActiveVeh += nc.ActiveVehicles + ",";
+                logThinkTime += thinkStopwatch.ElapsedMilliseconds + ",";
+                logMemUsed   += proc.PrivateMemorySize64 + ",";
+                prevActVeh = nc.ActiveVehicles;
+            }
+
             //Debug.WriteLine(GlobalTime.Instance.currentTime);
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
@@ -295,66 +294,42 @@ namespace SimTMDG
             renderStopwatch.Reset();
             renderStopwatch.Start();
 
-            //if (bmp != null)
-            //{
-            //    // Draw Background
-            //    //e.Graphics.DrawImage(bmp, Point.Empty);
-            //    Rectangle srcRect = new Rectangle(daGridScrollPosition.X, daGridScrollPosition.Y, DaGrid.Width, DaGrid.Height);
-            //    DrawZoom(e.Graphics, srcRect);
-            //}
-
-
             e.Graphics.Transform = new Matrix(
                 zoomMultipliers[zoomComboBox.SelectedIndex, 0], 0,
                 0, zoomMultipliers[zoomComboBox.SelectedIndex, 0],
                 -daGridScrollPosition.X * zoomMultipliers[zoomComboBox.SelectedIndex, 0], -daGridScrollPosition.Y * zoomMultipliers[zoomComboBox.SelectedIndex, 0]);
 
-            //roadSegment.Draw(e.Graphics);  
-            //nc.Draw(e.Graphics);
 
             if (boundsDefined)
             {
                 nc.Draw(e.Graphics, zoomComboBox.SelectedIndex);
             }
 
-            //Pen pen = new Pen(Color.OrangeRed, 1);
-            //e.Graphics.DrawRectangle(pen, renderedRect.X, renderedRect.Y, renderedRect.Width, renderedRect.Height);
-
-            // Draw Foreground
-            //foreach (WaySegment ws in nc.segments)
-            //{
-            //    foreach (IVehicle v in ws.vehicles)
-            //    {
-            //        v.Draw(e.Graphics);
-            //    }
-            //}
-
-
 
             renderStopwatch.Stop();
 
 
-            e.Graphics.Transform = new Matrix(1, 0, 0, 1, 0, 0);
-            e.Graphics.DrawString(
-                "thinking time: " + thinkStopwatch.ElapsedMilliseconds + "ms, possible thoughts per second: " + ((thinkStopwatch.ElapsedMilliseconds != 0) ? (1000 / thinkStopwatch.ElapsedMilliseconds).ToString() : "-"),
-                new Font("Arial", 10),
-                new SolidBrush(Color.Black),
-                8,
-                40);
+            //e.Graphics.Transform = new Matrix(1, 0, 0, 1, 0, 0);
+            //e.Graphics.DrawString(
+            //    "thinking time: " + thinkStopwatch.ElapsedMilliseconds + "ms, possible thoughts per second: " + ((thinkStopwatch.ElapsedMilliseconds != 0) ? (1000 / thinkStopwatch.ElapsedMilliseconds).ToString() : "-"),
+            //    new Font("Arial", 10),
+            //    new SolidBrush(Color.Black),
+            //    8,
+            //    40);
 
-            e.Graphics.DrawString(
-                "rendering time: " + renderStopwatch.ElapsedMilliseconds + "ms, possible fps: " + ((renderStopwatch.ElapsedMilliseconds != 0) ? (1000 / renderStopwatch.ElapsedMilliseconds).ToString() : "-"),
-                new Font("Arial", 10),
-                new SolidBrush(Color.Black),
-                8,
-                56);
+            //e.Graphics.DrawString(
+            //    "rendering time: " + renderStopwatch.ElapsedMilliseconds + "ms, possible fps: " + ((renderStopwatch.ElapsedMilliseconds != 0) ? (1000 / renderStopwatch.ElapsedMilliseconds).ToString() : "-"),
+            //    new Font("Arial", 10),
+            //    new SolidBrush(Color.Black),
+            //    8,
+            //    56);
 
-            e.Graphics.DrawString(
-                "Active Vehicles: " + nc.ActiveVehicles,
-                new Font("Arial", 10),
-                new SolidBrush(Color.Black),
-                8,
-                72);
+            //e.Graphics.DrawString(
+            //    "Active Vehicles: " + nc.ActiveVehicles,
+            //    new Font("Arial", 10),
+            //    new SolidBrush(Color.Black),
+            //    8,
+            //    72);
         }
 
 
@@ -1282,51 +1257,10 @@ namespace SimTMDG
                     nc.Load();
 
                     LoadMap(ofd.FileName);
-                    //LoadOsmMap_old(ofd.FileName);
-                    //LoadOsmMap(ofd.FileName);
                 }
             }
             #endregion
-
-
-            //#region Longitudinal Model Test
-            //GlobalTime.Instance.Reset();
-            //nc.Clear();
-
-            //nc._nodes.Add(new Node(new Vector2(0, 200)));
-            //nc._nodes.Add(new Node(new Vector2(2000, 200)));
-
-            //nc.segments.Add(new WaySegment(nc._nodes[0], nc._nodes[1]));
-            //_route = new List<WaySegment>();
-            //_route.Add(nc.segments[0]);
-
-            //_route[0].vehicles.Add(new IVehicle(
-            //    _route[0],
-            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-            //    _route));
-
-            //_route[0].vehicles[0]._physics.targetVelocity = 7;
-            //_route[0].vehicles[0].distance = 100;
-
-            //_route[0].vehicles.Add(new IVehicle(
-            //    _route[0],
-            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-            //    _route));
-
-            //_route[0].vehicles[1]._physics.targetVelocity = 13;
-            //_route[0].vehicles[1].distance = 50;
-
-            //_route[0].vehicles.Add(new IVehicle(
-            //    _route[0],
-            //    Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
-            //    _route));
-
-            //_route[0].vehicles[2]._physics.targetVelocity = 10;
-            //_route[0].vehicles[2].distance = 0;
-
-            //#endregion
-
-
+                        
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
 
@@ -1768,11 +1702,13 @@ namespace SimTMDG
             return toReturn;
         }
 
+        private void DaGrid_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
         #endregion
-
-
-
 
         #endregion
 

@@ -1,6 +1,6 @@
 ﻿namespace SimTMDG.MainForm
 {
-    partial class CustUserControl
+    public partial class CustUserControl
     {
         /// <summary> 
         /// Required designer variable.
