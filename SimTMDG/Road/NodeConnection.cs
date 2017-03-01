@@ -512,10 +512,10 @@
 //        }
 
 //        /// <summary>
-//        /// Gibt rekursiv das nächste TrafficLight zurück
+//        /// Gibt rekursiv das nächste Halte zurück
 //        /// </summary>
 //        /// <param name="distance">Maximale Suchreichweite</param>
-//        public TrafficLight GetNextTrafficLightWithin(double distance)
+//        public Halte GetNextTrafficLightWithin(double distance)
 //        {
 //            int currentDistance = 0;
 //            LineNode currentNode = this.endNode;

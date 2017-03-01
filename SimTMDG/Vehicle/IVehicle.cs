@@ -373,7 +373,7 @@ namespace SimTMDG.Vehicle
         public Double rotation = 0;
         //private WaySegment currentSegment;
         private bool alreadyMoved = false;
-
+        public int idxngetem;
         public double RearPos
         {
             get
@@ -501,6 +501,7 @@ namespace SimTMDG.Vehicle
             double lookaheadDistance = 768; // Constants.lookaheadDistance;
             double intersectionLookaheadDistance = 384; // Constants.intersectionLookaheadDistance;
             double stopDistance = -1;
+            //double ngetemTimer = 0;
             //_state._freeDrive = true;
 
             //thinkAboutLineChange;
@@ -562,10 +563,11 @@ namespace SimTMDG.Vehicle
 
             //        route[1].startNode.registeredVeh = closestVeh.vehicle;
             //    }
-                
+
             //}
             #endregion
 
+            
 
             #region Traffic lights
 
@@ -583,6 +585,29 @@ namespace SimTMDG.Vehicle
             }
 
             #endregion
+
+            #region Halte
+            if (this is Angkot)
+            {
+                // Check for blue halte on route
+                double distanceToHalte = GetDistanceToNextHalteOnRoute(route, this.distance, 768, true);
+                //intersectionLookaheadDistance = distanceToTrafficLight;
+                //lookaheadDistance = 768;
+                // If the next Halte is closer than the next vehicle, no free line change shall be performed
+                if (distanceToHalte < lookaheadDistance)
+                {
+                    lookaheadDistance = distanceToHalte;
+                    thinkAboutLineChange = false;
+                    lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
+                    _state._freeDrive = false;
+
+                    //route[idxngetem].endNode.tHalte.ngetemTimer = 1 ;
+                    //curr.endNode.tHalte.SwitchToBlue();
+                    //_state._freeDrive = false;
+                }
+            }
+            #endregion
+
 
 
             #region lane changing
@@ -615,7 +640,7 @@ namespace SimTMDG.Vehicle
             return lowestAcceleration;
         }
 
-
+        
         private double ConsiderLaneChange(int direction, double tickLength, List<RoadSegment> route, double lowestAcceleration)
         {
             #region consider lane change
@@ -979,14 +1004,15 @@ namespace SimTMDG.Vehicle
         }
 
         /// <summary>
-		/// Searches for the next TrafficLight on the vehicle's route within the given distance.
-		/// </summary>
-		/// <param name="route">Route of the Vehicle.</param>
-		/// <param name="arcPos">Current arc position of the vehicle on the first NodeConnection on <paramref name="route"/>.</param>
-		/// <param name="distance">Distance to cover during search.</param>
-		/// <param name="considerOnlyRed">If true, only red traffic lights will be considered.</param>
-		/// <returns>The distance to the next TrafficLight on the vehicle's route that covers the given constraints. <paramref name="distance"/> if no such TrafficLight exists.</returns>
-		private double GetDistanceToNextTrafficLightOnRoute(List<RoadSegment> route, double arcPos, double distance, bool considerOnlyRed)
+        /// Searches for the next TrafficLight on the vehicle's route within the given distance.
+        /// </summary>
+        /// <param name="route">Route of the Vehicle.</param>
+        /// <param name="arcPos">Current arc position of the vehicle on the first NodeConnection on <paramref name="route"/>.</param>
+        /// <param name="distance">Distance to cover during search.</param>
+        /// <param name="considerOnlyRed">If true, only red traffic lights will be considered.</param>
+        /// <returns>The distance to the next TrafficLight on the vehicle's route that covers the given constraints. <paramref name="distance"/> if no such TrafficLight exists.</returns>
+
+        private double GetDistanceToNextTrafficLightOnRoute(List<RoadSegment> route, double arcPos, double distance, bool considerOnlyRed)
         {
             //Debug.Assert(route.Count > 0);
 
@@ -1036,6 +1062,72 @@ namespace SimTMDG.Vehicle
             return toReturn;
         }
 
+        private double GetDistanceToNextHalteOnRoute(List<RoadSegment> route, double arcPos, double distance, bool considerOnlyWhite)
+        {
+            //Debug.Assert(route.Count > 0);
+
+            //double doneDistance = -arcPos;
+            //for(int i=route.Count - 1; i < 0; i--)
+            //{
+            //    doneDistance += route[i].Length;
+            //    if (doneDistance >= distance)
+            //        return distance;
+
+            //    if (route[i].endNode.tLight != null)
+            //    {
+            //        if(route[i].endNode.tLight.trafficLightState == TrafficLight.State.RED)
+            //        {
+            //            return doneDistance;
+            //        }
+            //    }
+            //    //if (ws.endNode.tLight != null && (!considerOnlyRed || ws.endNode.tLight.trafficLightState == TrafficLight.State.RED))
+            //    //    return doneDistance;
+            //}
+
+            //return distance;
+
+            double toReturn = distance;
+            double searchedDistance = 0;
+            
+
+            while (searchedDistance < 768)
+            {
+                for (int i = 0; i < route.Count; i++)
+                {
+                    if (route[i].endNode.tHalte != null)
+                    {
+                        //if (route[i].endNode.tHalte.ngetemTimer<=5000)
+                        //{
+                        //    idxngetem = i;
+                        //    toReturn = route[i].Length + searchedDistance - (this.distance + this.length / 2);
+                        //    return toReturn;
+                        //}
+
+                        if (route[i].endNode.tHalte.HaltePlace == Halte.Place.BLUE)
+                        {
+                            toReturn = route[i].Length + searchedDistance - (this.distance + this.length / 2);
+
+
+                            if ((toReturn < this.length) && (this.physics.velocity == 0))
+                            {
+                                route[i].endNode.tHalte.angkotNgetem = this;
+                                route[i].endNode.tHalte.halteTimer = true;
+                            }
+
+                            return toReturn;
+                        }
+
+                    }
+                    else
+                    {
+                        searchedDistance += route[i].Length;
+                    }
+                }
+
+            }
+
+            return toReturn;
+        }
 
         public void Accelerate(double newAcceleration)
         {

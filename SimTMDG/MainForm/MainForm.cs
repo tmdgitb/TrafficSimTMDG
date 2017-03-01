@@ -1357,7 +1357,7 @@ namespace SimTMDG
 
         private void buttonTLightTemp_Click(object sender, EventArgs e)
         {
-            //switch (nc.segments.Find(x => x.Id == 2918).endNode.tLight.trafficLightState)
+            //switch (nc.segments.Find(x => x.Id == 2918).endNode.tLight.State)
             //{
             //    case TrafficLight.State.GREEN:
             //        nc.segments.Find(x => x.Id == 2918).endNode.tLight.SwitchToRed();
@@ -1369,17 +1369,69 @@ namespace SimTMDG
             //        break;
             //}
 
-            switch (nc.segments.Find(x => x.Id == 28586).startNode.tLight.trafficLightState)
+            switch (nc.segments.Find(x => x.Id == 20973).endNode.tLight.trafficLightState)
             {
-                case TrafficLight.State.GREEN:
-                    nc.segments.Find(x => x.Id == 2925).endNode.tLight.SwitchToGreen();
-                    nc.segments.Find(x => x.Id == 28583).endNode.tLight.SwitchToGreen();
-                    nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToRed();
-                    break;
                 case TrafficLight.State.RED:
-                    nc.segments.Find(x => x.Id == 2925).endNode.tLight.SwitchToRed();
-                    nc.segments.Find(x => x.Id == 28583).endNode.tLight.SwitchToRed();
-                    nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 9687).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 17503).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 1013).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 16737).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 376).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 372).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 15490).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 9593).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 6093).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 635).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 20973).endNode.tLight.SwitchToGreen();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToGreen();
+
+                    nc.segments.Find(x => x.Id == 16472).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 15640).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 1053).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 6231).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 49).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 14831).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 246).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 13384).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 6144).endNode.tLight.SwitchToRed();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToRed();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToRed();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToRed();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToRed();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToRed();
+
+
+
+
+                    break;
+                case TrafficLight.State.GREEN:
+                    nc.segments.Find(x => x.Id == 9687).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 17503).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 1013).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 16737).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 376).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 372).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 15490).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 9593).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 6093).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 635).endNode.tLight.SwitchToRed();
+                    nc.segments.Find(x => x.Id == 20973).endNode.tLight.SwitchToRed();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToRed();
+
+                    nc.segments.Find(x => x.Id == 16472).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 15640).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 1053).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 6231).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 49).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 14831).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 246).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 13384).endNode.tLight.SwitchToGreen();
+                    nc.segments.Find(x => x.Id == 6144).endNode.tLight.SwitchToGreen();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToGreen();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToGreen();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToGreen();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToGreen();
+                    //nc.segments.Find(x => x.Id == ).endNode.tLight.SwitchToGreen();
                     break;
             }
 

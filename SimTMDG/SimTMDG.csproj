@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Road\Halte.cs" />
     <Compile Include="Road\LineNode.cs" />
     <Compile Include="Road\LineSegment.cs" />
     <Compile Include="Road\NetworkLayer.cs" />

@@ -66,6 +66,7 @@ namespace SimTMDG.Road
 		/// </summary>
 		[XmlIgnore]
         public TrafficLight tLight;
+        public Halte tHalte;
 
 
         #region Constructor
@@ -105,6 +106,22 @@ namespace SimTMDG.Road
                 else if (tLight.trafficLightState == TrafficLight.State.RED)
                 {
                     penColor = Color.Red;
+                }
+
+                Pen pen = new Pen(penColor, 1);
+                Rectangle rec = new Rectangle((int)this.Position.X - 1, (int)this.Position.Y - 1, 2, 2);
+                g.DrawEllipse(pen, rec);
+            }
+
+            if (tHalte != null)
+            {
+                if (tHalte.HaltePlace == Halte.Place.WHITE)
+                {
+                    penColor = Color.LightGray;
+                }
+                else if (tHalte.HaltePlace == Halte.Place.BLUE)
+                {
+                    penColor = Color.Blue;
                 }
 
                 Pen pen = new Pen(penColor, 1);

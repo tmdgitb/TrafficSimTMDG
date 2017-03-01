@@ -197,7 +197,26 @@ namespace SimTMDG.Vehicle
         List<RoadSegment> findRoute(RoadSegment start, RoadSegment end)
         {
             List<RoadSegment> toReturn = new List<RoadSegment>();
-            
+            //if ((start == segments.Find(x => x.Id == 16750)) && (end == segments.Find(x => x.Id == 2)))
+            //{
+
+            //for (int i = 16750; i < 16752; i++)
+            //{
+            //    toReturn.Add(segments.Find(x => x.Id == i));
+            //}
+            //toReturn.Add(segments.Find(x => x.Id == 11));
+            //toReturn.Add(segments.Find(x => x.Id == 8));
+            //toReturn.Add(segments.Find(x => x.Id == 5));
+            //toReturn.Add(segments.Find(x => x.Id == 2));
+            //AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 16750), segments.Find(x => x.Id == 2));
+            //if (newAStar.goalIsFound)
+            //{
+            //    List<RoadSegment> forAstar = new List<RoadSegment>();
+            //    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 16750), segments.Find(x => x.Id == 2));
+            //    toReturn.AddRange(forAstar);
+            //    forAstar.Clear();
+            //}
+            //}
             #region AStar route
             AStar newAStar = new AStar(this.segments, start, end);
             if (newAStar.goalIsFound)

@@ -42,7 +42,7 @@
 //        /// for associated traffic light LineNode
 //        /// </summary>
 //        //[XmlIgnore]
-//        //public TrafficLight tLight;
+//        //public tLight;
 
 //        /// <summary>
 //        /// Flag whether this LineNode models a stop sign
