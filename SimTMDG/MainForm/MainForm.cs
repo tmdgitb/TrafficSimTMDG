@@ -53,10 +53,13 @@ namespace SimTMDG
         ///  Performance test
         /// </summary>
         Process proc = Process.GetCurrentProcess();
-        string logActiveVeh = "";
-        string logThinkTime = "";
-        string logMemUsed   = "";
-        int prevActVeh = -1;
+        string logActiveVeh  = "";
+        string logThinkTime  = "";
+        string logMemUsed    = "";
+        string logRenderTime = "";
+        string logObjDraw   = "";
+        int prevActVeh       = -1;
+        int prevDrawLine     = -1;
         #endregion
 
         #endregion
@@ -224,13 +227,15 @@ namespace SimTMDG
             thinkStopwatch.Stop();
 
 
-            if (nc.ActiveVehicles > prevActVeh)
-            {
-                logActiveVeh += nc.ActiveVehicles + ",";
-                logThinkTime += thinkStopwatch.ElapsedMilliseconds + ",";
-                logMemUsed   += proc.PrivateMemorySize64 + ",";
-                prevActVeh = nc.ActiveVehicles;
-            }
+            #region perf test
+            //if (nc.ActiveVehicles > prevActVeh)
+            //{
+            //    logActiveVeh += nc.ActiveVehicles + ",";
+            //    logThinkTime += thinkStopwatch.ElapsedMilliseconds + ",";
+            //    logMemUsed += proc.PrivateMemorySize64 + ",";
+            //    prevActVeh = nc.ActiveVehicles;
+            //}
+            #endregion
 
             //Debug.WriteLine(GlobalTime.Instance.currentTime);
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
@@ -287,7 +292,6 @@ namespace SimTMDG
         #region paint
         void DaGrid_Paint(object sender, PaintEventArgs e)
         {
-            //Debug.WriteLine("DaGrid Paint");
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
@@ -308,29 +312,40 @@ namespace SimTMDG
 
             renderStopwatch.Stop();
 
+            #region perf test (rendering)
+            //if (nc.objDraw > prevDrawLine)
+            //{
+            //    logObjDraw += nc.objDraw + ",";
+            //    logRenderTime += renderStopwatch.ElapsedMilliseconds + ",";
+            //    prevDrawLine = nc.objDraw;
+            //}
+            #endregion
 
-            //e.Graphics.Transform = new Matrix(1, 0, 0, 1, 0, 0);
-            //e.Graphics.DrawString(
-            //    "thinking time: " + thinkStopwatch.ElapsedMilliseconds + "ms, possible thoughts per second: " + ((thinkStopwatch.ElapsedMilliseconds != 0) ? (1000 / thinkStopwatch.ElapsedMilliseconds).ToString() : "-"),
-            //    new Font("Arial", 10),
-            //    new SolidBrush(Color.Black),
-            //    8,
-            //    40);
 
-            //e.Graphics.DrawString(
-            //    "rendering time: " + renderStopwatch.ElapsedMilliseconds + "ms, possible fps: " + ((renderStopwatch.ElapsedMilliseconds != 0) ? (1000 / renderStopwatch.ElapsedMilliseconds).ToString() : "-"),
-            //    new Font("Arial", 10),
-            //    new SolidBrush(Color.Black),
-            //    8,
-            //    56);
+            e.Graphics.Transform = new Matrix(1, 0, 0, 1, 0, 0);
+            e.Graphics.DrawString(
+                "thinking time: " + thinkStopwatch.ElapsedMilliseconds + "ms, possible thoughts per second: " + ((thinkStopwatch.ElapsedMilliseconds != 0) ? (1000 / thinkStopwatch.ElapsedMilliseconds).ToString() : "-"),
+                new Font("Arial", 10),
+                new SolidBrush(Color.Black),
+                8,
+                40);
 
-            //e.Graphics.DrawString(
-            //    "Active Vehicles: " + nc.ActiveVehicles,
-            //    new Font("Arial", 10),
-            //    new SolidBrush(Color.Black),
-            //    8,
-            //    72);
+            e.Graphics.DrawString(
+                "rendering time: " + renderStopwatch.ElapsedMilliseconds + "ms, possible fps: " + ((renderStopwatch.ElapsedMilliseconds != 0) ? (1000 / renderStopwatch.ElapsedMilliseconds).ToString() : "-"),
+                new Font("Arial", 10),
+                new SolidBrush(Color.Black),
+                8,
+                56);
+
+            e.Graphics.DrawString(
+                "Active Vehicles: " + nc.ActiveVehicles,
+                new Font("Arial", 10),
+                new SolidBrush(Color.Black),
+                8,
+                72);
         }
+
+        
 
 
         private void Invalidate(InvalidationLevel il)
@@ -445,6 +460,20 @@ namespace SimTMDG
                             (rs.endNode.positionRect.Contains(clickedPosition)))
                         {
                             rs.ToggleDebugID();
+                        }
+                    }
+
+                    foreach (RoadSegment rs in nc.segments)
+                    {
+                        foreach (SegmentLane ln in rs.lanes)
+                        {
+                            foreach (IVehicle v in ln.vehicles)
+                            {
+                                if (v.positionRect.Contains(clickedPosition))
+                                {
+                                    v.ToggleDebug();
+                                }
+                            }
                         }
                     }
                     break;
@@ -1309,11 +1338,17 @@ namespace SimTMDG
                     nc.segments.Find(x => x.Id == 2925).endNode.tLight.SwitchToGreen();
                     nc.segments.Find(x => x.Id == 28583).endNode.tLight.SwitchToGreen();
                     nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToRed();
+
+                    nc.segments.Find(x => x.Id == 1).endNode.tLight.SwitchToRed();
+                    //nc.segments.Find(x => x.Id == 26964).endNode.tLight.SwitchToRed();
                     break;
                 case TrafficLight.State.RED:
                     nc.segments.Find(x => x.Id == 2925).endNode.tLight.SwitchToRed();
                     nc.segments.Find(x => x.Id == 28583).endNode.tLight.SwitchToRed();
                     nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
+
+                    nc.segments.Find(x => x.Id == 1).endNode.tLight.SwitchToGreen();
+                    //nc.segments.Find(x => x.Id == 26964).endNode.tLight.SwitchToGreen();
                     break;
             }
 
@@ -1321,175 +1356,7 @@ namespace SimTMDG
 
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
-
-
-
-
-        //private void manuallyAddRoute()
-        //{
-        //    _route = new List<RoadSegment>();
-        //    _route2 = new List<RoadSegment>();
-        //    _route3 = new List<RoadSegment>();
-        //    _route4 = new List<RoadSegment>();
-        //    _route5 = new List<RoadSegment>();
-        //    _route6 = new List<RoadSegment>();
-
-        //    // Route 1 : Pasteur
-        //    for (int i = 2908; i < 2926; i++)
-        //    {
-        //        _route.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-        //    _route.Add(nc.segments.Find(x => x.Id == 421));
-
-        //    for (int i = 28456; i < 28469; i++)
-        //    {
-        //        _route.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-        //    for (int i = 422; i < 431; i++)
-        //    {
-        //        _route.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-        //    //nc.segments.Find(x => x.Id == 2918).endNode.tLight = new TrafficLight();
-
-        //    // Route 2 : Pasteur
-        //    for (int i = 591; i < 607; i++)
-        //    {
-        //        _route2.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-        //    for (int i = 8986; i < 8997; i++)
-        //    {
-        //        _route2.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-            
-
-        //    for (int i = 28584; i < 28587; i++)
-        //    {
-        //        _route2.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-        //    //_route2.Add(nc.segments.Find(x => x.Id == 34087));
-        //    //_route2.Add(nc.segments.Find(x => x.Id == 34084));
-
-        //    for (int i = 25153; i < 25177; i++)
-        //    {
-        //        _route2.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-        //    //nc.segments.Find(x => x.Id == 25163).endNode.tLight = new TrafficLight();
-
-
-        //    // Route 3 : Pasteur
-        //    for (int i = 2908; i < 2926; i++)
-        //    {
-        //        _route3.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-        //    _route3.Add(nc.segments.Find(x => x.Id == 26040));
-        //    _route3.Add(nc.segments.Find(x => x.Id == 34069));
-
-        //    for (int i = 28587; i < 28601; i++)
-        //    {
-        //        _route3.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-
-        //    // Route 4 : Pasteur
-        //    for (int i = 28483; i < 28493; i++)
-        //    {
-        //        _route4.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-        //    _route4.Add(nc.segments.Find(x => x.Id == 28455));
-        //    _route4.Add(nc.segments.Find(x => x.Id == 28583));
-        //    _route4.Add(nc.segments.Find(x => x.Id == 26062));
-
-        //    for (int i = 25153; i < 25177; i++)
-        //    {
-        //        _route4.Add(nc.segments.Find(x => x.Id == i));
-        //    }
-
-
-
-        //    #region temp test obstacle
-        //    //IVehicle mogok1 = new IVehicle();
-        //    //IVehicle.Physics p1 = new IVehicle.Physics(0, 0, 0);
-        //    //mogok1.color = Color.Black;
-        //    //mogok1._physics = p1;
-        //    //mogok1.length = 1;
-        //    //mogok1._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
-        //    //mogok1._state.laneIdx = 0;
-        //    //mogok1.distance = mogok1.currentLane().Length - 2;
-        //    //mogok1.dumb = true;
-
-        //    //mogok1.currentLane().vehicles.Add(mogok1);
-        //    //mogok1.newCoord();
-        //    //mogok1.RotateVehicle(mogok1.currentLane().startNode, mogok1.currentLane().endNode);
-
-        //    //IVehicle mogok2 = new IVehicle();
-        //    //mogok2.color = Color.Black;
-        //    //mogok2._physics = p1;
-        //    //mogok2.length = 1;
-        //    //mogok2._state.currentSegment = nc.segments.Find(x => x.Id == 25163);
-        //    //mogok2._state.laneIdx = 1;
-        //    //mogok2.distance = mogok1.currentLane().Length - 2;
-        //    //mogok2.dumb = true;
-
-        //    //mogok2.currentLane().vehicles.Add(mogok2);
-        //    //mogok2.newCoord();
-        //    //mogok2.RotateVehicle(mogok2.currentLane().startNode, mogok2.currentLane().endNode);
-        //    #endregion
-
-
-
-        //    //// Route 3 : DU
-        //    //for (int i = 22273; i > 22245; i = i - 3)
-        //    //{
-        //    //    _route3.Add(nc.segments.Find(x => x.Id == i));
-        //    //}
-
-        //    //// Route 4 : DU
-        //    //for (int i = 22245; i < 22273; i = i + 3)
-        //    //{
-        //    //    _route4.Add(nc.segments.Find(x => x.Id == i));
-        //    //}
-
-
-        //    //// Route 5 : Lembong - Tamblong
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 54));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 55));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 9181));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 9182));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 10176));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 10177));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 10178));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 10179));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 7755));
-        //    //_route5.Add(nc.segments.Find(x => x.Id == 56));
-
-
-        //    //// Route 5 : Siliwangi - Simpang Dago
-        //    //_route6.Add(nc.segments.Find(x => x.Id == 357));
-        //    //_route6.Add(nc.segments.Find(x => x.Id == 10554));
-        //    //_route6.Add(nc.segments.Find(x => x.Id == 10553));
-        //    //_route6.Add(nc.segments.Find(x => x.Id == 10551));
-        //    //_route6.Add(nc.segments.Find(x => x.Id == 10552));
-        //    //_route6.Add(nc.segments.Find(x => x.Id == 10259));
-        //    //nc.segments.Find(x => x.Id == 10259).endNode.tLight = new TrafficLight();
-
-
-        //    nc.segments.Find(x => x.Id == 2925).endNode.tLight = new TrafficLight();
-        //    nc.segments.Find(x => x.Id == 28583).endNode.tLight = new TrafficLight();
-        //    nc.segments.Find(x => x.Id == 28586).startNode.tLight = new TrafficLight();
-        //    nc.segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
-
-
-        //    nc.segments.Find(x => x.Id == 2919).TargetSpeed = 4;
-        //    nc.segments.Find(x => x.Id == 25163).TargetSpeed = 5;
-        //}
+        
 
         #region oldRoute
         private void oldRoute()

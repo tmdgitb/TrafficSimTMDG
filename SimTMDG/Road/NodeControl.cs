@@ -87,46 +87,130 @@ namespace SimTMDG.Road
 
 
         #region draw
+
+        #region draw perf test
+        #endregion
+        public int objDraw;
+
         public void Draw(Graphics g, int zoomLvl)
         {
+            objDraw = 0;
+            /// new
+            Pen pen = new Pen(Color.Gray, 1);
+
             if (zoomLvl < 5)
             {
                 foreach (RoadSegment ws in Segments)
                 {
                     if ((IsInBound(ws.MidCoord, 0)))
-                        ws.Draw(g);
+                    {
+                        //ws.Draw(g);
+                        objDraw++;
+
+                        foreach (SegmentLane lane in ws.lanes)
+                        {
+                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
+                        }
+                    }
                 }
-            }else if (zoomLvl < 8)
+            }
+            else if (zoomLvl < 8)
             {
                 foreach (RoadSegment ws in Segments)
                 {
                     if ((IsInBound(ws.startNode.Position, 0)) || (IsInBound(ws.endNode.Position, 0)))
-                        ws.Draw(g);
+                    {
+                        //ws.Draw(g);
+                        objDraw++;
+
+                        foreach (SegmentLane lane in ws.lanes)
+                        {
+                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
+                        }
+                    }
                 }
-            }else if (zoomLvl < 10)
+            }
+            else if (zoomLvl < 10)
             {
                 foreach (RoadSegment ws in Segments)
                 {
                     if ((IsInBound(ws.startNode.Position, (int)mapBound.Width / 2)) || (IsInBound(ws.endNode.Position, (int)mapBound.Width / 2)))
-                        ws.Draw(g);
+                    {
+                        //ws.Draw(g);
+                        objDraw++;
+
+                        foreach (SegmentLane lane in ws.lanes)
+                        {
+                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
+                        }
+                    }
                 }
-            }else
+            }
+            else
             {
                 foreach (RoadSegment ws in Segments)
                 {
                     if ((IsInBound(ws.startNode.Position, mapBound.Width)) || (IsInBound(ws.endNode.Position, mapBound.Width)))
-                        ws.Draw(g);
+                    {
+                        //ws.Draw(g);
+                        objDraw++;
+
+                        foreach (SegmentLane lane in ws.lanes)
+                        {
+                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
+                        }
+                    }
                 }
             }
 
+            Rectangle rec = new Rectangle(0, 0, 2, 2);
+            Color penColor = Color.Gray;
 
             foreach (RoadSegment ws in Segments)
             {
-                ws.startNode.Draw(g);
-                ws.endNode.Draw(g);
+                //ws.startNode.Draw(g);
+                //ws.endNode.Draw(g);
+                objDraw += 2;
+
+                /// start node
+
+                if (ws.startNode.tLight != null)
+                {
+                    if (ws.startNode.tLight.trafficLightState == TrafficLight.State.GREEN)
+                    {
+                        penColor = Color.Green;
+                    }
+                    else if (ws.startNode.tLight.trafficLightState == TrafficLight.State.RED)
+                    {
+                        penColor = Color.Red;
+                    }
+
+                    pen.Color = penColor;
+                    rec.X = (int)ws.startNode.Position.X - 1;
+                    rec.Y = (int)ws.startNode.Position.Y - 1;
+                    g.DrawEllipse(pen, rec);
+                }
+
+                /// end node
+                if (ws.endNode.tLight != null)
+                {
+                    if (ws.endNode.tLight.trafficLightState == TrafficLight.State.GREEN)
+                    {
+                        penColor = Color.Green;
+                    }
+                    else if (ws.endNode.tLight.trafficLightState == TrafficLight.State.RED)
+                    {
+                        penColor = Color.Red;
+                    }
+
+                    pen.Color = penColor;
+                    rec.X = (int)ws.endNode.Position.X - 1;
+                    rec.Y = (int)ws.endNode.Position.Y - 1;
+                    g.DrawEllipse(pen, rec);
+                }
             }
 
-             //if Debug
+            ///if Debug
             foreach (RoadSegment ws in Segments)
             {
                 ws.DrawRoadID(g);
@@ -134,27 +218,21 @@ namespace SimTMDG.Road
 
             foreach (RoadSegment ws in Segments)
             {
-                //foreach (IVehicle v in ws.vehicles)
-                //{
-                //    //if (v.distance <= v.CurrentSegment.Length)
-                //    if (IsInBound(v.absCoord))
-                //        v.Draw(g);
-                //}
-
                 foreach (SegmentLane lane in ws.lanes)
                 {
                     foreach (IVehicle v in lane.vehicles)
                     {
                         if (IsInBound(v.absCoord, 0))
+                        {
                             v.Draw(g);
+                            objDraw++;
+                        }
                     }
                 }
             }
 
-            //Pen pen = new Pen(Color.OrangeRed, 1);
-
-            //g.DrawRectangle(pen, (float)minBound.X, (float)minBound.Y, (float)maxBound.X, (float)maxBound.Y);
         }
+        
         #endregion
 
         public bool IsInBound(Vector2 coord, int extension)
@@ -170,13 +248,18 @@ namespace SimTMDG.Road
 
         public void Tick(double tickLength, NodeControl nc = null)
         {
-            foreach(RoadSegment ws in Segments)
+            foreach (RoadSegment ws in Segments)
             {
                 ws.Tick(tickLength, this);
             }
 
+            //System.Threading.Tasks.Parallel.ForEach(segments, ws =>
+            //{
+            //    ws.Tick(tickLength, this);
+            //});
+
             //generateVehicles();
-            foreach(VehicleGenerator vehGen in vehGenerators)
+            foreach (VehicleGenerator vehGen in vehGenerators)
             {
                 ActiveVehicles += vehGen.generate(tickLength, this);
             }
@@ -427,6 +510,13 @@ namespace SimTMDG.Road
             #region temp test obstacle
             #endregion
 
+            #region log Traffic Light
+            //26962
+            segments.Find(x => x.Id == 1).endNode.tLight = new TrafficLight();
+            segments.Find(x => x.Id == 1).endNode.tLight.SwitchToGreen();
+            //segments.Find(x => x.Id == 26964).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 26964).endNode.tLight.SwitchToRed();
+            #endregion
 
 
             segments.Find(x => x.Id == 2925).endNode.tLight = new TrafficLight();
@@ -474,6 +564,13 @@ namespace SimTMDG.Road
             vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1), .3, origin_2__destinations, origin_2__q_outs);
 
 
+            //origin_2__destinations.Add(segments.Find(x => x.Id == 26964));
+            //origin_2__q_outs.Add(1);
+            //vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 353), .35, origin_2__destinations, origin_2__q_outs);
+            vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 0), .35, origin_2__destinations, origin_2__q_outs);
+
+
+
             vehGenerators.Add(vehGen2);
             #endregion
 
@@ -489,8 +586,8 @@ namespace SimTMDG.Road
             origin_3__q_outs.Add(.5);
 
             vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs);
-            
-            
+
+
             //vehGenerators.Add(vehGen3);
             #endregion
 

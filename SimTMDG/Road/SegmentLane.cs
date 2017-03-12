@@ -155,8 +155,22 @@ namespace SimTMDG.Road
             RemoveAllVehiclesInRemoveList(nc);
         }
 
+        public void AddVehicle(IVehicle v)
+        {
+            this.vehicles.Add(v);
+            SortVehicles();
+        }
+
 
         #region remove vehicle
+        public void RemoveVehicle(IVehicle v)
+        {
+            //this.vehicles.Remove(v);
+            //SortVehicles();
+            this.vehToRemove.Add(v);
+        }
+
+
         public void RemoveAllVehiclesInRemoveList(NodeControl nc)
         {
             foreach (IVehicle v in vehToRemove)
@@ -182,15 +196,18 @@ namespace SimTMDG.Road
         /// Sorting the vehicles based on their distance to the start point.
         /// veh[0] = most behind
         /// </summary>
-        public void SortVehicles()
+        public void SortVehicles(bool updateIdx = true)
         {
             if (vehicles.Count > 1)
             {
                 vehicles.Sort((x, y) => x.distance.CompareTo(y.distance));
 
-                for (int i = 0; i < vehicles.Count; i++)
+                if (updateIdx)
                 {
-                    vehicles[i].vehiclesIndex = i;
+                    for (int i = 0; i < vehicles.Count; i++)
+                    {
+                        vehicles[i].vehiclesIndex = i;
+                    }
                 }
             }
         }
@@ -211,21 +228,21 @@ namespace SimTMDG.Road
         #region tools
         public int findVehicleInFront(double position)
         {
-            //// Binary Search
+            // Binary Search
             //int low = 0;
             //int high = vehicles.Count - 1;
 
             //while (low <= high)
             //{
             //    int mid = (low + high) >> 1;
-            //    double rearPos = vehicles[mid].distance;
+            //    double searchPos = vehicles[mid].distance;
             //    // final int compare = Double.compare(midPos, vehiclePos);
             //    // note vehicles are sorted in reverse order of position
-            //    if (position > rearPos)
+            //    if (position > searchPos)
             //    {
             //        low = mid + 1;
             //    }
-            //    else if (position < rearPos)
+            //    else if (position < searchPos)
             //    {
             //        high = mid - 1;
             //    }
@@ -234,7 +251,7 @@ namespace SimTMDG.Road
             //        return mid; // key found
             //    }
             //}
-            //return -(low + 1); // key not found
+            //return -1; // -(low + 1); // key not found
 
             // naive search
             if (vehicles.Count < 1)
@@ -244,7 +261,8 @@ namespace SimTMDG.Road
 
             for (int i = 0; i < vehicles.Count; i++)
             {
-                if (vehicles[i].RearPos > position)
+                //if (vehicles[i].RearPos > position)
+                if (vehicles[i].distance > position)
                 {
                     return i;
                 }
@@ -255,6 +273,31 @@ namespace SimTMDG.Road
 
         public int findVehicleBehind(double position)
         {
+            //// Binary Search
+            //int low = 0;
+            //int high = vehicles.Count - 1;
+
+            //while (low <= high)
+            //{
+            //    int mid = (low + high) >> 1;
+            //    double searchPos = vehicles[mid].distance;
+            //    // final int compare = Double.compare(midPos, vehiclePos);
+            //    // note vehicles are sorted in reverse order of position
+            //    if (position < searchPos)
+            //    {
+            //        low = mid + 1;
+            //    }
+            //    else if (position > searchPos)
+            //    {
+            //        high = mid - 1;
+            //    }
+            //    else
+            //    {
+            //        return mid; // key found
+            //    }
+            //}
+            //return -1;
+
             if (vehicles.Count < 1)
             {
                 return -1;

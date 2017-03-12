@@ -386,6 +386,20 @@ namespace SimTMDG.Vehicle
             set { frontPos = value; }
         }
 
+        #region debugVeh
+        public RectangleF positionRect
+        {
+            get { return new RectangleF((float)absCoord.X - 1, (float)absCoord.Y - 1, 2, 2); }
+        }
+        private bool debugVeh = false;
+
+
+        public void ToggleDebug()
+        {
+            debugVeh = !debugVeh;
+        }
+
+        #endregion
 
 
         #region draw
@@ -418,42 +432,101 @@ namespace SimTMDG.Vehicle
             GraphicsPath gp = BuildGraphicsPath();
             
             fillBrush.Color = color;
+            //if (state.laneIdx == 0)
+            //{
+            //    fillBrush.Color = Color.Blue;
+            //}
+            //else if (state.laneIdx == 1)
+            //{
+            //    fillBrush.Color = Color.Red;
+            //}
+            //else if (state.laneIdx == 2)
+            //{
+            //    fillBrush.Color = Color.Green;
+            //}
+
             g.FillPath(fillBrush, gp);
 
-            #region debug draw
-            Font debugFont = new Font("Calibri", 6);
-            Brush blackBrush = new SolidBrush(Color.Black);
-            Rectangle layoutRect = new Rectangle((int) absCoord.X + 10, (int) absCoord.Y, 80, 160);
-
-            string leadVdId = "";
-            string leadVdS = "";
-            string lagVdId = "";
-            string lagVdS = "";
-
-            if (leadVd != null)
+            if (debugVeh)
             {
-                if (leadVd.vehicle != null)
+                #region debug draw
+                Font debugFont = new Font("Calibri", 6);
+                Brush blackBrush = new SolidBrush(Color.Black);
+                Rectangle layoutRect = new Rectangle((int)absCoord.X + 100, (int)absCoord.Y, 80, 160);
+
+                string leadVdId = "";
+                string leadVdS = "";
+                string newleadVdId = "";
+                string newleadVdS = "";
+                string newlagVdId = "";
+                string newlagVdS = "";
+                //string lagVdId = "";
+                //string lagVdS = "";
+
+                if (leadVd != null)
                 {
-                    leadVdId = leadVd.vehicle.hashcode.ToString();
+                    if (leadVd.vehicle != null)
+                    {
+                        leadVdId = leadVd.vehicle.hashcode.ToString();
+                    }
+
+                    leadVdS = leadVd.distance.ToString("#.#");
                 }
 
-                leadVdS = leadVd.distance.ToString();
-            }
-
-            if (lagVd != null)
-            {
-                if (lagVd.vehicle != null)
+                if (newLeadVd != null)
                 {
-                    lagVdId = lagVd.vehicle.hashcode.ToString();
+                    if (newLeadVd.vehicle != null)
+                    {
+                        newleadVdId = newLeadVd.vehicle.hashcode.ToString();
+                    }
+
+                    newleadVdS = newLeadVd.distance.ToString("#.#");
                 }
-                lagVdS = lagVd.distance.ToString();
+
+                if (newLagVd != null)
+                {
+                    if (newLagVd.vehicle != null)
+                    {
+                        newlagVdId = newLagVd.vehicle.hashcode.ToString();
+                    }
+
+                    if (newLagVd.distance == double.MaxValue)
+                    {
+                        newlagVdS = "Max";
+                    }else
+                    {
+                        newlagVdS = newLagVd.distance.ToString("#.#");
+                    }
+
+                }
+
+                //if (lagVd != null)
+                //{
+                //    if (lagVd.vehicle != null)
+                //    {
+                //        lagVdId = lagVd.vehicle.hashcode.ToString();
+                //    }
+                //    lagVdS = lagVd.distance.ToString();
+                //}
+
+                //string debugString = hashcode.ToString() + " - LastTimeLC: " + lastTimeLc + " - iProcLC: " + inProcessOfLC.ToString() + " - LCDelay : " + tLaneChangeDelay;
+                //string debugString = hashcode.ToString() + " - lv: " + leadVdId + " - nlv: " + newleadVdId; // + " - s: " + leadVdS;
+                //g.DrawString(hashcode.ToString(), debugFont, blackBrush, layoutRect);
+
+                // TODO : add a complete debug param for checking LC / MOBIL process
+                // TODO : only display the ID on the moving debug param
+
+                string debugString = hashcode.ToString() + "@prev[" + state.prevLaneIdx + "] " + " a: " + physics.acceleration +
+                                        //"|| TL s: " + distanceToTrafficLight.ToString("#.#") +
+                                        " || ldv: " + leadVdId + " -s : " + leadVdS +
+                                        " || nldv: " + newleadVdId + " - s: " + newleadVdS +
+                                        " || nlgv: " + newlagVdId + " - s: " + newlagVdS;   
+
+                //g.Transform = new Matrix(1, 0, 0, 1, 0, 0);
+                g.DrawString(debugString, debugFont, blackBrush, layoutRect);
+
+                #endregion
             }
-
-            string debugString = hashcode.ToString() + " - LastTimeLC" + lastTimeLc + " - iProcLC: " + inProcessOfLC.ToString() + " - LCDelay : " + tLaneChangeDelay;
-
-            g.DrawString(debugString, debugFont, blackBrush, layoutRect);
-            
-            #endregion
         }
 
         #endregion
@@ -512,6 +585,8 @@ namespace SimTMDG.Vehicle
         double timerLC = 0;
         VehicleDistance leadVd;
         VehicleDistance lagVd;
+        double distanceToTrafficLight;
+
 
         public double Think(List<RoadSegment> route, double tickLength)
         {
@@ -537,8 +612,9 @@ namespace SimTMDG.Vehicle
 
                 if (leadVd.vehicle != null)
                 {
-                    lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity - leadVd.vehicle._physics.velocity);
-                }else
+                    lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, this.physics.velocity - leadVd.vehicle.physics.velocity);
+                }
+                else
                 {
                     lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
                 }
@@ -546,7 +622,7 @@ namespace SimTMDG.Vehicle
             else
             {
                 // free acceleration
-                lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
+                lowestAcceleration = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity);
             }
 
             #endregion
@@ -589,9 +665,9 @@ namespace SimTMDG.Vehicle
 
             #region Traffic lights
 
-            double TLAcc = 0.0;
+            double TLAcc = double.MaxValue;
             // Check for red traffic lights on route
-            double distanceToTrafficLight = GetDistanceToNextTrafficLightOnRoute(route, this.distance, Constants.SearchRange, true);
+            distanceToTrafficLight = GetDistanceToNextTrafficLightOnRoute(route, this.distance, Constants.SearchRange, true);
             //intersectionLookaheadDistance = distanceToTrafficLight;
 
             // If the next TrafficLight is closer than the next vehicle, no free line change shall be performed
@@ -611,11 +687,49 @@ namespace SimTMDG.Vehicle
             #endregion
 
 
+            //return Math.Max(lowestAcceleration, -1.5 * bSafe);
+            return lowestAcceleration;
+        }
+
+        public int MakeLaneChange(double tickLength)
+        {
+            int toReturn = Lane.NO_CHANGE;
+
+            if (inProcessOfLC)
+            {
+                updateLaneChangeDelay(tickLength);
+            } else if (lastTimeLc <= 5)
+            {
+                lastTimeLCTick(tickLength);
+            } else { 
+                bool doLC = LaneChange(tickLength);
+
+                if (doLC)
+                {
+                    setLane(state.targetLaneIdx);
+                    getLane(state.laneIdx).AddVehicle(this);
+                    getLane(state.prevLaneIdx).RemoveVehicle(this);
+                    //inProcessOfLC = true;
+                }
+
+            }
+
+            return toReturn;
+        }
+
+        public bool LaneChange(double tickLength)
+        {
+
+            List<RoadSegment> route = new List<RoadSegment>();
+            foreach (RoadSegment ws in routing.Route)
+                route.Add(ws);
+
             #region lane changing
-            if ((!inProcessOfLC) && (lastTimeLc > 5) && (currentSegment.lanes.Count > 1))
+            if ((!inProcessOfLC) && (currentSegment.lanes.Count > 1) && (lastTimeLc > 5)) //
             {
                 thinkAboutLC = true;
-            }else
+            }
+            else
             {
                 thinkAboutLC = false;
             }
@@ -629,51 +743,64 @@ namespace SimTMDG.Vehicle
             if (thinkAboutLC)
             {
                 int direction = 0;
-                double accToLeft = 0;
-                double accToRight = 0;
+                double accToLeft = double.MinValue;
+                double accToRight = double.MinValue;
 
                 // Check lane + 1 (right lane)
                 if (state.laneIdx < currentSegment.lanes.Count - 1)
                 {
-                    direction = 1;
-                    accToRight = ConsiderLaneChange(direction, tickLength, route, lowestAcceleration);
+                    direction = Lane.TO_RIGHT;
+                    accToRight = ConsiderLaneChange(direction, tickLength, route, physics.acceleration);
                 }
 
                 // Check lane - 1 (left lane)
                 if (state.laneIdx > 0)
                 {
-                    direction = -1;
-                    accToLeft = ConsiderLaneChange(direction, tickLength, route, lowestAcceleration);
+                    direction = Lane.TO_LEFT;
+                    accToLeft = ConsiderLaneChange(direction, tickLength, route, physics.acceleration);
                 }
 
-                if ((accToLeft > 0) || (accToRight > 0)){
+                if (inProcessOfLC)
+                {
                     if (accToLeft > accToRight)
                     {
-                        lowestAcceleration = accToLeft;
-                    }else
+                        _state.targetLaneIdx = state.laneIdx + Lane.TO_LEFT;
+                        //Accelerate(accToLeft);
+                        return true;
+                    }
+                    else
                     {
-                        lowestAcceleration = accToRight;
+                        _state.targetLaneIdx = state.laneIdx + Lane.TO_RIGHT;
+                        //Accelerate(accToRight);
+                        return true;
                     }
                 }
 
             }
             #endregion
 
-
-            return lowestAcceleration;
+            return false;
         }
 
+
+        VehicleDistance newLeadVd = null;
+        VehicleDistance newLagVd = null;
         // TODO
         private double ConsiderLaneChange(int direction, double tickLength, List<RoadSegment> route, double lowestAcceleration)
         {
             #region consider lane change
             // Find idx of new Lead
             //int newLeadIdx = currentLane(direction).findVehicleInFront(distance);
-            VehicleDistance newLeadVd = findVehicleInFront(route, direction);
-            VehicleDistance newLagVd = findVehicleInBehind(direction);
+            newLeadVd = findVehicleInFront(route, direction);
+
+            double newTLDistance = GetDistanceToNextTrafficLightOnRoute(route, distance, Constants.SearchRange, true);            
+
+
+            newLagVd = findVehicleInBehind(direction);
             //VehicleDistance lagVd = findVehicleInBehind();
             lagVd = findVehicleInBehind();
 
+            //double acc = Think(route, tickLength);
             double sNewLead;
             double sNewLag;
             double sLead;
@@ -688,24 +815,36 @@ namespace SimTMDG.Vehicle
             double accLag;
             double newAccOldLag;
 
+            /// If new lead in target lane is found
             if (newLeadVd != null)
             {
                 sNewLead = newLeadVd.distance;
 
-                if (newLeadVd.vehicle != null)
+                if (sNewLead < newTLDistance)
                 {
-                    vNewLead = newLeadVd.vehicle.physics.velocity;
+                    if (newLeadVd.vehicle != null)
+                    {
+                        vNewLead = newLeadVd.vehicle.physics.velocity;
+                    }
+                    else
+                    {
+                        vNewLead = physics.velocity;
+                    }
                 }else
                 {
-                    vNewLead = physics.velocity;
+                    sNewLead = newTLDistance;
+                    vNewLead = 0;
                 }
+
             }
+            /// If new lead in target lane is NOT found
             else
             {
                 sNewLead = Constants.SearchRange;
                 vNewLead = physics.velocity;
             }
 
+            /// If new follower in target lane is found
             if (newLagVd != null)
             {
                 sNewLag = newLagVd.distance;
@@ -714,19 +853,47 @@ namespace SimTMDG.Vehicle
                 {
                     vNewLag = newLagVd.vehicle.physics.velocity;
                     accNewLag = newLagVd.vehicle.physics.acceleration;
-                }else
+
+                    newAccNewLag = CalculateAcceleration(vNewLag, effectiveDesiredVelocity, sNewLag, vNewLag - physics.velocity);
+                }
+                else
                 {
                     vNewLag = 0;
                     accNewLag = 0;
+                    newAccNewLag = 0;
                 }
             }
+            /// If new follower in target lane is NOT found
             else
             {
                 sNewLag = Constants.SearchRange;
                 vNewLag = 0;
                 accNewLag = 0;
+                newAccNewLag = 0;
             }
 
+            /// If lead in current lane is found
+            if (leadVd != null)
+            {
+                sLead = leadVd.distance;
+
+                if (leadVd.vehicle != null)
+                {
+                    vLead = leadVd.vehicle.physics.velocity;
+                }
+                else
+                {
+                    vLead = double.MaxValue;
+                }
+            }
+            /// If follower in current lane is NOT found
+            else
+            {
+                sLead = Constants.SearchRange;
+                vLead = double.MaxValue;
+            }
+
+            /// If follower in current lane is found
             if (lagVd != null)
             {
                 sLag = lagVd.distance;
@@ -735,78 +902,57 @@ namespace SimTMDG.Vehicle
                 {
                     vLag = lagVd.vehicle.physics.velocity;
                     accLag = lagVd.vehicle.physics.acceleration;
-                }else
+
+                    newAccOldLag = CalculateAcceleration(
+                        vLag,
+                        lagVd.vehicle.effectiveDesiredVelocity,
+                        sLag + sLead + this.length,
+                        vLag - vLead
+                    );
+                }
+                else
                 {
                     vLag = 0;
                     accLag = 0;
+                    newAccOldLag = 0;
                 }
             }
+            /// If follower in current lane is NOT found
             else
             {
                 sLag = Constants.SearchRange;
                 vLag = 0;
                 accLag = 0;
+                newAccOldLag = 0;
             }
-
-            if (leadVd != null)
-            {
-                sLead = leadVd.distance;
-
-                if (leadVd.vehicle != null)
-                {
-                    vLead = leadVd.vehicle.physics.velocity;
-                }else
-                {
-                    vLead = 0;
-                }
-            }
-            else
-            {
-                sLead = Constants.SearchRange;
-                vLead = 0;
-            }
+            
 
             accNew = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, sNewLead, physics.velocity - vNewLead);
 
-            if (accNewLag != 0)
-            {
-                newAccNewLag = CalculateAcceleration(vNewLag, effectiveDesiredVelocity, sNewLag, vNewLag - physics.velocity);
-            }else
-            {
-                newAccNewLag = 0;
-            }
 
-            if (accLag != 0)
+            if (SafetyCriterion(newAccNewLag) && (sNewLag > 0) && (sNewLead >0)) // this.length / 2
             {
-                newAccOldLag = CalculateAcceleration(
-                    vLag,
-                    effectiveDesiredVelocity,
-                    sLag + sLead + this.length,
-                    vLag - vLead
-                    );
-            }else
-            {
-                newAccOldLag = 0;
-            }
-
-
-
-            if (SafetyCriterion(newAccNewLag))
-            {
-                if (sNewLead > 0 && sNewLag > 0 && LaneChangeDecision(accNew, physics.acceleration, newAccNewLag, accNewLag, newAccOldLag, accLag))
+                if (LaneChangeDecision(accNew, physics.acceleration, newAccNewLag, accNewLag, newAccOldLag, accLag))
                 {
                     // Do line change
                     //thinkAboutLineChange = true;
                     //color = Color.BlueViolet;
                     //doLaneChange(direction, tickLength);
                     lowestAcceleration = accNew;
-                    _state.targetLaneIdx = state.laneIdx + direction;
+                    //_state.targetLaneIdx = state.laneIdx + direction;
                     inProcessOfLC = true;
                 }
             }
             #endregion
 
             return lowestAcceleration;
+        }
+
+        private void setLane(int targetLane)
+        {
+            _state.prevLaneIdx = state.laneIdx;
+            _state.laneIdx = targetLane;
+            _state.targetLaneIdx = Lane.NONE;
         }
 
 
@@ -820,13 +966,16 @@ namespace SimTMDG.Vehicle
             //resetDelay(tickLength);
 
             //_state.targetLaneIdx = state.laneIdx + direction;
-            currentLane(state.targetLaneIdx - state.laneIdx).vehicles.Add(this);
+            //_state.prevLaneIdx = state.laneIdx;
+            //_state.laneIdx = state.targetLaneIdx;
+            currentLane().RemoveVehicle(this);
+            currentLane(state.targetLaneIdx - state.laneIdx).AddVehicle(this);
             updateLaneChangeDelay(tickLength);
             //currentLane().vehToRemove.Add(this);
 
-            //_state.prevLaneIdx = state.laneIdx;
-            //_state.laneIdx = state.targetLaneIdx;
-            //_state.targetLaneIdx = -1;
+            _state.prevLaneIdx = state.laneIdx;
+            _state.laneIdx = state.targetLaneIdx;
+            _state.targetLaneIdx = -1;
 
             //resetDelay(tickLength);
         }
@@ -870,9 +1019,14 @@ namespace SimTMDG.Vehicle
 
         public void laneChangeFinished(double dt)
         {
-            currentLane().vehToRemove.Add(this);
-            _state.prevLaneIdx = state.laneIdx;
-            _state.laneIdx = state.targetLaneIdx;
+            //doLaneChange(dt);
+
+            //currentLane().vehToRemove.Add(this);
+            //currentLane().RemoveVehicle(this);
+            //_state.prevLaneIdx = state.laneIdx;
+            //_state.laneIdx = state.targetLaneIdx;
+
+            //getLane(state.prevLaneIdx).RemoveVehicle(this);
 
             inProcessOfLC = false;
             resetDelay(dt);
@@ -900,7 +1054,7 @@ namespace SimTMDG.Vehicle
             //        vd = new VehicleDistance(veh, returnDistance);
             //    }
             //}
-            /// Search in current segment + direction (left or right segment) in current RoadSegment
+            /// Search in current segment +direction(left or right segment) in current RoadSegment
             //else
             //{
                 if (currentLane(direction).vehicles.Count > 0)
@@ -924,13 +1078,12 @@ namespace SimTMDG.Vehicle
                 searchedDistance += route[0].Length - (this.FrontPos);
                 /// search in next segment
                 vd = findVehFrontNext(route, searchedDistance, direction);
-            }
-
-            if (vd.distance < 0)
+            }else if (vd.distance < 0)
             {
                 vd.distance = 0;
             }
-            
+
+
             return vd;
         }
 
@@ -1097,7 +1250,7 @@ namespace SimTMDG.Vehicle
                     if (vehIdx != -1)
                     {
                         IVehicle veh = currentLane(direction).vehicles[vehIdx];
-                        double returnDistance = this.distance - (veh.frontPos + (this.length / 2));
+                        double returnDistance = this.RearPos - veh.FrontPos; //this.distance - (veh.FrontPos + (this.length / 2));
                         vd = new VehicleDistance(veh, returnDistance);
                     }
                 }
@@ -1107,7 +1260,8 @@ namespace SimTMDG.Vehicle
             if (vd == null)
             {
                 /// add current lane length remaining distance to accumulated searched distance
-                searchedDistance += currentLane(direction).Length - (this.FrontPos);
+                //searchedDistance += currentLane(direction).Length - (this.FrontPos);
+                searchedDistance = this.RearPos;
                 /// search in next segment
                 vd = findVehBehindNext(this.currentSegment, searchedDistance, direction);
             }
@@ -1190,7 +1344,7 @@ namespace SimTMDG.Vehicle
                         /// If there's a veh in searched lane segment
                         if (searchedLane.vehicles.Count > 0)
                         {
-                            double curDistance = searchedLane.Length - searchedLane.vehicles[searchedLane.vehicles.Count - 1].frontPos;
+                            double curDistance = searchedLane.Length - searchedLane.vehicles[searchedLane.vehicles.Count - 1].FrontPos;
 
                             /// If current found veh is nearer than previously found veh
                             if (curDistance < tempVd.distance)
@@ -1299,7 +1453,7 @@ namespace SimTMDG.Vehicle
                     {
                         if (route[i].endNode.tLight.trafficLightState == TrafficLight.State.RED)
                         {
-                            toReturn = route[i].Length + searchedDistance - (this.distance + this.length / 2);
+                            toReturn = route[i].Length + searchedDistance - this.FrontPos;// (this.distance + this.length / 2);
                             return toReturn;
                         }
                             
@@ -1320,6 +1474,33 @@ namespace SimTMDG.Vehicle
             _physics.acceleration = newAcceleration;
         }
 
+        public string logAcc  = "";
+        public string logVel  = "";
+        public string logDist = "";
+        public string logTime = "";
+        double totalDist = 0;
+        double roadDist = 0;
+        double prevDist = 0;
+
+        public void LogVeh(double totalTime)
+        {
+            logTime += totalTime + ";";
+            logAcc += physics.acceleration + ";";
+            logVel += physics.velocity + ";";
+
+
+            if (distance + roadDist < totalDist)
+            {
+                logTime += "";
+            }
+
+            totalDist = distance + roadDist;
+
+            logDist += totalDist + ";";
+            prevDist = distance;
+
+        }
+
 
         #region move
         public void Move(double tickLength)
@@ -1334,23 +1515,26 @@ namespace SimTMDG.Vehicle
                 distance += _physics.velocity * tickLength;
 
                 #region do lane change
-                if (inProcessOfLC)
-                {
-                    if (tLaneChangeDelay == 0)
-                    {
-                        doLaneChange(tickLength);
-                    }
-                    else
-                    {
-                        updateLaneChangeDelay(tickLength);
-                    }
-                }else
-                {
-                    if (lastTimeLc <= 5)
-                    {
-                        lastTimeLCTick(tickLength);
-                    }
-                }
+                //if (inProcessOfLC)
+                //{
+                //    if (tLaneChangeDelay == 0)
+                //    {
+                //        doLaneChange(tickLength);
+                //        //currentLane(state.targetLaneIdx - state.laneIdx).AddVehicle(this);
+                //        //updateLaneChangeDelay(tickLength);
+                //    }
+                //    else
+                //    {
+                //        updateLaneChangeDelay(tickLength);
+                //    }
+                //}
+                //else
+                //{
+                //    if (lastTimeLc <= 5)
+                //    {
+                //        lastTimeLCTick(tickLength);
+                //    }
+                //}
                 #endregion
 
                 //Debug.WriteLine(hashcode + " - " + distance);
@@ -1365,8 +1549,12 @@ namespace SimTMDG.Vehicle
                         Routing.Route.RemoveFirst();
                         if (Routing.Route.Count > 0)
                         {
+                            /// test log
+                            roadDist += currentLane().Length;
+
                             if (newDistance > Routing.Route.First.Value.Length)
                             {
+                                roadDist += Routing.Route.First.Value.Length;
                                 newDistance = newDistance - Routing.Route.First.Value.Length;
                                 Routing.Route.RemoveFirst();
                                 RemoveFromCurrentSegment(Routing.Route.First.Value, newDistance);
@@ -1390,10 +1578,7 @@ namespace SimTMDG.Vehicle
                     newCoord();
                 }
                 #endregion
-
-                //speed += acc * tickLength;
-                //distance += speed * tickLength;
-                //newCoord();
+               
 
                 alreadyMoved = true;
             }
@@ -1433,10 +1618,40 @@ namespace SimTMDG.Vehicle
 
             //float segmentLength = (float) Vector2.GetDistance(start, end);
 
-            toReturn.X = (float) difference.X * (float) (this.distance / currentLane().Length) +
-                (float) currentLane().startNode.Position.X;
-            toReturn.Y = (float) difference.Y * (float) (this.distance / currentLane().Length) + 
-                (float) currentLane().startNode.Position.Y;
+
+            if (inProcessOfLC)
+            {
+
+                PointF offset = new PointF();
+                int direction = state.laneIdx - state.prevLaneIdx;
+                double angle = Vector2.AngleBetween(getLane(state.prevLaneIdx).endNode.Position, getLane(state.prevLaneIdx).startNode.Position);
+
+                // TODO : Make it based on current / new lane, not prev lane. The lane shift is based on substraction
+                toReturn.X = (float)difference.X * (float)(this.distance / getLane(state.laneIdx).Length) +
+                                (float)getLane(state.laneIdx).startNode.Position.X;
+                toReturn.Y = (float)difference.Y * (float)(this.distance / getLane(state.laneIdx).Length) +
+                                (float)getLane(state.laneIdx).startNode.Position.Y;
+
+                if (angle >= 0)
+                {
+                    offset.X = ((float)currentSegment.laneWidth * (float)(1 - tLaneChangeDelay) * direction) * (float)Math.Sin(angle);
+                    offset.Y = ((float)currentSegment.laneWidth * (float)(1 - tLaneChangeDelay) * direction) * (float)Math.Cos(angle);
+
+                }else
+                {
+                    offset.X = ((float)currentSegment.laneWidth * (float)(1 - tLaneChangeDelay) * -direction) * (float)Math.Sin(angle);
+                    offset.Y = ((float)currentSegment.laneWidth * (float)(1 - tLaneChangeDelay) * -direction) * (float)Math.Cos(angle);
+                }
+
+                toReturn.X += offset.X;
+                toReturn.Y += offset.Y;
+            }else
+            {
+                toReturn.X = (float) difference.X * (float) (this.distance / currentLane().Length) +
+                    (float) currentLane().startNode.Position.X;
+                toReturn.Y = (float) difference.Y * (float) (this.distance / currentLane().Length) + 
+                    (float) currentLane().startNode.Position.Y;
+            }
 
 
             absCoord = toReturn;
@@ -1464,6 +1679,17 @@ namespace SimTMDG.Vehicle
         public SegmentLane currentLane(int direction = 0)
         {
             return currentSegment.lanes[state.laneIdx + direction];
+        }
+
+        public SegmentLane getLane(int lane)
+        {
+            if (currentSegment.lanes.Count > lane)
+            {
+                return currentSegment.lanes[lane];
+            }else
+            {
+                return null;
+            }
         }
 
     }

@@ -212,7 +212,7 @@ namespace SimTMDG.Road
         #endregion
 
 
-
+        double totalTime = 0;
         #region tick
         public void Tick(double tickLength, NodeControl nc)
         {
@@ -254,9 +254,73 @@ namespace SimTMDG.Road
             //#endregion
 
 
+            //foreach (SegmentLane lane in lanes)
+            //{
+            //    lane.Tick(tickLength, nc);
+            //}
+
+
             foreach (SegmentLane lane in lanes)
             {
-                lane.Tick(tickLength, nc);
+                lane.SortVehicles();
+            }
+
+            foreach (SegmentLane lane in lanes)
+            {
+                for (int i = 0; i < lane.vehicles.Count; i++)
+                {
+                    lane.vehicles[i].MakeLaneChange(tickLength);
+                }
+            }
+
+            foreach (SegmentLane lane in lanes)
+            {
+                for (int i = 0; i < lane.vehicles.Count; i++)
+                {
+                    lane.vehicles[i].Think(tickLength);
+                }
+            }
+
+            /// TODO : delete lane changing here
+            //foreach (SegmentLane lane in lanes)
+            //{
+            //    for (int i = 0; i < lane.vehicles.Count; i++)
+            //    {
+            //        lane.vehicles[i].LaneChange(tickLength);
+            //    }
+            //}
+
+            foreach (SegmentLane lane in lanes)
+            {
+                for (int i = 0; i < lane.vehicles.Count; i++)
+                {
+                    lane.vehicles[i].Move(tickLength);
+                }
+            }
+
+            int akj = 0;
+
+            //if (((Id >= 353) && (Id <= 368)) || ((Id >= 0) && (Id <= 1)) || ((Id >= 26962) && (Id <= 26964)))
+            //{
+            //    totalTime += tickLength;
+
+            //    foreach (SegmentLane lane in lanes)
+            //    {
+            //        for (int i = 0; i < lane.vehicles.Count; i++)
+            //        {
+            //            lane.vehicles[i].LogVeh(totalTime);
+            //        }
+            //    }
+
+            //    if (Id == 26964)
+            //    {
+            //        akj = 1;
+            //    }
+            //}
+
+            foreach (SegmentLane lane in lanes)
+            {
+                lane.RemoveAllVehiclesInRemoveList(nc);
             }
         }
         #endregion

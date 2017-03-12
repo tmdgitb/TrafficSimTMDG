@@ -30,17 +30,19 @@ namespace SimTMDG.Vehicle
 
         public Truck(RoadSegment cs, int laneIndex, List<RoadSegment> r)
         {
-            a = 0.6;
-            b = 0.8;
+            a = 0.7;
+            b = 2;
+            s0 = 4;
+            T = 2;
 
             _physics = physics;
             _state.currentSegment = cs;
             _state.laneIdx = laneIndex;
 
-            a *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            b *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            T *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //a *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //b *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //T *= (GlobalRandom.Instance.NextDouble() + 0.25);
 
             length = (GlobalRandom.Instance.Next(2) == 0) ? 10 : 12;
 

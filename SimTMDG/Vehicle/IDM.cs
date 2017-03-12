@@ -58,7 +58,7 @@ namespace SimTMDG.Vehicle
         /// <summary>
         /// Zeitlicher Sicherheitsabstand
         /// </summary>
-        protected double T = 1.4;
+        protected double T = 1.5;
         /// <summary>
         /// Zeitlicher Sicherheitsabstand
         /// </summary>
@@ -67,7 +67,7 @@ namespace SimTMDG.Vehicle
         /// <summary>
         /// maximale Beschleunigung
         /// </summary>
-        protected double a = 1.2;//0.3;
+        protected double a = 1.4;//0.3;
 
         /// <summary>
         /// komfortable Bremsverzögerung
@@ -91,7 +91,7 @@ namespace SimTMDG.Vehicle
         /// <summary>
         /// Mindest-Vorteilswert für Spurwechsel
         /// </summary>
-        protected double lineChangeThreshold = 0.75;
+        protected double lineChangeThreshold = 0.15;
 
         /// <summary>
         /// maximale sichere Bremsverzögerung
@@ -137,7 +137,14 @@ namespace SimTMDG.Vehicle
             sstar = CalculateWantedDistance(velocity, vDiff);
 
             // Neue Geschwindigkeit berechnen
-            double vNeu = a * (1 - Math.Pow((velocity / desiredVelocity), 2) - Math2.Square(sstar / distance));
+            //double tempSquare, tempPow;
+            //tempPow = Math.Pow((velocity / desiredVelocity), 2);
+            //tempSquare = Math.Sqrt((sstar / distance));
+            //Console.WriteLine("value of tempPow : " + tempPow);
+            //Console.WriteLine("value of tempSquare : " + tempSquare);
+            //double vNeu = a * (1 - tempPow - tempSquare);
+            //Console.WriteLine("value of vNew : " + vNeu);
+            double vNeu = a * (1 - Math.Pow((velocity / desiredVelocity), 1) - (Math2.Square(sstar / distance)));
 
             return vNeu;
         }

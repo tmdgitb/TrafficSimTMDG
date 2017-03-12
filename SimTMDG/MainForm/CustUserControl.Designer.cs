@@ -28,13 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.SuspendLayout();
+            // 
+            // CustUserControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "CustUserControl";
-            this.Size = new System.Drawing.Size(295, 283);
+            this.Size = new System.Drawing.Size(590, 544);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.CustUserControl_Paint);
             this.ResumeLayout(false);
+
         }
 
         #endregion

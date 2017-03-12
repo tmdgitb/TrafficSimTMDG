@@ -108,11 +108,15 @@
     <Compile Include="Vehicle\Car.cs" />
     <Compile Include="Vehicle\IDM.cs" />
     <Compile Include="Vehicle\IVehicle.cs" />
+    <Compile Include="Vehicle\Lane.cs" />
     <Compile Include="Vehicle\Truck.cs" />
     <Compile Include="Vehicle\VehicleDistance.cs" />
     <Compile Include="Vehicle\VehicleGenerator.cs" />
     <EmbeddedResource Include="LoadingForm\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm\CustUserControl.resx">
+      <DependentUpon>CustUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

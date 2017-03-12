@@ -32,10 +32,10 @@ namespace SimTMDG.Vehicle
             _state.currentSegment = cs;
             _state.laneIdx = laneIndex;
 
-            a *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            b *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            T *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //a *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //b *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            //T *= (GlobalRandom.Instance.NextDouble() + 0.25);
 
             length = GlobalRandom.Instance.Next(6, 8);
 

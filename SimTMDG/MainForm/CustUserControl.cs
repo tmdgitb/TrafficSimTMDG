@@ -28,6 +28,8 @@ namespace SimTMDG.MainForm
         /// </summary>
         private bool m_DrawGrid;
 
+
+
         /// <summary>
         /// Grids size
         /// </summary>
@@ -113,10 +115,14 @@ namespace SimTMDG.MainForm
         }
         #endregion
 
+        private Brush brush;
+
         public CustUserControl()
         {
             InitializeComponent();
 
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.SetStyle(ControlStyles.Opaque, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.DoubleBuffered = true;
 
@@ -156,7 +162,7 @@ namespace SimTMDG.MainForm
         /// <Param name = "e"> Paint Event arguments </ param>
         private void CustUserControl_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.Clear(Color.White);
+            e.Graphics.Clear(this.BackColor);
         }
         #endregion
     }

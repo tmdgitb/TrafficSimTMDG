@@ -47,8 +47,8 @@ namespace SimTMDG
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.btnAstar = new System.Windows.Forms.Button();
             this.astarStatus = new System.Windows.Forms.Label();
-            this.timerSimulation = new System.Windows.Forms.Timer(this.components);
             this.DaGrid = new SimTMDG.MainForm.CustUserControl();
+            this.timerSimulation = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -60,8 +60,8 @@ namespace SimTMDG
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 440F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.DaGrid, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.DaGrid, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
@@ -265,15 +265,10 @@ namespace SimTMDG
             this.astarStatus.TabIndex = 11;
             this.astarStatus.Text = "status";
             // 
-            // timerSimulation
-            // 
-            this.timerSimulation.Interval = 67;
-            this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
-            // 
             // DaGrid
             // 
             this.DaGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.DaGrid.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.DaGrid.BackColor = System.Drawing.Color.White;
             this.DaGrid.CellHeight = 0;
             this.DaGrid.CellSize = new System.Drawing.Size(0, 0);
             this.DaGrid.CellWidth = 0;
@@ -293,6 +288,11 @@ namespace SimTMDG
             this.DaGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DaGrid_MouseUp);
             this.DaGrid.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.DaGrid_MouseWheel);
             this.DaGrid.Resize += new System.EventHandler(this.DaGrid_Resize);
+            // 
+            // timerSimulation
+            // 
+            this.timerSimulation.Interval = 67;
+            this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
             // 
             // Main
             // 

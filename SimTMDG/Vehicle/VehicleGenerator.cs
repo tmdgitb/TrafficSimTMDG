@@ -161,7 +161,7 @@ namespace SimTMDG.Vehicle
 
                 v.Reuse(startSegment, laneidx, routes[destination]);
 
-                v.color = System.Drawing.Color.Pink;
+                //v.color = System.Drawing.Color.Pink;
 
             }
             else
