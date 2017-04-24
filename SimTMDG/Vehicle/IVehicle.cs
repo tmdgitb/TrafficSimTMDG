@@ -1514,6 +1514,16 @@ namespace SimTMDG.Vehicle
 
                 distance += _physics.velocity * tickLength;
 
+
+                //if (_physics.velocity < 0)
+                //    _physics.velocity = 0;
+
+                //double advance = _physics.velocity * tickLength + 0.5 * _physics.acceleration * tickLength * tickLength;
+
+                //distance += advance;
+
+                //_physics.velocity += _physics.acceleration * tickLength;
+
                 #region do lane change
                 //if (inProcessOfLC)
                 //{

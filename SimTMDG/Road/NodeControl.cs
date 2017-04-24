@@ -545,7 +545,7 @@ namespace SimTMDG.Road
             vehGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
 
 
-            //vehGenerators.Add(vehGen1);
+            vehGenerators.Add(vehGen1);
             #endregion
 
 
@@ -567,7 +567,7 @@ namespace SimTMDG.Road
             //origin_2__destinations.Add(segments.Find(x => x.Id == 26964));
             //origin_2__q_outs.Add(1);
             //vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 353), .35, origin_2__destinations, origin_2__q_outs);
-            vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 0), .35, origin_2__destinations, origin_2__q_outs);
+            //vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 0), .35, origin_2__destinations, origin_2__q_outs);
 
 
 
@@ -588,7 +588,7 @@ namespace SimTMDG.Road
             vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs);
 
 
-            //vehGenerators.Add(vehGen3);
+            vehGenerators.Add(vehGen3);
             #endregion
 
 
@@ -605,7 +605,7 @@ namespace SimTMDG.Road
             vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs);
 
 
-            //vehGenerators.Add(vehGen4);
+            vehGenerators.Add(vehGen4);
             #endregion
 
 
@@ -622,7 +622,7 @@ namespace SimTMDG.Road
             vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
 
 
-            //vehGenerators.Add(vehGen5);
+            vehGenerators.Add(vehGen5);
             #endregion
 
 
@@ -639,7 +639,7 @@ namespace SimTMDG.Road
             vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs);
 
 
-            //vehGenerators.Add(vehGen6);
+            vehGenerators.Add(vehGen6);
             #endregion
 
 
@@ -653,7 +653,7 @@ namespace SimTMDG.Road
             anGen1 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIBADUYUT, 0.1, origin_7__destinations, origin_7__q_outs);
 
 
-            //angGenerators.Add(anGen1);
+            angGenerators.Add(anGen1);
             #endregion
 
             #region Angkot Cicaheum Ledeng
@@ -666,7 +666,7 @@ namespace SimTMDG.Road
             anGen2 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_8__destinations, origin_8__q_outs);
 
 
-            //angGenerators.Add(anGen2);
+            angGenerators.Add(anGen2);
             #endregion
 
             #region Angkot Kelapa - Dago
@@ -679,7 +679,7 @@ namespace SimTMDG.Road
             anGen3 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_9__destinations, origin_9__q_outs);
 
 
-            //angGenerators.Add(anGen3);
+            angGenerators.Add(anGen3);
             #endregion
 
             #region Angkot Stasiun - Dago
@@ -691,7 +691,7 @@ namespace SimTMDG.Road
             anGen4 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_10__destinations, origin_10__q_outs);
 
 
-            //angGenerators.Add(anGen4);
+            angGenerators.Add(anGen4);
             #endregion
 
             #region coba

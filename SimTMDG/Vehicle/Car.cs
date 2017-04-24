@@ -36,6 +36,10 @@ namespace SimTMDG.Vehicle
             //b *= (GlobalRandom.Instance.NextDouble() + 0.25);
             //s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
             //T *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            a = Math2.GetRandomNumber(0.9 * a, 1.1 * a);
+            b = Math2.GetRandomNumber(0.9 * b, 1.1 * b);
+            s0 = Math2.GetRandomNumber(0.9 * s0, 1.1 * s0);
+            T = Math2.GetRandomNumber(0.9 * T, 1.1 * T);
 
             length = GlobalRandom.Instance.Next(6, 8);
 

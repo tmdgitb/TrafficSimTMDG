@@ -113,5 +113,12 @@ namespace SimTMDG.Tools
         {
             return Math.Min(Math.Max(value, min), max);
         }
+
+
+        public static double GetRandomNumber(double minimum, double maximum)
+        {
+            Random random = new Random();
+            return random.NextDouble() * (maximum - minimum) + minimum;
+        }
     }
 }
