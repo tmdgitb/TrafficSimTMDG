@@ -529,8 +529,8 @@ namespace SimTMDG.Road
             segments.Find(x => x.Id == 28611).startNode.tLight = new TrafficLight();
             segments.Find(x => x.Id == 28611).startNode.tLight.SwitchToGreen();
 
-            segments.Find(x => x.Id == 2919).TargetSpeed = 4;
-            segments.Find(x => x.Id == 25163).TargetSpeed = 5;
+            segments.Find(x => x.Id == 2919).MaxSpeed = 4;
+            segments.Find(x => x.Id == 25163).MaxSpeed = 5;
 
 
             #region VehGen 1: #2908
@@ -545,7 +545,7 @@ namespace SimTMDG.Road
             vehGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
 
 
-            //vehGenerators.Add(vehGen1);
+            vehGenerators.Add(vehGen1);
             #endregion
 
 
@@ -588,7 +588,7 @@ namespace SimTMDG.Road
             vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs);
 
 
-            //vehGenerators.Add(vehGen3);
+            vehGenerators.Add(vehGen3);
             #endregion
 
 
@@ -605,7 +605,7 @@ namespace SimTMDG.Road
             vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs);
 
 
-            //vehGenerators.Add(vehGen4);
+            vehGenerators.Add(vehGen4);
             #endregion
 
 
@@ -622,7 +622,7 @@ namespace SimTMDG.Road
             vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
 
 
-            //vehGenerators.Add(vehGen5);
+            vehGenerators.Add(vehGen5);
             #endregion
 
 
@@ -639,59 +639,90 @@ namespace SimTMDG.Road
             vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs);
 
 
-            //vehGenerators.Add(vehGen6);
+            vehGenerators.Add(vehGen6);
             #endregion
+
+
+            #region VehGen 7: #286
+            List<RoadSegment> origin_7__destinations = new List<RoadSegment>();
+            List<double> origin_7__q_outs = new List<double>();
+            
+            origin_7__destinations.Add(segments.Find(x => x.Id == 30141));
+            
+            origin_7__q_outs.Add(1);
+
+            vehGen7 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20419), .3, origin_7__destinations, origin_7__q_outs);
+
+
+            vehGenerators.Add(vehGen7);
+            #endregion
+
+
+            #region VehGen 8: #286
+            List<RoadSegment> origin_8__destinations = new List<RoadSegment>();
+            List<double> origin_8__q_outs = new List<double>();
+
+            origin_8__destinations.Add(segments.Find(x => x.Id == 35013));
+
+            origin_8__q_outs.Add(1);
+
+            vehGen8 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23195), .3, origin_8__destinations, origin_8__q_outs);
+
+
+            vehGenerators.Add(vehGen8);
+            #endregion
+
 
 
             #region Angkot 1: Cibaduyut - Kr Setra 529 22825
-            List<AngkotGenerator.AngkotPoint> origin_7__destinations = new List<AngkotGenerator.AngkotPoint>();
-            List<double> origin_7__q_outs = new List<double>();
+            List<AngkotGenerator.AngkotPoint> origin_1a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_1a__q_outs = new List<double>();
 
-            origin_7__destinations.Add(AngkotGenerator.AngkotPoint.KR_SETRA);
-            origin_7__q_outs.Add(1);
+            origin_1a__destinations.Add(AngkotGenerator.AngkotPoint.KR_SETRA);
+            origin_1a__q_outs.Add(1);
 
-            anGen1 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIBADUYUT, 0.1, origin_7__destinations, origin_7__q_outs);
+            anGen1 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIBADUYUT, 0.1, origin_1a__destinations, origin_1a__q_outs);
 
 
-            //angGenerators.Add(anGen1);
+            angGenerators.Add(anGen1);
             #endregion
 
             #region Angkot Cicaheum Ledeng
-            List<AngkotGenerator.AngkotPoint> origin_8__destinations = new List<AngkotGenerator.AngkotPoint>();
-            List<double> origin_8__q_outs = new List<double>();
+            List<AngkotGenerator.AngkotPoint> origin_2a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_2a__q_outs = new List<double>();
 
-            origin_8__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
-            origin_8__q_outs.Add(1);
+            origin_2a__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
+            origin_2a__q_outs.Add(1);
 
-            anGen2 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_8__destinations, origin_8__q_outs);
+            anGen2 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_2a__destinations, origin_2a__q_outs);
 
 
-            //angGenerators.Add(anGen2);
+            angGenerators.Add(anGen2);
             #endregion
 
             #region Angkot Kelapa - Dago
-            List<AngkotGenerator.AngkotPoint> origin_9__destinations = new List<AngkotGenerator.AngkotPoint>();
-            List<double> origin_9__q_outs = new List<double>();
+            List<AngkotGenerator.AngkotPoint> origin_3a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_3a__q_outs = new List<double>();
 
-            origin_9__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
-            origin_9__q_outs.Add(1);
+            origin_3a__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
+            origin_3a__q_outs.Add(1);
 
-            anGen3 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_9__destinations, origin_9__q_outs);
+            anGen3 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_3a__destinations, origin_3a__q_outs);
 
 
-            //angGenerators.Add(anGen3);
+            angGenerators.Add(anGen3);
             #endregion
 
             #region Angkot Stasiun - Dago
-            List<AngkotGenerator.AngkotPoint> origin_10__destinations = new List<AngkotGenerator.AngkotPoint>();
-            List<double> origin_10__q_outs = new List<double>();
+            List<AngkotGenerator.AngkotPoint> origin_4a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_4a__q_outs = new List<double>();
 
-            origin_10__destinations.Add(AngkotGenerator.AngkotPoint.STASIUN);
-            origin_10__q_outs.Add(1);
-            anGen4 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_10__destinations, origin_10__q_outs);
+            origin_4a__destinations.Add(AngkotGenerator.AngkotPoint.STASIUN);
+            origin_4a__q_outs.Add(1);
+            anGen4 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_4a__destinations, origin_4a__q_outs);
 
 
-            //angGenerators.Add(anGen4);
+            angGenerators.Add(anGen4);
             #endregion
 
             #region coba
@@ -714,6 +745,8 @@ namespace SimTMDG.Road
         VehicleGenerator vehGen4;
         VehicleGenerator vehGen5;
         VehicleGenerator vehGen6;
+        VehicleGenerator vehGen7;
+        VehicleGenerator vehGen8;
         AngkotGenerator anGen1;
         AngkotGenerator anGen2;
         AngkotGenerator anGen3;

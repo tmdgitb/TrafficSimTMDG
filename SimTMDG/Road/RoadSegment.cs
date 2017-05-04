@@ -74,7 +74,7 @@ namespace SimTMDG.Road
 
 
         /// <summary>
-        /// WaySegment target average speed
+        /// RoadSegment average speed
         /// </summary>
         private int _avgSpeed;
 
@@ -86,15 +86,15 @@ namespace SimTMDG.Road
         }
 
         /// <summary>
-        /// WaySegment target average speed
+        /// RoadSegment target max speed
         /// </summary>
-        private int _targetSpeed = -1;
+        private int _maxSpeed = -1;
 
-        public int TargetSpeed
+        public int MaxSpeed
         {
-            get { return _targetSpeed; }
+            get { return _maxSpeed; }
 
-            set { _targetSpeed = value; }
+            set { _maxSpeed = value; }
         }
 
         /// <summary>

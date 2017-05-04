@@ -228,13 +228,13 @@ namespace SimTMDG
 
 
             #region perf test
-            //if (nc.ActiveVehicles > prevActVeh)
-            //{
-            //    logActiveVeh += nc.ActiveVehicles + ",";
-            //    logThinkTime += thinkStopwatch.ElapsedMilliseconds + ",";
-            //    logMemUsed += proc.PrivateMemorySize64 + ",";
-            //    prevActVeh = nc.ActiveVehicles;
-            //}
+            if (nc.ActiveVehicles > prevActVeh)
+            {
+                logActiveVeh += nc.ActiveVehicles + ",";
+                logThinkTime += thinkStopwatch.ElapsedMilliseconds + ",";
+                logMemUsed += proc.PrivateMemorySize64 + ",";
+                prevActVeh = nc.ActiveVehicles;
+            }
             #endregion
 
             //Debug.WriteLine(GlobalTime.Instance.currentTime);

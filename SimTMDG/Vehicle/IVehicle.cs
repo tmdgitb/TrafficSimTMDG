@@ -174,7 +174,7 @@ namespace SimTMDG.Vehicle
         {
             get
             {
-                return (currentSegment.TargetSpeed != -1) ? Math.Min(_physics.targetVelocity, currentSegment.TargetSpeed) : _physics.targetVelocity;
+                return (currentSegment.MaxSpeed != -1) ? Math.Min(_physics.targetVelocity, currentSegment.MaxSpeed) : _physics.targetVelocity;
                 //return _physics.targetVelocity;
             }
         }
@@ -1072,10 +1072,14 @@ namespace SimTMDG.Vehicle
 
 
             /// No front veh in current segment, search in next RoadSegment
-            if (vd == null)
+            if (vd == null && route.Count > 0)
             {
-                /// add current lane length remaining distance to accumulated searched distance
-                searchedDistance += route[0].Length - (this.FrontPos);
+                if (route[0] != null)
+                {
+                    /// add current lane length remaining distance to accumulated searched distance
+                    searchedDistance += route[0].Length - (this.FrontPos);
+                }
+
                 /// search in next segment
                 vd = findVehFrontNext(route, searchedDistance, direction);
             }else if (vd.distance < 0)
