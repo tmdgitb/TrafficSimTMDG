@@ -152,6 +152,7 @@ namespace OSMConverter
                     XmlNode onewayTag = aXmlNode.SelectSingleNode("tag[@k='oneway']");
                     XmlNode highwayTag = aXmlNode.SelectSingleNode("tag[@k='highway']");
                     XmlNode numlanesTag = aXmlNode.SelectSingleNode("tag[@k='lanes']");
+                    string wayid = aXmlNode.Attributes.GetNamedItem("id").Value;
 
                     List<XmlNode> lnd = new List<XmlNode>();
 
@@ -163,11 +164,11 @@ namespace OSMConverter
                     if (onewayTag != null)
                     {
                         string oneway = onewayTag.Attributes.GetNamedItem("v").Value;
-                        makeWaySegment(lnd, highwayTag, numlanesTag, oneway);
+                        makeWaySegment(wayid, lnd, highwayTag, numlanesTag, oneway);
                     }
                     else
                     {
-                        makeWaySegment(lnd, highwayTag, numlanesTag, "");
+                        makeWaySegment(wayid, lnd, highwayTag, numlanesTag, "");
                     }
 
                     lf.StepLowerProgress();
@@ -289,17 +290,21 @@ namespace OSMConverter
         }
 
 
-        private void makeWaySegment(List<XmlNode> lnd, XmlNode highwayTag, XmlNode numlanesTag, string oneway)
+        private void makeWaySegment(string wayid, List<XmlNode> lnd, XmlNode highwayTag, XmlNode numlanesTag, string oneway)
         {
             #region road type and lanes
             string highway;
             int numlanes;
+            long wayId = long.Parse(wayid);
 
             if (highwayTag != null) { highway = highwayTag.Attributes.GetNamedItem("v").Value; }
             else { highway = ""; }
 
             if (numlanesTag != null) { numlanes = int.Parse(numlanesTag.Attributes.GetNamedItem("v").Value); }
             else { numlanes = -1; }
+
+            
+
             #endregion
 
             #region new approach
@@ -328,6 +333,7 @@ namespace OSMConverter
                         rn.segments[rn.segments.Count - 1].idx = rn.segments.Count - 1;
                         rn.segments[rn.segments.Count - 1].startNodeIdx = rn.segments[rn.segments.Count - 1].startNode.idx;
                         rn.segments[rn.segments.Count - 1].endNodeIdx = rn.segments[rn.segments.Count - 1].endNode.idx;
+                        rn.segments[rn.segments.Count - 1].WayId = wayId;
                     }
                 }
             }

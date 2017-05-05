@@ -29,6 +29,18 @@ namespace OSMConverter
             set { _id = value; }
         }
 
+        /// <summary>
+        /// OSM Way ID
+        /// </summary>
+        private long _wayId = -1;
+
+        public long WayId
+        {
+            get { return _wayId; }
+
+            set { _wayId = value; }
+        }
+
         [XmlIgnore]
         public int idx;
         #endregion
