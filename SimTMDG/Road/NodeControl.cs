@@ -91,12 +91,12 @@ namespace SimTMDG.Road
         #region draw perf test
         #endregion
         public int objDraw;
+        Pen pen = new Pen(Color.Gray, 1);
 
         public void Draw(Graphics g, int zoomLvl)
         {
             objDraw = 0;
             /// new
-            Pen pen = new Pen(Color.Gray, 1);
 
             if (zoomLvl < 5)
             {
@@ -104,13 +104,7 @@ namespace SimTMDG.Road
                 {
                     if ((IsInBound(ws.MidCoord, 0)))
                     {
-                        //ws.Draw(g);
-                        objDraw++;
-
-                        foreach (SegmentLane lane in ws.lanes)
-                        {
-                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
-                        }
+                        DrawRoadSegment(g, ws);
                     }
                 }
             }
@@ -120,13 +114,7 @@ namespace SimTMDG.Road
                 {
                     if ((IsInBound(ws.startNode.Position, 0)) || (IsInBound(ws.endNode.Position, 0)))
                     {
-                        //ws.Draw(g);
-                        objDraw++;
-
-                        foreach (SegmentLane lane in ws.lanes)
-                        {
-                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
-                        }
+                        DrawSegmentLane(g, ws);
                     }
                 }
             }
@@ -136,13 +124,7 @@ namespace SimTMDG.Road
                 {
                     if ((IsInBound(ws.startNode.Position, (int)mapBound.Width / 2)) || (IsInBound(ws.endNode.Position, (int)mapBound.Width / 2)))
                     {
-                        //ws.Draw(g);
-                        objDraw++;
-
-                        foreach (SegmentLane lane in ws.lanes)
-                        {
-                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
-                        }
+                        DrawSegmentLane(g, ws);
                     }
                 }
             }
@@ -152,13 +134,7 @@ namespace SimTMDG.Road
                 {
                     if ((IsInBound(ws.startNode.Position, mapBound.Width)) || (IsInBound(ws.endNode.Position, mapBound.Width)))
                     {
-                        //ws.Draw(g);
-                        objDraw++;
-
-                        foreach (SegmentLane lane in ws.lanes)
-                        {
-                            g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
-                        }
+                        DrawSegmentLane(g, ws);
                     }
                 }
             }
@@ -232,7 +208,31 @@ namespace SimTMDG.Road
             }
 
         }
-        
+
+        public void DrawSegmentLane(Graphics g, RoadSegment segment)
+        {
+            //ws.Draw(g);
+            objDraw++;
+
+            foreach (SegmentLane lane in segment.lanes)
+            {
+                //g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
+                //pen.Color = lane.debugColor;
+                pen.Width = 1;
+                pen.Color = Color.Gray;
+                lane.Draw(g, pen);
+            }
+        }
+
+        public void DrawRoadSegment(Graphics g, RoadSegment segment)
+        {
+            objDraw++;
+            pen.Width = 2;
+            pen.Color = segment.debugColor;
+            segment.Draw(g, pen);
+
+        }
+
         #endregion
 
         public bool IsInBound(Vector2 coord, int extension)

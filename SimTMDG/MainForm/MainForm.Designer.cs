@@ -47,6 +47,7 @@ namespace SimTMDG
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.btnAstar = new System.Windows.Forms.Button();
             this.astarStatus = new System.Windows.Forms.Label();
+            this.btnRESTAPI = new System.Windows.Forms.Button();
             this.DaGrid = new SimTMDG.MainForm.CustUserControl();
             this.timerSimulation = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
@@ -183,6 +184,7 @@ namespace SimTMDG
             this.flowLayoutPanel2.Controls.Add(this.textBox2);
             this.flowLayoutPanel2.Controls.Add(this.btnAstar);
             this.flowLayoutPanel2.Controls.Add(this.astarStatus);
+            this.flowLayoutPanel2.Controls.Add(this.btnRESTAPI);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 75);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(6);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -265,6 +267,17 @@ namespace SimTMDG
             this.astarStatus.TabIndex = 11;
             this.astarStatus.Text = "status";
             // 
+            // btnRESTAPI
+            // 
+            this.btnRESTAPI.Location = new System.Drawing.Point(6, 456);
+            this.btnRESTAPI.Margin = new System.Windows.Forms.Padding(6);
+            this.btnRESTAPI.Name = "btnRESTAPI";
+            this.btnRESTAPI.Size = new System.Drawing.Size(411, 46);
+            this.btnRESTAPI.TabIndex = 12;
+            this.btnRESTAPI.Text = "Pull Traffic";
+            this.btnRESTAPI.UseVisualStyleBackColor = true;
+            this.btnRESTAPI.Click += new System.EventHandler(this.btnRESTAPI_Click);
+            // 
             // DaGrid
             // 
             this.DaGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -310,6 +323,7 @@ namespace SimTMDG
             this.ResumeLayout(false);
 
         }
+
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -330,6 +344,7 @@ namespace SimTMDG
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button btnAstar;
         private System.Windows.Forms.Label astarStatus;
+        private System.Windows.Forms.Button btnRESTAPI;
     }
 }
 

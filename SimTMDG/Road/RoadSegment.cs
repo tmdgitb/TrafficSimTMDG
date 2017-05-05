@@ -37,6 +37,19 @@ namespace SimTMDG.Road
 
             set { _id = value; }
         }
+
+
+        /// <summary>
+        /// OSM Way ID
+        /// </summary>
+        private long _wayId = -1;
+
+        public long WayId
+        {
+            get { return _wayId; }
+
+            set { _wayId = value; }
+        }
         #endregion
 
         #region primary properties
@@ -329,7 +342,9 @@ namespace SimTMDG.Road
 
 
         #region draw
-        public void Draw(Graphics g)
+        public Color debugColor = Color.Gray;
+
+        public void Draw(Graphics g, Pen pen)
         {
             //Pen pen = new Pen(debugColor, 1);
 
@@ -354,22 +369,23 @@ namespace SimTMDG.Road
 
             //g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
 
-            foreach (SegmentLane lane in lanes)
-            {
-                lane.Draw(g);
-            }
+            //foreach (SegmentLane lane in lanes)
+            //{
+            //    lane.Draw(g);
+            //}
 
             //g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
 
-            Font debugFont = new Font("Calibri", 3);
-            Brush blackBrush = new SolidBrush(Color.Black);
+            //Font debugFont = new Font("Calibri", 3);
+            //Brush blackBrush = new SolidBrush(Color.Black);
 
-            if (startNode.registeredVeh != null)
-            {
-                g.DrawString(startNode.registeredVeh.vehiclesIndex.ToString(), debugFont, blackBrush,
-                    startNode.Position);
-            }
+            //if (startNode.registeredVeh != null)
+            //{
+            //    g.DrawString(startNode.registeredVeh.vehiclesIndex.ToString(), debugFont, blackBrush,
+            //        startNode.Position);
+            //}
             //g.DrawString(Id.ToString(), debugFont, blackBrush, MidCoord);
+            g.DrawLine(pen, (Point)startNode.Position, (Point)endNode.Position);
         }
 
         bool drawDebug = false;
@@ -386,14 +402,14 @@ namespace SimTMDG.Road
                 Font debugFont = new Font("Calibri", 3);
                 Brush blackBrush = new SolidBrush(Color.Black);
 
-                String toPrint = Id.ToString() + "\n";
+                String toPrint = Id + "\n " + WayId;
                                     //"laneCount: " + lanes.Count + "\n" +
                                     //"oneway: " + this.OneWay + "\n\n";
 
-                for(int i = 0; i < lanes.Count; i++)
-                {
-                    toPrint += "lane: " + i + " - " + lanes[i].Id + "\n";
-                }
+                //for(int i = 0; i < lanes.Count; i++)
+                //{
+                //    toPrint += "lane: " + i + " - " + lanes[i].Id + "\n";
+                //}
 
                 g.DrawString(toPrint, debugFont, blackBrush, MidCoord);
             }
@@ -504,6 +520,54 @@ namespace SimTMDG.Road
             }
 
             return toReturn;
+        }
+
+
+        public void updateMaxSpeed(int trafficCode)
+        {
+            switch (trafficCode)
+            {
+                case 1:
+                    this.MaxSpeed = 14;
+                    this.debugColor = Color.Green;
+                    //foreach (SegmentLane lane in this.lanes)
+                    //{
+                    //    lane.debugColor = Color.Green;
+                    //}
+                    break;
+                case 2:
+                    this.MaxSpeed = 10;
+                    this.debugColor = Color.Lime;
+                    //foreach (SegmentLane lane in this.lanes)
+                    //{
+                    //    lane.debugColor = Color.Lime;
+                    //}
+                    break;
+                case 3:
+                    this.MaxSpeed = 6;
+                    this.debugColor = Color.Orange;
+                    //foreach (SegmentLane lane in this.lanes)
+                    //{
+                    //    lane.debugColor = Color.Orange;
+                    //}
+                    break;
+                case 4:
+                    this.MaxSpeed = 3;
+                    this.debugColor = Color.Red;
+                    //foreach (SegmentLane lane in this.lanes)
+                    //{
+                    //    lane.debugColor = Color.Red;
+                    //}
+                    break;
+                case 5:
+                    this.MaxSpeed = 1;
+                    this.debugColor = Color.DarkRed;
+                    //foreach (SegmentLane lane in this.lanes)
+                    //{
+                    //    lane.debugColor = Color.DarkRed;
+                    //}
+                    break;
+            }
         }
 
 

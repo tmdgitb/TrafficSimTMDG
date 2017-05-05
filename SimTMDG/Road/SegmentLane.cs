@@ -331,9 +331,9 @@ namespace SimTMDG.Road
 
 
         #region draw
-        public void Draw(Graphics g)
+        public void Draw(Graphics g, Pen pen)
         {
-            Pen pen = new Pen(debugColor, 1);
+            //Pen pen = new Pen(debugColor, 1);
 
             //if (LaneIdx % 2 == 0)
             //{

@@ -1,4 +1,5 @@
-﻿using SimTMDG.Road;
+﻿using SimTMDG.DataSource;
+using SimTMDG.Road;
 using SimTMDG.Time;
 using SimTMDG.Tools;
 using SimTMDG.Vehicle;
@@ -53,13 +54,13 @@ namespace SimTMDG
         ///  Performance test
         /// </summary>
         Process proc = Process.GetCurrentProcess();
-        string logActiveVeh  = "";
-        string logThinkTime  = "";
-        string logMemUsed    = "";
+        string logActiveVeh = "";
+        string logThinkTime = "";
+        string logMemUsed = "";
         string logRenderTime = "";
-        string logObjDraw   = "";
-        int prevActVeh       = -1;
-        int prevDrawLine     = -1;
+        string logObjDraw = "";
+        int prevActVeh = -1;
+        int prevDrawLine = -1;
         #endregion
 
         #endregion
@@ -217,7 +218,7 @@ namespace SimTMDG
         {
             thinkStopwatch.Reset();
             thinkStopwatch.Start();
-            
+
             GlobalTime.Instance.Advance(tickLength);
 
             nc.Tick(tickLength);
@@ -345,7 +346,7 @@ namespace SimTMDG
                 72);
         }
 
-        
+
 
 
         private void Invalidate(InvalidationLevel il)
@@ -728,7 +729,7 @@ namespace SimTMDG
 
                 lf.StepUpperProgress("Done");
                 lf.ShowLog();
-                
+
                 nc.manuallyAddRoute();
 
                 lf.Close();
@@ -1081,7 +1082,7 @@ namespace SimTMDG
                     ndId = long.Parse(ndIdNode.Value);
                     //else
                     //    ndId = 0;
-                    
+
                     long ndNextId;
                     XmlNode ndIdNextNode = lnd[i + 1].Attributes.GetNamedItem("ref");
                     //if (ndIdNextNode != null)
@@ -1289,7 +1290,7 @@ namespace SimTMDG
                 }
             }
             #endregion
-                        
+
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
 
@@ -1297,7 +1298,7 @@ namespace SimTMDG
         {
             timerSimulation.Interval = (int)(1000 / (int)_temp_stepsPerSeconds);// / speedMultipliers[speedComboBox.SelectedIndex]);
             tickLength = 1.0d / (_temp_stepsPerSeconds / speedMultipliers[speedComboBox.SelectedIndex]);
-            
+
             Debug.WriteLine("timerSimulation Interval " + timerSimulation.Interval + ", " + speedMultipliers[speedComboBox.SelectedIndex]);
         }
 
@@ -1352,11 +1353,11 @@ namespace SimTMDG
                     break;
             }
 
-            
+
 
             Invalidate(InvalidationLevel.MAIN_CANVAS_AND_TIMELINE);
         }
-        
+
 
         #region oldRoute
         private void oldRoute()
@@ -1531,15 +1532,17 @@ namespace SimTMDG
                 {
                     astarStatus.Text = "The path is not found";
                 }
-                
-            }else if (startSegment == null)
+
+            }
+            else if (startSegment == null)
             {
                 astarStatus.Text = "Start Segment is not found";
             }
             else if (endSegment == null)
             {
                 astarStatus.Text = "End Segment is not found";
-            }else
+            }
+            else
             {
                 astarStatus.Text = "Start & End Segment is not found";
             }
@@ -1575,6 +1578,22 @@ namespace SimTMDG
         }
 
 
+        #endregion
+
+
+        #region REST API
+
+        private void btnRESTAPI_Click(object sender, EventArgs e)
+        {
+            List<WayTraffic> trafficList = null;
+            //RunAsync().Wait();
+            Console.Write("test");
+            RestClient restClient = new RestClient();
+
+            restClient.ParseTraffic(nc.segments);
+        }
+
+        
         #endregion
 
         #endregion
