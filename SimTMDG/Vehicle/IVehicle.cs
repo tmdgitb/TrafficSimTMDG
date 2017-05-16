@@ -563,7 +563,7 @@ namespace SimTMDG.Vehicle
         #endregion
 
         #region think
-        public void Think(double tickLength)
+        public virtual void Think(double tickLength)
         {
             double acceleration;
 
@@ -665,24 +665,24 @@ namespace SimTMDG.Vehicle
 
             #region Traffic lights
 
-            double TLAcc = double.MaxValue;
-            // Check for red traffic lights on route
-            distanceToTrafficLight = GetDistanceToNextTrafficLightOnRoute(route, this.distance, Constants.SearchRange, true);
-            //intersectionLookaheadDistance = distanceToTrafficLight;
+            //double TLAcc = double.MaxValue;
+            //// Check for red traffic lights on route
+            //distanceToTrafficLight = GetDistanceToNextTrafficLightOnRoute(route, this.distance, Constants.SearchRange, true);
+            ////intersectionLookaheadDistance = distanceToTrafficLight;
 
-            // If the next TrafficLight is closer than the next vehicle, no free line change shall be performed
-            if (distanceToTrafficLight < lookaheadDistance)
-            {
-                lookaheadDistance = distanceToTrafficLight;
-                thinkAboutLC = false;
-                TLAcc = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
-                _state._freeDrive = false;
-            }
+            //// If the next TrafficLight is closer than the next vehicle, no free line change shall be performed
+            //if (distanceToTrafficLight < lookaheadDistance)
+            //{
+            //    lookaheadDistance = distanceToTrafficLight;
+            //    thinkAboutLC = false;
+            //    TLAcc = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
+            //    _state._freeDrive = false;
+            //}
 
-            if (TLAcc < lowestAcceleration)
-            {
-                lowestAcceleration = TLAcc;
-            }
+            //if (TLAcc < lowestAcceleration)
+            //{
+            //    lowestAcceleration = TLAcc;
+            //}
 
             #endregion
 
@@ -793,7 +793,7 @@ namespace SimTMDG.Vehicle
             //int newLeadIdx = currentLane(direction).findVehicleInFront(distance);
             newLeadVd = findVehicleInFront(route, direction);
 
-            double newTLDistance = GetDistanceToNextTrafficLightOnRoute(route, distance, Constants.SearchRange, true);            
+            double newTLDistance = 9999; // GetDistanceToNextTrafficLightOnRoute(route, distance, Constants.SearchRange, true);            
 
 
             newLagVd = findVehicleInBehind(direction);
@@ -1507,7 +1507,7 @@ namespace SimTMDG.Vehicle
 
 
         #region move
-        public void Move(double tickLength)
+        public virtual void Move(double tickLength)
         {
             if (!alreadyMoved)
             {

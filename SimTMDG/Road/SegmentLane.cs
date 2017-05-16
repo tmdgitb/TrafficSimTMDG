@@ -264,7 +264,17 @@ namespace SimTMDG.Road
                 //if (vehicles[i].RearPos > position)
                 if (vehicles[i].distance > position)
                 {
-                    return i;
+                    if (!(vehicles[i] is TLight))
+                    {
+                        return i;
+                    }else
+                    {
+                        TLight tl = vehicles[i] as TLight;
+                        if (tl.tLightState == TLight.TLState.RED)
+                        {
+                            return i;
+                        }
+                    }
                 }
             }
 

@@ -217,9 +217,9 @@ namespace SimTMDG.Road
             foreach (SegmentLane lane in segment.lanes)
             {
                 //g.DrawLine(pen, (Point)lane.startNode.Position, (Point)lane.endNode.Position);
-                //pen.Color = lane.debugColor;
+                pen.Color = lane.debugColor;
                 pen.Width = 1;
-                pen.Color = Color.Gray;
+                //pen.Color = Color.Gray;
                 lane.Draw(g, pen);
             }
         }
@@ -292,6 +292,7 @@ namespace SimTMDG.Road
         int vehCount = 0;
         //int activeVehicles = 0;
         Double timeMod = 0.0;
+        public TLight testTL1, testTL2;
 
         private void generateVehicles()
         {
@@ -528,6 +529,14 @@ namespace SimTMDG.Road
             segments.Find(x => x.Id == 28606).endNode.tLight.SwitchToGreen();
             segments.Find(x => x.Id == 28611).startNode.tLight = new TrafficLight();
             segments.Find(x => x.Id == 28611).startNode.tLight.SwitchToGreen();
+
+            testTL1 = new TLight(segments.Find(x => x.Id == 1), 0);
+            testTL2 = new TLight(segments.Find(x => x.Id == 1), 1);
+
+            testTL2.tLightState = TLight.TLState.GREEN;
+
+            segments.Find(x => x.Id == 1).lanes[0].vehicles.Add(testTL1);
+            segments.Find(x => x.Id == 1).lanes[1].vehicles.Add(testTL2);
 
             segments.Find(x => x.Id == 2919).MaxSpeed = 4;
             segments.Find(x => x.Id == 25163).MaxSpeed = 5;

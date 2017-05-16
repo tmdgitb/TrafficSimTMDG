@@ -100,6 +100,7 @@
     <Compile Include="Road\RoadSegment.cs" />
     <Compile Include="Road\Route.cs" />
     <Compile Include="Road\SegmentLane.cs" />
+    <Compile Include="Road\TLight.cs" />
     <Compile Include="Road\TrafficLight.cs" />
     <Compile Include="Road\WaySegment.cs" />
     <Compile Include="Time\GlobalTime.cs" />
@@ -140,6 +141,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
