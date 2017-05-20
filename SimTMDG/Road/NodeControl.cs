@@ -520,193 +520,207 @@ namespace SimTMDG.Road
             #endregion
 
 
-            segments.Find(x => x.Id == 2925).endNode.tLight = new TrafficLight();
-            segments.Find(x => x.Id == 28583).endNode.tLight = new TrafficLight();
-            segments.Find(x => x.Id == 28586).startNode.tLight = new TrafficLight();
-            segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
-            //RSHS
-            segments.Find(x => x.Id == 28606).endNode.tLight = new TrafficLight();
-            segments.Find(x => x.Id == 28606).endNode.tLight.SwitchToGreen();
-            segments.Find(x => x.Id == 28611).startNode.tLight = new TrafficLight();
-            segments.Find(x => x.Id == 28611).startNode.tLight.SwitchToGreen();
+            //segments.Find(x => x.Id == 2925).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 28583).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 28586).startNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 28586).startNode.tLight.SwitchToGreen();
+            ////RSHS
+            //segments.Find(x => x.Id == 28606).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 28606).endNode.tLight.SwitchToGreen();
+            //segments.Find(x => x.Id == 28611).startNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 28611).startNode.tLight.SwitchToGreen();
 
-            testTL1 = new TLight(segments.Find(x => x.Id == 1), 0);
-            testTL2 = new TLight(segments.Find(x => x.Id == 1), 1);
+            //testTL1 = new TLight(segments.Find(x => x.Id == 1), 0);
+            //testTL2 = new TLight(segments.Find(x => x.Id == 1), 1);
 
-            testTL2.tLightState = TLight.TLState.GREEN;
+            //testTL2.tLightState = TLight.TLState.GREEN;
 
-            segments.Find(x => x.Id == 1).lanes[0].vehicles.Add(testTL1);
-            segments.Find(x => x.Id == 1).lanes[1].vehicles.Add(testTL2);
+            //segments.Find(x => x.Id == 1).lanes[0].vehicles.Add(testTL1);
+            //segments.Find(x => x.Id == 1).lanes[1].vehicles.Add(testTL2);
 
-            segments.Find(x => x.Id == 2919).MaxSpeed = 4;
-            segments.Find(x => x.Id == 25163).MaxSpeed = 5;
-
-
-            #region VehGen 1: #2908
-            List<RoadSegment> origin_1__destinations = new List<RoadSegment>();
-            List<double> origin_1__q_outs = new List<double>();
-            origin_1__destinations.Add(segments.Find(x => x.Id == 430));        // 430));
-            origin_1__destinations.Add(segments.Find(x => x.Id == 28735));      // 28598));
-
-            origin_1__q_outs.Add(0.3);
-            origin_1__q_outs.Add(0.7);
-
-            vehGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
+            //segments.Find(x => x.Id == 2919).MaxSpeed = 4;
+            //segments.Find(x => x.Id == 25163).MaxSpeed = 5;
 
 
-            vehGenerators.Add(vehGen1);
-            #endregion
+            //#region VehGen 1: #2908
+            //List<RoadSegment> origin_1__destinations = new List<RoadSegment>();
+            //List<double> origin_1__q_outs = new List<double>();
+            //origin_1__destinations.Add(segments.Find(x => x.Id == 430));        // 430));
+            //origin_1__destinations.Add(segments.Find(x => x.Id == 28735));      // 28598));
+
+            //origin_1__q_outs.Add(0.3);
+            //origin_1__q_outs.Add(0.7);
+
+            //vehGen1 = new VehicleGenerator(segments, segments.Find(x => x.Id == 2908), 0.8, origin_1__destinations, origin_1__q_outs);
 
 
-            #region VehGen 2: #1
-            List<RoadSegment> origin_2__destinations = new List<RoadSegment>();
-            List<double> origin_2__q_outs = new List<double>();
-
-            origin_2__destinations.Add(segments.Find(x => x.Id == 25176));
-            origin_2__destinations.Add(segments.Find(x => x.Id == 266));
-            origin_2__destinations.Add(segments.Find(x => x.Id == 29103));
-
-            origin_2__q_outs.Add(.3);
-            origin_2__q_outs.Add(.3);
-            origin_2__q_outs.Add(.3);
-
-            vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1), .3, origin_2__destinations, origin_2__q_outs);
+            //vehGenerators.Add(vehGen1);
+            //#endregion
 
 
-            //origin_2__destinations.Add(segments.Find(x => x.Id == 26964));
-            //origin_2__q_outs.Add(1);
-            //vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 353), .35, origin_2__destinations, origin_2__q_outs);
-            vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 0), .35, origin_2__destinations, origin_2__q_outs);
+            //#region VehGen 2: #1
+            //List<RoadSegment> origin_2__destinations = new List<RoadSegment>();
+            //List<double> origin_2__q_outs = new List<double>();
+
+            //origin_2__destinations.Add(segments.Find(x => x.Id == 25176));
+            //origin_2__destinations.Add(segments.Find(x => x.Id == 266));
+            //origin_2__destinations.Add(segments.Find(x => x.Id == 29103));
+
+            //origin_2__q_outs.Add(.3);
+            //origin_2__q_outs.Add(.3);
+            //origin_2__q_outs.Add(.3);
+
+            //vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1), .3, origin_2__destinations, origin_2__q_outs);
+
+
+            ////origin_2__destinations.Add(segments.Find(x => x.Id == 26964));
+            ////origin_2__q_outs.Add(1);
+            ////vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 353), .35, origin_2__destinations, origin_2__q_outs);
+            //vehGen2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 0), .35, origin_2__destinations, origin_2__q_outs);
 
 
 
-            vehGenerators.Add(vehGen2);
-            #endregion
+            //vehGenerators.Add(vehGen2);
+            //#endregion
 
 
-            #region VehGen 3: #29103
-            List<RoadSegment> origin_3__destinations = new List<RoadSegment>();
-            List<double> origin_3__q_outs = new List<double>();
+            //#region VehGen 3: #29103
+            //List<RoadSegment> origin_3__destinations = new List<RoadSegment>();
+            //List<double> origin_3__q_outs = new List<double>();
 
-            origin_3__destinations.Add(segments.Find(x => x.Id == 988));
-            origin_3__destinations.Add(segments.Find(x => x.Id == 8818));
+            //origin_3__destinations.Add(segments.Find(x => x.Id == 988));
+            //origin_3__destinations.Add(segments.Find(x => x.Id == 8818));
 
-            origin_3__q_outs.Add(.5);
-            origin_3__q_outs.Add(.5);
+            //origin_3__q_outs.Add(.5);
+            //origin_3__q_outs.Add(.5);
 
-            vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs);
-
-
-            vehGenerators.Add(vehGen3);
-            #endregion
+            //vehGen3 = new VehicleGenerator(segments, segments.Find(x => x.Id == 29103), .3, origin_3__destinations, origin_3__q_outs);
 
 
-            #region VehGen 4: #20390
-            List<RoadSegment> origin_4__destinations = new List<RoadSegment>();
-            List<double> origin_4__q_outs = new List<double>();
-
-            origin_4__destinations.Add(segments.Find(x => x.Id == 245));
-            origin_4__destinations.Add(segments.Find(x => x.Id == 30022));
-
-            origin_4__q_outs.Add(.5);
-            origin_4__q_outs.Add(.5);
-
-            vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs);
+            //vehGenerators.Add(vehGen3);
+            //#endregion
 
 
-            vehGenerators.Add(vehGen4);
-            #endregion
+            //#region VehGen 4: #20390
+            //List<RoadSegment> origin_4__destinations = new List<RoadSegment>();
+            //List<double> origin_4__q_outs = new List<double>();
+
+            //origin_4__destinations.Add(segments.Find(x => x.Id == 245));
+            //origin_4__destinations.Add(segments.Find(x => x.Id == 30022));
+
+            //origin_4__q_outs.Add(.5);
+            //origin_4__q_outs.Add(.5);
+
+            //vehGen4 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20390), .3, origin_4__destinations, origin_4__q_outs);
 
 
-            #region VehGen 5: #23059
-            List<RoadSegment> origin_5__destinations = new List<RoadSegment>();
-            List<double> origin_5__q_outs = new List<double>();
-
-            //origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
-            origin_5__destinations.Add(segments.Find(x => x.Id == 33238));
-
-            //origin_5__q_outs.Add(.5);
-            origin_5__q_outs.Add(1);
-
-            vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
+            //vehGenerators.Add(vehGen4);
+            //#endregion
 
 
-            vehGenerators.Add(vehGen5);
-            #endregion
+            //#region VehGen 5: #23059
+            //List<RoadSegment> origin_5__destinations = new List<RoadSegment>();
+            //List<double> origin_5__q_outs = new List<double>();
+
+            ////origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
+            //origin_5__destinations.Add(segments.Find(x => x.Id == 33238));
+
+            ////origin_5__q_outs.Add(.5);
+            //origin_5__q_outs.Add(1);
+
+            //vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
 
 
-            #region VehGen 6: #286
-            List<RoadSegment> origin_6__destinations = new List<RoadSegment>();
-            List<double> origin_6__q_outs = new List<double>();
-
-            origin_6__destinations.Add(segments.Find(x => x.Id == 33630));
-            origin_6__destinations.Add(segments.Find(x => x.Id == 22168));
-
-            origin_6__q_outs.Add(.5);
-            origin_6__q_outs.Add(.5);
-
-            vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs);
+            //vehGenerators.Add(vehGen5);
+            //#endregion
 
 
-            vehGenerators.Add(vehGen6);
-            #endregion
+            //#region VehGen 6: #286
+            //List<RoadSegment> origin_6__destinations = new List<RoadSegment>();
+            //List<double> origin_6__q_outs = new List<double>();
+
+            //origin_6__destinations.Add(segments.Find(x => x.Id == 33630));
+            //origin_6__destinations.Add(segments.Find(x => x.Id == 22168));
+
+            //origin_6__q_outs.Add(.5);
+            //origin_6__q_outs.Add(.5);
+
+            //vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs);
 
 
-            #region VehGen 7: #286
-            List<RoadSegment> origin_7__destinations = new List<RoadSegment>();
-            List<double> origin_7__q_outs = new List<double>();
+            //vehGenerators.Add(vehGen6);
+            //#endregion
+
+
+            //#region VehGen 7: #286
+            //List<RoadSegment> origin_7__destinations = new List<RoadSegment>();
+            //List<double> origin_7__q_outs = new List<double>();
             
-            origin_7__destinations.Add(segments.Find(x => x.Id == 30141));
+            //origin_7__destinations.Add(segments.Find(x => x.Id == 30141));
             
-            origin_7__q_outs.Add(1);
+            //origin_7__q_outs.Add(1);
 
-            vehGen7 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20419), .3, origin_7__destinations, origin_7__q_outs);
-
-
-            vehGenerators.Add(vehGen7);
-            #endregion
+            //vehGen7 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20419), .3, origin_7__destinations, origin_7__q_outs);
 
 
-            #region VehGen 8: #286
-            List<RoadSegment> origin_8__destinations = new List<RoadSegment>();
-            List<double> origin_8__q_outs = new List<double>();
-
-            origin_8__destinations.Add(segments.Find(x => x.Id == 35013));
-
-            origin_8__q_outs.Add(1);
-
-            vehGen8 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23195), .3, origin_8__destinations, origin_8__q_outs);
+            //vehGenerators.Add(vehGen7);
+            //#endregion
 
 
-            vehGenerators.Add(vehGen8);
-            #endregion
+            //#region VehGen 8: #286
+            //List<RoadSegment> origin_8__destinations = new List<RoadSegment>();
+            //List<double> origin_8__q_outs = new List<double>();
+
+            //origin_8__destinations.Add(segments.Find(x => x.Id == 35013));
+
+            //origin_8__q_outs.Add(1);
+
+            //vehGen8 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23195), .3, origin_8__destinations, origin_8__q_outs);
+
+
+            //vehGenerators.Add(vehGen8);
+            //#endregion
 
 
 
-            #region Angkot 1: Cibaduyut - Kr Setra 529 22825
+            #region Angkot 1: Sd Saerang - Caringin
             List<AngkotGenerator.AngkotPoint> origin_1a__destinations = new List<AngkotGenerator.AngkotPoint>();
             List<double> origin_1a__q_outs = new List<double>();
 
-            origin_1a__destinations.Add(AngkotGenerator.AngkotPoint.KR_SETRA);
+            origin_1a__destinations.Add(AngkotGenerator.AngkotPoint.CARINGIN);
             origin_1a__q_outs.Add(1);
-
-            anGen1 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIBADUYUT, 0.1, origin_1a__destinations, origin_1a__q_outs);
-
+            anGen1 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.SD_SAERANG, 0.06, origin_1a__destinations, origin_1a__q_outs);
 
             angGenerators.Add(anGen1);
+
+            List<AngkotGenerator.AngkotPoint> origin_1aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_1aa__q_outs = new List<double>();
+
+            origin_1aa__destinations.Add(AngkotGenerator.AngkotPoint.SD_SAERANG);
+            origin_1aa__q_outs.Add(1);
+            anGen1a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CARINGIN, 0.06, origin_1aa__destinations, origin_1aa__q_outs);
+
+            angGenerators.Add(anGen1a);
             #endregion
 
-            #region Angkot Cicaheum Ledeng
+            #region Angkot Dago Riung
             List<AngkotGenerator.AngkotPoint> origin_2a__destinations = new List<AngkotGenerator.AngkotPoint>();
             List<double> origin_2a__q_outs = new List<double>();
 
-            origin_2a__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
+            origin_2a__destinations.Add(AngkotGenerator.AngkotPoint.RIUNG);
             origin_2a__q_outs.Add(1);
 
-            anGen2 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_2a__destinations, origin_2a__q_outs);
-
-
+            anGen2 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.0167, origin_2a__destinations, origin_2a__q_outs);
             angGenerators.Add(anGen2);
+
+            List<AngkotGenerator.AngkotPoint> origin_2aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_2aa__q_outs = new List<double>();
+
+            origin_2aa__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
+            origin_2aa__q_outs.Add(1);
+
+            anGen2a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.RIUNG, 0.0167, origin_2aa__destinations, origin_2aa__q_outs);
+            angGenerators.Add(anGen2a);
             #endregion
 
             #region Angkot Kelapa - Dago
@@ -715,11 +729,18 @@ namespace SimTMDG.Road
 
             origin_3a__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
             origin_3a__q_outs.Add(1);
-
-            anGen3 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_3a__destinations, origin_3a__q_outs);
-
+            anGen3 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.0167, origin_3a__destinations, origin_3a__q_outs);
 
             angGenerators.Add(anGen3);
+
+            List<AngkotGenerator.AngkotPoint> origin_3a2__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_3a2__q_outs = new List<double>();
+
+            origin_3a2__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
+            origin_3a2__q_outs.Add(1);
+            anGen3a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KALAPA, 0.0167, origin_3a2__destinations, origin_3a2__q_outs);
+
+            angGenerators.Add(anGen3a);
             #endregion
 
             #region Angkot Stasiun - Dago
@@ -728,22 +749,126 @@ namespace SimTMDG.Road
 
             origin_4a__destinations.Add(AngkotGenerator.AngkotPoint.STASIUN);
             origin_4a__q_outs.Add(1);
-            anGen4 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.1, origin_4a__destinations, origin_4a__q_outs);
-
-
+            anGen4 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.0167, origin_4a__destinations, origin_4a__q_outs);
             angGenerators.Add(anGen4);
+
+            List<AngkotGenerator.AngkotPoint> origin_4a2__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_4a2__q_outs = new List<double>();
+
+            origin_4a2__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
+            origin_4a2__q_outs.Add(1);
+            anGen4a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.STASIUN, 0.0167, origin_4a2__destinations, origin_4a2__q_outs);
+            angGenerators.Add(anGen4a);
             #endregion
 
-            #region coba
-            //List<RoadSegment> origin_11__destinations = new List<RoadSegment>();
-            //List<double> origin_11__q_outs = new List<double>();
+            #region Angkot Cicaheum Ledeng
+            List<AngkotGenerator.AngkotPoint> origin_5a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_5a__q_outs = new List<double>();
 
-            //origin_11__destinations.Add(segments.Find(x => x.Id == 1510));
-            //origin_11__q_outs.Add(1);
-            //anGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 1533), 0.8, origin_11__destinations, origin_11__q_outs);
+            origin_5a__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
+            origin_5a__q_outs.Add(1);
+            anGen5a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_5a__destinations, origin_5a__q_outs);
+            angGenerators.Add(anGen5a);
 
+            List<AngkotGenerator.AngkotPoint> origin_5aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_5aa__q_outs = new List<double>();
 
-            //angGenerators.Add(anGen5);
+            origin_5aa__destinations.Add(AngkotGenerator.AngkotPoint.LEDENG);
+            origin_5aa__q_outs.Add(1);
+            anGen5 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CICAHEUM, 0.1, origin_5aa__destinations, origin_5aa__q_outs);
+            angGenerators.Add(anGen5);
+            #endregion
+
+            #region Angkot Cisitu tegalega
+            List<AngkotGenerator.AngkotPoint> origin_6a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_6a__q_outs = new List<double>();
+
+            origin_6a__destinations.Add(AngkotGenerator.AngkotPoint.CISITU);
+            origin_6a__q_outs.Add(1);
+            anGen6a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.TEGALEGA, 0.1, origin_6a__destinations, origin_6a__q_outs);
+            angGenerators.Add(anGen6a);
+
+            List<AngkotGenerator.AngkotPoint> origin_6aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_6aa__q_outs = new List<double>();
+
+            origin_6aa__destinations.Add(AngkotGenerator.AngkotPoint.TEGALEGA);
+            origin_6aa__q_outs.Add(1);
+            anGen6 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CISITU, 0.1, origin_6aa__destinations, origin_6aa__q_outs);
+            angGenerators.Add(anGen6);
+            #endregion
+
+            #region Angkot Cibaduyut Krsetra
+            List<AngkotGenerator.AngkotPoint> origin_7aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_7aa__q_outs = new List<double>();
+
+            origin_7aa__destinations.Add(AngkotGenerator.AngkotPoint.KR_SETRA);
+            origin_7aa__q_outs.Add(1);
+            anGen7 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIBADUYUT, 0.1, origin_7aa__destinations, origin_7aa__q_outs);
+            angGenerators.Add(anGen7);
+            List<AngkotGenerator.AngkotPoint> origin_7a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_7a__q_outs = new List<double>();
+
+            origin_7a__destinations.Add(AngkotGenerator.AngkotPoint.CIBADUYUT);
+            origin_7a__q_outs.Add(1);
+            anGen7a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KR_SETRA, 0.1, origin_7a__destinations, origin_7a__q_outs);
+            angGenerators.Add(anGen7a);
+
+            #endregion
+
+            #region Angkot Kelapa Buah Batu
+            List<AngkotGenerator.AngkotPoint> origin_8aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_8aa__q_outs = new List<double>();
+
+            origin_8aa__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
+            origin_8aa__q_outs.Add(1);
+            anGen8 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.BUAHBATU, 0.1, origin_8aa__destinations, origin_8aa__q_outs);
+            angGenerators.Add(anGen8);
+            List<AngkotGenerator.AngkotPoint> origin_8a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_8a__q_outs = new List<double>();
+
+            origin_8a__destinations.Add(AngkotGenerator.AngkotPoint.BUAHBATU);
+            origin_8a__q_outs.Add(1);
+            anGen8a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KALAPA, 0.1, origin_8a__destinations, origin_8a__q_outs);
+            angGenerators.Add(anGen8a);
+
+            #endregion
+
+            #region Angkot Elang Gd Bage
+            List<AngkotGenerator.AngkotPoint> origin_9__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_9__q_outs = new List<double>();
+
+            origin_9__destinations.Add(AngkotGenerator.AngkotPoint.GEDEBAGE);
+            origin_9__q_outs.Add(1);
+            anGen9 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.ELANG, 0.1, origin_9__destinations, origin_9__q_outs);
+            angGenerators.Add(anGen9);
+
+            List<AngkotGenerator.AngkotPoint> origin_9a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_9a__q_outs = new List<double>();
+
+            origin_9a__destinations.Add(AngkotGenerator.AngkotPoint.ELANG);
+            origin_9a__q_outs.Add(1);
+            anGen9a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.GEDEBAGE, 0.1, origin_9a__destinations, origin_9a__q_outs);
+            angGenerators.Add(anGen9a);
+
+            #endregion
+
+            #region Angkot Caheum Ciroyom
+            List<AngkotGenerator.AngkotPoint> origin_10__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_10__q_outs = new List<double>();
+
+            origin_10__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
+            origin_10__q_outs.Add(1);
+            anGen10 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIROYOM, 0.1, origin_10__destinations, origin_10__q_outs);
+            angGenerators.Add(anGen10);
+
+            List<AngkotGenerator.AngkotPoint> origin_10a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_10a__q_outs = new List<double>();
+
+            origin_10a__destinations.Add(AngkotGenerator.AngkotPoint.CIROYOM);
+            origin_10a__q_outs.Add(1);
+            anGen10a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CICAHEUM, 0.1, origin_10a__destinations, origin_10a__q_outs);
+            angGenerators.Add(anGen10a);
+
             #endregion
 
         }
@@ -757,9 +882,25 @@ namespace SimTMDG.Road
         VehicleGenerator vehGen7;
         VehicleGenerator vehGen8;
         AngkotGenerator anGen1;
+        AngkotGenerator anGen1a;
         AngkotGenerator anGen2;
+        AngkotGenerator anGen2a;
         AngkotGenerator anGen3;
+        AngkotGenerator anGen3a;
         AngkotGenerator anGen4;
+        AngkotGenerator anGen4a;
+        AngkotGenerator anGen5;
+        AngkotGenerator anGen5a;
+        AngkotGenerator anGen6;
+        AngkotGenerator anGen6a;
+        AngkotGenerator anGen7;
+        AngkotGenerator anGen7a;
+        AngkotGenerator anGen8;
+        AngkotGenerator anGen8a;
+        AngkotGenerator anGen9;
+        AngkotGenerator anGen9a;
+        AngkotGenerator anGen10;
+        AngkotGenerator anGen10a;
         //VehicleGenerator anGen5;
 
     }    

@@ -1,4 +1,5 @@
 ﻿using SimTMDG.Road;
+using SimTMDG.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,15 @@ namespace SimTMDG.Vehicle
             LEDENG,
             CIROYOM,
             CIBADUYUT,
-            KR_SETRA
+            KR_SETRA,
+            CARINGIN,
+            SD_SAERANG,
+            RIUNG,
+            CISITU,
+            TEGALEGA,
+            BUAHBATU,
+            ELANG,
+            GEDEBAGE
         }
 
         /// <summary>
@@ -51,15 +60,68 @@ namespace SimTMDG.Vehicle
 
             if (startPoint == AngkotPoint.DAGO)
             {
-                startSegment = segments.Find(x => x.Id == 19684);
+                startSegment = segments.Find(x => x.Id == 8178);
+            }
+            else if (startPoint == AngkotPoint.RIUNG)
+            {
+                startSegment = segments.Find(x => x.Id == 19811);
+            }
+            else if (startPoint == AngkotPoint.CISITU)
+            {
+                startSegment = segments.Find(x => x.Id == 220);
+            }
+            else if (startPoint == AngkotPoint.TEGALEGA)
+            {
+                startSegment = segments.Find(x => x.Id == 24990);
+            }
+            else if (startPoint == AngkotPoint.KALAPA)
+            {
+                startSegment = segments.Find(x => x.Id == 15138);
+            }
+            else if (startPoint == AngkotPoint.STASIUN)
+            {
+                startSegment = segments.Find(x => x.Id == 1212);
+            }
+            else if (startPoint == AngkotPoint.SD_SAERANG)
+            {
+                startSegment = segments.Find(x => x.Id == 200);
+            }
+            else if (startPoint == AngkotPoint.CARINGIN)
+            {
+                startSegment = segments.Find(x => x.Id == 394);
             }
             else if (startPoint == AngkotPoint.LEDENG)
             {
-                startSegment = segments.Find(x => x.Id == 27149);
+
+                startSegment = segments.Find(x => x.Id == 233);
+            }
+            else if (startPoint == AngkotPoint.CICAHEUM)
+            {
+                startSegment = segments.Find(x => x.Id == 18109);
             }
             else if (startPoint == AngkotPoint.CIBADUYUT)
             {
-                startSegment = segments.Find(x => x.Id == 22825);
+                startSegment = segments.Find(x => x.Id == 8529);
+            }
+            else if (startPoint == AngkotPoint.KR_SETRA)
+            {
+                startSegment = segments.Find(x => x.Id == 5800);
+            }
+            else if (startPoint == AngkotPoint.BUAHBATU)
+            {
+                startSegment = segments.Find(x => x.Id == 22056);
+            }
+            else if (startPoint == AngkotPoint.ELANG)
+            {
+                startSegment = segments.Find(x => x.Id == 12634);
+            }
+            else if (startPoint == AngkotPoint.GEDEBAGE)
+            {
+                startSegment = segments.Find(x => x.Id == 20166);
+            }
+            else if (startPoint == AngkotPoint.CIROYOM)
+            {
+                startSegment = segments.Find(x => x.Id == 308);
             }
 
             this.q_outs = _q_outs;
@@ -71,159 +133,642 @@ namespace SimTMDG.Vehicle
         List<RoadSegment> findRoute(AngkotPoint start, AngkotPoint end)
         {
             List<RoadSegment> toReturn = new List<RoadSegment>();
-            
+
             #region manual route
-            ///// Manual Route
-            /// Route 5: coba
-            //if ((start == AngkotPoint.) && (end.Id == 1510))
-            //{
-            //    for (int i = 1533; i > 1509; i--)
-            //    {
-            //        toReturn.Add(segments.Find(x => x.Id == i));
-            //    }
-            //}
 
-            ///Route 4: Stasiun - Dago
-            if ((start == AngkotPoint.DAGO) && (end == AngkotPoint.STASIUN))
+
+
+            /// Route Cibaduyut Kr Setra
+            if ((start == AngkotPoint.CIBADUYUT) && (end == AngkotPoint.KR_SETRA))
             {
-                #region 03StasiunDAgo
-                for (int i = 19684; i < 19728; i++)
+                #region Cibaduyut Kr Setra
+
+
+                AStar newAStarx = new AStar(this.segments, segments.Find(x => x.Id == 8529), segments.Find(x => x.Id == 8531));
+                if (newAStarx.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstarx = new List<RoadSegment>();
+                    forAstarx = generatePath(newAStarx, segments.Find(x => x.Id == 8529), segments.Find(x => x.Id == 8531));
+                    toReturn.AddRange(forAstarx);
+                    forAstarx.Clear();
                 }
-                for (int i = 28034; i < 28038; i++)
+
+                AStar newAStarx2 = new AStar(this.segments, segments.Find(x => x.Id == 21811), segments.Find(x => x.Id == 12758));
+                if (newAStarx2.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstarx2 = new List<RoadSegment>();
+                    forAstarx2 = generatePath(newAStarx2, segments.Find(x => x.Id == 21811), segments.Find(x => x.Id == 12758));
+                    toReturn.AddRange(forAstarx2);
+                    forAstarx2.Clear();
                 }
-                for (int i = 33622; i < 33627; i++)
+                AStar newAStarx3 = new AStar(this.segments, segments.Find(x => x.Id == 21711), segments.Find(x => x.Id == 21710));
+                if (newAStarx3.goalIsFound)
+                {
+                    List<RoadSegment> forAstarx3 = new List<RoadSegment>();
+                    forAstarx3 = generatePath(newAStarx3, segments.Find(x => x.Id == 21711), segments.Find(x => x.Id == 21710));
+                    toReturn.AddRange(forAstarx3);
+                    forAstarx3.Clear();
+                }
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 12771), segments.Find(x => x.Id == 15922));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 12771), segments.Find(x => x.Id == 15922));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 15946), segments.Find(x => x.Id == 708));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 15946), segments.Find(x => x.Id == 708));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 677), segments.Find(x => x.Id == 683));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 677), segments.Find(x => x.Id == 683));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 10776), segments.Find(x => x.Id == 10046));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 10776), segments.Find(x => x.Id == 10046));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 21947), segments.Find(x => x.Id == 21057));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 21947), segments.Find(x => x.Id == 21057));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 10803), segments.Find(x => x.Id == 16770));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 10803), segments.Find(x => x.Id == 16770));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 12521), segments.Find(x => x.Id == 970));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 12521), segments.Find(x => x.Id == 970));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+                for (int i = 16244; i < 16248; i++)
                 {
                     toReturn.Add(segments.Find(x => x.Id == i));
                 }
 
-                for (int i = 29103; i < 29117; i++)
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 6343), segments.Find(x => x.Id == 6328));
+                if (newAStar7.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 6343), segments.Find(x => x.Id == 6328));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
                 }
 
-                for (int i = 29098; i < 29101; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 30018; i < 30022; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 353; i < 369; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 0));
-                toReturn.Add(segments.Find(x => x.Id == 1));
-                for (int i = 26962; i < 26965; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 2772; i < 2775; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 23273));
-                for (int i = 349; i < 353; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 989));
-                for (int i = 23264; i < 23273; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 21915));
-                toReturn.Add(segments.Find(x => x.Id == 34249));
-                toReturn.Add(segments.Find(x => x.Id == 34250));
-                toReturn.Add(segments.Find(x => x.Id == 987));
-                toReturn.Add(segments.Find(x => x.Id == 988));
-                toReturn.Add(segments.Find(x => x.Id == 975));
-                toReturn.Add(segments.Find(x => x.Id == 961));
-                toReturn.Add(segments.Find(x => x.Id == 964));
-                toReturn.Add(segments.Find(x => x.Id == 967));
-                toReturn.Add(segments.Find(x => x.Id == 970));
-                toReturn.Add(segments.Find(x => x.Id == 25225));
-                toReturn.Add(segments.Find(x => x.Id == 25231));
-                toReturn.Add(segments.Find(x => x.Id == 25234));
-                toReturn.Add(segments.Find(x => x.Id == 25237));
-                toReturn.Add(segments.Find(x => x.Id == 25341));
-                toReturn.Add(segments.Find(x => x.Id == 27742));
-                toReturn.Add(segments.Find(x => x.Id == 27745));
-                for (int i = 25261; i < 25264; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 237));
-                toReturn.Add(segments.Find(x => x.Id == 238));
-                for (int i = 250; i < 254; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 27901));
-                toReturn.Add(segments.Find(x => x.Id == 27731));
-                toReturn.Add(segments.Find(x => x.Id == 30022));
-                toReturn.Add(segments.Find(x => x.Id == 987));
-                toReturn.Add(segments.Find(x => x.Id == 988));
-                for (int i = 975; i < 987; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 28629));
-                toReturn.Add(segments.Find(x => x.Id == 681));
-                toReturn.Add(segments.Find(x => x.Id == 682));
-                for (int i = 2764; i < 2767; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 683; i < 691; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 29526));
-                for (int i = 28150; i < 28155; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 23283));
-                toReturn.Add(segments.Find(x => x.Id == 26115));
-                for (int i = 28089; i < 28094; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 35035));
-                for (int i = 23070; i < 23077; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 10));
-                toReturn.Add(segments.Find(x => x.Id == 11));
-                toReturn.Add(segments.Find(x => x.Id == 28045));
 
-                for (int i = 9311; i < 9323; i++)
+                #endregion
+            }
+            else if ((start == AngkotPoint.KR_SETRA) && (end == AngkotPoint.CIBADUYUT))
+            {
+                #region  Kr Setra Cibaduyut
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 5800), segments.Find(x => x.Id == 5804));
+                if (newAStar.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 5800), segments.Find(x => x.Id == 5804));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
                 }
-                for (int i = 9326; i < 9331; i++)
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 10787), segments.Find(x => x.Id == 921));
+                if (newAStar2.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 10787), segments.Find(x => x.Id == 921));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
                 }
-                for (int i = 27121; i < 27126; i++)
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 6336), segments.Find(x => x.Id == 6342));
+                if (newAStar3.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 6336), segments.Find(x => x.Id == 6342));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
                 }
-                for (int i = 28805; i < 28808; i++)
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 971), segments.Find(x => x.Id == 975));
+                if (newAStar9a.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 971), segments.Find(x => x.Id == 975));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 28038));
-                for (int i = 28724; i < 28804; i++)
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 969), segments.Find(x => x.Id == 12520));
+                if (newAStar4.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 969), segments.Find(x => x.Id == 12520));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 10810), segments.Find(x => x.Id == 16253));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 10810), segments.Find(x => x.Id == 16253));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 21058), segments.Find(x => x.Id == 21948));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 21058), segments.Find(x => x.Id == 21948));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 653), segments.Find(x => x.Id == 16044));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 653), segments.Find(x => x.Id == 16044));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 16046), segments.Find(x => x.Id == 15957));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 16046), segments.Find(x => x.Id == 15957));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 15911), segments.Find(x => x.Id == 1256));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 15911), segments.Find(x => x.Id == 1256));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 12757), segments.Find(x => x.Id == 21813));
+                if (newAStar9.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 12757), segments.Find(x => x.Id == 21813));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
+                }
+
+                #endregion
+            }
+
+            /// Route Cicaheum Ciroyom
+            else if ((start == AngkotPoint.CICAHEUM) && (end == AngkotPoint.CIROYOM))
+            {
+                #region Cicaheum Ciroyom
+                toReturn.Add(segments.Find(x => x.Id == 18109));
+                toReturn.Add(segments.Find(x => x.Id == 18110));
+                toReturn.Add(segments.Find(x => x.Id == 18111));
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 24844), segments.Find(x => x.Id == 11820));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 24844), segments.Find(x => x.Id == 11820));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 6527), segments.Find(x => x.Id == 22687));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 6527), segments.Find(x => x.Id == 22687));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 15272), segments.Find(x => x.Id == 445));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 15272), segments.Find(x => x.Id == 445));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 1013));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 1013));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 1673), segments.Find(x => x.Id == 1676));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 1673), segments.Find(x => x.Id == 1676));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 16253));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 16253));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 21058), segments.Find(x => x.Id == 21951));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 21058), segments.Find(x => x.Id == 21951));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 653), segments.Find(x => x.Id == 10040));
+                if (newAStar9.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 653), segments.Find(x => x.Id == 10040));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
+                }
+                AStar newAStar2a = new AStar(this.segments, segments.Find(x => x.Id == 10062), segments.Find(x => x.Id == 21500));
+                if (newAStar2a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2a = new List<RoadSegment>();
+                    forAstar2a = generatePath(newAStar2a, segments.Find(x => x.Id == 10062), segments.Find(x => x.Id == 21500));
+                    toReturn.AddRange(forAstar2a);
+                    forAstar2a.Clear();
+                }
+                AStar newAStar2aa = new AStar(this.segments, segments.Find(x => x.Id == 13059), segments.Find(x => x.Id == 13032));
+                if (newAStar2aa.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2aa = new List<RoadSegment>();
+                    forAstar2aa = generatePath(newAStar2aa, segments.Find(x => x.Id == 13059), segments.Find(x => x.Id == 13032));
+                    toReturn.AddRange(forAstar2aa);
+                    forAstar2aa.Clear();
+                }
+                AStar newAStarx = new AStar(this.segments, segments.Find(x => x.Id == 16203), segments.Find(x => x.Id == 17479));
+                if (newAStarx.goalIsFound)
+                {
+                    List<RoadSegment> forAstarx = new List<RoadSegment>();
+                    forAstarx = generatePath(newAStarx, segments.Find(x => x.Id == 16203), segments.Find(x => x.Id == 17479));
+                    toReturn.AddRange(forAstarx);
+                    forAstarx.Clear();
+                }
+                #endregion
+            }
+            else if ((start == AngkotPoint.CIROYOM) && (end == AngkotPoint.CICAHEUM))
+            {
+                #region  Ciroyom Cicaheum 
+                toReturn.Add(segments.Find(x => x.Id == 308));
+                toReturn.Add(segments.Find(x => x.Id == 309));
+                toReturn.Add(segments.Find(x => x.Id == 310));
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 106), segments.Find(x => x.Id == 127));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 106), segments.Find(x => x.Id == 127));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 95), segments.Find(x => x.Id == 10063));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 95), segments.Find(x => x.Id == 10063));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 10050), segments.Find(x => x.Id == 10046));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 10050), segments.Find(x => x.Id == 10046));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 21950), segments.Find(x => x.Id == 21057));
+                if (newAStar9a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 21950), segments.Find(x => x.Id == 21057));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
+                }
+
+
+
+                //AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 10803), segments.Find(x => x.Id == 16770));
+                //if (newAStar4.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                //    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 10803), segments.Find(x => x.Id == 16770));
+                //    toReturn.AddRange(forAstar4);
+                //    forAstar4.Clear();
+                //}
+                //AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                //if (newAStar5.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                //    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                //    toReturn.AddRange(forAstar5);
+                //    forAstar5.Clear();
+                //}
+                //AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                //if (newAStar6.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                //    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                //    toReturn.AddRange(forAstar6);
+                //    forAstar6.Clear();
+                //}
+                //AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 979));
+                //if (newAStar2c.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                //    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 979));
+                //    toReturn.AddRange(forAstar2c);
+                //    forAstar2c.Clear();
+                //}
+
+                //AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 6478), segments.Find(x => x.Id == 6499));
+                //if (newAStar7.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                //    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 6478), segments.Find(x => x.Id == 6499));
+                //    toReturn.AddRange(forAstar7);
+                //    forAstar7.Clear();
+                //}
+                //AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 10865), segments.Find(x => x.Id == 978));
+                //if (newAStar8.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                //    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 10865), segments.Find(x => x.Id == 978));
+                //    toReturn.AddRange(forAstar8);
+                //    forAstar8.Clear();
+                //}
+                //AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 15440), segments.Find(x => x.Id == 15308));
+                //if (newAStar9.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                //    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 15440), segments.Find(x => x.Id == 15308));
+                //    toReturn.AddRange(forAstar9);
+                //    forAstar9.Clear();
+                //}
+
+                #endregion
+            }
+            /// Route Elang Gede Bage
+            else if ((start == AngkotPoint.ELANG) && (end == AngkotPoint.GEDEBAGE))
+            {
+                #region Elang Gd Bage
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 12634), segments.Find(x => x.Id == 15214));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 12634), segments.Find(x => x.Id == 15214));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 19837), segments.Find(x => x.Id == 18065));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 19837), segments.Find(x => x.Id == 18065));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+                #endregion
+            }
+            else if ((start == AngkotPoint.GEDEBAGE) && (end == AngkotPoint.ELANG))
+            {
+                #region  Gd Bage Elang
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 20166), segments.Find(x => x.Id == 21233));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 20166), segments.Find(x => x.Id == 21233));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 16443), segments.Find(x => x.Id == 12634));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 16443), segments.Find(x => x.Id == 12634));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                #endregion
+            }
+
+            /// Route Kelapa Buah Batu
+            else if ((start == AngkotPoint.BUAHBATU) && (end == AngkotPoint.KALAPA))
+            {
+                #region Buah Batu - Kelapa
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 22056), segments.Find(x => x.Id == 23983));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 22056), segments.Find(x => x.Id == 23983));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 12848), segments.Find(x => x.Id == 12851));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 12848), segments.Find(x => x.Id == 12851));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 12822), segments.Find(x => x.Id == 18058));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 12822), segments.Find(x => x.Id == 18058));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                toReturn.Add(segments.Find(x => x.Id == 22054));
+                toReturn.Add(segments.Find(x => x.Id == 22055));
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 1509), segments.Find(x => x.Id == 20999));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 1509), segments.Find(x => x.Id == 20999));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                toReturn.Add(segments.Find(x => x.Id == 8408));
+                toReturn.Add(segments.Find(x => x.Id == 8411));
+
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 8277), segments.Find(x => x.Id == 12660));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 8277), segments.Find(x => x.Id == 12660));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 9474), segments.Find(x => x.Id == 9459));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 9474), segments.Find(x => x.Id == 9459));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 22083), segments.Find(x => x.Id == 6072));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 22083), segments.Find(x => x.Id == 6072));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 17678), segments.Find(x => x.Id == 15131));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 17678), segments.Find(x => x.Id == 15131));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 1251), segments.Find(x => x.Id == 1254));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 1251), segments.Find(x => x.Id == 1254));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+
+
+                #endregion
+            }
+            else if ((start == AngkotPoint.KALAPA) && (end == AngkotPoint.BUAHBATU))
+            {
+                #region  Kelapa Buah Batu
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 15138), segments.Find(x => x.Id == 9152));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 15138), segments.Find(x => x.Id == 9152));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 22083), segments.Find(x => x.Id == 1508));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 22083), segments.Find(x => x.Id == 1508));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 12746), segments.Find(x => x.Id == 12719));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 12746), segments.Find(x => x.Id == 12719));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 9759), segments.Find(x => x.Id == 18367));
+                if (newAStar9a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 9759), segments.Find(x => x.Id == 18367));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 10020), segments.Find(x => x.Id == 20990));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 10020), segments.Find(x => x.Id == 20990));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                toReturn.Add(segments.Find(x => x.Id == 10030));
+                toReturn.Add(segments.Find(x => x.Id == 10033));
+
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 18059), segments.Find(x => x.Id == 12823));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 18059), segments.Find(x => x.Id == 12823));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 22068), segments.Find(x => x.Id == 17640));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 22068), segments.Find(x => x.Id == 17640));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
                 }
 
 
@@ -233,462 +778,1119 @@ namespace SimTMDG.Vehicle
             /// Route 3: Cicaheum - Ledeng
             else if ((start == AngkotPoint.LEDENG) && (end == AngkotPoint.CICAHEUM))
             {
-                #region Cicaheum Ledeng
-                toReturn.Add(segments.Find(x => x.Id == 27149));
-                toReturn.Add(segments.Find(x => x.Id == 27151));
-                toReturn.Add(segments.Find(x => x.Id == 27155));
-                toReturn.Add(segments.Find(x => x.Id == 27157));
-                toReturn.Add(segments.Find(x => x.Id == 27169));
-                toReturn.Add(segments.Find(x => x.Id == 27172));
-                toReturn.Add(segments.Find(x => x.Id == 27178));
-                toReturn.Add(segments.Find(x => x.Id == 27181));
-                toReturn.Add(segments.Find(x => x.Id == 27188));
-                toReturn.Add(segments.Find(x => x.Id == 27191));
-                toReturn.Add(segments.Find(x => x.Id == 27194));
-                toReturn.Add(segments.Find(x => x.Id == 27197));
-                toReturn.Add(segments.Find(x => x.Id == 27203));
-                toReturn.Add(segments.Find(x => x.Id == 27206));
-                toReturn.Add(segments.Find(x => x.Id == 27209));
-                toReturn.Add(segments.Find(x => x.Id == 27212));
-                toReturn.Add(segments.Find(x => x.Id == 27215));
-                toReturn.Add(segments.Find(x => x.Id == 27218));
-                toReturn.Add(segments.Find(x => x.Id == 27221));
-                toReturn.Add(segments.Find(x => x.Id == 27224));
-                toReturn.Add(segments.Find(x => x.Id == 27227));
-                toReturn.Add(segments.Find(x => x.Id == 27230));
-                toReturn.Add(segments.Find(x => x.Id == 27236));
-                toReturn.Add(segments.Find(x => x.Id == 27238));
-                toReturn.Add(segments.Find(x => x.Id == 27241));
-                toReturn.Add(segments.Find(x => x.Id == 27244));
-                toReturn.Add(segments.Find(x => x.Id == 27250));
-                toReturn.Add(segments.Find(x => x.Id == 27253));
-                toReturn.Add(segments.Find(x => x.Id == 27259));
-                toReturn.Add(segments.Find(x => x.Id == 27262));
-                toReturn.Add(segments.Find(x => x.Id == 27265));
-                toReturn.Add(segments.Find(x => x.Id == 27268));
-                toReturn.Add(segments.Find(x => x.Id == 27271));
-                toReturn.Add(segments.Find(x => x.Id == 27274));
-                for (int i = 23183; i < 23193; i++)
+                #region Ledeng Cicaheum
+                toReturn.Add(segments.Find(x => x.Id == 233));
+                toReturn.Add(segments.Find(x => x.Id == 234));
+                toReturn.Add(segments.Find(x => x.Id == 235));
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 15310), segments.Find(x => x.Id == 15439));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 15310), segments.Find(x => x.Id == 15439));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 10883), segments.Find(x => x.Id == 10892));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 10883), segments.Find(x => x.Id == 10892));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 6500), segments.Find(x => x.Id == 6479));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 6500), segments.Find(x => x.Id == 6479));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 1640), segments.Find(x => x.Id == 6518));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 1640), segments.Find(x => x.Id == 6518));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 21022), segments.Find(x => x.Id == 6547));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 21022), segments.Find(x => x.Id == 6547));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 1001), segments.Find(x => x.Id == 15291));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 1001), segments.Find(x => x.Id == 15291));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 154), segments.Find(x => x.Id == 179));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 154), segments.Find(x => x.Id == 179));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+                for (int i = 182; i < 190; i++)
                 {
                     toReturn.Add(segments.Find(x => x.Id == i));
                 }
-                toReturn.Add(segments.Find(x => x.Id == 9135));
-                toReturn.Add(segments.Find(x => x.Id == 9132));
-                toReturn.Add(segments.Find(x => x.Id == 9126));
-                toReturn.Add(segments.Find(x => x.Id == 9123));
-                toReturn.Add(segments.Find(x => x.Id == 9120));
-                toReturn.Add(segments.Find(x => x.Id == 9117));
-                toReturn.Add(segments.Find(x => x.Id == 9114));
-                toReturn.Add(segments.Find(x => x.Id == 1426));
-                toReturn.Add(segments.Find(x => x.Id == 1427));
-                for (int i = 27715; i < 27722; i++)
+
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 444), segments.Find(x => x.Id == 15271));
+                if (newAStar7.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 444), segments.Find(x => x.Id == 15271));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
                 }
-                //pertigaan ciumbeuluit
-                for (int i = 9146; i < 9152; i++)
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 6792), segments.Find(x => x.Id == 10794));
+                if (newAStar8.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 6792), segments.Find(x => x.Id == 10794));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 33262));
-                toReturn.Add(segments.Find(x => x.Id == 33260));
-                toReturn.Add(segments.Find(x => x.Id == 20768));
-                toReturn.Add(segments.Find(x => x.Id == 20765));
-                toReturn.Add(segments.Find(x => x.Id == 20762));
-                toReturn.Add(segments.Find(x => x.Id == 20759));
-                toReturn.Add(segments.Find(x => x.Id == 20756));
-                toReturn.Add(segments.Find(x => x.Id == 9221));
-                toReturn.Add(segments.Find(x => x.Id == 9218));
-                toReturn.Add(segments.Find(x => x.Id == 9215));
-                toReturn.Add(segments.Find(x => x.Id == 9212));
-                toReturn.Add(segments.Find(x => x.Id == 9209));
-                toReturn.Add(segments.Find(x => x.Id == 9206));
-                toReturn.Add(segments.Find(x => x.Id == 9203));
-                //pertigaan cisitu
-                for (int i = 1533; i > 1509; i--)
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 18405), segments.Find(x => x.Id == 11870));
+                if (newAStar9.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 18405), segments.Find(x => x.Id == 11870));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 643));
-                toReturn.Add(segments.Find(x => x.Id == 640));
-                toReturn.Add(segments.Find(x => x.Id == 637));
-                toReturn.Add(segments.Find(x => x.Id == 631));
-                toReturn.Add(segments.Find(x => x.Id == 628));
-                toReturn.Add(segments.Find(x => x.Id == 619));
-                toReturn.Add(segments.Find(x => x.Id == 616));
-                toReturn.Add(segments.Find(x => x.Id == 613));
-                toReturn.Add(segments.Find(x => x.Id == 610));
-                toReturn.Add(segments.Find(x => x.Id == 28822));
-                toReturn.Add(segments.Find(x => x.Id == 28819));
-                toReturn.Add(segments.Find(x => x.Id == 28816));
-                toReturn.Add(segments.Find(x => x.Id == 28812));
-                toReturn.Add(segments.Find(x => x.Id == 28809));
-                toReturn.Add(segments.Find(x => x.Id == 9187));
-                toReturn.Add(segments.Find(x => x.Id == 9183));
-                toReturn.Add(segments.Find(x => x.Id == 9180));
-                toReturn.Add(segments.Find(x => x.Id == 9177));
-                toReturn.Add(segments.Find(x => x.Id == 9174));
-                toReturn.Add(segments.Find(x => x.Id == 9171));
-                toReturn.Add(segments.Find(x => x.Id == 9168));
-                toReturn.Add(segments.Find(x => x.Id == 9165));
-                toReturn.Add(segments.Find(x => x.Id == 9188));
-                //baltos
-                toReturn.Add(segments.Find(x => x.Id == 664));
-                toReturn.Add(segments.Find(x => x.Id == 661));
-                toReturn.Add(segments.Find(x => x.Id == 658));
-                toReturn.Add(segments.Find(x => x.Id == 654));
-                toReturn.Add(segments.Find(x => x.Id == 651));
-                toReturn.Add(segments.Find(x => x.Id == 648));
-                toReturn.Add(segments.Find(x => x.Id == 645));
-                toReturn.Add(segments.Find(x => x.Id == 28));
-                toReturn.Add(segments.Find(x => x.Id == 31));
-                toReturn.Add(segments.Find(x => x.Id == 34));
-                toReturn.Add(segments.Find(x => x.Id == 37));
-                toReturn.Add(segments.Find(x => x.Id == 40));
-                toReturn.Add(segments.Find(x => x.Id == 43));
-                //dukomsel
-                toReturn.Add(segments.Find(x => x.Id == 377));
-                toReturn.Add(segments.Find(x => x.Id == 380));
-                toReturn.Add(segments.Find(x => x.Id == 383));
-                toReturn.Add(segments.Find(x => x.Id == 386));
-                toReturn.Add(segments.Find(x => x.Id == 389));
-                toReturn.Add(segments.Find(x => x.Id == 27119));
-                toReturn.Add(segments.Find(x => x.Id == 30273));
-                toReturn.Add(segments.Find(x => x.Id == 27110));
-                toReturn.Add(segments.Find(x => x.Id == 27113));
-                toReturn.Add(segments.Find(x => x.Id == 27116));
-                //pusdai
-                toReturn.Add(segments.Find(x => x.Id == 9463));
-                toReturn.Add(segments.Find(x => x.Id == 9464));
-                for (int i = 33046; i < 33055; i++)
+                AStar newAStar2a = new AStar(this.segments, segments.Find(x => x.Id == 16383), segments.Find(x => x.Id == 16317));
+                if (newAStar2a.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar2a = new List<RoadSegment>();
+                    forAstar2a = generatePath(newAStar2a, segments.Find(x => x.Id == 16383), segments.Find(x => x.Id == 16317));
+                    toReturn.AddRange(forAstar2a);
+                    forAstar2a.Clear();
                 }
-                //wr supratman
-                for (int i = 24522; i < 24530; i++)
+                AStar newAStar2aa = new AStar(this.segments, segments.Find(x => x.Id == 16388), segments.Find(x => x.Id == 24828));
+                if (newAStar2aa.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar2aa = new List<RoadSegment>();
+                    forAstar2aa = generatePath(newAStar2aa, segments.Find(x => x.Id == 16388), segments.Find(x => x.Id == 24828));
+                    toReturn.AddRange(forAstar2aa);
+                    forAstar2aa.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 23093));
-                toReturn.Add(segments.Find(x => x.Id == 23094));
-                toReturn.Add(segments.Find(x => x.Id == 23095));
-                toReturn.Add(segments.Find(x => x.Id == 30485));
-                toReturn.Add(segments.Find(x => x.Id == 30488));
-                toReturn.Add(segments.Find(x => x.Id == 30491));
-                toReturn.Add(segments.Find(x => x.Id == 30494));
-                toReturn.Add(segments.Find(x => x.Id == 30500));
-                toReturn.Add(segments.Find(x => x.Id == 30506));
-                toReturn.Add(segments.Find(x => x.Id == 30512));
-                toReturn.Add(segments.Find(x => x.Id == 30515));
-                toReturn.Add(segments.Find(x => x.Id == 26130));
-                toReturn.Add(segments.Find(x => x.Id == 26133));
-                toReturn.Add(segments.Find(x => x.Id == 26136));
-                toReturn.Add(segments.Find(x => x.Id == 26139));
-                toReturn.Add(segments.Find(x => x.Id == 26142));
-                toReturn.Add(segments.Find(x => x.Id == 26144));
-                toReturn.Add(segments.Find(x => x.Id == 26147));
-                toReturn.Add(segments.Find(x => x.Id == 26150));
-                toReturn.Add(segments.Find(x => x.Id == 26153));
-                toReturn.Add(segments.Find(x => x.Id == 1167));
-                toReturn.Add(segments.Find(x => x.Id == 1170));
-                toReturn.Add(segments.Find(x => x.Id == 1185));
-                toReturn.Add(segments.Find(x => x.Id == 1188));
-                toReturn.Add(segments.Find(x => x.Id == 1194));
-                toReturn.Add(segments.Find(x => x.Id == 28232));
-                toReturn.Add(segments.Find(x => x.Id == 28235));
-                toReturn.Add(segments.Find(x => x.Id == 2604));
-                toReturn.Add(segments.Find(x => x.Id == 30222));
-                toReturn.Add(segments.Find(x => x.Id == 30225));
-                toReturn.Add(segments.Find(x => x.Id == 30228));
-                toReturn.Add(segments.Find(x => x.Id == 30240));
-                toReturn.Add(segments.Find(x => x.Id == 30243));
-                toReturn.Add(segments.Find(x => x.Id == 38625));
-                toReturn.Add(segments.Find(x => x.Id == 38631));
-                toReturn.Add(segments.Find(x => x.Id == 38634));
-                toReturn.Add(segments.Find(x => x.Id == 38640));
-                toReturn.Add(segments.Find(x => x.Id == 38643));
-                toReturn.Add(segments.Find(x => x.Id == 38646));
-                toReturn.Add(segments.Find(x => x.Id == 24032));
-                toReturn.Add(segments.Find(x => x.Id == 27695));
-                toReturn.Add(segments.Find(x => x.Id == 33162));
-                toReturn.Add(segments.Find(x => x.Id == 33165));
-                toReturn.Add(segments.Find(x => x.Id == 33168));
+
+                #endregion
+            }
+            else if ((start == AngkotPoint.CICAHEUM) && (end == AngkotPoint.LEDENG))
+            {
+                #region  Cicaheum Ledeng
+                toReturn.Add(segments.Find(x => x.Id == 18109));
+                toReturn.Add(segments.Find(x => x.Id == 18110));
+                toReturn.Add(segments.Find(x => x.Id == 18111));
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 24832), segments.Find(x => x.Id == 18403));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 24832), segments.Find(x => x.Id == 18403));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 20951), segments.Find(x => x.Id == 22687));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 20951), segments.Find(x => x.Id == 22687));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 15272), segments.Find(x => x.Id == 445));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 15272), segments.Find(x => x.Id == 445));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 1013));
+                if (newAStar9a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 1013));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 1673), segments.Find(x => x.Id == 1676));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 1673), segments.Find(x => x.Id == 1676));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 979));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 979));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 6478), segments.Find(x => x.Id == 6499));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 6478), segments.Find(x => x.Id == 6499));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 10865), segments.Find(x => x.Id == 978));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 10865), segments.Find(x => x.Id == 978));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 15440), segments.Find(x => x.Id == 15308));
+                if (newAStar9.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 15440), segments.Find(x => x.Id == 15308));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
+                }
 
                 #endregion
             }
 
-            ///Route 2: Angkot Kelapa Dago
+            /// Route 3: CIsitu -Tegalega
+            else if ((start == AngkotPoint.CISITU) && (end == AngkotPoint.TEGALEGA))
+            {
+                #region Cisitu tegalega
+                toReturn.Add(segments.Find(x => x.Id == 220));
+                toReturn.Add(segments.Find(x => x.Id == 221));
+                toReturn.Add(segments.Find(x => x.Id == 222));
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 74), segments.Find(x => x.Id == 59));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 74), segments.Find(x => x.Id == 59));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 56), segments.Find(x => x.Id == 20));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 56), segments.Find(x => x.Id == 20));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 16038), segments.Find(x => x.Id == 15291));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 16038), segments.Find(x => x.Id == 15291));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 1673), segments.Find(x => x.Id == 1676));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 1673), segments.Find(x => x.Id == 1676));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 6546), segments.Find(x => x.Id == 8827));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 1635), segments.Find(x => x.Id == 1639));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+
+                AStar newAStar4a = new AStar(this.segments, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 17943));
+                if (newAStar4a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4a = new List<RoadSegment>();
+                    forAstar4a = generatePath(newAStar4a, segments.Find(x => x.Id == 8415), segments.Find(x => x.Id == 17943));
+                    toReturn.AddRange(forAstar4a);
+                    forAstar4a.Clear();
+                }
+                AStar newAStar5a = new AStar(this.segments, segments.Find(x => x.Id == 1047), segments.Find(x => x.Id == 16044));
+                if (newAStar5a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5a = new List<RoadSegment>();
+                    forAstar5a = generatePath(newAStar5a, segments.Find(x => x.Id == 1047), segments.Find(x => x.Id == 16044));
+                    toReturn.AddRange(forAstar5a);
+                    forAstar5a.Clear();
+                }
+                AStar newAStar6a = new AStar(this.segments, segments.Find(x => x.Id == 16046), segments.Find(x => x.Id == 755));
+                if (newAStar6a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6a = new List<RoadSegment>();
+                    forAstar6a = generatePath(newAStar6a, segments.Find(x => x.Id == 16046), segments.Find(x => x.Id == 755));
+                    toReturn.AddRange(forAstar6a);
+                    forAstar6a.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 713), segments.Find(x => x.Id == 10686));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 713), segments.Find(x => x.Id == 10686));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+
+                #endregion
+            }
+            else if ((start == AngkotPoint.TEGALEGA) && (end == AngkotPoint.CISITU))
+            {
+                #region  Tegalega Cisitu
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 24990), segments.Find(x => x.Id == 20770));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 24990), segments.Find(x => x.Id == 20770));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 15958), segments.Find(x => x.Id == 708));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 15958), segments.Find(x => x.Id == 708));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 677), segments.Find(x => x.Id == 683));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 677), segments.Find(x => x.Id == 683));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 672), segments.Find(x => x.Id == 19285));
+                if (newAStar9a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 672), segments.Find(x => x.Id == 19285));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 22042), segments.Find(x => x.Id == 10388));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 22042), segments.Find(x => x.Id == 10388));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 661), segments.Find(x => x.Id == 10988));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 661), segments.Find(x => x.Id == 10988));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar2a = new AStar(this.segments, segments.Find(x => x.Id == 16140), segments.Find(x => x.Id == 16155));
+                if (newAStar2a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2a = new List<RoadSegment>();
+                    forAstar2a = generatePath(newAStar2a, segments.Find(x => x.Id == 16140), segments.Find(x => x.Id == 16155));
+                    toReturn.AddRange(forAstar2a);
+                    forAstar2a.Clear();
+                }
+                AStar newAStar2aa = new AStar(this.segments, segments.Find(x => x.Id == 16976), segments.Find(x => x.Id == 16981));
+                if (newAStar2aa.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2aa = new List<RoadSegment>();
+                    forAstar2aa = generatePath(newAStar2aa, segments.Find(x => x.Id == 16976), segments.Find(x => x.Id == 16981));
+                    toReturn.AddRange(forAstar2aa);
+                    forAstar2aa.Clear();
+                }
+
+                AStar newAStar9aa = new AStar(this.segments, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 6536));
+                if (newAStar9aa.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9aa = new List<RoadSegment>();
+                    forAstar9aa = generatePath(newAStar9aa, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 6536));
+                    toReturn.AddRange(forAstar9aa);
+                    forAstar9aa.Clear();
+                }
+
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 16971), segments.Find(x => x.Id == 16037));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 16971), segments.Find(x => x.Id == 16037));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar2c = new AStar(this.segments, segments.Find(x => x.Id == 22), segments.Find(x => x.Id == 55));
+                if (newAStar2c.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2c = new List<RoadSegment>();
+                    forAstar2c = generatePath(newAStar2c, segments.Find(x => x.Id == 22), segments.Find(x => x.Id == 55));
+                    toReturn.AddRange(forAstar2c);
+                    forAstar2c.Clear();
+                }
+
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 58), segments.Find(x => x.Id == 73));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 58), segments.Find(x => x.Id == 73));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+
+                #endregion
+            }
+
+            ///Route 5: SDSaerang - Caringin
+            else if ((start == AngkotPoint.SD_SAERANG) && (end == AngkotPoint.CARINGIN))
+            {
+                #region SdSaerang Caringin
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 200), segments.Find(x => x.Id == 204));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 200), segments.Find(x => x.Id == 204));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+                AStar newAStar4a = new AStar(this.segments, segments.Find(x => x.Id == 21480), segments.Find(x => x.Id == 1324));
+                if (newAStar4a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4a = new List<RoadSegment>();
+                    forAstar4a = generatePath(newAStar4a, segments.Find(x => x.Id == 21480), segments.Find(x => x.Id == 1324));
+                    toReturn.AddRange(forAstar4a);
+                    forAstar4a.Clear();
+                }
+
+                for (int i = 21392; i < 21398; i++)
+                {
+                    toReturn.Add(segments.Find(x => x.Id == i));
+                }
+
+                for (int i = 10095; i < 10100; i++)
+                {
+                    toReturn.Add(segments.Find(x => x.Id == i));
+                }
+                for (int i = 15288; i < 15292; i++)
+                {
+                    toReturn.Add(segments.Find(x => x.Id == i));
+                }
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 154), segments.Find(x => x.Id == 179));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 154), segments.Find(x => x.Id == 179));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+                for (int i = 182; i < 190; i++)
+                {
+                    toReturn.Add(segments.Find(x => x.Id == i));
+                }
+                toReturn.Add(segments.Find(x => x.Id == 9188));
+                toReturn.Add(segments.Find(x => x.Id == 9191));
+                toReturn.Add(segments.Find(x => x.Id == 9194));
+                toReturn.Add(segments.Find(x => x.Id == 9185));
+                toReturn.Add(segments.Find(x => x.Id == 9186));
+                toReturn.Add(segments.Find(x => x.Id == 14195));
+                toReturn.Add(segments.Find(x => x.Id == 14196));
+                toReturn.Add(segments.Find(x => x.Id == 9197));
+                toReturn.Add(segments.Find(x => x.Id == 21594));
+                toReturn.Add(segments.Find(x => x.Id == 9196));
+                toReturn.Add(segments.Find(x => x.Id == 16983));
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 16156), segments.Find(x => x.Id == 16141));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 16156), segments.Find(x => x.Id == 16141));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                toReturn.Add(segments.Find(x => x.Id == 423));
+                toReturn.Add(segments.Find(x => x.Id == 424));
+                toReturn.Add(segments.Find(x => x.Id == 425));
+                for (int i = 16256; i < 16260; i++)
+                {
+                    toReturn.Add(segments.Find(x => x.Id == i));
+                }
+                for (int i = 426; i < 436; i++)
+                {
+                    toReturn.Add(segments.Find(x => x.Id == i));
+                }
+                for (int i = 2755; i < 2758; i++)
+                {
+                    toReturn.Add(segments.Find(x => x.Id == i));
+                }
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 16239), segments.Find(x => x.Id == 10040));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 16239), segments.Find(x => x.Id == 10040));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 10062), segments.Find(x => x.Id == 21500));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 10062), segments.Find(x => x.Id == 21500));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 13056), segments.Find(x => x.Id == 13032));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 13056), segments.Find(x => x.Id == 13032));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 13017), segments.Find(x => x.Id == 15884));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 13017), segments.Find(x => x.Id == 15884));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 13022), segments.Find(x => x.Id == 17538));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 13022), segments.Find(x => x.Id == 17538));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 16191), segments.Find(x => x.Id == 705));
+                if (newAStar9.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 16191), segments.Find(x => x.Id == 705));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
+                }
+                AStar newAStar2a = new AStar(this.segments, segments.Find(x => x.Id == 16021), segments.Find(x => x.Id == 21438));
+                if (newAStar2a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2a = new List<RoadSegment>();
+                    forAstar2a = generatePath(newAStar2a, segments.Find(x => x.Id == 16021), segments.Find(x => x.Id == 21438));
+                    toReturn.AddRange(forAstar2a);
+                    forAstar2a.Clear();
+                }
+                AStar newAStar2aa = new AStar(this.segments, segments.Find(x => x.Id == 279), segments.Find(x => x.Id == 306));
+                if (newAStar2aa.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2aa = new List<RoadSegment>();
+                    forAstar2aa = generatePath(newAStar2aa, segments.Find(x => x.Id == 279), segments.Find(x => x.Id == 306));
+                    toReturn.AddRange(forAstar2aa);
+                    forAstar2aa.Clear();
+                }
+
+
+
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //for (int i = ; i < ; i++)
+                //{
+                //    toReturn.Add(segments.Find(x => x.Id == i));
+                //}
+                //for (int i = ; i < ; i++)
+                //{
+                //    toReturn.Add(segments.Find(x => x.Id == i));
+                //}
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //for (int i = ; i < ; i++)
+                //{
+                //    toReturn.Add(segments.Find(x => x.Id == i));
+                //}
+
+                //AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 200), segments.Find(x => x.Id == 204));
+                //if (newAStar.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar = new List<RoadSegment>();
+                //    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 200), segments.Find(x => x.Id == 204));
+                //    toReturn.AddRange(forAstar);
+                //    forAstar.Clear();
+                //}
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+
+                //for (int i = ; i < ; i++)
+                //{
+                //    toReturn.Add(segments.Find(x => x.Id == i));
+                //}
+
+
+
+                #endregion
+            }
+            else if ((start == AngkotPoint.CARINGIN) && (end == AngkotPoint.SD_SAERANG))
+            {
+                #region  Caringin SdSaerang
+                toReturn.Add(segments.Find(x => x.Id == 394));
+                toReturn.Add(segments.Find(x => x.Id == 395));
+                toReturn.Add(segments.Find(x => x.Id == 396));
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 307), segments.Find(x => x.Id == 280));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 307), segments.Find(x => x.Id == 280));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 21437), segments.Find(x => x.Id == 16020));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 21437), segments.Find(x => x.Id == 16020));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 705), segments.Find(x => x.Id == 694));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 705), segments.Find(x => x.Id == 694));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+                toReturn.Add(segments.Find(x => x.Id == 13029));
+                toReturn.Add(segments.Find(x => x.Id == 13026));
+                toReturn.Add(segments.Find(x => x.Id == 13023));
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 10989), segments.Find(x => x.Id == 810));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 10989), segments.Find(x => x.Id == 810));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 13031), segments.Find(x => x.Id == 13058));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 13031), segments.Find(x => x.Id == 13058));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 21501), segments.Find(x => x.Id == 10063));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 21501), segments.Find(x => x.Id == 10063));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 10050), segments.Find(x => x.Id == 10046));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 10050), segments.Find(x => x.Id == 10046));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 21947), segments.Find(x => x.Id == 624));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 21947), segments.Find(x => x.Id == 624));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 626), segments.Find(x => x.Id == 10988));
+                if (newAStar9.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 626), segments.Find(x => x.Id == 10988));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
+                }
+                AStar newAStar2a = new AStar(this.segments, segments.Find(x => x.Id == 16140), segments.Find(x => x.Id == 16155));
+                if (newAStar2a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2a = new List<RoadSegment>();
+                    forAstar2a = generatePath(newAStar2a, segments.Find(x => x.Id == 16140), segments.Find(x => x.Id == 16155));
+                    toReturn.AddRange(forAstar2a);
+                    forAstar2a.Clear();
+                }
+                AStar newAStar2aa = new AStar(this.segments, segments.Find(x => x.Id == 16976), segments.Find(x => x.Id == 16981));
+                if (newAStar2aa.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2aa = new List<RoadSegment>();
+                    forAstar2aa = generatePath(newAStar2aa, segments.Find(x => x.Id == 16976), segments.Find(x => x.Id == 16981));
+                    toReturn.AddRange(forAstar2aa);
+                    forAstar2aa.Clear();
+                }
+
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 6536));
+                if (newAStar9a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 1014), segments.Find(x => x.Id == 6536));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
+                }
+                AStar newAStar3a = new AStar(this.segments, segments.Find(x => x.Id == 1), segments.Find(x => x.Id == 7));
+                if (newAStar3a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3a = new List<RoadSegment>();
+                    forAstar3a = generatePath(newAStar3a, segments.Find(x => x.Id == 1), segments.Find(x => x.Id == 7));
+                    toReturn.AddRange(forAstar3a);
+                    forAstar3a.Clear();
+                }
+
+                AStar newAStar4a = new AStar(this.segments, segments.Find(x => x.Id == 16182), segments.Find(x => x.Id == 16910));
+                if (newAStar4a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4a = new List<RoadSegment>();
+                    forAstar4a = generatePath(newAStar4a, segments.Find(x => x.Id == 16182), segments.Find(x => x.Id == 16910));
+                    toReturn.AddRange(forAstar4a);
+                    forAstar4a.Clear();
+                }
+                AStar newAStar5a = new AStar(this.segments, segments.Find(x => x.Id == 16178), segments.Find(x => x.Id == 16181));
+                if (newAStar5a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5a = new List<RoadSegment>();
+                    forAstar5a = generatePath(newAStar5a, segments.Find(x => x.Id == 16178), segments.Find(x => x.Id == 16181));
+                    toReturn.AddRange(forAstar5a);
+                    forAstar5a.Clear();
+                }
+                AStar newAStar6a = new AStar(this.segments, segments.Find(x => x.Id == 1323), segments.Find(x => x.Id == 16176));
+                if (newAStar6a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6a = new List<RoadSegment>();
+                    forAstar6a = generatePath(newAStar6a, segments.Find(x => x.Id == 1323), segments.Find(x => x.Id == 16176));
+                    toReturn.AddRange(forAstar6a);
+                    forAstar6a.Clear();
+                }
+
+                #endregion
+            }
+            ///Route DAgo - Riung
+            else if ((start == AngkotPoint.DAGO) && (end == AngkotPoint.RIUNG))
+            {
+                #region Dago riung
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 8178), segments.Find(x => x.Id == 13));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 8178), segments.Find(x => x.Id == 13));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 9437), segments.Find(x => x.Id == 15200));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 9437), segments.Find(x => x.Id == 15200));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 369), segments.Find(x => x.Id == 360));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 369), segments.Find(x => x.Id == 360));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 1418), segments.Find(x => x.Id == 20804));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 1418), segments.Find(x => x.Id == 20804));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 6983), segments.Find(x => x.Id == 12309));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 6983), segments.Find(x => x.Id == 12309));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 571), segments.Find(x => x.Id == 575));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 571), segments.Find(x => x.Id == 575));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 577), segments.Find(x => x.Id == 583));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 577), segments.Find(x => x.Id == 583));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 21329), segments.Find(x => x.Id == 12405));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 21329), segments.Find(x => x.Id == 12405));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 12401), segments.Find(x => x.Id == 22650));
+                if (newAStar9.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 12401), segments.Find(x => x.Id == 22650));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
+                }
+                AStar newAStar2a = new AStar(this.segments, segments.Find(x => x.Id == 9231), segments.Find(x => x.Id == 14252));
+                if (newAStar2a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2a = new List<RoadSegment>();
+                    forAstar2a = generatePath(newAStar2a, segments.Find(x => x.Id == 9231), segments.Find(x => x.Id == 14252));
+                    toReturn.AddRange(forAstar2a);
+                    forAstar2a.Clear();
+                }
+                AStar newAStar2aa = new AStar(this.segments, segments.Find(x => x.Id == 12398), segments.Find(x => x.Id == 20959));
+                if (newAStar2aa.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2aa = new List<RoadSegment>();
+                    forAstar2aa = generatePath(newAStar2aa, segments.Find(x => x.Id == 12398), segments.Find(x => x.Id == 20959));
+                    toReturn.AddRange(forAstar2aa);
+                    forAstar2aa.Clear();
+                }
+                toReturn.Add(segments.Find(x => x.Id == 20675));
+                toReturn.Add(segments.Find(x => x.Id == 20678));
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 350), segments.Find(x => x.Id == 20130));
+                if (newAStar9a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 350), segments.Find(x => x.Id == 20130));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
+                }
+
+
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //toReturn.Add(segments.Find(x => x.Id == ));
+                //for (int i = ; i < ; i++)
+                //{
+                //    toReturn.Add(segments.Find(x => x.Id == i));
+                //}
+
+                //AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 200), segments.Find(x => x.Id == 204));
+                //if (newAStar.goalIsFound)
+                //{
+                //    List<RoadSegment> forAstar = new List<RoadSegment>();
+                //    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 200), segments.Find(x => x.Id == 204));
+                //    toReturn.AddRange(forAstar);
+                //    forAstar.Clear();
+                //}
+
+                #endregion
+            }
+            else if ((start == AngkotPoint.RIUNG) && (end == AngkotPoint.DAGO))
+            {
+                #region Riung Dago
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 19811), segments.Find(x => x.Id == 348));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 19811), segments.Find(x => x.Id == 348));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 354), segments.Find(x => x.Id == 12400));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 354), segments.Find(x => x.Id == 12400));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 14253), segments.Find(x => x.Id == 9232));
+                if (newAStar3.goalIsFound)
+                {
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 14253), segments.Find(x => x.Id == 9232));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
+                }
+
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 15281), segments.Find(x => x.Id == 12457));
+                if (newAStar4.goalIsFound)
+                {
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 15281), segments.Find(x => x.Id == 12457));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
+                }
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 8986), segments.Find(x => x.Id == 12345));
+                if (newAStar5.goalIsFound)
+                {
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 8986), segments.Find(x => x.Id == 12345));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
+                }
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 12462), segments.Find(x => x.Id == 12474));
+                if (newAStar6.goalIsFound)
+                {
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 12462), segments.Find(x => x.Id == 12474));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
+                }
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 18194), segments.Find(x => x.Id == 20510));
+                if (newAStar7.goalIsFound)
+                {
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 18194), segments.Find(x => x.Id == 20510));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
+                }
+                AStar newAStar8 = new AStar(this.segments, segments.Find(x => x.Id == 1420), segments.Find(x => x.Id == 1418));
+                if (newAStar8.goalIsFound)
+                {
+                    List<RoadSegment> forAstar8 = new List<RoadSegment>();
+                    forAstar8 = generatePath(newAStar8, segments.Find(x => x.Id == 1420), segments.Find(x => x.Id == 1418));
+                    toReturn.AddRange(forAstar8);
+                    forAstar8.Clear();
+                }
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 359), segments.Find(x => x.Id == 368));
+                if (newAStar9.goalIsFound)
+                {
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 359), segments.Find(x => x.Id == 368));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
+                }
+                AStar newAStar2a = new AStar(this.segments, segments.Find(x => x.Id == 15201), segments.Find(x => x.Id == 22633));
+                if (newAStar2a.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2a = new List<RoadSegment>();
+                    forAstar2a = generatePath(newAStar2a, segments.Find(x => x.Id == 15201), segments.Find(x => x.Id == 22633));
+                    toReturn.AddRange(forAstar2a);
+                    forAstar2a.Clear();
+                }
+                AStar newAStar2aa = new AStar(this.segments, segments.Find(x => x.Id == 206), segments.Find(x => x.Id == 16966));
+                if (newAStar2aa.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2aa = new List<RoadSegment>();
+                    forAstar2aa = generatePath(newAStar2aa, segments.Find(x => x.Id == 206), segments.Find(x => x.Id == 16966));
+                    toReturn.AddRange(forAstar2aa);
+                    forAstar2aa.Clear();
+                }
+                #endregion
+            }
+
+            ///Route 4: DAgo - Stasiun
+            else if ((start == AngkotPoint.DAGO) && (end == AngkotPoint.STASIUN))
+            {
+                #region DAgoStasiun
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 8178), segments.Find(x => x.Id == 1225));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 8178), segments.Find(x => x.Id == 1225));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+                #endregion
+            }
+
+            else if ((start == AngkotPoint.STASIUN) && (end == AngkotPoint.DAGO))
+            {
+                #region StasiunDAgo
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 1212), segments.Find(x => x.Id == 16307));
+                if (newAStar2.goalIsFound)
+                {
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 1212), segments.Find(x => x.Id == 16307));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
+                }
+
+
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 13927), segments.Find(x => x.Id == 16966));
+                if (newAStar.goalIsFound)
+                {
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 13927), segments.Find(x => x.Id == 16966));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
+                }
+                #endregion
+            }
+
+
+            ///Route 2: Angkot Dago - kalapa
             else if ((start == AngkotPoint.DAGO) && (end == AngkotPoint.KALAPA))
             {
-                #region 02KelapaDago
-                for (int i = 19684; i < 19728; i++)
+                #region Dago Kelapa
+                AStar newAStar = new AStar(this.segments, segments.Find(x => x.Id == 8178), segments.Find(x => x.Id == 6072));
+                if (newAStar.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar = new List<RoadSegment>();
+                    forAstar = generatePath(newAStar, segments.Find(x => x.Id == 8178), segments.Find(x => x.Id == 6072));
+                    toReturn.AddRange(forAstar);
+                    forAstar.Clear();
                 }
-                for (int i = 28034; i < 28038; i++)
+                AStar newAStar2 = new AStar(this.segments, segments.Find(x => x.Id == 17684), segments.Find(x => x.Id == 15131));
+                if (newAStar2.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar2 = new List<RoadSegment>();
+                    forAstar2 = generatePath(newAStar2, segments.Find(x => x.Id == 17684), segments.Find(x => x.Id == 15131));
+                    toReturn.AddRange(forAstar2);
+                    forAstar2.Clear();
                 }
-                for (int i = 33622; i < 33627; i++)
+                AStar newAStar3 = new AStar(this.segments, segments.Find(x => x.Id == 1251), segments.Find(x => x.Id == 1254));
+                if (newAStar3.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar3 = new List<RoadSegment>();
+                    forAstar3 = generatePath(newAStar3, segments.Find(x => x.Id == 1251), segments.Find(x => x.Id == 1254));
+                    toReturn.AddRange(forAstar3);
+                    forAstar3.Clear();
                 }
 
-                for (int i = 29103; i < 29117; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-
-                for (int i = 29098; i < 29101; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 30018; i < 30022; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 353; i < 369; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 0));
-                toReturn.Add(segments.Find(x => x.Id == 1));
-                toReturn.Add(segments.Find(x => x.Id == 26966));
-                toReturn.Add(segments.Find(x => x.Id == 26969));
-                toReturn.Add(segments.Find(x => x.Id == 27015));
-                toReturn.Add(segments.Find(x => x.Id == 21495));
-                toReturn.Add(segments.Find(x => x.Id == 21307));
-                toReturn.Add(segments.Find(x => x.Id == 21304));
-                toReturn.Add(segments.Find(x => x.Id == 26981));
-                for (int i = 21262; i < 21266; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 21119; i < 21126; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 20990));
-                toReturn.Add(segments.Find(x => x.Id == 21055));
-                for (int i = 84; i < 89; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 21162));
-                for (int i = 34279; i < 34285; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 1292));
-                for (int i = 34276; i < 34279; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 8815; i < 8819; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 29660; i < 29663; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 20308; i < 20315; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 7806; i < 7810; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 29659));
-                toReturn.Add(segments.Find(x => x.Id == 29656));
-                toReturn.Add(segments.Find(x => x.Id == 29653));
-                toReturn.Add(segments.Find(x => x.Id == 29650));
-                toReturn.Add(segments.Find(x => x.Id == 29647));
-                toReturn.Add(segments.Find(x => x.Id == 29644));
-                toReturn.Add(segments.Find(x => x.Id == 29641));
-                toReturn.Add(segments.Find(x => x.Id == 29638));
-                toReturn.Add(segments.Find(x => x.Id == 29635));
-                toReturn.Add(segments.Find(x => x.Id == 29632));
-                toReturn.Add(segments.Find(x => x.Id == 29629));
-                toReturn.Add(segments.Find(x => x.Id == 24873));
-                toReturn.Add(segments.Find(x => x.Id == 24870));
-                toReturn.Add(segments.Find(x => x.Id == 24864));
-                toReturn.Add(segments.Find(x => x.Id == 24861));
-                toReturn.Add(segments.Find(x => x.Id == 24858));
-                toReturn.Add(segments.Find(x => x.Id == 1505));
-                toReturn.Add(segments.Find(x => x.Id == 20861));
-                toReturn.Add(segments.Find(x => x.Id == 20864));
-                toReturn.Add(segments.Find(x => x.Id == 20867));
-                toReturn.Add(segments.Find(x => x.Id == 33244));
-                toReturn.Add(segments.Find(x => x.Id == 33245));
-                for (int i = 34297; i < 34299; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 34286; i < 34291; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 24874; i < 24877; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 34296));
-                toReturn.Add(segments.Find(x => x.Id == 30056));
-                toReturn.Add(segments.Find(x => x.Id == 30057));
-                for (int i = 29527; i < 29534; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 21410));
-                toReturn.Add(segments.Find(x => x.Id == 21412));
-                toReturn.Add(segments.Find(x => x.Id == 21415));
-                toReturn.Add(segments.Find(x => x.Id == 28144));
-                toReturn.Add(segments.Find(x => x.Id == 27006));
-                toReturn.Add(segments.Find(x => x.Id == 1862));
-                toReturn.Add(segments.Find(x => x.Id == 38350));
-                toReturn.Add(segments.Find(x => x.Id == 27036));
-                toReturn.Add(segments.Find(x => x.Id == 27039));
-                toReturn.Add(segments.Find(x => x.Id == 27042));
-                toReturn.Add(segments.Find(x => x.Id == 27045));
-                toReturn.Add(segments.Find(x => x.Id == 27048));
-                for (int i = 9311; i < 9323; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 9326; i < 9331; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 27121; i < 27126; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                for (int i = 28805; i < 28808; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 28038));
-                for (int i = 28724; i < 28805; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
                 #endregion
             }
 
-            /// Route 1: Angkot Cibaduyut - Kr Setra
-            else if ((start == AngkotPoint.CIBADUYUT) && (end == AngkotPoint.KR_SETRA))
+            else if ((start == AngkotPoint.KALAPA) && (end == AngkotPoint.DAGO))
             {
-                #region 01CibaduyutKarangsetra
-                for (int i = 22825; i < 22843; i++)
+                #region Kalapa - Dago
+                AStar newAStar3a = new AStar(this.segments, segments.Find(x => x.Id == 15138), segments.Find(x => x.Id == 8632));
+                if (newAStar3a.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar3a = new List<RoadSegment>();
+                    forAstar3a = generatePath(newAStar3a, segments.Find(x => x.Id == 15138), segments.Find(x => x.Id == 8632));
+                    toReturn.AddRange(forAstar3a);
+                    forAstar3a.Clear();
                 }
-                for (int i = 29606; i < 29612; i++)
+                AStar newAStar4 = new AStar(this.segments, segments.Find(x => x.Id == 17675), segments.Find(x => x.Id == 12639));
+                if (newAStar4.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar4 = new List<RoadSegment>();
+                    forAstar4 = generatePath(newAStar4, segments.Find(x => x.Id == 17675), segments.Find(x => x.Id == 12639));
+                    toReturn.AddRange(forAstar4);
+                    forAstar4.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 20915));
-                for (int i = 23106; i < 23110; i++)
+                AStar newAStar5 = new AStar(this.segments, segments.Find(x => x.Id == 1668), segments.Find(x => x.Id == 8869));
+                if (newAStar5.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar5 = new List<RoadSegment>();
+                    forAstar5 = generatePath(newAStar5, segments.Find(x => x.Id == 1668), segments.Find(x => x.Id == 8869));
+                    toReturn.AddRange(forAstar5);
+                    forAstar5.Clear();
                 }
-                for (int i = 27930; i < 27935; i++)
+                AStar newAStar6 = new AStar(this.segments, segments.Find(x => x.Id == 22104), segments.Find(x => x.Id == 17587));
+                if (newAStar6.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar6 = new List<RoadSegment>();
+                    forAstar6 = generatePath(newAStar6, segments.Find(x => x.Id == 22104), segments.Find(x => x.Id == 17587));
+                    toReturn.AddRange(forAstar6);
+                    forAstar6.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 27783));
-                toReturn.Add(segments.Find(x => x.Id == 27784));
-                toReturn.Add(segments.Find(x => x.Id == 27808));
-                toReturn.Add(segments.Find(x => x.Id == 27805));
-                toReturn.Add(segments.Find(x => x.Id == 27802));
-                toReturn.Add(segments.Find(x => x.Id == 27799));
-                toReturn.Add(segments.Find(x => x.Id == 27796));
-                toReturn.Add(segments.Find(x => x.Id == 27790));
-                toReturn.Add(segments.Find(x => x.Id == 27787));
-                toReturn.Add(segments.Find(x => x.Id == 27817));
-                toReturn.Add(segments.Find(x => x.Id == 27814));
-                toReturn.Add(segments.Find(x => x.Id == 27811));
-                toReturn.Add(segments.Find(x => x.Id == 27913));
-                toReturn.Add(segments.Find(x => x.Id == 27910));
-                toReturn.Add(segments.Find(x => x.Id == 27907));
-                toReturn.Add(segments.Find(x => x.Id == 283));
-                toReturn.Add(segments.Find(x => x.Id == 256));
-                toReturn.Add(segments.Find(x => x.Id == 258));
-                toReturn.Add(segments.Find(x => x.Id == 261));
-                for (int i = 23081; i < 23083; i++)
+                AStar newAStar7 = new AStar(this.segments, segments.Find(x => x.Id == 9404), segments.Find(x => x.Id == 15149));
+                if (newAStar7.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar7 = new List<RoadSegment>();
+                    forAstar7 = generatePath(newAStar7, segments.Find(x => x.Id == 9404), segments.Find(x => x.Id == 15149));
+                    toReturn.AddRange(forAstar7);
+                    forAstar7.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 25257));
-                for (int i = 25253; i < 25257; i++)
+
+                toReturn.Add(segments.Find(x => x.Id == 2034));
+                toReturn.Add(segments.Find(x => x.Id == 24646));
+                AStar newAStar9 = new AStar(this.segments, segments.Find(x => x.Id == 15179), segments.Find(x => x.Id == 15194));
+                if (newAStar9.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar9 = new List<RoadSegment>();
+                    forAstar9 = generatePath(newAStar9, segments.Find(x => x.Id == 15179), segments.Find(x => x.Id == 15194));
+                    toReturn.AddRange(forAstar9);
+                    forAstar9.Clear();
                 }
-                toReturn.Add(segments.Find(x => x.Id == 33342));
-                toReturn.Add(segments.Find(x => x.Id == 25251));
-                for (int i = 33334; i < 33341; i++)
+                AStar newAStar9a = new AStar(this.segments, segments.Find(x => x.Id == 6639), segments.Find(x => x.Id == 16966));
+                if (newAStar9a.goalIsFound)
                 {
-                    toReturn.Add(segments.Find(x => x.Id == i));
+                    List<RoadSegment> forAstar9a = new List<RoadSegment>();
+                    forAstar9a = generatePath(newAStar9a, segments.Find(x => x.Id == 6639), segments.Find(x => x.Id == 16966));
+                    toReturn.AddRange(forAstar9a);
+                    forAstar9a.Clear();
                 }
-                for (int i = 22164; i < 22169; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 22181));
-                toReturn.Add(segments.Find(x => x.Id == 34144));
-                toReturn.Add(segments.Find(x => x.Id == 34147));
-                toReturn.Add(segments.Find(x => x.Id == 34150));
-                toReturn.Add(segments.Find(x => x.Id == 34153));
-                toReturn.Add(segments.Find(x => x.Id == 33288));
-                toReturn.Add(segments.Find(x => x.Id == 33292));
-                toReturn.Add(segments.Find(x => x.Id == 33294));
-                toReturn.Add(segments.Find(x => x.Id == 28101));
-                toReturn.Add(segments.Find(x => x.Id == 28607));
-                toReturn.Add(segments.Find(x => x.Id == 28605));
-                toReturn.Add(segments.Find(x => x.Id == 34206));
-                toReturn.Add(segments.Find(x => x.Id == 34205));
-                toReturn.Add(segments.Find(x => x.Id == 23111));
-                toReturn.Add(segments.Find(x => x.Id == 24741));
-                toReturn.Add(segments.Find(x => x.Id == 24738));
-                toReturn.Add(segments.Find(x => x.Id == 575));
-                toReturn.Add(segments.Find(x => x.Id == 34106));
-                toReturn.Add(segments.Find(x => x.Id == 34103));
-                toReturn.Add(segments.Find(x => x.Id == 34100));
-                toReturn.Add(segments.Find(x => x.Id == 34097));
-                toReturn.Add(segments.Find(x => x.Id == 34094));
-                toReturn.Add(segments.Find(x => x.Id == 34124));
-                toReturn.Add(segments.Find(x => x.Id == 34121));
-                toReturn.Add(segments.Find(x => x.Id == 34118));
-                toReturn.Add(segments.Find(x => x.Id == 34115));
-                toReturn.Add(segments.Find(x => x.Id == 34112));
-                toReturn.Add(segments.Find(x => x.Id == 34109));
-                toReturn.Add(segments.Find(x => x.Id == 578));
-                for (int i = 28095; i < 28098; i++)
-                {
-                    toReturn.Add(segments.Find(x => x.Id == i));
-                }
-                toReturn.Add(segments.Find(x => x.Id == 34204));
-                toReturn.Add(segments.Find(x => x.Id == 28504));
-                toReturn.Add(segments.Find(x => x.Id == 28501));
-                toReturn.Add(segments.Find(x => x.Id == 8984));
-                toReturn.Add(segments.Find(x => x.Id == 8981));
-                toReturn.Add(segments.Find(x => x.Id == 8978));
-                toReturn.Add(segments.Find(x => x.Id == 8975));
-                toReturn.Add(segments.Find(x => x.Id == 8972));
-                toReturn.Add(segments.Find(x => x.Id == 8969));
-                toReturn.Add(segments.Find(x => x.Id == 23087));
-                toReturn.Add(segments.Find(x => x.Id == 550));
-                toReturn.Add(segments.Find(x => x.Id == 547));
-                toReturn.Add(segments.Find(x => x.Id == 544));
-                toReturn.Add(segments.Find(x => x.Id == 540));
-                toReturn.Add(segments.Find(x => x.Id == 538));
-                toReturn.Add(segments.Find(x => x.Id == 535));
-                toReturn.Add(segments.Find(x => x.Id == 532));
-                toReturn.Add(segments.Find(x => x.Id == 529));
                 #endregion
             }
+
 
             /// Route 0: Pasteur
             #region Pasteur
@@ -859,16 +2061,81 @@ namespace SimTMDG.Vehicle
 
             if ((startPoint == AngkotPoint.DAGO) && (endPoints[destination] == AngkotPoint.STASIUN))
             {
-                colorCode = 4;
-            }else if ((startPoint == AngkotPoint.DAGO) && (endPoints[destination] == AngkotPoint.KALAPA))
+                colorCode = 3;
+            }
+            else if ((startPoint == AngkotPoint.STASIUN) && (endPoints[destination] == AngkotPoint.DAGO))
             {
                 colorCode = 3;
             }
+            else if ((startPoint == AngkotPoint.DAGO) && (endPoints[destination] == AngkotPoint.KALAPA))
+            {
+                colorCode = 13;
+            }
+            else if ((startPoint == AngkotPoint.KALAPA) && (endPoints[destination] == AngkotPoint.DAGO))
+            {
+                colorCode = 13;
+            }
             else if ((startPoint == AngkotPoint.LEDENG) && (endPoints[destination] == AngkotPoint.CICAHEUM))
             {
-                colorCode = 2;
+                colorCode = 17;
+            }
+            else if ((startPoint == AngkotPoint.CICAHEUM) && (endPoints[destination] == AngkotPoint.LEDENG))
+            {
+                colorCode = 17;
             }
             else if ((startPoint == AngkotPoint.CIBADUYUT) && (endPoints[destination] == AngkotPoint.KR_SETRA))
+            {
+                colorCode = 8;
+            }
+            else if ((startPoint == AngkotPoint.KR_SETRA) && (endPoints[destination] == AngkotPoint.CIBADUYUT))
+            {
+                colorCode = 8;
+            }
+            else if ((startPoint == AngkotPoint.SD_SAERANG) && (endPoints[destination] == AngkotPoint.CARINGIN))
+            {
+                colorCode = 4;
+            }
+            else if ((startPoint == AngkotPoint.CARINGIN) && (endPoints[destination] == AngkotPoint.SD_SAERANG))
+            {
+                colorCode = 4;
+            }
+            else if ((startPoint == AngkotPoint.DAGO) && (endPoints[destination] == AngkotPoint.RIUNG))
+            {
+                colorCode = 9;
+            }
+            else if ((startPoint == AngkotPoint.RIUNG) && (endPoints[destination] == AngkotPoint.DAGO))
+            {
+                colorCode = 9;
+            }
+            else if ((startPoint == AngkotPoint.CISITU) && (endPoints[destination] == AngkotPoint.TEGALEGA))
+            {
+                colorCode = 16;
+            }
+            else if ((startPoint == AngkotPoint.TEGALEGA) && (endPoints[destination] == AngkotPoint.CISITU))
+            {
+                colorCode = 16;
+            }
+            else if ((startPoint == AngkotPoint.BUAHBATU) && (endPoints[destination] == AngkotPoint.KALAPA))
+            {
+                colorCode = 12;
+            }
+            else if ((startPoint == AngkotPoint.KALAPA) && (endPoints[destination] == AngkotPoint.BUAHBATU))
+            {
+                colorCode = 12;
+            }
+            else if ((startPoint == AngkotPoint.ELANG) && (endPoints[destination] == AngkotPoint.GEDEBAGE))
+            {
+                colorCode = 18;
+            }
+            else if ((startPoint == AngkotPoint.GEDEBAGE) && (endPoints[destination] == AngkotPoint.ELANG))
+            {
+                colorCode = 6;
+            }
+            else if ((startPoint == AngkotPoint.CICAHEUM) && (endPoints[destination] == AngkotPoint.CIROYOM))
+            {
+                colorCode = 6;
+            }
+            else if ((startPoint == AngkotPoint.CIROYOM) && (endPoints[destination] == AngkotPoint.CICAHEUM))
             {
                 colorCode = 6;
             }

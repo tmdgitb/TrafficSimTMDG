@@ -1561,7 +1561,15 @@ namespace SimTMDG.Vehicle
                                 roadDist += Routing.Route.First.Value.Length;
                                 newDistance = newDistance - Routing.Route.First.Value.Length;
                                 Routing.Route.RemoveFirst();
-                                RemoveFromCurrentSegment(Routing.Route.First.Value, newDistance);
+
+                                if (Routing.Route.Count > 0)
+                                {
+                                    RemoveFromCurrentSegment(Routing.Route.First.Value, newDistance);
+                                }
+                                else
+                                {
+                                    RemoveFromCurrentSegment(null, 0);
+                                }
                             }
                             else
                             {

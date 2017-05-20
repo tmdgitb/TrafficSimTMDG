@@ -34,15 +34,30 @@ namespace SimTMDG.Vehicle
             b = 2;
             s0 = 4;
             T = 2;
+            
+            a *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            b *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            T *= (GlobalRandom.Instance.NextDouble() + 0.25);
 
+            initVeh(cs, laneIndex, r);
+        }
+
+        public Truck(RoadSegment cs, int laneIndex, List<RoadSegment> r, double _a, double _b, double _s0, double _T)
+        {
+            a = _a;
+            b = _b;
+            s0 = _s0;
+            T = _T;
+
+            initVeh(cs, laneIndex, r);
+        }
+
+        private void initVeh(RoadSegment cs, int laneIndex, List<RoadSegment> r)
+        {
             _physics = physics;
             _state.currentSegment = cs;
             _state.laneIdx = laneIndex;
-
-            //a *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            //b *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            //s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
-            //T *= (GlobalRandom.Instance.NextDouble() + 0.25);
 
             length = (GlobalRandom.Instance.Next(2) == 0) ? 10 : 12;
 
