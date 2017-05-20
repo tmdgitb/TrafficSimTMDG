@@ -39,16 +39,18 @@ namespace SimTMDG.Vehicle
             b *= (GlobalRandom.Instance.NextDouble() + 0.25);
             s0 *= (GlobalRandom.Instance.NextDouble() + 0.25);
             T *= (GlobalRandom.Instance.NextDouble() + 0.25);
+            p *= (GlobalRandom.Instance.NextDouble() + 0.25);
 
             initVeh(cs, laneIndex, r);
         }
 
-        public Truck(RoadSegment cs, int laneIndex, List<RoadSegment> r, double _a, double _b, double _s0, double _T)
+        public Truck(RoadSegment cs, int laneIndex, List<RoadSegment> r, double _a, double _b, double _s0, double _T, double _p)
         {
             a = _a;
             b = _b;
             s0 = _s0;
             T = _T;
+            p = _p;
 
             initVeh(cs, laneIndex, r);
         }

@@ -1497,6 +1497,57 @@ namespace SimTMDG
             //_route[0].vehicles[2].distance = 0;
         }
 
+
+
+        private void vehtypeChanged(object sender, EventArgs e)
+        {
+            if (vehTypeCombo.SelectedIndex == 0)
+            {
+                aNumVal.Text = "1.4";
+                bNumVal.Text = "1.5";
+                sNumVal.Text = "2";
+                tNumVal.Text = "1.5";
+                pNumVal.Text = "0.5";
+            }
+            else if (vehTypeCombo.SelectedIndex == 1)
+            {
+                aNumVal.Text = "0.9";
+                bNumVal.Text = "2";
+                sNumVal.Text = "3";
+                tNumVal.Text = "2";
+                pNumVal.Text = "0.5";
+            }
+            else if (vehTypeCombo.SelectedIndex == 2)
+            {
+                aNumVal.Text = "0.7";
+                bNumVal.Text = "2";
+                sNumVal.Text = "4";
+                tNumVal.Text = "2";
+                pNumVal.Text = "0.5";
+            }
+        }
+
+
+
+        private void customParamCheckedChange(object sender, EventArgs e)
+        {
+            if (!customParamCheck.Checked)
+            {
+                aNumVal.Enabled = false;
+                bNumVal.Enabled = false;
+                sNumVal.Enabled = false;
+                pNumVal.Enabled = false;
+                tNumVal.Enabled = false;
+            }else
+            {
+                aNumVal.Enabled = true;
+                bNumVal.Enabled = true;
+                sNumVal.Enabled = true;
+                pNumVal.Enabled = true;
+                tNumVal.Enabled = true;
+            }
+        }
+
         #region AStar Testing Temp
         private void btnAstar_Click(object sender, EventArgs e)
         {
@@ -1514,21 +1565,79 @@ namespace SimTMDG
                 {
                     List<RoadSegment> newRoute = generatePath(newAStar, startSegment, endSegment);
 
-                    foreach (RoadSegment segment in nc.segments)
-                    {
-                        for (int j = 0; j < segment.lanes.Count; j++)
-                        {
-                            segment.lanes[j].debugColor = Color.DarkGray;
-                        }
-                    }
+                    //foreach (RoadSegment segment in nc.segments)
+                    //{
+                    //    for (int j = 0; j < segment.lanes.Count; j++)
+                    //    {
+                    //        segment.lanes[j].debugColor = Color.DarkGray;
+                    //    }
+                    //}
 
-                    foreach (RoadSegment segment in newRoute)
+                    //foreach (RoadSegment segment in newRoute)
+                    //{
+                    //    for (int j = 0; j < segment.lanes.Count; j++)
+                    //    {
+                    //        segment.lanes[j].debugColor = Color.SeaGreen;
+                    //    }
+                    //}
+
+                    #region Add Vehicle at Simulation Run
+                    int laneidx = rnd.Next(0, startSegment.lanes.Count);
+                    IVehicle v = null;
+
+                    if ((startSegment.lanes[laneidx].vehicles.Count == 0) ||
+                        (startSegment.lanes[laneidx].vehicles[startSegment.lanes[laneidx].vehicles.Count - 1].RearPos <
+                        startSegment.lanes[laneidx].Length - 20))
                     {
-                        for (int j = 0; j < segment.lanes.Count; j++)
+
+                        if (!customParamCheck.Checked)
                         {
-                            segment.lanes[j].debugColor = Color.Red;
+                            if (vehTypeCombo.SelectedIndex == 0)
+                            {
+                                v = new Car(startSegment, laneidx, newRoute);
+                            }
+                            else if (vehTypeCombo.SelectedIndex == 1)
+                            {
+                                v = new Bus(startSegment, laneidx, newRoute);
+                            }
+                            else if(vehTypeCombo.SelectedIndex == 2)
+                            {
+                                v = new Truck(startSegment, laneidx, newRoute);
+                            }
+                        }else
+                        {
+                            double a  = double.Parse(aNumVal.Text);
+                            double b  = double.Parse(bNumVal.Text);
+                            double s0 = double.Parse(sNumVal.Text);
+                            double T  = double.Parse(tNumVal.Text);
+                            double p  = double.Parse(pNumVal.Text);
+
+                            if (vehTypeCombo.SelectedIndex == 0)
+                            {
+                                v = new Car(startSegment, laneidx, newRoute, a, b, s0, T, p);
+                            }
+                            else if (vehTypeCombo.SelectedIndex == 1)
+                            {
+                                v = new Bus(startSegment, laneidx, newRoute, a, b, s0, T, p);
+                            }
+                            else
+                            {
+                                v = new Truck(startSegment, laneidx, newRoute, a, b, s0, T, p);
+                            }
                         }
+
+                        
+
+                        v.color = Color.Purple;
+
+                        startSegment.lanes[laneidx].vehicles.Add(v);
+                        nc.ActiveVehicles++;
+
+                        daGridScrollPosition = new Point((int)(v.absCoord.X - (renderedRect.Width / 2)), (int)(v.absCoord.Y - (renderedRect.Height / 2)));
                     }
+                    #endregion
+
+                    UpdateDaGridClippingRect();
 
                     Invalidate(InvalidationLevel.ONLY_MAIN_CANVAS);
 
@@ -1599,7 +1708,17 @@ namespace SimTMDG
             restClient.ParseTraffic(nc.segments);
         }
 
-        
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
         #endregion
 
         #endregion
