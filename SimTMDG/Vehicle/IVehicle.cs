@@ -577,6 +577,8 @@ namespace SimTMDG.Vehicle
             } else { acceleration = 0; }
             
             Accelerate(acceleration);
+
+            //LogVeh(tickLength, acceleration);
         }
 
         Boolean thinkAboutLC = true;
@@ -658,31 +660,31 @@ namespace SimTMDG.Vehicle
 
             //        route[1].startNode.registeredVeh = closestVeh.vehicle;
             //    }
-                
+
             //}
             #endregion
 
 
             #region Traffic lights
 
-            //double TLAcc = double.MaxValue;
-            //// Check for red traffic lights on route
-            //distanceToTrafficLight = GetDistanceToNextTrafficLightOnRoute(route, this.distance, Constants.SearchRange, true);
-            ////intersectionLookaheadDistance = distanceToTrafficLight;
+            double TLAcc = double.MaxValue;
+            // Check for red traffic lights on route
+            distanceToTrafficLight = GetDistanceToNextTrafficLightOnRoute(route, this.distance, Constants.SearchRange, true);
+            //intersectionLookaheadDistance = distanceToTrafficLight;
 
-            //// If the next TrafficLight is closer than the next vehicle, no free line change shall be performed
-            //if (distanceToTrafficLight < lookaheadDistance)
-            //{
-            //    lookaheadDistance = distanceToTrafficLight;
-            //    thinkAboutLC = false;
-            //    TLAcc = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
-            //    _state._freeDrive = false;
-            //}
+            // If the next TrafficLight is closer than the next vehicle, no free line change shall be performed
+            if (distanceToTrafficLight < lookaheadDistance)
+            {
+                lookaheadDistance = distanceToTrafficLight;
+                thinkAboutLC = false;
+                TLAcc = CalculateAcceleration(physics.velocity, effectiveDesiredVelocity, lookaheadDistance, physics.velocity);
+                _state._freeDrive = false;
+            }
 
-            //if (TLAcc < lowestAcceleration)
-            //{
-            //    lowestAcceleration = TLAcc;
-            //}
+            if (TLAcc < lowestAcceleration)
+            {
+                lowestAcceleration = TLAcc;
+            }
 
             #endregion
 
@@ -1486,10 +1488,10 @@ namespace SimTMDG.Vehicle
         double roadDist = 0;
         double prevDist = 0;
 
-        public void LogVeh(double totalTime)
+        public void LogVeh(double totalTime, double newAcc)
         {
             logTime += totalTime + ";";
-            logAcc += physics.acceleration + ";";
+            logAcc += newAcc + ";";
             logVel += physics.velocity + ";";
 
 

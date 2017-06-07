@@ -38,7 +38,6 @@ namespace SimTMDG
             this.playButton = new System.Windows.Forms.Button();
             this.stepButton = new System.Windows.Forms.Button();
             this.tempLoadButton = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnRESTAPI = new System.Windows.Forms.Button();
             this.buttonTLightTemp = new System.Windows.Forms.Button();
@@ -51,19 +50,19 @@ namespace SimTMDG
             this.vehTypeCombo = new System.Windows.Forms.ComboBox();
             this.customParamCheck = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.aNumVal = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.bNumVal = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.sNumVal = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.tNumVal = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.pNumVal = new System.Windows.Forms.TextBox();
             this.btnAstar = new System.Windows.Forms.Button();
             this.astarStatus = new System.Windows.Forms.Label();
             this.DaGrid = new SimTMDG.MainForm.CustUserControl();
             this.timerSimulation = new System.Windows.Forms.Timer(this.components);
-            this.aNumVal = new System.Windows.Forms.TextBox();
-            this.bNumVal = new System.Windows.Forms.TextBox();
-            this.sNumVal = new System.Windows.Forms.TextBox();
-            this.tNumVal = new System.Windows.Forms.TextBox();
-            this.pNumVal = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -109,7 +108,6 @@ namespace SimTMDG
             this.flowLayoutPanel1.Controls.Add(this.playButton);
             this.flowLayoutPanel1.Controls.Add(this.stepButton);
             this.flowLayoutPanel1.Controls.Add(this.tempLoadButton);
-            this.flowLayoutPanel1.Controls.Add(this.comboBox1);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(223, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(867, 30);
@@ -181,14 +179,6 @@ namespace SimTMDG
             this.tempLoadButton.Text = "Load";
             this.tempLoadButton.UseVisualStyleBackColor = true;
             this.tempLoadButton.Click += new System.EventHandler(this.tempLoadButton_Click);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(500, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 6;
             // 
             // flowLayoutPanel2
             // 
@@ -301,6 +291,7 @@ namespace SimTMDG
             this.vehTypeCombo.Name = "vehTypeCombo";
             this.vehTypeCombo.Size = new System.Drawing.Size(100, 21);
             this.vehTypeCombo.TabIndex = 14;
+            this.vehTypeCombo.SelectedIndex = 0;
             this.vehTypeCombo.SelectionChangeCommitted += new System.EventHandler(this.vehtypeChanged);
             // 
             // customParamCheck
@@ -324,6 +315,14 @@ namespace SimTMDG
             this.label5.Text = "a (max acc)";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
+            // aNumVal
+            // 
+            this.aNumVal.Enabled = false;
+            this.aNumVal.Location = new System.Drawing.Point(109, 217);
+            this.aNumVal.Name = "aNumVal";
+            this.aNumVal.Size = new System.Drawing.Size(100, 20);
+            this.aNumVal.TabIndex = 26;
+            // 
             // label6
             // 
             this.label6.Location = new System.Drawing.Point(3, 240);
@@ -331,6 +330,14 @@ namespace SimTMDG
             this.label6.Size = new System.Drawing.Size(100, 23);
             this.label6.TabIndex = 18;
             this.label6.Text = "b (max decc)";
+            // 
+            // bNumVal
+            // 
+            this.bNumVal.Enabled = false;
+            this.bNumVal.Location = new System.Drawing.Point(109, 243);
+            this.bNumVal.Name = "bNumVal";
+            this.bNumVal.Size = new System.Drawing.Size(100, 20);
+            this.bNumVal.TabIndex = 27;
             // 
             // label7
             // 
@@ -340,6 +347,14 @@ namespace SimTMDG
             this.label7.TabIndex = 20;
             this.label7.Text = "s0 (safe distance)";
             // 
+            // sNumVal
+            // 
+            this.sNumVal.Enabled = false;
+            this.sNumVal.Location = new System.Drawing.Point(109, 269);
+            this.sNumVal.Name = "sNumVal";
+            this.sNumVal.Size = new System.Drawing.Size(100, 20);
+            this.sNumVal.TabIndex = 28;
+            // 
             // label8
             // 
             this.label8.Location = new System.Drawing.Point(3, 292);
@@ -348,6 +363,14 @@ namespace SimTMDG
             this.label8.TabIndex = 22;
             this.label8.Text = "T (time gap)";
             // 
+            // tNumVal
+            // 
+            this.tNumVal.Enabled = false;
+            this.tNumVal.Location = new System.Drawing.Point(109, 295);
+            this.tNumVal.Name = "tNumVal";
+            this.tNumVal.Size = new System.Drawing.Size(100, 20);
+            this.tNumVal.TabIndex = 29;
+            // 
             // label9
             // 
             this.label9.Location = new System.Drawing.Point(3, 318);
@@ -355,6 +378,14 @@ namespace SimTMDG
             this.label9.Size = new System.Drawing.Size(100, 23);
             this.label9.TabIndex = 25;
             this.label9.Text = "p (politeness)";
+            // 
+            // pNumVal
+            // 
+            this.pNumVal.Enabled = false;
+            this.pNumVal.Location = new System.Drawing.Point(109, 321);
+            this.pNumVal.Name = "pNumVal";
+            this.pNumVal.Size = new System.Drawing.Size(100, 20);
+            this.pNumVal.TabIndex = 30;
             // 
             // btnAstar
             // 
@@ -403,50 +434,6 @@ namespace SimTMDG
             this.timerSimulation.Interval = 67;
             this.timerSimulation.Tick += new System.EventHandler(this.timerSimulation_Tick);
             // 
-            // aNumVal
-            // 
-            this.aNumVal.Location = new System.Drawing.Point(109, 217);
-            this.aNumVal.Name = "aNumVal";
-            this.aNumVal.Size = new System.Drawing.Size(100, 20);
-            this.aNumVal.TabIndex = 26;
-            this.aNumVal.Enabled = false;
-            
-            // 
-            // bNumVal
-            // 
-            this.bNumVal.Location = new System.Drawing.Point(109, 243);
-            this.bNumVal.Name = "bNumVal";
-            this.bNumVal.Size = new System.Drawing.Size(100, 20);
-            this.bNumVal.TabIndex = 27;
-            this.bNumVal.Enabled = false;
-            
-            // 
-            // sNumVal
-            // 
-            this.sNumVal.Location = new System.Drawing.Point(109, 269);
-            this.sNumVal.Name = "sNumVal";
-            this.sNumVal.Size = new System.Drawing.Size(100, 20);
-            this.sNumVal.TabIndex = 28;
-            this.sNumVal.Enabled = false;
-            
-            // 
-            // tNumVal
-            // 
-            this.tNumVal.Location = new System.Drawing.Point(109, 295);
-            this.tNumVal.Name = "tNumVal";
-            this.tNumVal.Size = new System.Drawing.Size(100, 20);
-            this.tNumVal.TabIndex = 29;
-            this.pNumVal.Enabled = false;
-            
-            // 
-            // pNumVal
-            // 
-            this.pNumVal.Location = new System.Drawing.Point(109, 321);
-            this.pNumVal.Name = "pNumVal";
-            this.pNumVal.Size = new System.Drawing.Size(100, 20);
-            this.pNumVal.TabIndex = 30;
-            this.tNumVal.Enabled = false;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -484,7 +471,6 @@ namespace SimTMDG
         private System.Windows.Forms.Button btnAstar;
         private System.Windows.Forms.Label astarStatus;
         private System.Windows.Forms.Button btnRESTAPI;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox vehTypeCombo;
         private System.Windows.Forms.CheckBox customParamCheck;

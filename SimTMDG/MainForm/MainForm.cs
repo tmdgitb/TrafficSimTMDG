@@ -1321,6 +1321,16 @@ namespace SimTMDG
 
         private void buttonTLightTemp_Click(object sender, EventArgs e)
         {
+            switch (nc.segments.Find(x => x.Id == 771).endNode.tLight.trafficLightState)
+            {
+                case TrafficLight.State.GREEN:
+                    nc.segments.Find(x => x.Id == 771).endNode.tLight.SwitchToRed();
+                    break;
+                case TrafficLight.State.RED:
+                    nc.segments.Find(x => x.Id == 771).endNode.tLight.SwitchToGreen();
+                    break;
+            }
+
             //switch (nc.segments.Find(x => x.Id == 2918).endNode.tLight.trafficLightState)
             //{
             //    case TrafficLight.State.GREEN:
@@ -1356,8 +1366,8 @@ namespace SimTMDG
             //}
 
 
-            nc.testTL1.ChangeState();
-            nc.testTL2.ChangeState();
+            //nc.testTL1.ChangeState();
+            //nc.testTL2.ChangeState();
 
 
 

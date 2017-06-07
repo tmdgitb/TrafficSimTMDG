@@ -278,13 +278,13 @@ namespace SimTMDG.Road
                 lane.SortVehicles();
             }
 
-            foreach (SegmentLane lane in lanes)
-            {
-                for (int i = 0; i < lane.vehicles.Count; i++)
-                {
-                    lane.vehicles[i].MakeLaneChange(tickLength);
-                }
-            }
+            //foreach (SegmentLane lane in lanes)
+            //{
+            //    for (int i = 0; i < lane.vehicles.Count; i++)
+            //    {
+            //        lane.vehicles[i].MakeLaneChange(tickLength);
+            //    }
+            //}
 
             foreach (SegmentLane lane in lanes)
             {
@@ -311,19 +311,19 @@ namespace SimTMDG.Road
                 }
             }
 
-            int akj = 0;
+            //int akj = 0;
 
             //if (((Id >= 353) && (Id <= 368)) || ((Id >= 0) && (Id <= 1)) || ((Id >= 26962) && (Id <= 26964)))
             //{
-            //    totalTime += tickLength;
+            //totalTime += tickLength;
 
-            //    foreach (SegmentLane lane in lanes)
+            //foreach (SegmentLane lane in lanes)
+            //{
+            //    for (int i = 0; i < lane.vehicles.Count; i++)
             //    {
-            //        for (int i = 0; i < lane.vehicles.Count; i++)
-            //        {
-            //            lane.vehicles[i].LogVeh(totalTime);
-            //        }
+            //        lane.vehicles[i].LogVeh(totalTime);
             //    }
+            //}
 
             //    if (Id == 26964)
             //    {

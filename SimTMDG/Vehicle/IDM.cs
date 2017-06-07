@@ -144,7 +144,7 @@ namespace SimTMDG.Vehicle
             //Console.WriteLine("value of tempSquare : " + tempSquare);
             //double vNeu = a * (1 - tempPow - tempSquare);
             //Console.WriteLine("value of vNew : " + vNeu);
-            double vNeu = a * (1 - Math.Pow((velocity / desiredVelocity), 1) - (Math2.Square(sstar / distance)));
+            double vNeu = a * (1 - Math.Pow((velocity / desiredVelocity), 4) - (Math2.Square(sstar / distance)));
 
             return vNeu;
         }
