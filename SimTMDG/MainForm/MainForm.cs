@@ -1321,15 +1321,74 @@ namespace SimTMDG
 
         private void buttonTLightTemp_Click(object sender, EventArgs e)
         {
-            switch (nc.segments.Find(x => x.Id == 771).endNode.tLight.trafficLightState)
-            {
-                case TrafficLight.State.GREEN:
-                    nc.segments.Find(x => x.Id == 771).endNode.tLight.SwitchToRed();
-                    break;
-                case TrafficLight.State.RED:
-                    nc.segments.Find(x => x.Id == 771).endNode.tLight.SwitchToGreen();
-                    break;
-            }
+            //if ((nc.segments.Find(x => x.Id == 21395).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 21395).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 16895).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 218).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 15292).endNode.tLight.SwitchToGreen();
+            //}
+            //else if ((nc.segments.Find(x => x.Id == 15292).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 15292).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 21395).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 218).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 16895).endNode.tLight.SwitchToGreen();
+            //}
+            //else if ((nc.segments.Find(x => x.Id == 16895).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 16895).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 21395).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 15292).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 218).endNode.tLight.SwitchToGreen();
+            //}
+            //else if ((nc.segments.Find(x => x.Id == 218).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 218).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 16895).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 15292).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 21395).endNode.tLight.SwitchToGreen();
+            //}
+
+            //if ((nc.segments.Find(x => x.Id == 17149).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 17149).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 1458).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 6658).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 15286).endNode.tLight.SwitchToGreen();
+            //}
+            //else if ((nc.segments.Find(x => x.Id == 15286).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 15286).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 17149).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 6658).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 1458).endNode.tLight.SwitchToGreen();
+            //}
+            //else if ((nc.segments.Find(x => x.Id == 1458).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 1458).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 17149).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 15286).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 6658).endNode.tLight.SwitchToGreen();
+            //}
+            //else if ((nc.segments.Find(x => x.Id == 6658).endNode.tLight.trafficLightState) == TrafficLight.State.GREEN)
+            //{
+            //    nc.segments.Find(x => x.Id == 6658).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 1458).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 15286).endNode.tLight.SwitchToRed();
+            //    nc.segments.Find(x => x.Id == 17149).endNode.tLight.SwitchToGreen();
+            //}
+
+
+            //switch (nc.segments.Find(x => x.Id == 771).endNode.tLight.trafficLightState)
+            //{
+            //    case TrafficLight.State.GREEN:
+            //        nc.segments.Find(x => x.Id == 771).endNode.tLight.SwitchToRed();
+            //        break;
+            //    case TrafficLight.State.RED:
+            //        nc.segments.Find(x => x.Id == 771).endNode.tLight.SwitchToGreen();
+            //        break;
+            //}
 
             //switch (nc.segments.Find(x => x.Id == 2918).endNode.tLight.trafficLightState)
             //{

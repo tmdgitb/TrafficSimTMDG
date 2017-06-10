@@ -513,8 +513,8 @@ namespace SimTMDG.Road
 
             #region log Traffic Light
             //26962
-            segments.Find(x => x.Id == 771).endNode.tLight = new TrafficLight();
-            segments.Find(x => x.Id == 15104).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 771).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 15104).endNode.tLight = new TrafficLight();
 
             //segments.Find(x => x.Id == 1).endNode.tLight = new TrafficLight();
             //segments.Find(x => x.Id == 1).endNode.tLight.SwitchToGreen();
@@ -522,6 +522,17 @@ namespace SimTMDG.Road
             //segments.Find(x => x.Id == 26964).endNode.tLight.SwitchToRed();
             #endregion
 
+            //segments.Find(x => x.Id == 17149).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 15286).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 6658).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 1458).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 17149).endNode.tLight.SwitchToGreen();
+
+            //segments.Find(x => x.Id == 21395).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 15292).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 16895).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 218).endNode.tLight = new TrafficLight();
+            //segments.Find(x => x.Id == 21395).endNode.tLight.SwitchToGreen();
 
             //segments.Find(x => x.Id == 2925).endNode.tLight = new TrafficLight();
             //segments.Find(x => x.Id == 28583).endNode.tLight = new TrafficLight();
@@ -621,258 +632,309 @@ namespace SimTMDG.Road
             //#endregion
 
 
-            //#region VehGen 5: #23059
-            //List<RoadSegment> origin_5__destinations = new List<RoadSegment>();
-            //List<double> origin_5__q_outs = new List<double>();
+            #region VehGen 5: #23059
+            List<RoadSegment> origin_5x__destinations = new List<RoadSegment>();
+            List<double> origin_5x__q_outs = new List<double>();//dari jl riau lapangan
 
-            ////origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
-            //origin_5__destinations.Add(segments.Find(x => x.Id == 33238));
+            //origin_5__destinations.Add(segments.Find(x => x.Id == 33646));
+            origin_5x__destinations.Add(segments.Find(x => x.Id == 16966));//dago
 
-            ////origin_5__q_outs.Add(.5);
-            //origin_5__q_outs.Add(1);
+            //origin_5__q_outs.Add(.5);
+            origin_5x__q_outs.Add(1);
 
-            //vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23059), .3, origin_5__destinations, origin_5__q_outs);
+            vehGen5 = new VehicleGenerator(segments, segments.Find(x => x.Id == 9213), .1, origin_5x__destinations, origin_5x__q_outs);
 
 
-            //vehGenerators.Add(vehGen5);
-            //#endregion
+            vehGenerators.Add(vehGen5);
+            #endregion
 
 
-            //#region VehGen 6: #286
-            //List<RoadSegment> origin_6__destinations = new List<RoadSegment>();
-            //List<double> origin_6__q_outs = new List<double>();
+            #region VehGen 6: #286
+            List<RoadSegment> origin_6x__destinations = new List<RoadSegment>();
+            List<double> origin_6x__q_outs = new List<double>();//dari pasteur bawah
 
-            //origin_6__destinations.Add(segments.Find(x => x.Id == 33630));
-            //origin_6__destinations.Add(segments.Find(x => x.Id == 22168));
+            origin_6x__destinations.Add(segments.Find(x => x.Id == 1417));//suci - panatayuda
+            origin_6x__destinations.Add(segments.Find(x => x.Id == 16966));//dago
 
-            //origin_6__q_outs.Add(.5);
-            //origin_6__q_outs.Add(.5);
+            origin_6x__q_outs.Add(.5);
+            origin_6x__q_outs.Add(.5);
 
-            //vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 286), .3, origin_6__destinations, origin_6__q_outs);
+            vehGen6 = new VehicleGenerator(segments, segments.Find(x => x.Id == 13860), .1, origin_6x__destinations, origin_6x__q_outs);
 
 
-            //vehGenerators.Add(vehGen6);
-            //#endregion
+            vehGenerators.Add(vehGen6);
+            #endregion
 
 
-            //#region VehGen 7: #286
-            //List<RoadSegment> origin_7__destinations = new List<RoadSegment>();
-            //List<double> origin_7__q_outs = new List<double>();
+            #region VehGen 7: #286
+            List<RoadSegment> origin_7__destinations = new List<RoadSegment>();
+            List<double> origin_7__q_outs = new List<double>();//dari cihampelas bawah
 
-            //origin_7__destinations.Add(segments.Find(x => x.Id == 30141));
+            origin_7__destinations.Add(segments.Find(x => x.Id == 16966));//dago
 
-            //origin_7__q_outs.Add(1);
+            origin_7__q_outs.Add(1);
 
-            //vehGen7 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20419), .3, origin_7__destinations, origin_7__q_outs);
+            vehGen7 = new VehicleGenerator(segments, segments.Find(x => x.Id == 20526), .1, origin_7__destinations, origin_7__q_outs);
 
 
-            //vehGenerators.Add(vehGen7);
-            //#endregion
+            vehGenerators.Add(vehGen7);
+            #endregion
 
 
-            //#region VehGen 8: #286
-            //List<RoadSegment> origin_8__destinations = new List<RoadSegment>();
-            //List<double> origin_8__q_outs = new List<double>();
 
-            //origin_8__destinations.Add(segments.Find(x => x.Id == 35013));
+            #region VehGen 8: #286
+            List<RoadSegment> origin_8aa__destinations = new List<RoadSegment>();
+            List<double> origin_8aa__q_outs = new List<double>();//dari dago
+            origin_8aa__destinations.Add(segments.Find(x => x.Id == 1212)); //stasiun
+            origin_8aa__destinations.Add(segments.Find(x => x.Id == 12942)); //tol pasteur
+            
+            origin_8aa__q_outs.Add(.4);
+            origin_8aa__q_outs.Add(.6);
+          
+            vehGen8b = new VehicleGenerator(segments, segments.Find(x => x.Id == 8190), 0.05, origin_8aa__destinations, origin_8aa__q_outs);
 
-            //origin_8__q_outs.Add(1);
+            vehGenerators.Add(vehGen8b);
+            #endregion
 
-            //vehGen8 = new VehicleGenerator(segments, segments.Find(x => x.Id == 23195), .3, origin_8__destinations, origin_8__q_outs);
+            #region VehGen 8: #286
+            List<RoadSegment> origin_8aa2__destinations = new List<RoadSegment>();
+            List<double> origin_8aa2__q_outs = new List<double>();//dari dago
+            
+            origin_8aa2__destinations.Add(segments.Find(x => x.Id == 20781)); //antapani
+            origin_8aa2__destinations.Add(segments.Find(x => x.Id == 430)); //bec
+            origin_8aa2__q_outs.Add(.6);
+            origin_8aa2__q_outs.Add(.4);
+            vehGen8b2 = new VehicleGenerator(segments, segments.Find(x => x.Id == 8178), 0.1, origin_8aa2__destinations, origin_8aa2__q_outs);
 
+            vehGenerators.Add(vehGen8b2);
+            #endregion
 
-            //vehGenerators.Add(vehGen8);
-            //#endregion
 
+            #region VehGen 9: #286
+            List<RoadSegment> origin_9aa__destinations = new List<RoadSegment>();
+            List<double> origin_9aa__q_outs = new List<double>();//dari dago
 
+            origin_9aa__destinations.Add(segments.Find(x => x.Id == 18068)); //cibiru
+            origin_9aa__q_outs.Add(1);
+            vehGen9 = new VehicleGenerator(segments, segments.Find(x => x.Id == 10754), 0.1, origin_9aa__destinations, origin_9aa__q_outs);
 
-            //#region Angkot 1: Sd Saerang - Caringin
-            //List<AngkotGenerator.AngkotPoint> origin_1a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_1a__q_outs = new List<double>();
+            vehGenerators.Add(vehGen9);
+            #endregion
 
-            //origin_1a__destinations.Add(AngkotGenerator.AngkotPoint.CARINGIN);
-            //origin_1a__q_outs.Add(1);
-            //anGen1 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.SD_SAERANG, 0.06, origin_1a__destinations, origin_1a__q_outs);
 
-            //angGenerators.Add(anGen1);
+            #region VehGen 10: #286
+            List<RoadSegment> origin_10aa__destinations = new List<RoadSegment>();
+            List<double> origin_10aa__q_outs = new List<double>();//dari dago
 
-            //List<AngkotGenerator.AngkotPoint> origin_1aa__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_1aa__q_outs = new List<double>();
+            origin_10aa__destinations.Add(segments.Find(x => x.Id == 18068)); //cibiru
+            origin_10aa__q_outs.Add(1);
+            vehGen10 = new VehicleGenerator(segments, segments.Find(x => x.Id == 22598), 0.1, origin_10aa__destinations, origin_10aa__q_outs);
 
-            //origin_1aa__destinations.Add(AngkotGenerator.AngkotPoint.SD_SAERANG);
-            //origin_1aa__q_outs.Add(1);
-            //anGen1a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CARINGIN, 0.06, origin_1aa__destinations, origin_1aa__q_outs);
+            vehGenerators.Add(vehGen10);
+            #endregion
 
-            //angGenerators.Add(anGen1a);
-            //#endregion
+            #region VehGen 11: #286
+            List<RoadSegment> origin_11a__destinations = new List<RoadSegment>();
+            List<double> origin_11a__q_outs = new List<double>();//dari dago
 
-            //#region Angkot Dago Riung
-            //List<AngkotGenerator.AngkotPoint> origin_2a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_2a__q_outs = new List<double>();
+            origin_11a__destinations.Add(segments.Find(x => x.Id == 18068)); //cibiru
+            origin_11a__q_outs.Add(1);
+            vehGen11 = new VehicleGenerator(segments, segments.Find(x => x.Id == 12898), 0.1, origin_11a__destinations, origin_11a__q_outs);
 
-            //origin_2a__destinations.Add(AngkotGenerator.AngkotPoint.RIUNG);
-            //origin_2a__q_outs.Add(1);
+            vehGenerators.Add(vehGen11);
+            #endregion
 
-            //anGen2 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.0167, origin_2a__destinations, origin_2a__q_outs);
-            //angGenerators.Add(anGen2);
 
-            //List<AngkotGenerator.AngkotPoint> origin_2aa__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_2aa__q_outs = new List<double>();
 
-            //origin_2aa__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
-            //origin_2aa__q_outs.Add(1);
 
-            //anGen2a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.RIUNG, 0.0167, origin_2aa__destinations, origin_2aa__q_outs);
-            //angGenerators.Add(anGen2a);
-            //#endregion
-
-            //#region Angkot Kelapa - Dago
-            //List<AngkotGenerator.AngkotPoint> origin_3a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_3a__q_outs = new List<double>();
-
-            //origin_3a__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
-            //origin_3a__q_outs.Add(1);
-            //anGen3 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.0167, origin_3a__destinations, origin_3a__q_outs);
-
-            //angGenerators.Add(anGen3);
-
-            //List<AngkotGenerator.AngkotPoint> origin_3a2__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_3a2__q_outs = new List<double>();
-
-            //origin_3a2__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
-            //origin_3a2__q_outs.Add(1);
-            //anGen3a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KALAPA, 0.0167, origin_3a2__destinations, origin_3a2__q_outs);
-
-            //angGenerators.Add(anGen3a);
-            //#endregion
-
-            //#region Angkot Stasiun - Dago
-            //List<AngkotGenerator.AngkotPoint> origin_4a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_4a__q_outs = new List<double>();
-
-            //origin_4a__destinations.Add(AngkotGenerator.AngkotPoint.STASIUN);
-            //origin_4a__q_outs.Add(1);
-            //anGen4 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.0167, origin_4a__destinations, origin_4a__q_outs);
-            //angGenerators.Add(anGen4);
-
-            //List<AngkotGenerator.AngkotPoint> origin_4a2__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_4a2__q_outs = new List<double>();
-
-            //origin_4a2__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
-            //origin_4a2__q_outs.Add(1);
-            //anGen4a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.STASIUN, 0.0167, origin_4a2__destinations, origin_4a2__q_outs);
-            //angGenerators.Add(anGen4a);
-            //#endregion
-
-            //#region Angkot Cicaheum Ledeng
-            //List<AngkotGenerator.AngkotPoint> origin_5a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_5a__q_outs = new List<double>();
-
-            //origin_5a__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
-            //origin_5a__q_outs.Add(1);
-            //anGen5a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.1, origin_5a__destinations, origin_5a__q_outs);
-            //angGenerators.Add(anGen5a);
-
-            //List<AngkotGenerator.AngkotPoint> origin_5aa__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_5aa__q_outs = new List<double>();
-
-            //origin_5aa__destinations.Add(AngkotGenerator.AngkotPoint.LEDENG);
-            //origin_5aa__q_outs.Add(1);
-            //anGen5 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CICAHEUM, 0.1, origin_5aa__destinations, origin_5aa__q_outs);
-            //angGenerators.Add(anGen5);
-            //#endregion
-
-            //#region Angkot Cisitu tegalega
-            //List<AngkotGenerator.AngkotPoint> origin_6a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_6a__q_outs = new List<double>();
-
-            //origin_6a__destinations.Add(AngkotGenerator.AngkotPoint.CISITU);
-            //origin_6a__q_outs.Add(1);
-            //anGen6a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.TEGALEGA, 0.1, origin_6a__destinations, origin_6a__q_outs);
-            //angGenerators.Add(anGen6a);
-
-            //List<AngkotGenerator.AngkotPoint> origin_6aa__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_6aa__q_outs = new List<double>();
-
-            //origin_6aa__destinations.Add(AngkotGenerator.AngkotPoint.TEGALEGA);
-            //origin_6aa__q_outs.Add(1);
-            //anGen6 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CISITU, 0.1, origin_6aa__destinations, origin_6aa__q_outs);
-            //angGenerators.Add(anGen6);
-            //#endregion
-
-            //#region Angkot Cibaduyut Krsetra
-            //List<AngkotGenerator.AngkotPoint> origin_7aa__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_7aa__q_outs = new List<double>();
-
-            //origin_7aa__destinations.Add(AngkotGenerator.AngkotPoint.KR_SETRA);
-            //origin_7aa__q_outs.Add(1);
-            //anGen7 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIBADUYUT, 0.1, origin_7aa__destinations, origin_7aa__q_outs);
-            //angGenerators.Add(anGen7);
-            //List<AngkotGenerator.AngkotPoint> origin_7a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_7a__q_outs = new List<double>();
-
-            //origin_7a__destinations.Add(AngkotGenerator.AngkotPoint.CIBADUYUT);
-            //origin_7a__q_outs.Add(1);
-            //anGen7a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KR_SETRA, 0.1, origin_7a__destinations, origin_7a__q_outs);
-            //angGenerators.Add(anGen7a);
-
-            //#endregion
-
-            //#region Angkot Kelapa Buah Batu
-            //List<AngkotGenerator.AngkotPoint> origin_8aa__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_8aa__q_outs = new List<double>();
-
-            //origin_8aa__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
-            //origin_8aa__q_outs.Add(1);
-            //anGen8 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.BUAHBATU, 0.1, origin_8aa__destinations, origin_8aa__q_outs);
-            //angGenerators.Add(anGen8);
-            //List<AngkotGenerator.AngkotPoint> origin_8a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_8a__q_outs = new List<double>();
-
-            //origin_8a__destinations.Add(AngkotGenerator.AngkotPoint.BUAHBATU);
-            //origin_8a__q_outs.Add(1);
-            //anGen8a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KALAPA, 0.1, origin_8a__destinations, origin_8a__q_outs);
-            //angGenerators.Add(anGen8a);
-
-            //#endregion
-
-            //#region Angkot Elang Gd Bage
-            //List<AngkotGenerator.AngkotPoint> origin_9__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_9__q_outs = new List<double>();
-
-            //origin_9__destinations.Add(AngkotGenerator.AngkotPoint.GEDEBAGE);
-            //origin_9__q_outs.Add(1);
-            //anGen9 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.ELANG, 0.1, origin_9__destinations, origin_9__q_outs);
-            //angGenerators.Add(anGen9);
-
-            //List<AngkotGenerator.AngkotPoint> origin_9a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_9a__q_outs = new List<double>();
-
-            //origin_9a__destinations.Add(AngkotGenerator.AngkotPoint.ELANG);
-            //origin_9a__q_outs.Add(1);
-            //anGen9a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.GEDEBAGE, 0.1, origin_9a__destinations, origin_9a__q_outs);
-            //angGenerators.Add(anGen9a);
-
-            //#endregion
-
-            //#region Angkot Caheum Ciroyom
-            //List<AngkotGenerator.AngkotPoint> origin_10__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_10__q_outs = new List<double>();
-
-            //origin_10__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
-            //origin_10__q_outs.Add(1);
-            //anGen10 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIROYOM, 0.1, origin_10__destinations, origin_10__q_outs);
-            //angGenerators.Add(anGen10);
-
-            //List<AngkotGenerator.AngkotPoint> origin_10a__destinations = new List<AngkotGenerator.AngkotPoint>();
-            //List<double> origin_10a__q_outs = new List<double>();
-
-            //origin_10a__destinations.Add(AngkotGenerator.AngkotPoint.CIROYOM);
-            //origin_10a__q_outs.Add(1);
-            //anGen10a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CICAHEUM, 0.1, origin_10a__destinations, origin_10a__q_outs);
-            //angGenerators.Add(anGen10a);
-
-            //#endregion
+
+            #region Angkot 1: Sd Saerang - Caringin
+            List<AngkotGenerator.AngkotPoint> origin_1a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_1a__q_outs = new List<double>();
+
+            origin_1a__destinations.Add(AngkotGenerator.AngkotPoint.CARINGIN);
+            origin_1a__q_outs.Add(1);
+            anGen1 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.SD_SAERANG, 0.05, origin_1a__destinations, origin_1a__q_outs);
+
+            angGenerators.Add(anGen1);
+
+            List<AngkotGenerator.AngkotPoint> origin_1aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_1aa__q_outs = new List<double>();
+
+            origin_1aa__destinations.Add(AngkotGenerator.AngkotPoint.SD_SAERANG);
+            origin_1aa__q_outs.Add(1);
+            anGen1a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CARINGIN, 0.05, origin_1aa__destinations, origin_1aa__q_outs);
+
+            angGenerators.Add(anGen1a);
+            #endregion
+
+            #region Angkot Dago Riung
+            List<AngkotGenerator.AngkotPoint> origin_2a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_2a__q_outs = new List<double>();
+
+            origin_2a__destinations.Add(AngkotGenerator.AngkotPoint.RIUNG);
+            origin_2a__q_outs.Add(1);
+
+            anGen2 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.05, origin_2a__destinations, origin_2a__q_outs);
+            angGenerators.Add(anGen2);
+
+            List<AngkotGenerator.AngkotPoint> origin_2aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_2aa__q_outs = new List<double>();
+
+            origin_2aa__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
+            origin_2aa__q_outs.Add(1);
+
+            anGen2a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.RIUNG, 0.05, origin_2aa__destinations, origin_2aa__q_outs);
+            angGenerators.Add(anGen2a);
+            #endregion
+
+            #region Angkot Kelapa - Dago
+            List<AngkotGenerator.AngkotPoint> origin_3a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_3a__q_outs = new List<double>();
+
+            origin_3a__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
+            origin_3a__q_outs.Add(1);
+            anGen3 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.05, origin_3a__destinations, origin_3a__q_outs);
+
+            angGenerators.Add(anGen3);
+
+            List<AngkotGenerator.AngkotPoint> origin_3a2__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_3a2__q_outs = new List<double>();
+
+            origin_3a2__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
+            origin_3a2__q_outs.Add(1);
+            anGen3a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KALAPA, 0.05, origin_3a2__destinations, origin_3a2__q_outs);
+
+            angGenerators.Add(anGen3a);
+            #endregion
+
+            #region Angkot Stasiun - Dago
+            List<AngkotGenerator.AngkotPoint> origin_4a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_4a__q_outs = new List<double>();
+
+            origin_4a__destinations.Add(AngkotGenerator.AngkotPoint.STASIUN);
+            origin_4a__q_outs.Add(1);
+            anGen4 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.DAGO, 0.05, origin_4a__destinations, origin_4a__q_outs);
+            angGenerators.Add(anGen4);
+
+            List<AngkotGenerator.AngkotPoint> origin_4a2__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_4a2__q_outs = new List<double>();
+
+            origin_4a2__destinations.Add(AngkotGenerator.AngkotPoint.DAGO);
+            origin_4a2__q_outs.Add(1);
+            anGen4a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.STASIUN, 0.05, origin_4a2__destinations, origin_4a2__q_outs);
+            angGenerators.Add(anGen4a);
+            #endregion
+
+            #region Angkot Cicaheum Ledeng
+            List<AngkotGenerator.AngkotPoint> origin_5a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_5a__q_outs = new List<double>();
+
+            origin_5a__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
+            origin_5a__q_outs.Add(1);
+            anGen5a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.LEDENG, 0.05, origin_5a__destinations, origin_5a__q_outs);
+            angGenerators.Add(anGen5a);
+
+            List<AngkotGenerator.AngkotPoint> origin_5aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_5aa__q_outs = new List<double>();
+
+            origin_5aa__destinations.Add(AngkotGenerator.AngkotPoint.LEDENG);
+            origin_5aa__q_outs.Add(1);
+            anGen5 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CICAHEUM, 0.05, origin_5aa__destinations, origin_5aa__q_outs);
+            angGenerators.Add(anGen5);
+            #endregion
+
+            #region Angkot Cisitu tegalega
+            List<AngkotGenerator.AngkotPoint> origin_6a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_6a__q_outs = new List<double>();
+
+            origin_6a__destinations.Add(AngkotGenerator.AngkotPoint.CISITU);
+            origin_6a__q_outs.Add(1);
+            anGen6a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.TEGALEGA, 0.05, origin_6a__destinations, origin_6a__q_outs);
+            angGenerators.Add(anGen6a);
+
+            List<AngkotGenerator.AngkotPoint> origin_6aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_6aa__q_outs = new List<double>();
+
+            origin_6aa__destinations.Add(AngkotGenerator.AngkotPoint.TEGALEGA);
+            origin_6aa__q_outs.Add(1);
+            anGen6 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CISITU, 0.05, origin_6aa__destinations, origin_6aa__q_outs);
+            angGenerators.Add(anGen6);
+            #endregion
+
+            #region Angkot Cibaduyut Krsetra
+            List<AngkotGenerator.AngkotPoint> origin_7aa__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_7aa__q_outs = new List<double>();
+
+            origin_7aa__destinations.Add(AngkotGenerator.AngkotPoint.KR_SETRA);
+            origin_7aa__q_outs.Add(1);
+            anGen7 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIBADUYUT, 0.05, origin_7aa__destinations, origin_7aa__q_outs);
+            angGenerators.Add(anGen7);
+            List<AngkotGenerator.AngkotPoint> origin_7a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_7a__q_outs = new List<double>();
+
+            origin_7a__destinations.Add(AngkotGenerator.AngkotPoint.CIBADUYUT);
+            origin_7a__q_outs.Add(1);
+            anGen7a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KR_SETRA, 0.05, origin_7a__destinations, origin_7a__q_outs);
+            angGenerators.Add(anGen7a);
+
+            #endregion
+
+            #region Angkot Kelapa Buah Batu
+            List<AngkotGenerator.AngkotPoint> origin_8aaq__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_8aaq__q_outs = new List<double>();
+
+            origin_8aaq__destinations.Add(AngkotGenerator.AngkotPoint.KALAPA);
+            origin_8aaq__q_outs.Add(1);
+            anGen8 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.BUAHBATU, 0.05, origin_8aaq__destinations, origin_8aaq__q_outs);
+            angGenerators.Add(anGen8);
+            List<AngkotGenerator.AngkotPoint> origin_8a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_8a__q_outs = new List<double>();
+
+            origin_8a__destinations.Add(AngkotGenerator.AngkotPoint.BUAHBATU);
+            origin_8a__q_outs.Add(1);
+            anGen8a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.KALAPA, 0.05, origin_8a__destinations, origin_8a__q_outs);
+            angGenerators.Add(anGen8a);
+
+            #endregion
+
+            #region Angkot Elang Gd Bage
+            List<AngkotGenerator.AngkotPoint> origin_9__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_9__q_outs = new List<double>();
+
+            origin_9__destinations.Add(AngkotGenerator.AngkotPoint.GEDEBAGE);
+            origin_9__q_outs.Add(1);
+            anGen9 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.ELANG, 0.05, origin_9__destinations, origin_9__q_outs);
+            angGenerators.Add(anGen9);
+
+            List<AngkotGenerator.AngkotPoint> origin_9a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_9a__q_outs = new List<double>();
+
+            origin_9a__destinations.Add(AngkotGenerator.AngkotPoint.ELANG);
+            origin_9a__q_outs.Add(1);
+            anGen9a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.GEDEBAGE, 0.05, origin_9a__destinations, origin_9a__q_outs);
+            angGenerators.Add(anGen9a);
+
+            #endregion
+
+            #region Angkot Caheum Ciroyom
+            List<AngkotGenerator.AngkotPoint> origin_10__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_10__q_outs = new List<double>();
+
+            origin_10__destinations.Add(AngkotGenerator.AngkotPoint.CICAHEUM);
+            origin_10__q_outs.Add(1);
+            anGen10 = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CIROYOM, 0.05, origin_10__destinations, origin_10__q_outs);
+            angGenerators.Add(anGen10);
+
+            List<AngkotGenerator.AngkotPoint> origin_10a__destinations = new List<AngkotGenerator.AngkotPoint>();
+            List<double> origin_10a__q_outs = new List<double>();
+
+            origin_10a__destinations.Add(AngkotGenerator.AngkotPoint.CIROYOM);
+            origin_10a__q_outs.Add(1);
+            anGen10a = new AngkotGenerator(segments, AngkotGenerator.AngkotPoint.CICAHEUM, 0.05, origin_10a__destinations, origin_10a__q_outs);
+            angGenerators.Add(anGen10a);
+
+            #endregion
 
         }
 
@@ -883,7 +945,13 @@ namespace SimTMDG.Road
         VehicleGenerator vehGen5;
         VehicleGenerator vehGen6;
         VehicleGenerator vehGen7;
-        VehicleGenerator vehGen8;
+        VehicleGenerator vehGen8b;
+        VehicleGenerator vehGen8b2;
+        VehicleGenerator vehGen9;
+        VehicleGenerator vehGen10;
+        VehicleGenerator vehGen11;
+
+
         AngkotGenerator anGen1;
         AngkotGenerator anGen1a;
         AngkotGenerator anGen2;
@@ -904,7 +972,6 @@ namespace SimTMDG.Road
         AngkotGenerator anGen9a;
         AngkotGenerator anGen10;
         AngkotGenerator anGen10a;
-        //VehicleGenerator anGen5;
 
     }    
 }

@@ -27,7 +27,7 @@ namespace SimTMDG.DataSource
         {
             List<WayTraffic> trafficList = null;
             trafficList = await RunAsync(); //.Wait();
-            
+
             if (trafficList != null)
             {
                 foreach (WayTraffic traffic in trafficList)
@@ -35,11 +35,11 @@ namespace SimTMDG.DataSource
                     var matchSegment = segments.FindAll(x => x.WayId == traffic.way_id);
                     Console.WriteLine("id: " + traffic.way_id);
 
-                    foreach(RoadSegment segment in matchSegment)
+                    foreach (RoadSegment segment in matchSegment)
                     {
-                        segment.updateMaxSpeed(traffic.traffic);
+                        segment.updateMaxSpeed(traffic.traffic_color);
                     }
-                    
+
                 }
             }
         }
@@ -57,9 +57,11 @@ namespace SimTMDG.DataSource
                 List<WayTraffic> trafficList = null;
 
 
-                trafficList = await GetTrafficAsync("http://localhost/testapi/api/trafficsource/");
+                //trafficList = await GetTrafficAsync("http://localhost/testapi/api/trafficsource/");
+                //trafficList = await GetTrafficAsync("http://localhost/bsts_routing/index.php/api/traffic/data");
+                trafficList = await GetTrafficAsync("http://167.205.7.229/bsts_traffic/index.php/api/traffic/data");
                 return trafficList;
-                
+
 
             }
             catch (Exception e)
@@ -80,7 +82,7 @@ namespace SimTMDG.DataSource
                 var jsonString = response.Content.ReadAsStringAsync();
                 jsonString.Wait();
                 trafficList = JsonConvert.DeserializeObject<List<WayTraffic>>(jsonString.Result);
-            
+
             }
 
             return trafficList;

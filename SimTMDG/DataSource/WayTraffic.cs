@@ -9,7 +9,8 @@ namespace SimTMDG.DataSource
     public class WayTraffic
     {
         public long way_id { get; set; }
-        public int traffic { get; set; }
+        //public int traffic { get; set; }
+        public string traffic_color { get; set; }
 
 
         public void a()

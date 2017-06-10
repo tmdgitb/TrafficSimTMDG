@@ -523,11 +523,12 @@ namespace SimTMDG.Road
         }
 
 
-        public void updateMaxSpeed(int trafficCode)
+        //public void updateMaxSpeed(int trafficCode)
+        public void updateMaxSpeed(string trafficCode)
         {
             switch (trafficCode)
             {
-                case 1:
+                case "green":
                     this.MaxSpeed = 14;
                     this.debugColor = Color.Green;
                     //foreach (SegmentLane lane in this.lanes)
@@ -535,36 +536,28 @@ namespace SimTMDG.Road
                     //    lane.debugColor = Color.Green;
                     //}
                     break;
-                case 2:
-                    this.MaxSpeed = 10;
+                case "yellow":
+                    this.MaxSpeed = 7;
                     this.debugColor = Color.Lime;
                     //foreach (SegmentLane lane in this.lanes)
                     //{
                     //    lane.debugColor = Color.Lime;
                     //}
                     break;
-                case 3:
-                    this.MaxSpeed = 6;
+                case "orange":
+                    this.MaxSpeed = 3;
                     this.debugColor = Color.Orange;
                     //foreach (SegmentLane lane in this.lanes)
                     //{
                     //    lane.debugColor = Color.Orange;
                     //}
                     break;
-                case 4:
-                    this.MaxSpeed = 3;
+                case "red":
+                    this.MaxSpeed = 1;
                     this.debugColor = Color.Red;
                     //foreach (SegmentLane lane in this.lanes)
                     //{
                     //    lane.debugColor = Color.Red;
-                    //}
-                    break;
-                case 5:
-                    this.MaxSpeed = 1;
-                    this.debugColor = Color.DarkRed;
-                    //foreach (SegmentLane lane in this.lanes)
-                    //{
-                    //    lane.debugColor = Color.DarkRed;
                     //}
                     break;
             }
